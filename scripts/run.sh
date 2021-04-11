@@ -1,6 +1,6 @@
 #!/bin/bash
 
-runCmd="serve -s build -l 24020"
+runCmd="serve -s build -l 24010"
 
 PID=""
 notRunning() {
