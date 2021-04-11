@@ -13,19 +13,19 @@ import React from "react";
 const ViewRouter = (props) => {
     return (
         <Switch>
-            <Route path="/homework-service">
+            <Route path="/api/homework-service">
                 <HomeworkView />
             </Route>
-            <Route path="/grades-service">
+            <Route path="/api/grades-service">
                 <GradesView />
             </Route>
-            <Route path="/timetable-service">
+            <Route path="/api/timetable-service">
                 <TimetableView />
             </Route>
-            <Route path="/usermanagement-service">
+            <Route path="/api/usermanagement-service">
                 <UserManagementView />
             </Route>
-            <Route path="/presence-service">
+            <Route path="/api/presence-service">
                 <PresenceView />
             </Route>
         </Switch>
