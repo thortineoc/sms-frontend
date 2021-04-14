@@ -1,0 +1,62 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 15.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 15.x
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+
+    - name: Stop frontend
+      uses: garygrossgarten/github-action-ssh@v0.6.3
+      with:
+        command: ./subsystems/frontend/run.sh stop
+        host: 52.142.201.18
+        username: SMS
+        privateKey: ${{ secrets.SERVER_SSH_KEY }}
+        
+    - name: Clear build folder
+      uses: garygrossgarten/github-action-ssh@v0.6.3
+      with:
+        command: ./subsystems/frontend/clear-build-folder.sh
+        host: 52.142.201.18
+        username: SMS
+        privateKey: ${{ secrets.SERVER_SSH_KEY }}
+
+    - name: SSH deploy frontend
+      uses: easingthemes/ssh-deploy@v2.1.6
+      with:
+        # Private Key
+        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }} 
+        # Remote host
+        REMOTE_HOST: 52.142.201.18
+        # Remote user
+        REMOTE_USER: SMS
+        # Source directory
+        SOURCE: build/
+        # Target directory
+        TARGET: /home/SMS/subsystems/frontend/build
+
+    - name: Start frontend
+      uses: garygrossgarten/github-action-ssh@v0.6.3
+      with:
+        command: (cd subsystems/frontend/ && ./run.sh start )
+        host: 52.142.201.18
+        username: SMS
+        privateKey: ${{ secrets.SERVER_SSH_KEY }}
