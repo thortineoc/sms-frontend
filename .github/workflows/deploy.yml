@@ -45,7 +45,7 @@ jobs:
         # Source directory
         SOURCE: build/
         # Target directory
-        TARGET: /home/SMS/subsystems/frontend
+        TARGET: /home/SMS/subsystems/frontend/build
 
     - name: Start frontend
       uses: garygrossgarten/github-action-ssh@v0.6.3
