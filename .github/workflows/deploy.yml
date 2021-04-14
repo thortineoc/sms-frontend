@@ -28,7 +28,7 @@ jobs:
     - name: Stop frontend
       uses: garygrossgarten/github-action-ssh@v0.6.3
       with:
-        command: ./subsystems/frontend stop
+        command: ./subsystems/frontend/run.sh stop
         host: 52.142.201.18
         username: SMS
         privateKey: ${{ secrets.SERVER_SSH_KEY }}
@@ -50,7 +50,7 @@ jobs:
     - name: Start frontend
       uses: garygrossgarten/github-action-ssh@v0.6.3
       with:
-        command: ./subsystems/frontend start
+        command: ./subsystems/frontend/run.sh start
         host: 52.142.201.18
         username: SMS
         privateKey: ${{ secrets.SERVER_SSH_KEY }}
