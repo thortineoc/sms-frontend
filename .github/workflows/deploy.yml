@@ -32,6 +32,14 @@ jobs:
         host: 52.142.201.18
         username: SMS
         privateKey: ${{ secrets.SERVER_SSH_KEY }}
+        
+    - name: Clear build folder
+      uses: garygrossgarten/github-action-ssh@v0.6.3
+      with:
+        command: ./subsystems/frontend/clear-build-folder.sh
+        host: 52.142.201.18
+        username: SMS
+        privateKey: ${{ secrets.SERVER_SSH_KEY }}
 
     - name: SSH deploy frontend
       uses: easingthemes/ssh-deploy@v2.1.6
