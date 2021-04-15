@@ -1,12 +1,8 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import './LeftMenu.css'
 
 const LeftMenu = () => {
-    {/*
-    const [role, setRole] = useState('');
-    ...
-    */}
     let role = 'admin';
 
     return (
