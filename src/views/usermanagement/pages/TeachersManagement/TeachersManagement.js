@@ -2,7 +2,7 @@ import React from 'react';
 
 const TeacherManagement = () => {
     return (
-        <div>
+        <div className="TeacherManagement">
             
         </div>
     );
