@@ -6,9 +6,10 @@ import PresenceView from "../presence/PresenceView";
 import TimetableView from "../timetables/TimetableView";
 import GradesView from "../grades/GradesView";
 
-import UserManagementCreate from "../usermanagement/UserManagementCreate/UserManagementCreate";
-import UserManagementDisplay from "../usermanagement/UserManagementDisplay/UserManagementDisplay";
-import UserManagementTimetables from "../usermanagement/UserManagmentTimetables/UserManagementTimetables";
+import CreateStudentsForm from "../usermanagement/components/CreateStudentsForm/CreateStudentsForm";
+import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
+import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
+import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
 
 const ViewRouter = () => {
     return (
@@ -25,14 +26,17 @@ const ViewRouter = () => {
             <Route path="/api/presence-service">
                 <PresenceView />
             </Route>
-            <Route path="/api/usermanagement-service/account-creator">
-                <UserManagementCreate />
+            <Route path="/api/usermanagement-service/students">
+                <StudentManagement />
             </Route>
-            <Route path="/api/usermanagement-service/all-users">
-                <UserManagementDisplay />
+            <Route path="/api/usermanagement-service/teachers">
+                <TeacherManagement />
             </Route>
-            <Route path="/api/usermanagement-service/timetables-creator">
-                <UserManagementTimetables />
+            <Route path="/api/usermanagement-service/timetables">
+                <TimetablesManagement />
+            </Route>
+            <Route path="/api/usermanagement-service/temp">
+                <CreateStudentsForm />
             </Route>
         </Switch>
     );

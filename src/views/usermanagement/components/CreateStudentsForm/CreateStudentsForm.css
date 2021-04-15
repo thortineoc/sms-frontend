@@ -5,10 +5,10 @@
     transform: translate(-50%, -50%);
 }
 
-.UserManagmentCreate__row {
+.UserManagementCreate__row {
     display: flex;
 }
 
-.UserManagmentCreate__col {
+.UserManagementCreate__col {
     margin: 2%;
 }
