@@ -2,18 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import LeftMenu from "./widgets/left-menu/LeftMenu";
-import ViewRouter from "./views/common/ViewRouter";
-import {
-    BrowserRouter as Router,
-} from "react-router-dom";
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-      <Router>
-        <LeftMenu/>
-        <ViewRouter/>
-      </Router>
+      <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

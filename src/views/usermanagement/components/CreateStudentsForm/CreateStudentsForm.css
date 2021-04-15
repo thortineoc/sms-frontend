@@ -1,0 +1,14 @@
+.UserManagementCreate {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.UserManagementCreate__row {
+    display: flex;
+}
+
+.UserManagementCreate__col {
+    margin: 2%;
+}
