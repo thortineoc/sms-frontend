@@ -2,7 +2,7 @@ import React from 'react';
 
 const TimetablesManagement = () => {
     return (
-        <div>
+        <div className="TimetablesManagement">
             
         </div>
     );
