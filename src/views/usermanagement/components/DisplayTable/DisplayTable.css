@@ -1,0 +1,79 @@
+.DisplayTable {
+    background-color: #dddddd;
+    display: block;
+    margin-top: 8rem;
+    margin-left: 5%;
+    width: 90%;
+    max-height: 700px;
+}
+
+.DisplayTable > table {
+    width: 100%;
+}
+
+.DisplayTable table, td {
+    border-collapse: collapse;
+}
+
+.DisplayTable > table > thead {
+    display: table;
+    width: 100%
+}
+
+.DisplayTable > table > tbody {
+    display: block;
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+.ColumnNames {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    display: table;
+    width: calc(100% - 12px);
+
+    box-sizing: border-box;
+    background-color: #5599cc;
+    color: #eeeeee;
+    font-size: 20px;
+    height: 40px;
+    z-index: 100;
+}
+
+.ColumnNames > th {
+    height: 40px;
+    padding-left: 20px;
+    border-left: 2px solid gray;
+    text-align: left;
+    text-decoration: none;
+    z-index: 2;
+}
+
+.ColumnNames > th:last-child {
+    border-right: 2px solid gray;
+}
+
+.ColumnNames > th::selection {
+    background: none;
+}
+
+.DataRow {
+    display: table;
+    width: 100%;
+    box-sizing: border-box;
+    height: 30px;
+}
+
+.DataRow:nth-child(even) {
+    background-color: #eeeeee;
+}
+
+.DataRow > td {
+    padding-left: 20px;
+    border-left: 2px solid gray;
+    text-align: left;
+    text-decoration: none;
+}
+
+.DataRow > td:last-child {
+    border-right: 2px solid gray;
+}
