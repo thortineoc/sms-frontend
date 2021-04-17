@@ -10,6 +10,7 @@ import CreateStudentsForm from "../usermanagement/components/CreateStudentsForm/
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
+import Logout from "../keycloak/pages/Logout/Logout";
 
 const ViewRouter = () => {
     return (
@@ -37,6 +38,9 @@ const ViewRouter = () => {
             </Route>
             <Route path="/api/usermanagement-service/temp">
                 <CreateStudentsForm />
+            </Route>
+            <Route path="/logout">
+                <Logout />
             </Route>
         </Switch>
     );

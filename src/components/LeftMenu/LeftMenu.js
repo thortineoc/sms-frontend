@@ -13,6 +13,7 @@ const LeftMenu = () => {
                     <Link to="/api/usermanagement-service/teachers">Teachers management</Link>
                     <Link to="/api/usermanagement-service/timetables">Timetables management</Link>
                     <Link to="/api/usermanagement-service/temp">Create</Link>
+                    <Link to="/logout">Logout</Link>
                 </nav>
             ) : (
                 <nav>
@@ -20,6 +21,7 @@ const LeftMenu = () => {
                     <Link to="/api/homework-service">Homework</Link>
                     <Link to="/api/grades-service">Grades</Link>
                     <Link to="/api/presence-service">Presences</Link>
+                    <Link to="/logout">Logout</Link>
                 </nav>
             )}
         </div>
