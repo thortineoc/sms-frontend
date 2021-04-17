@@ -6,21 +6,27 @@
     display: flex;
     flex-direction: column;
     flex-shrink: initial;
-    width: 20%;
+    width: 22%;
     min-height: 60%;
     padding: 2%;
     border-radius: 3%;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
-    background-color: #f8f8f8;
+    background-color: #fff;
 }
 
 .CreateForm__control {
     display: flex;
     flex-direction: column;
-    margin: 5%;
+    margin-bottom: 3%;
 }
 
 .error {
     color: red;
     font-size: 0.75rem;
+}
+
+.CreateForm__button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10%;
 }
