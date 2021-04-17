@@ -15,21 +15,28 @@ const initialValues = {
     role: '' //?
 }
 
-const onSubmit = async (values) => {
-    await axios.post("/send", values);
-
+const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+    try {
+        await axios.post("/send", values);
+        resetForm();
+        setStatus({success: true});
+    } catch(error) {
+        setStatus({success: false});
+        setSubmitting(false);
+        setErrors({submit: error.message});
+    }
 }
+
 const validationSchema = Yup.object({
-    firstName: Yup.string().matches(/^[A-Za-z]*$/, 'Invalid characters').required('Required'),
+    firstName: Yup.string().required('Required'),
     secondName: Yup.string(),
     lastName: Yup.string().required('Required'),
-    dateOfBirth: Yup.date().required('Required'),
+    dateOfBirth: Yup.date().max(new Date(), 'Invalid date').required('Required'),
     email: Yup.string().email('Invalid format'),
-    phone: Yup.string().matches(/^[0-9]+-[0-9]+-[0-9]+(-[0-9]*){0,1}$/, 'Invalid format'),
+    phone: Yup.string().matches(/^[0-9]+(-[0-9]+){2}(-[0-9]*){0,1}$/, 'Invalid format'),
 })
 
-const CreateForm = ({type}) => {
-    let mocktype = 'student';
+const CreateForm = () => {
     return (
         <Formik
             initialValues={initialValues}
@@ -91,13 +98,15 @@ const CreateForm = ({type}) => {
                                     </ErrorMessage>
                                 </div>
 
-                                <button type="submit" disabled={formik.isSubmitting} className="CreateForm__submit">Submit</button>
+                                <button type="submit" disabled={formik.isSubmitting} className="CreateForm__submit">
+                                    Submit
+                                </button>
+                                {formik.errors && formik.errors.submit && <div className="error">{formik.errors.submit}</div>}
                             </div>
                         </Form>
                     )
                 }
             }
-
 
         </Formik>
     );
