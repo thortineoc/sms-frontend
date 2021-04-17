@@ -1,4 +1,4 @@
-.CreateForm__container {
+.CreateForm {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -12,17 +12,6 @@
     border-radius: 3%;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
     background-color: #fff;
-}
-
-.CreateForm__control {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 3%;
-}
-
-.error {
-    color: red;
-    font-size: 0.75rem;
 }
 
 .CreateForm__button-wrapper {

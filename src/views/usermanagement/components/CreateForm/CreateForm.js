@@ -1,10 +1,9 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import './CreateForm.css';
 import axios from 'axios';
-import FormControl from "./FormControl";
-import DateFormControl from "./DateFormControl";
+import FormControl from "../../../../components/FormControl/FormControl";
 import Button from "../../../../components/Button/Button";
 
 const initialValues = {
@@ -52,16 +51,47 @@ const CreateForm = () => {
                 formik => {
                     return (
                         <Form>
-                            <div className="CreateForm__container">
-
+                            <div className="CreateForm">
                                 {formik.errors && formik.errors.submit && <div className="error">{formik.errors.submit}</div>}
-
-                                <FormControl label="First name" name="firstName" type="text" isRequired={true} />
-                                <FormControl label="Second name" name="secondName" type="text" isRequired={false} />
-                                <FormControl label="Last name" name="lastName" type="text" isRequired={true} />
-                                <FormControl label="E-mail address" name="email" type="email" isRequired={false} />
-                                <FormControl label="Phone number" name="phone" type="text" isRequired={false} />
-                                <DateFormControl label="Date of birth" name="dateOfBirth" type="date" isRequired={true} />
+                                <FormControl
+                                    label="First name"
+                                    name="firstName"
+                                    type="text"
+                                    required={true}
+                                />
+                                <FormControl
+                                    label="Second name"
+                                    name="secondName"
+                                    type="text"
+                                    required={false}
+                                />
+                                <FormControl
+                                    label="Last name"
+                                    name="lastName"
+                                    type="text"
+                                    required={true}
+                                />
+                                <FormControl
+                                    label="E-mail address"
+                                    name="email"
+                                    type="email"
+                                    required={false}
+                                />
+                                <FormControl
+                                    label="Phone number"
+                                    name="phone"
+                                    type="text"
+                                    required={false}
+                                />
+                                <FormControl
+                                    label="Date of birth"
+                                    name="dateOfBirth"
+                                    type="date"
+                                    required={true}
+                                    InputLabelProps={{
+                                        shrink: true
+                                    }}
+                                />
 
                                 <div className="CreateForm__button-wrapper">
                                     <Button type="submit" label="Submit" disabled={formik.isSubmitting} />
