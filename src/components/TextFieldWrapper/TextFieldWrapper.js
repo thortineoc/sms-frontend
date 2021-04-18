@@ -11,7 +11,7 @@ const TextFieldWrapper = ({ name, ...rest }) => {
         fullWidth: true
     }
 
-    if (meta && meta.touched && meta.error) {
+    if(meta && meta.touched && meta.error) {
         configField.error = true;
         configField.helperText = meta.error;
     }

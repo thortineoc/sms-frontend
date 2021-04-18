@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
+import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
+// lol why is it working without including styles
 
 let initialValues = {
     firstName: '',
@@ -19,7 +21,7 @@ let initialValues = {
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
     console.log(values);
     try {
-        await axios.post("/usr/{id}", values);
+        await axios.post(".../{id}", values);
         resetForm();
         setStatus({success: true});
     } catch(error) {
@@ -36,19 +38,25 @@ const validationSchema = Yup.object({
     dateOfBirth: Yup.date().max(new Date(), 'Invalid date').required('Required'),
     email: Yup.string().email('Invalid format'),
     phone: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
+    group: Yup.string().required('Required')
 })
 
 const user = {
     firstName: 'Joe',
     lastName: 'Doe',
     dateOfBirth: '2000-11-11',
-    group: '1A'
+    group: '1Z'
 }
 
+const groups = [
+    "1A",
+    "1B",
+    "1C",
+    "1Z"
+]
+
 const EditForm = ({id}) => {
-    useEffect(async () => {
-            initialValues = await user;
-    }, []);
+    // fetch user data and groups
 
     return (
         <Formik
@@ -65,7 +73,7 @@ const EditForm = ({id}) => {
                                 {formik.errors && formik.errors.submit &&
                                 <div className="error">{formik.errors.submit}</div>}
                                 <TextFieldWrapper
-                                    label="First name"
+                                    label="First name *"
                                     name="firstName"
                                     type="text"
                                 />
@@ -75,7 +83,7 @@ const EditForm = ({id}) => {
                                     type="text"
                                 />
                                 <TextFieldWrapper
-                                    label="Last name"
+                                    label="Last name *"
                                     name="lastName"
                                     type="text"
                                 />
@@ -84,18 +92,22 @@ const EditForm = ({id}) => {
                                     name="email"
                                     type="email"
                                 />
-                                <TextFieldWrapper
+                                <TextFieldWrappergit
                                     label="Phone number"
                                     name="phone"
                                 />
                                 <TextFieldWrapper
-                                    label="Date of birth"
+                                    label="Date of birth *"
                                     name="dateOfBirth"
                                     type="date"
                                     InputLabelProps={{
                                         shrink: true
                                     }}
-                                    defaultValue={user.dateOfBirth}
+                                />
+                                <SelectFieldWrapper
+                                    name="group"
+                                    label="Group *"
+                                    options={groups}
                                 />
 
                                 <div className="CreateForm__button-wrapper">
@@ -109,6 +121,6 @@ const EditForm = ({id}) => {
             }
         </Formik>
     );
-};
+}
 
 export default EditForm;

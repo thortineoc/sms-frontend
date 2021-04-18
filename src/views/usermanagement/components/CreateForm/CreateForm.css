@@ -19,3 +19,8 @@
     justify-content: flex-end;
     margin-top: 10%;
 }
+
+.error {
+    color: red;
+    margin-bottom: 5%;
+}
