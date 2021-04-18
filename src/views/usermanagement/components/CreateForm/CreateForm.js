@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import './CreateForm.css';
 import axios from 'axios';
-import FormControl from "../../../../components/FormControl/FormControl";
+import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
 
 const initialValues = {
@@ -53,41 +53,34 @@ const CreateForm = () => {
                         <Form>
                             <div className="CreateForm">
                                 {formik.errors && formik.errors.submit && <div className="error">{formik.errors.submit}</div>}
-                                <FormControl
+                                <TextFieldWrapper
                                     label="First name"
                                     name="firstName"
                                     type="text"
-                                    required={true}
                                 />
-                                <FormControl
+                                <TextFieldWrapper
                                     label="Second name"
                                     name="secondName"
                                     type="text"
-                                    required={false}
                                 />
-                                <FormControl
+                                <TextFieldWrapper
                                     label="Last name"
                                     name="lastName"
                                     type="text"
-                                    required={true}
                                 />
-                                <FormControl
+                                <TextFieldWrapper
                                     label="E-mail address"
                                     name="email"
                                     type="email"
-                                    required={false}
                                 />
-                                <FormControl
+                                <TextFieldWrapper
                                     label="Phone number"
                                     name="phone"
-                                    type="text"
-                                    required={false}
                                 />
-                                <FormControl
+                                <TextFieldWrapper
                                     label="Date of birth"
                                     name="dateOfBirth"
                                     type="date"
-                                    required={true}
                                     InputLabelProps={{
                                         shrink: true
                                     }}

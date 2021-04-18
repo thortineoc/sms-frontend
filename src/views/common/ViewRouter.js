@@ -11,6 +11,7 @@ import StudentManagement from "../usermanagement/pages/StudentsManagement/Studen
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
 import CreateForm from "../usermanagement/components/CreateForm/CreateForm";
+import EditForm from "../usermanagement/components/EditForm/EditForm";
 
 const ViewRouter = () => {
     return (
@@ -37,7 +38,7 @@ const ViewRouter = () => {
                 <TimetablesManagement />
             </Route>
             <Route path="/api/usermanagement-service/temp">
-                <CreateForm />
+                <EditForm />
             </Route>
         </Switch>
     );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useField } from "formik";
 import TextField from '@material-ui/core/TextField';
-import './FormControl.css'
+import './TextFieldWrapper.css'
 
-const FormControl = ({ name, ...rest }) => {
+const TextFieldWrapper = ({ name, ...rest }) => {
     const [field, meta] = useField(name);
     const configField = {
         ...field,
@@ -15,14 +15,12 @@ const FormControl = ({ name, ...rest }) => {
         configField.error = true;
         configField.helperText = meta.error;
     }
-    configField.required && (configField.label += ' *');
-    configField.required = false;
 
     return (
-        <div className="FormControl">
+        <div className="TextFieldWrapper">
             <TextField {...configField} />
         </div>
     );
 }
 
-export default FormControl;
+export default TextFieldWrapper;
