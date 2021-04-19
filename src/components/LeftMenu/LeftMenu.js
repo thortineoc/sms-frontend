@@ -9,7 +9,7 @@ const LeftMenu = () => {
         <div className="LeftMenu">
             {role === 'admin' ? (
                 <nav>
-                    <Link to="/api/usermanagement-service/students">Student management</Link>
+                    <Link to="/api/usermanagement-service/students">Students management</Link>
                     <Link to="/api/usermanagement-service/teachers">Teachers management</Link>
                     <Link to="/api/usermanagement-service/timetables">Timetables management</Link>
                     <Link to="/api/usermanagement-service/temp">Create</Link>
