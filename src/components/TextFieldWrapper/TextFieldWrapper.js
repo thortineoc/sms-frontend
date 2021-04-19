@@ -8,6 +8,7 @@ const TextFieldWrapper = ({ name, ...rest }) => {
     const configField = {
         ...field,
         ...rest,
+        autoComplete: "off",
         fullWidth: true
     }
 

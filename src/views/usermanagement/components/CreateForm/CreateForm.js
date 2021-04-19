@@ -23,9 +23,9 @@ const initialValues = {
 }
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
-    console.log(values);
+    console.log(JSON.stringify(values));
     try {
-        await axios.post("http://52.142.201.18:24020/usermanagement-service/users", values);
+        await axios.post("http://52.142.201.18:24020/usermanagement-service/users", JSON.stringify(values));
         resetForm();
         setStatus({success: true});
     } catch(error) {
