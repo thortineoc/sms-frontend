@@ -7,20 +7,25 @@ import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldW
 import Button from "../../../../components/Button/Button";
 
 const initialValues = {
+    id: '',
+    userName: '',
     firstName: '',
-    secondName: '',
     lastName: '',
-    dateOfBirth: '', //?
+    role: 'STUDENT',
     email: '',
-    phone: '',
-    group: '', //?
-    role: '' //?
+    pesel: '',
+    customAttributes: {
+        group: '1A',
+        phoneNumber: '',
+        middleName: '',
+        subjects: []
+    }
 }
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
     console.log(values);
     try {
-        await axios.post("/send", values);
+        await axios.post("http://52.142.201.18:24020/usermanagement-service/users", values);
         resetForm();
         setStatus({success: true});
     } catch(error) {
@@ -32,11 +37,14 @@ const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}
 
 const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
-    secondName: Yup.string(),
     lastName: Yup.string().required('Required'),
-    dateOfBirth: Yup.date().max(new Date(), 'Invalid date').required('Required'),
-    email: Yup.string().email('Invalid format'),
-    phone: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
+    //dateOfBirth: Yup.date().max(new Date(), 'Invalid date').required('Required'),
+    email: Yup.string().email('Invalid format').required('Required'),
+    pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
+    middleName: Yup.string(),
+    customAttributes: Yup.object({
+        phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
+    })
 })
 
 const CreateForm = () => {
@@ -54,29 +62,37 @@ const CreateForm = () => {
                             <div className="CreateForm">
                                 {formik.errors && formik.errors.submit && <div className="error">{formik.errors.submit}</div>}
                                 <TextFieldWrapper
-                                    label="First name"
+                                    label="First name *"
                                     name="firstName"
                                     type="text"
                                 />
                                 <TextFieldWrapper
-                                    label="Second name"
-                                    name="secondName"
+                                    label="Middle name"
+                                    name="customAttributes.middleName"
                                     type="text"
                                 />
                                 <TextFieldWrapper
-                                    label="Last name"
+                                    label="Last name *"
                                     name="lastName"
                                     type="text"
                                 />
                                 <TextFieldWrapper
-                                    label="E-mail address"
+                                    label="PESEL *"
+                                    name="pesel"
+                                    type="pesel"
+                                />
+                                <TextFieldWrapper
+                                    label="E-mail address *"
                                     name="email"
                                     type="email"
                                 />
                                 <TextFieldWrapper
                                     label="Phone number"
-                                    name="phone"
+                                    name="customAttributes.phoneNumber"
+                                    type="text"
                                 />
+
+                                {/*
                                 <TextFieldWrapper
                                     label="Date of birth"
                                     name="dateOfBirth"
@@ -85,6 +101,7 @@ const CreateForm = () => {
                                         shrink: true
                                     }}
                                 />
+                                */}
 
                                 <div className="CreateForm__button-wrapper">
                                     <Button type="submit" label="Submit" disabled={formik.isSubmitting} />

@@ -92,7 +92,7 @@ const EditForm = ({id}) => {
                                     name="email"
                                     type="email"
                                 />
-                                <TextFieldWrappergit
+                                <TextFieldWrapper
                                     label="Phone number"
                                     name="phone"
                                 />
