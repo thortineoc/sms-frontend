@@ -1,33 +1,25 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 
-class ManageComponent extends Component {
+const ManageComponent = (props) => {
 
+    const [subjects, updateSubjects] = useState([]);
 
-    state = {
-        loading: true,
-        subjects: [],
-    }
-
-    async componentDidMount() {
-        const url = this.props.url;
+    useEffect(async () => {
+        const url = props.url;
         const response = await fetch(url);
         const data = await response.json();
-        this.setState({subjects: data.subjects})
-        this.setState({loading: false})
+        updateLoading(false)
+        updateSubjects(data.subjects)
+    });
 
-    }
-
-    render() {
-        return (
-            <ol>
-                {this.state.subjects.map((subject) => (
-                    <li>{subject}</li>
-                ))}
-            </ol>
-        );
-    }
-
+    return (
+        <ol>
+            {subjects.map((subject) => (
+                <li>{subject}</li>
+            ))}
+        </ol>
+    );
 
 }
 
- export default ManageComponent;
+export default ManageComponent;
