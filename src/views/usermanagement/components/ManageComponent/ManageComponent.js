@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "./ManageComponent.css"
 import {useFormik} from "formik";
+import axios from 'axios';
 
 const ManageComponent = (props) => {
 
@@ -8,36 +9,29 @@ const ManageComponent = (props) => {
     const [error, updateError] = useState(false);
     const [errorMessage, updateErrorMessage] = useState("")
 
-    useEffect(async () => {
-        let url = "";
-        if (props.type === "subjects") {
-            //change to url for fetching subjects
-            url = "http://8gd4z.mocklab.io/json/1"
-        } else if (props.type === "groups") {
-            //change to url for fetching groups
-            url = "http://8gd4z.mocklab.io/json/1"
-        } else {
-            updateError(true)
-            return
-        }
-        const response = await fetch(url);
+    const fetchData = async () => {
+        //let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type;
+        let url = "http://8gd4z.mocklab.io/json/1"
+        const response = await axios.get(url)
         if (response.status !== 200) {
             updateError(true)
             return
         }
-        const data = await response.json();
-        updateItems(data[props.type])
+        updateItems(response.data[props.type])
+    }
+
+    useEffect(async () => {
+        await fetchData();
 
     }, []);
 
     const onDelete = async (index) => {
         updateErrorMessage("");
-        let url = "http://8gd4z.mocklab.io/templated"
         const itemsToUpdate = [...items]
-        //change to url for deleting items
-        //let url = "http://8gd4z.mocklab.io/templated/" + itemsToUpdate[index].id;
-        console.log(url)
-        const response = await fetch(url, {method: 'DELETE'});
+        let url = "http://8gd4z.mocklab.io/templated"
+        //let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/" + itemsToUpdate[index].id;
+
+        const response = await axios.delete(url);
         if (response.status === 200) {
             itemsToUpdate.splice(index, 1);
             updateItems(itemsToUpdate);
@@ -52,6 +46,7 @@ const ManageComponent = (props) => {
         },
         onSubmit: values => {
             console.log(JSON.stringify(values, null, 2))
+            fetchData()
         },
     });
 
