@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import "./ManageComponent.css"
-import {Form, Formik, useFormik} from "formik";
+import {Form, Formik} from "formik";
 import axios from 'axios';
 import {TrashIcon} from '@heroicons/react/solid'
 import Button from "../../../../components/Button/Button";
@@ -32,9 +32,12 @@ const ManageComponent = (props) => {
         updateItems(response.data[props.type])
     }
 
-    useEffect(async () => {
-        await fetchData();
+    useEffect( () => {
 
+        async function loadData() {
+            await fetchData()
+        }
+        loadData();
     }, []);
 
     const onDelete = async (index) => {
@@ -52,15 +55,14 @@ const ManageComponent = (props) => {
         }
     }
 
-    const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+    const onSubmit = async (values, { resetForm}) => {
         console.log(JSON.stringify(values));
         let url = "http://8gd4z.mocklab.io/json"
         //let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type;
         const response = await axios.post(url, JSON.stringify(values));
-        //console.log(response.data)
         if (response.status === 200) {
             resetForm();
-            fetchData();
+            await fetchData();
         } else {
             updateErrorMessage("Cannot add this item");
         }
@@ -111,7 +113,6 @@ const ManageComponent = (props) => {
                                         <div className="CreateForm__button-wrapper">
                                             <Button type="submit" label="Add"/>
                                         </div>
-
                                     </div>
                                 </Form>
                             )
