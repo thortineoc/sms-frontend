@@ -1,60 +1,88 @@
 import React, {useEffect, useState} from 'react';
 import "./ManageComponent.css"
-import formik, { Formik, Form } from 'formik';
-import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import Button from "../../../../components/Button/Button";
+import {useFormik} from "formik";
 
 
 const ManageComponent = (props) => {
 
-    const [subjects, updateSubjects] = useState([]);
+    const [items, updateItems] = useState([]);
+    const [error, updateError] = useState(false);
 
     useEffect(async () => {
-        const url = "http://8gd4z.mocklab.io/json/1"
+        let url = "";
+        if (props.type === "subjects") {
+            //change to url for fetching subjects
+            url = "http://8gd4z.mocklab.io/json/1"
+        } else if (props.type === "groups") {
+            //change to url for fetching groups
+            url = "http://8gd4z.mocklab.io/json/1"
+        } else {
+            updateError(true)
+            return
+        }
         const response = await fetch(url);
+        if (response.status !== 200) {
+            updateError(true)
+            return
+        }
         const data = await response.json();
-        updateSubjects(data[props.type])
-        console.log("updated")
+        updateItems(data[props.type])
 
     }, []);
 
-    const onClick = async (e) => {
+    const onDelete = async (index) => {
         let url = "http://8gd4z.mocklab.io/templated"
-        console.log(e)
-        const d = [...subjects]
-        const response = await fetch(url, { method: 'DELETE' });
-        if(response.status===200) {
-            d.splice(e, 1);
-            console.log(d);
-            updateSubjects(d);
+        const itemsToUpdate = [...items]
+        //change to url for deleting items
+        //let url = "http://8gd4z.mocklab.io/templated/" + itemsToUpdate[index].id;
+        console.log(url)
+        const response = await fetch(url, {method: 'DELETE'});
+        if (response.status === 200) {
+            itemsToUpdate.splice(index, 1);
+            updateItems(itemsToUpdate);
         }
     }
 
-    const onSubmit = async (values) => {
-        console.log(values)
+    const formik = useFormik({
+        initialValues: {
+            item: ""
+        },
+        onSubmit: values => {
+            console.log(JSON.stringify(values, null, 2))
+        },
+    });
+
+    if (error) {
+        return (
+            <div className="Component">
+                <h1>Error!</h1>
+            </div>
+        )
+    } else {
+        return (
+
+            <div className="Component">
+                <h1>{props.type}</h1>
+                <ol>
+                    {items.map((item, index) => (
+                        <li onClick={() => onDelete(index)} key={item.id}>{item.name}</li>
+                    ))}
+                </ol>
+                <form onSubmit={formik.handleSubmit}>
+
+                    <input
+                        id="item"
+                        name="item"
+                        type="item"
+                        onChange={formik.handleChange}
+                        value={formik.values.email}
+                    />
+
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+        );
     }
-
-    return (
-        <div className="Component">
-            <h1>{props.type}</h1>
-            <ol>
-                {subjects.map((subject, index) => (
-                    <li onClick={(x) => onClick(index)}>{subject.name}</li>
-                ))}
-            </ol>            {/*<Formik onSubmit={onClick} validateOnChange={false}>*/}
-            {/*    <div>*/}
-            {/*        <TextFieldWrapper*/}
-            {/*            label="Add subject"*/}
-            {/*            name="addSubject"*/}
-            {/*            type="text"*/}
-            {/*        />*/}
-            {/*        <Button type="submit" label="Add"/>*/}
-            {/*    </div>*/}
-            {/*</Formik>
-*/}
-        </div>
-    );
-
 }
 
 export default ManageComponent;
