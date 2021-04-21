@@ -37,7 +37,7 @@ const ViewRouter = () => {
                 <TimetablesManagement />
             </Route>
             <Route path="/api/usermanagement-service/temp">
-                <CreateForm />
+
             </Route>
         </Switch>
     );
