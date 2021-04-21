@@ -5,10 +5,15 @@ import axios from 'axios';
 import {TrashIcon} from '@heroicons/react/solid'
 import Button from "../../../../components/Button/Button";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
+import * as Yup from "yup";
 
 const initialValues = {
     item: ''
 }
+
+const validationSchema = Yup.object({
+    item: Yup.string().required('Required'),
+})
 
 const ManageComponent = (props) => {
 
@@ -49,18 +54,18 @@ const ManageComponent = (props) => {
 
     const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
         console.log(JSON.stringify(values));
+        let url = "http://8gd4z.mocklab.io/json"
+        //let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type;
+        const response = await axios.post(url, JSON.stringify(values));
+        //console.log(response.data)
+        if (response.status === 200) {
+            resetForm();
+            fetchData();
+        } else {
+            updateErrorMessage("Cannot add this item");
+        }
 
     }
-
-    // const formik = useFormik({
-    //     initialValues: {
-    //         item: ""
-    //     },
-    //     onSubmit: values => {
-    //         console.log(JSON.stringify(values, null, 2))
-    //         fetchData()
-    //     },
-    // });
 
     if (error) {
         return (
@@ -70,11 +75,10 @@ const ManageComponent = (props) => {
         )
     } else {
         return (
-
             <div className="Component">
                 <h1>{props.type}</h1>
                 {errorMessage.length > 0 ? <p>{errorMessage}</p> : <></>}
-                <table>
+                <table className="SubjectsTable">
                     <tbody>
                     {items.map((item, index) => (
                         <tr key={item.id}>
@@ -88,6 +92,7 @@ const ManageComponent = (props) => {
 
                 <Formik
                     initialValues={initialValues}
+                    validationSchema={validationSchema}
                     validateOnChange={false}
                     onSubmit={onSubmit}
                 >
@@ -100,7 +105,7 @@ const ManageComponent = (props) => {
                                         <div className="error">{formik.errors.submit}</div>}
                                         <TextFieldWrapper
                                             label={"Add "+ props.type}
-                                            name="item"
+                                            name={"item"}
                                             type="text"
                                         />
                                         <div className="CreateForm__button-wrapper">
@@ -113,29 +118,6 @@ const ManageComponent = (props) => {
                         }
                     }
                 </Formik>
-
-
-                {/*<form onSubmit={formik.handleSubmit}>*/}
-
-                {/*    <input*/}
-                {/*        id="item"*/}
-                {/*        name="item"*/}
-                {/*        type="item"*/}
-                {/*        onChange={formik.handleChange}*/}
-                {/*        value={formik.values.email}*/}
-                {/*    />*/}
-
-                {/*    <TextFieldWrapper*/}
-                {/*        label="First name *"*/}
-                {/*        name="firstName"*/}
-                {/*        type="text"*/}
-                {/*        />*/}
-
-                {/*    <div className="CreateForm__button-wrapper">*/}
-                {/*        <Button type="submit" label="Add" />*/}
-                {/*    </div>*/}
-
-                {/*</form>*/}
             </div>
         );
     }
