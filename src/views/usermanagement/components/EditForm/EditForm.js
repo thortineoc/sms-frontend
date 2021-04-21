@@ -72,6 +72,7 @@ const EditForm = ({id}) => {
                             <div className="CreateForm">
                                 {formik.errors && formik.errors.submit &&
                                 <div className="error">{formik.errors.submit}</div>}
+
                                 <TextFieldWrapper
                                     label="First name *"
                                     name="firstName"

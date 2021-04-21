@@ -5,7 +5,7 @@ import './CreateForm.css';
 import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
-/*import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";*/
+import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 
 const initialValues = {
     id: '',
@@ -117,27 +117,6 @@ const CreateForm = () => {
                                     name="group"
                                     options={groups}
                                 />
-
-                                {/*
-                                {formik.values.role === 'TEACHER' && (
-                                    <SelectFieldWrapper
-                                        label="Subjects"
-                                        name="customAttributes.subjects"
-                                        options={subjects}
-                                        multiple
-                                    />
-                                )}*/}
-
-                                {/*
-                                <TextFieldWrapper
-                                    label="Date of birth"
-                                    name="dateOfBirth"
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true
-                                    }}
-                                />
-                                */}
 
                                 <div className="CreateForm__button-wrapper">
                                     <Button type="submit" label="Submit" disabled={formik.isSubmitting}/>
