@@ -76,7 +76,7 @@ const ManageComponent = (props) => {
     } else {
         return (
             <div className="Component">
-                <h1>{props.type}</h1>
+                <h1>{props.type.charAt(0).toUpperCase() + props.type.slice(1)}</h1>
                 {errorMessage.length > 0 ? <p>{errorMessage}</p> : <></>}
                 <table className="SubjectsTable">
                     <tbody>
