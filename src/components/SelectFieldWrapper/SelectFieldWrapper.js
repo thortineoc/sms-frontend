@@ -37,11 +37,18 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
         <div className="SelectFieldWrapper">
             <TextField {...configSelect} >
                 {options.map((item, index) => {
-                  return (
-                      <MenuItem key={index} value={item}>
-                          {item}
-                      </MenuItem>
-                  )
+                    if(item === '') {
+                        return (
+                            <MenuItem key={index} value={item}>
+                                <em>None</em>
+                            </MenuItem>
+                        )
+                    }
+                    return (
+                          <MenuItem key={index} value={item}>
+                             {item}
+                          </MenuItem>
+                    )
                 })}
             </TextField>
         </div>

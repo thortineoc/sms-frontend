@@ -45,7 +45,7 @@ const user = {
     firstName: 'Joe',
     lastName: 'Doe',
     dateOfBirth: '2000-11-11',
-    group: '1Z'
+    group: '1A'
 }
 
 const groups = [

@@ -16,7 +16,7 @@ const initialValues = {
     pesel: '',
     customAttributes: {
         email: '',
-        group: '1A',
+        group: '',
         phoneNumber: '',
         middleName: '',
         subjects: []
@@ -24,10 +24,10 @@ const initialValues = {
 }
 
 const groups = [
+    "",
     "1A",
     "1B",
     "1C",
-    "1Z"
 ]
 
 const subjects = [
@@ -37,6 +37,7 @@ const subjects = [
 ]
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+    console.log(JSON.stringify(values));
     try {
         await axios
             .post(
@@ -117,6 +118,7 @@ const CreateForm = () => {
                                     name="group"
                                     options={groups}
                                 />
+
 
                                 <div className="CreateForm__button-wrapper">
                                     <Button type="submit" label="Submit" disabled={formik.isSubmitting}/>
