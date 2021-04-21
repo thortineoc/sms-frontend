@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import "./ManageComponent.css"
 import {useFormik} from "formik";
 
-
 const ManageComponent = (props) => {
 
     const [items, updateItems] = useState([]);
     const [error, updateError] = useState(false);
+    const [errorMessage, updateErrorMessage] = useState("")
 
     useEffect(async () => {
         let url = "";
@@ -31,6 +31,7 @@ const ManageComponent = (props) => {
     }, []);
 
     const onDelete = async (index) => {
+        updateErrorMessage("");
         let url = "http://8gd4z.mocklab.io/templated"
         const itemsToUpdate = [...items]
         //change to url for deleting items
@@ -40,6 +41,8 @@ const ManageComponent = (props) => {
         if (response.status === 200) {
             itemsToUpdate.splice(index, 1);
             updateItems(itemsToUpdate);
+        } else{
+            updateErrorMessage("Cannot delete following item: " + itemsToUpdate[index].name);
         }
     }
 
@@ -63,6 +66,7 @@ const ManageComponent = (props) => {
 
             <div className="Component">
                 <h1>{props.type}</h1>
+                {errorMessage.length>0 ? <p>{errorMessage}</p> : <></>}
                 <ol>
                     {items.map((item, index) => (
                         <li onClick={() => onDelete(index)} key={item.id}>{item.name}</li>
