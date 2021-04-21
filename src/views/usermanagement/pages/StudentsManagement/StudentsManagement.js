@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useKeycloak} from '@react-keycloak/web'
 import useAxios from "../../../keycloak/utilities/useAxios";
-import axios from "axios";
 
 
 const StudentManagement = () => {
