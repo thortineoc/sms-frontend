@@ -13,3 +13,14 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
     background-color: #fff;
 }
+
+.CreateForm__button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: 2vh;
+}
+
+.error {
+    color: red;
+    margin-bottom: 5%;
+}
