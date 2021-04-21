@@ -7,7 +7,6 @@ import TimetableView from "../timetables/TimetableView";
 import GradesView from "../grades/GradesView";
 
 import CreateStudentsForm from "../usermanagement/components/CreateStudentsForm/CreateStudentsForm";
-import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
 import CreateForm from "../usermanagement/components/CreateForm/CreateForm";
@@ -29,7 +28,7 @@ const ViewRouter = () => {
                 <PresenceView />
             </Route>
             <Route path="/api/usermanagement-service/students">
-                <StudentManagement />
+                <CreateStudentsForm />
             </Route>
             <Route path="/api/usermanagement-service/teachers">
                 <TeacherManagement />

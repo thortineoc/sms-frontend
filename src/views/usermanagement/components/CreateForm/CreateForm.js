@@ -5,6 +5,7 @@ import './CreateForm.css';
 import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
+import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 
 const initialValues = {
     id: '',
@@ -12,9 +13,9 @@ const initialValues = {
     firstName: '',
     lastName: '',
     role: 'STUDENT',
-    email: '',
     pesel: '',
     customAttributes: {
+        email: '',
         group: '1A',
         phoneNumber: '',
         middleName: '',
@@ -22,10 +23,29 @@ const initialValues = {
     }
 }
 
+const groups = [
+    "1A",
+    "1B",
+    "1C",
+    "1Z"
+]
+
+const subjects = [
+    'geography',
+    'chemistry',
+    'french'
+]
+
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
-    console.log(JSON.stringify(values));
     try {
-        await axios.post("http://52.142.201.18:24020/usermanagement-service/users", JSON.stringify(values));
+        await axios
+            .post(
+                "http://52.142.201.18:24020/usermanagement-service/users",
+                JSON.stringify(values), {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
         resetForm();
         setStatus({success: true});
     } catch(error) {
@@ -39,7 +59,7 @@ const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     lastName: Yup.string().required('Required'),
     //dateOfBirth: Yup.date().max(new Date(), 'Invalid date').required('Required'),
-    email: Yup.string().email('Invalid format').required('Required'),
+    email: Yup.string().email('Invalid format'),
     pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
     middleName: Yup.string(),
     customAttributes: Yup.object({
@@ -60,7 +80,8 @@ const CreateForm = () => {
                     return (
                         <Form>
                             <div className="CreateForm">
-                                {formik.errors && formik.errors.submit && <div className="error">{formik.errors.submit}</div>}
+                                {formik.errors && formik.errors.submit &&
+                                <div className="error">{formik.errors.submit}</div>}
                                 <TextFieldWrapper
                                     label="First name *"
                                     name="firstName"
@@ -82,7 +103,7 @@ const CreateForm = () => {
                                     type="pesel"
                                 />
                                 <TextFieldWrapper
-                                    label="E-mail address *"
+                                    label="E-mail address"
                                     name="email"
                                     type="email"
                                 />
@@ -91,20 +112,14 @@ const CreateForm = () => {
                                     name="customAttributes.phoneNumber"
                                     type="text"
                                 />
-
-                                {/*
-                                <TextFieldWrapper
-                                    label="Date of birth"
-                                    name="dateOfBirth"
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true
-                                    }}
+                                <SelectFieldWrapper
+                                    label="Group"
+                                    name="group"
+                                    options={groups}
                                 />
-                                */}
 
                                 <div className="CreateForm__button-wrapper">
-                                    <Button type="submit" label="Submit" disabled={formik.isSubmitting} />
+                                    <Button type="submit" label="Submit" disabled={formik.isSubmitting}/>
                                 </div>
 
                             </div>
@@ -114,6 +129,6 @@ const CreateForm = () => {
             }
         </Formik>
     );
-};
+}
 
 export default CreateForm;
