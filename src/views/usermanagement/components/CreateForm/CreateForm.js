@@ -1,11 +1,13 @@
-import React from 'react';
-import { Formik, Form } from 'formik';
+import React, {useState} from 'react';
+import {Formik, Form, FieldArray} from 'formik';
 import * as Yup from 'yup';
 import './CreateForm.css';
 import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
+import SelectMultipleFieldWrapper from "../../../../components/SelectMultipleFieldWrapper/SelectMultipleFieldWrapper";
+import MultipleSelectField from "../../../../components/testowy/MultipleSelectField";
 
 const initialValues = {
     id: '',
@@ -69,6 +71,8 @@ const validationSchema = Yup.object({
 })
 
 const CreateForm = () => {
+    const [subjects, setSubjects] = useState([]);
+
     return (
         <Formik
             initialValues={initialValues}
@@ -118,7 +122,17 @@ const CreateForm = () => {
                                     name="group"
                                     options={groups}
                                 />
+                                {/*
+                                <SelectMultipleFieldWrapper
+                                    label="Subjects"
+                                    name="customAttributes.subjects"
+                                    options={subjects}
+                                />*/}
 
+                                <MultipleSelectField
+                                    name="customAttributes.subjects"
+                                    options={subjects}
+                                />
 
                                 <div className="CreateForm__button-wrapper">
                                     <Button type="submit" label="Submit" disabled={formik.isSubmitting}/>

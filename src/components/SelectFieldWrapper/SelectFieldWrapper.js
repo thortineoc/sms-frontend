@@ -21,13 +21,6 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
         onChange: handleChange
     }
 
-    if(configSelect.multiple) {
-        console.log("this is multiple ", name)
-    } else {
-        console.log("this is not multiple ", name)
-    }
-
-
     if(meta && meta.touched && meta.error) {
         configSelect.error = true;
         configSelect.helperText = meta.error;
