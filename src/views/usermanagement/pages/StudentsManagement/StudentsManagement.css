@@ -1,0 +1,42 @@
+.ActionButtons_create > a {
+    background-color: #5599cc;
+    margin: 1ch;
+    padding: 1ch;
+    text-decoration: none;
+    color: #eeeeee;
+    font-size: 20px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.ActionButtons_create > a:hover {
+    background-color: #3366aa;
+}
+
+.ActionButtons_genericButton > button {
+    border: none;
+    cursor: pointer;
+
+    margin: 1ch;
+    background-color: #5599cc;
+    padding: 1ch;
+    text-decoration: none;
+    color: #eeeeee;
+    font-size: 20px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.ActionButtons_genericButton > button:hover {
+    background-color: #3366aa;
+}
+
+.ActionButtons {
+    margin-top: 1rem;
+    margin-right: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}

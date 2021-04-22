@@ -3,7 +3,7 @@ import { useField } from "formik";
 import TextField from '@material-ui/core/TextField';
 import './TextFieldWrapper.css'
 
-const TextFieldWrapper = ({ name, ...rest }) => {
+const TextFieldWrapper = ({name, resetValue = false, setResetValue, ...rest}) => {
     const [field, meta] = useField(name);
     const configField = {
         ...field,
@@ -12,9 +12,14 @@ const TextFieldWrapper = ({ name, ...rest }) => {
         fullWidth: true
     }
 
-    if(meta && meta.touched && meta.error) {
+    if (meta && meta.touched && meta.error) {
         configField.error = true;
         configField.helperText = meta.error;
+    }
+
+    if (resetValue) {
+        configField.value = "";
+        setResetValue();
     }
 
     return (

@@ -1,10 +1,9 @@
 .DisplayTable {
-    background-color: #dddddd;
     display: block;
-    margin-top: 8rem;
     margin-left: 5%;
     width: 90%;
-    max-height: 700px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    background-color: #5599cc;
 }
 
 .DisplayTable > table {
@@ -17,16 +16,18 @@
 
 .DisplayTable > table > thead {
     display: table;
-    width: 100%
+    width: 100%;
+    /*overflow-x: auto;*/
 }
 
 .DisplayTable > table > tbody {
     display: block;
-    max-height: 600px;
+    max-height: 40rem;
     overflow-y: scroll;
+    overflow-x: auto;
 }
 
-.ColumnNames {
+.DisplayTable_header {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
     display: table;
     width: calc(100% - 12px);
@@ -35,45 +36,56 @@
     background-color: #5599cc;
     color: #eeeeee;
     font-size: 20px;
-    height: 40px;
+    height: 4ch;
     z-index: 100;
 }
 
-.ColumnNames > th {
-    height: 40px;
-    padding-left: 20px;
+.DisplayTable_header > th {
+    padding-left: 1rem;
     border-left: 2px solid gray;
     text-align: left;
     text-decoration: none;
-    z-index: 2;
 }
 
-.ColumnNames > th:last-child {
+.DisplayTable_header > th:hover {
+    background-color: #3366aa;
+}
+
+.DisplayTable_header > th:last-child {
     border-right: 2px solid gray;
 }
 
-.ColumnNames > th::selection {
+.DisplayTable_header > th::selection {
     background: none;
 }
 
-.DataRow {
+.DisplayTable_row {
     display: table;
-    width: 100%;
     box-sizing: border-box;
-    height: 30px;
+    height: 2rem;
+    width: 100%;
 }
 
-.DataRow:nth-child(even) {
+.DisplayTable_row:nth-child(even) {
+    background-color: #dedede;
+}
+
+.DisplayTable_row:nth-child(odd) {
     background-color: #eeeeee;
 }
 
-.DataRow > td {
-    padding-left: 20px;
+.DisplayTable_row:hover {
+    background-color: #cccccc;
+}
+
+.DisplayTable_row > td {
+    padding-left: 1rem;
     border-left: 2px solid gray;
     text-align: left;
     text-decoration: none;
 }
 
-.DataRow > td:last-child {
+.DisplayTable_row > td:last-child {
     border-right: 2px solid gray;
 }
+

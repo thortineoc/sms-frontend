@@ -7,88 +7,101 @@ const columnNameTranslations = {
     lastName: "Last Name",
     middleName: "Middle Name",
     pesel: "PESEL",
+    username: "Username",
     phoneNumber: "Phone Number",
     email: "E-mail Address",
+    group: "Group"
 }
 
-const DisplayTable = ({columns, tableContent}) => {
+const DisplayTable = ({onRowClick, columns, tableContent}) => {
     let [sortColumn, setSortColumn] = useState(null);
     let [sortOrder, setSortOrder] = useState(null);
-    let [displayColumns, setDisplayColumns] = useState(columns);
     let [items, setItems] = useState(tableContent);
+
+    const UserRows = () => {
+        let sorted = getSortedItems(sortColumn, sortOrder, items);
+        return fillRows(sorted, 20, columns, onRowClick);
+    }
+
+    const ColumnNames = () => {
+        let width = calcCellWidth(columns.length);
+        let columnNames = columns.map((column) => {
+            let name = getColumnName(column, sortColumn, sortOrder);
+            return (<th width={width} onClick={() =>
+                handleColumnClick(column,
+                    sortColumn, setSortColumn,
+                    sortOrder, setSortOrder)}>{name}</th>);
+
+        });
+        return (
+            <tr className="DisplayTable_header">
+                {columnNames}
+            </tr>
+        );
+    }
 
     return (
         <div className="DisplayTable">
             <table>
                 <thead>
-                    <ColumnNames columns={displayColumns}
-                                 sortColumn={sortColumn}
-                                 setSortColumn={setSortColumn}
-                                 sortOrder={sortOrder}
-                                 setSortOrder={setSortOrder}
-                    />
+                    <ColumnNames />
                 </thead>
                 <tbody>
-                    <UserRows columns={displayColumns}
-                              sortColumn={sortColumn}
-                              sortOrder={sortOrder}
-                              items={items} />
+                    <UserRows />
                 </tbody>
             </table>
         </div>
     );
 };
 
-const ColumnNames = ({columns, sortColumn, setSortColumn, sortOrder, setSortOrder}) => {
-
-    let columnNames = [];
-    let width = (100 / columns.length) + "%";
-    for (const column of columns) {
-        let name = columnNameTranslations[column];
-        if (sortColumn === column) {
-            name += " [" + (sortOrder === "ASC" ? "↑" : "↓") + "]";
-        }
-        columnNames.push(<th width={width} onClick={() =>
-            handleColumnClick(column,
-            sortColumn, setSortColumn,
-            sortOrder, setSortOrder)}>{name}</th>);
+const getColumnName = (column, sortColumn, sortOrder) => {
+    let name = columnNameTranslations[column] ?? name;
+    if (sortColumn === column) {
+        name += " [" + (sortOrder === "ASC" ? "↑" : "↓") + "]";
     }
-
-    return (
-        <tr className="ColumnNames">
-            {columnNames}
-        </tr>
-    );
+    return name;
 }
 
-const UserRows = ({columns, sortColumn, sortOrder, items}) => {
-    let emptyColumns = new Array(columns.length);
-    emptyColumns.fill(<TableCell content={null} columns={columns} />);
+const calcCellWidth = (count) => {
+    return (100 / count) + "%";
+    // return count < 7
+    //     ? (100 / count) + "%"
+    //     : "200px";
+}
+
+const TableCell = ({count, content}) => {
+    return <td width={calcCellWidth(count)}>{content}</td>;
+}
+
+const getEmptyRows = (rowCount, colCount) => {
+    let emptyColumns = new Array(colCount);
+    emptyColumns.fill(<TableCell content={null} count={colCount} />);
 
     let rows = [];
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < rowCount; i++) {
         rows.push(
-            <tr className="DataRow" key={i}>
+            <tr className="DisplayTable_row" key={i}>
                 {emptyColumns}
-            </tr>
-        );
-    }
-
-    let sorted = getSortedItems(sortColumn, sortOrder, items);
-    for (let i = 0; i < sorted.length; i++) {
-        let filledColumns = columns.map(column => <TableCell columns={columns} content={sorted[i][column]} />);
-        rows[i] = (
-            <tr className="DataRow" key={sorted[i]}>
-                {filledColumns}
             </tr>
         );
     }
     return rows;
 }
 
-const TableCell = ({columns, content}) => {
-    let width = (100 / columns.length) + "%";
-    return <td width={width}>{content}</td>;
+const fillRows = (items, maxRowCount, columns, onRowClick) => {
+    let rows = getEmptyRows(maxRowCount, columns.length);
+
+    for (let i = 0; i < items.length; i++) {
+        let filledColumns = columns.map(column => <TableCell count={columns.length}
+                                                             content={items[i][column] ?? "-"}/>);
+        rows[i] = (
+            <tr onClick={() => onRowClick(items[i].id)}
+                className="DisplayTable_row" key={items[i]}>
+                {filledColumns}
+            </tr>
+        );
+    }
+    return rows;
 }
 
 const handleColumnClick = (column, sortColumn, setSortColumn, sortOrder, setSortOrder) => {

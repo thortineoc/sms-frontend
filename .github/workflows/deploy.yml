@@ -21,7 +21,7 @@ jobs:
         node-version: 15.x
     - run: npm ci
     - run: CI='' npm run build --if-present
-    - run: npm test
+    - run: npm __test
 
     - name: Stop frontend
       uses: garygrossgarten/github-action-ssh@v0.6.3
