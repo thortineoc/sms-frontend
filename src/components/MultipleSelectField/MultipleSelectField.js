@@ -1,23 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {useFormik} from "formik";
+import {useFormikContext} from "formik";
+import './MultipleSelectField.css';
 
-const MultipleSelectField = ({name, options}) => {
+const MultipleSelectField = ({name, options, label}) => {
     const [values, setValues] = useState([]);
+    const { setFieldValue } = useFormikContext();
 
     useEffect(() => {
-           console.log(displayValues());
+        setFieldValue(name, values);
     },[values]);
-
-    const { setFieldValue } = useFormik(name);
 
     const handleClick = e => {
         const {value} = e.target;
         if(!(values.includes(value))) {
             setValues([...values, value]);
-            //setFieldValue(name, values)
         } else {
-            const newArr = values.filter(val => val !== value);
-            setValues(newArr);
+            setValues(values.filter(val => val !== value));
         }
     }
 
@@ -26,8 +24,11 @@ const MultipleSelectField = ({name, options}) => {
     }
 
     return (
-        <div>
-            <select name={name} style={{width:'100%'}}>
+        <div className="MultipleSelectField">
+            <label className="MultipleSelectField__label">
+                {label}
+            </label>
+            <select className="MultipleSelectField__input">
                 {options.map((item, index) => {
                     return (
                         <option key={index} value={item} onClick={handleClick}>

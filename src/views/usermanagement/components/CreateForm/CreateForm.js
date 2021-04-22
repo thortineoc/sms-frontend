@@ -6,8 +6,7 @@ import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
-import SelectMultipleFieldWrapper from "../../../../components/SelectMultipleFieldWrapper/SelectMultipleFieldWrapper";
-import MultipleSelectField from "../../../../components/testowy/MultipleSelectField";
+import MultipleSelectField from "../../../../components/MultipleSelectField/MultipleSelectField";
 
 const initialValues = {
     id: '',
@@ -71,7 +70,6 @@ const validationSchema = Yup.object({
 })
 
 const CreateForm = () => {
-    const [subjects, setSubjects] = useState([]);
 
     return (
         <Formik
@@ -122,15 +120,10 @@ const CreateForm = () => {
                                     name="group"
                                     options={groups}
                                 />
-                                {/*
-                                <SelectMultipleFieldWrapper
-                                    label="Subjects"
-                                    name="customAttributes.subjects"
-                                    options={subjects}
-                                />*/}
 
                                 <MultipleSelectField
-                                    name="customAttributes.subjects"
+                                    label="Subjects"
+                                    name='customAttributes.subjects'
                                     options={subjects}
                                 />
 

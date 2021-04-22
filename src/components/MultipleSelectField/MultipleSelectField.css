@@ -1,0 +1,15 @@
+.MultipleSelectField {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+.MultipleSelectField__label {
+    color: #666;
+    margin-bottom: 100px;
+}
+
+.MultipleSelectField__input {
+    margin-top: 50%;
+    min-height: 50%;
+}
