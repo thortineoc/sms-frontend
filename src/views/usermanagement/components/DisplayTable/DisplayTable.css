@@ -1,0 +1,91 @@
+.DisplayTable {
+    display: block;
+    margin-left: 5%;
+    width: 90%;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    background-color: #5599cc;
+}
+
+.DisplayTable > table {
+    width: 100%;
+}
+
+.DisplayTable table, td {
+    border-collapse: collapse;
+}
+
+.DisplayTable > table > thead {
+    display: table;
+    width: 100%;
+    /*overflow-x: auto;*/
+}
+
+.DisplayTable > table > tbody {
+    display: block;
+    max-height: 40rem;
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.DisplayTable_header {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    display: table;
+    width: calc(100% - 12px);
+
+    box-sizing: border-box;
+    background-color: #5599cc;
+    color: #eeeeee;
+    font-size: 20px;
+    height: 4ch;
+    z-index: 100;
+}
+
+.DisplayTable_header > th {
+    padding-left: 1rem;
+    border-left: 2px solid gray;
+    text-align: left;
+    text-decoration: none;
+}
+
+.DisplayTable_header > th:hover {
+    background-color: #3366aa;
+}
+
+.DisplayTable_header > th:last-child {
+    border-right: 2px solid gray;
+}
+
+.DisplayTable_header > th::selection {
+    background: none;
+}
+
+.DisplayTable_row {
+    display: table;
+    box-sizing: border-box;
+    height: 2rem;
+    width: 100%;
+}
+
+.DisplayTable_row:nth-child(even) {
+    background-color: #dedede;
+}
+
+.DisplayTable_row:nth-child(odd) {
+    background-color: #eeeeee;
+}
+
+.DisplayTable_row:hover {
+    background-color: #cccccc;
+}
+
+.DisplayTable_row > td {
+    padding-left: 1rem;
+    border-left: 2px solid gray;
+    text-align: left;
+    text-decoration: none;
+}
+
+.DisplayTable_row > td:last-child {
+    border-right: 2px solid gray;
+}
+

@@ -1,0 +1,99 @@
+.Modal {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+
+    z-index: 200;
+}
+
+.Modal_rightAligned {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: right;
+
+    align-items: center;
+    left: 0;
+    top: 0;
+
+    z-index: 200;
+}
+
+.Modal_leftAligned {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    left: 0;
+    top: 0;
+
+    z-index: 200;
+}
+
+.Modal_content {
+    /*display: flex;*/
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    padding: 1rem 1rem 1rem 1rem;
+    /*justify-content: space-evenly;*/
+    margin: 1rem 1rem 1rem 1rem;
+    width: 40%;
+    height: 90%;
+    z-index: 200;
+}
+
+.Modal_contentTop {
+    /*display: flex;*/
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    padding: 1rem 1rem 1rem 1rem;
+    margin: 1rem 1rem 1rem 1rem;
+    /*justify-content: space-evenly;*/
+    width: 40%;
+    height: 45%;
+    transform: translateY(-45%);
+    z-index: 200;
+}
+
+.Modal_contentBottom {
+    /*display: flex;*/
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    padding: 1rem 1rem 1rem 1rem;
+    margin: 1rem 1rem 1rem 1rem;
+    /*justify-content: space-evenly;*/
+    width: 40%;
+    height: 45%;
+    transform: translateY(45%);
+    z-index: 200;
+}
+
+.Modal_contentTransparent {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0);
+    /*justify-content: space-evenly;*/
+    border-radius: 1rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    padding: 1rem 1rem 1rem 1rem;
+    margin: 1rem 1rem 1rem 1rem;
+    z-index: 200;
+}
+
+.Modal_contentFitContent {
+    width: fit-content;
+    height: fit-content;
+}
