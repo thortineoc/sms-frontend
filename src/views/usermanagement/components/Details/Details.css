@@ -1,0 +1,14 @@
+.Details {
+
+}
+
+.Details__label {
+    color: gray;
+    font-size: 1.2rem;
+}
+
+.Details__data {
+    background-color: #5599cc;
+    padding: 3%;
+    cursor: pointer;
+}

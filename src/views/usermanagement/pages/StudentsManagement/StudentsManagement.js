@@ -32,7 +32,7 @@ const StudentManagement = () => {
     const [userModalShown, setUserModalShown] = useState(false);
     const [columns, setColumns] = useState(["id", "firstName", "lastName", "group", "pesel"]);
     const [detailsModalShown, setDetailsModalShown] = useState(false);
-    const [detailsUserId, setDetailsUserId] = useState(0);
+    const [detailsUser, setDetailsUser] = useState({});
 
     return (
         <div className="StudentManagement">
@@ -86,9 +86,8 @@ const StudentManagement = () => {
             {detailsModalShown &&
             <Modal
                 onClose={() => setDetailsModalShown(false)}
-
             >
-                <Details userId={detailsUserId} />
+                <Details user={detailsUser} />
             </Modal>
             }
 
@@ -98,9 +97,9 @@ const StudentManagement = () => {
         </div>
     );
 
-    function onRowClick(userId) {
+    function onRowClick(user) {
         setDetailsModalShown(true);
-        setDetailsUserId(userId);
+        setDetailsUser(user);
         //alert("clicked row " + userId);
     }
 
@@ -126,9 +125,18 @@ function getData_mock() {
         },
         {
             id: 2,
+            userName: ':))',
             firstName: "Angelika",
             lastName: "Kubicka",
-            phoneNumber: "234567643"
+            role: 'STUDENT',
+            pesel: 12345678900,
+            customAttributes: {
+                email: 'ak@wp.pl',
+                group: '1B',
+                phoneNumber: "234567643",
+                middleName: "Noemi",
+                subjects: []
+            }
         },
         {
             id: 3,
