@@ -17,7 +17,6 @@ const Logout = () => {
             </Link>
         );
     }
-    console.log("HERE?");
     return (
         <Link to="/" onClick={keycloak.login}>
             Login
