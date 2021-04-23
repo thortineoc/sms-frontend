@@ -1,10 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Details.css';
+import { TrashIcon } from "@heroicons/react/outline";
+import {Dialog} from "@material-ui/core";
+import Modal from "../Modal/Modal";
+import DialogBox from "../DialogBox/DialogBox";
 
 const Details = ({user, showEdit, setShowEdit}) => {
+    const [displayDialog, setDisplayDialog] = useState(false);
+    const [deteleUser, setDeleteUser] = useState('');
 
     const handleClick = () => {
-        setShowEdit(true);
+        if(!displayDialog) {
+            setShowEdit(true);
+        }
+    }
+
+    const openDialog = () => {
+        setDisplayDialog(true);
     }
 
     return (
@@ -109,9 +121,11 @@ const Details = ({user, showEdit, setShowEdit}) => {
                 </div>
             </div>
 
-            <div className="Details__delete">
-
+            <div className="Details__delete-wrapper">
+                 <TrashIcon className="Details__delete" onClick={() => setDisplayDialog(true)} />
             </div>
+
+            { displayDialog && <DialogBox setDisplayDialog={setDisplayDialog} setDeleteUser={setDeleteUser} /> }
 
         </div>
     );
