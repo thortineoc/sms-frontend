@@ -31,10 +31,9 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
     display: table;
     width: calc(100% - 12px);
-
     box-sizing: border-box;
-    background-color: #5599cc;
-    color: #eeeeee;
+    background-color: rgb(63, 81, 181);
+    color: white;
     font-size: 20px;
     height: 4ch;
     z-index: 100;
@@ -48,7 +47,8 @@
 }
 
 .DisplayTable_header > th:hover {
-    background-color: #3366aa;
+    background-color: rgb(43, 61, 161);
+    color: #f0edff;
 }
 
 .DisplayTable_header > th:last-child {
@@ -62,7 +62,7 @@
 .DisplayTable_row {
     display: table;
     box-sizing: border-box;
-    height: 2rem;
+    height: 2.5rem;
     width: 100%;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .DisplayTable_row:nth-child(odd) {
-    background-color: #eeeeee;
+    background-color: #f0edff;
 }
 
 .DisplayTable_row:hover {

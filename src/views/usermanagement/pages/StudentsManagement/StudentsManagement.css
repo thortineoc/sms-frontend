@@ -1,4 +1,4 @@
-.ActionButtons_create > a {
+/*.ActionButtons_create > a {
     background-color: #5599cc;
     margin: 1ch;
     padding: 1ch;
@@ -17,7 +17,6 @@
 .ActionButtons_genericButton > button {
     border: none;
     cursor: pointer;
-
     margin: 1ch;
     background-color: #5599cc;
     padding: 1ch;
@@ -40,7 +39,33 @@
     align-items: center;
     justify-content: right;
 }
-
+*/
 .StudentManagement__header {
-    margin: 6%;
+    margin: 2% 0 0 5%;
+}
+
+.ButtonsGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 0 5% 2% 5%;
+}
+
+.TableButtons {
+    display: flex;
+    max-height: 50px;
+    bottom: 0;
+}
+
+.CreationButtons {
+    display: flex;
+    flex-direction: column;
+}
+
+.CreationButtons > * {
+    margin-top: 5%;
+}
+
+.TableButtons > * {
+    margin-right: 5%;
 }

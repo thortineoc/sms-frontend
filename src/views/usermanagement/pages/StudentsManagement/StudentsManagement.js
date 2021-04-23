@@ -7,6 +7,7 @@ import Modal from "../../components/Modal/Modal";
 import CreateForm from "../../components/CreateForm/CreateForm";
 import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
 import Details from "../../components/Details/Details";
+import Button from "../../../../components/Button/Button";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -35,21 +36,21 @@ const StudentManagement = () => {
 
     return (
         <div className="StudentManagement">
-            <h1 className="StudentManagement__header">Students</h1>
-            <div className="ActionButtons">
-                <div className="ActionButtons_genericButton">
-                    <button onClick={() => setFilterModalShown(true)}>Filters</button>
+            <h1 className="StudentManagement__header">Students' accounts</h1>
+            <div className="ButtonsGroup">
+
+                <div className="TableButtons">
+                    <Button label='Filters' onClick={() => setFilterModalShown(true)} />
+                    <Button label='Columns' onClick={() => setColumnModalShown(true)} />
                 </div>
-                <div className="ActionButtons_genericButton">
-                    <button onClick={() => setColumnModalShown(true)}>Columns</button>
+
+                <div className="CreationButtons">
+                    <Button label='New account' onClick={() => setUserModalShown(true)} />
+                    <Button label='Manage groups' />
                 </div>
-                <div className="ActionButtons_genericButton">
-                    <button onClick={() => setUserModalShown(true)}>Create student</button>
-                </div>
-            </div>
-            <div className="CreationButtons">
 
             </div>
+
             {filterModalShown && <Modal configuration={"RIGHT"}
                                         contentConfiguration={"TOP"}
                                         fitContent={true}

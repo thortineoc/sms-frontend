@@ -1,7 +1,7 @@
 import React from 'react';
 import './Details.css';
 
-const Details = ({userId}) => {
+const Details = ({user}) => {
     return (
         <div className="Details">
             <div className="Details__field">
