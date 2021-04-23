@@ -1,8 +1,8 @@
 // ### USAGE EXAMPLE ###
 // const axiosInstance = useAxios('http://52.142.201.18:24020/');
-// const runBackendGet = useCallback((axiosInstance, url, data) => {
+// const runBackend = useCallback((axiosInstance, url, data) => {
 //     if (!!initialized) {
-//         callBackendPost(axiosInstance, url, setResData, data);
+//         callBackendPut(axiosInstance, url, setResData, data);
 //     }
 // }, [initialized]);
 
