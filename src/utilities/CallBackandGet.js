@@ -6,12 +6,9 @@
 //     }
 // }, [initialized]);
 
+import callBackend from "./CallBackenk";
+
 const callBackendGet = (axiosInstance, url, setResponseData, data) => {
-    !!axiosInstance && axiosInstance.get(url, data)
-        .then((response) => {
-                setResponseData(response.data);
-            }
-        )
-        .catch((error) => console.log(error));
+    callBackend(axiosInstance, url, setResponseData, data, "get")
 }
 export default callBackendGet;

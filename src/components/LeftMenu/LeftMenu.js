@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import './LeftMenu.css'
 import Logout from "../../views/keycloak/pages/Logout/Logout";
 import {useKeycloak} from "@react-keycloak/web";
-import getKeycloakRoles from "../../views/common/GetRoles";
+import getKeycloakRoles from "../../utilities/GetRoles";
 
 const LeftMenu = () => {
     const {keycloak, initialized} = useKeycloak();
