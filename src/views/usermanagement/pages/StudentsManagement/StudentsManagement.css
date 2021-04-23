@@ -40,3 +40,7 @@
     align-items: center;
     justify-content: right;
 }
+
+.StudentManagement__header {
+    margin: 6%;
+}

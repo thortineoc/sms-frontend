@@ -1,21 +1,13 @@
 import React from 'react';
+import './Details.css';
 
-const mockUser = {
-    userName: 'ussser1',
-    firstName: 'Angelika',
-    secondName: 'Noemi',
-    lastName: 'Kubicka',
-}
-
-
-const Details = () => {
+const Details = ({userId}) => {
     return (
         <div className="Details">
-            <ol>
-                <li>Imię: {mockUser.firstName}</li>
-                <li>2Imię: {mockUser.secondName}</li>
-                <li>nazwisko: {mockUser.lastName}</li>
-            </ol>
+            <div className="Details__field">
+                <span>User Id</span>
+                <span>{userId}</span>
+            </div>
         </div>
     );
 };

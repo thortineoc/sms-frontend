@@ -6,6 +6,7 @@ import "./StudentsManagement.css";
 import Modal from "../../components/Modal/Modal";
 import CreateForm from "../../components/CreateForm/CreateForm";
 import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
+import Details from "../../components/Details/Details";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -24,14 +25,17 @@ const allColumns = [
 ];
 
 const StudentManagement = () => {
-    let [filterParams, setFilterParams] = useState({});
-    let [filterModalShown, setFilterModalShown] = useState(false);
-    let [columnModalShown, setColumnModalShown] = useState(false);
-    let [userModalShown, setUserModalShown] = useState(false);
-    let [columns, setColumns] = useState(["id", "firstName", "lastName", "group", "pesel"]);
+    const [filterParams, setFilterParams] = useState({});
+    const [filterModalShown, setFilterModalShown] = useState(false);
+    const [columnModalShown, setColumnModalShown] = useState(false);
+    const [userModalShown, setUserModalShown] = useState(false);
+    const [columns, setColumns] = useState(["id", "firstName", "lastName", "group", "pesel"]);
+    const [detailsModalShown, setDetailsModalShown] = useState(false);
+    const [detailsUserId, setDetailsUserId] = useState(0);
 
     return (
         <div className="StudentManagement">
+            <h1 className="StudentManagement__header">Students</h1>
             <div className="ActionButtons">
                 <div className="ActionButtons_genericButton">
                     <button onClick={() => setFilterModalShown(true)}>Filters</button>
@@ -42,6 +46,9 @@ const StudentManagement = () => {
                 <div className="ActionButtons_genericButton">
                     <button onClick={() => setUserModalShown(true)}>Create student</button>
                 </div>
+            </div>
+            <div className="CreationButtons">
+
             </div>
             {filterModalShown && <Modal configuration={"RIGHT"}
                                         contentConfiguration={"TOP"}
@@ -71,10 +78,19 @@ const StudentManagement = () => {
                                   }}/>
                 </div>
             </Modal>}
-            {userModalShown && <Modal contentConfiguration={"TRANSPARENT"}
-                                      onClose={() => setUserModalShown(false)}>
+            {userModalShown && <Modal onClose={() => setUserModalShown(false)}>
                 <CreateForm />
             </Modal>}
+
+            {detailsModalShown &&
+            <Modal
+                onClose={() => setDetailsModalShown(false)}
+
+            >
+                <Details userId={detailsUserId} />
+            </Modal>
+            }
+
             <DisplayTable onRowClick={onRowClick}
                           tableContent={getData_mock()}
                           columns={columns}/>
@@ -82,7 +98,9 @@ const StudentManagement = () => {
     );
 
     function onRowClick(userId) {
-        alert("clicked row " + userId);
+        setDetailsModalShown(true);
+        setDetailsUserId(userId);
+        //alert("clicked row " + userId);
     }
 
     async function getData() {
@@ -94,7 +112,7 @@ const StudentManagement = () => {
         let baseUrl = "http://52.142.201.18:24020/usermanagement-service/users";
         return baseUrl;
     }
-};
+}
 
 function getData_mock() {
     return [

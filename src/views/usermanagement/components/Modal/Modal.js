@@ -26,7 +26,7 @@ const Modal = ({children,
         contentClass += " Modal_contentFitContent";
     }
 
-    if (opaqueBackground) {
+    if(opaqueBackground) {
         return (
             <div className={(configurations[configuration] ?? "Modal")}
                  onClick={onClose}>
