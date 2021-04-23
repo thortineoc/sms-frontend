@@ -4,7 +4,7 @@ import ViewRouter from "./views/common/ViewRouter";
 import {BrowserRouter as Router} from "react-router-dom";
 import {ReactKeycloakProvider} from '@react-keycloak/web'
 
-import keycloak from './keycloak.js'
+import keycloak from './utilities/keycloak.js'
 
 const App = () => {
     return (<ReactKeycloakProvider
