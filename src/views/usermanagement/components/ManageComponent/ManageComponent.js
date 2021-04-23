@@ -23,13 +23,18 @@ const ManageComponent = (props) => {
 
     const fetchData = async () => {
         //let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type;
-        let url = "http://8gd4z.mocklab.io/json/1"
+        //let url = "http://8gd4z.mocklab.io/json/1"
+        let url = "http://localhost:24034/usermanagement-service/groups"
         const response = await axios.get(url)
-        if (response.status !== 200) {
+
+        if (response.status === 204) {
+            updateError(true)
+            return
+        } else if(response.status > 204){
             updateError(true)
             return
         }
-        updateItems(response.data[props.type])
+        updateItems(response.data)
     }
 
     useEffect( () => {
@@ -83,8 +88,8 @@ const ManageComponent = (props) => {
                 <table className="SubjectsTable">
                     <tbody>
                     {items.map((item, index) => (
-                        <tr key={item.id}>
-                            <td>{item.name}</td>
+                        <tr key={item}>
+                            <td>{item}</td>
                             <td><TrashIcon onClick={() => onDelete(index)} style={{cursor: 'pointer', color: 'red'}}/>
                             </td>
                         </tr>
