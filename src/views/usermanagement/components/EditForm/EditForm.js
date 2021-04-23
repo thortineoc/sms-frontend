@@ -5,23 +5,11 @@ import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
-// lol why is it working without including styles
-
-let initialValues = {
-    firstName: '',
-    secondName: '',
-    lastName: '',
-    dateOfBirth: '', //?
-    email: '',
-    phone: '',
-    group: '', //?
-    role: '' //?
-}
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
     console.log(values);
     try {
-        await axios.post(".../{id}", values);
+        await axios.put(".../{id}", values);
         resetForm();
         setStatus({success: true});
     } catch(error) {
@@ -35,29 +23,13 @@ const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     secondName: Yup.string(),
     lastName: Yup.string().required('Required'),
-    dateOfBirth: Yup.date().max(new Date(), 'Invalid date').required('Required'),
     email: Yup.string().email('Invalid format'),
     phone: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
     group: Yup.string().required('Required')
 })
 
-const user = {
-    firstName: 'Joe',
-    lastName: 'Doe',
-    dateOfBirth: '2000-11-11',
-    group: '1A'
-}
-
-const groups = [
-    "1A",
-    "1B",
-    "1C",
-    "1Z"
-]
-
-const EditForm = ({id}) => {
+const EditForm = ({user, groups}) => {
     // fetch user data and groups
-
     return (
         <Formik
             initialValues={user}
@@ -69,7 +41,7 @@ const EditForm = ({id}) => {
                 formik => {
                     return (
                         <Form>
-                            <div className="CreateForm">
+                            <div className="EditForm">
                                 {formik.errors && formik.errors.submit &&
                                 <div className="error">{formik.errors.submit}</div>}
 
@@ -97,14 +69,7 @@ const EditForm = ({id}) => {
                                     label="Phone number"
                                     name="phone"
                                 />
-                                <TextFieldWrapper
-                                    label="Date of birth *"
-                                    name="dateOfBirth"
-                                    type="date"
-                                    InputLabelProps={{
-                                        shrink: true
-                                    }}
-                                />
+
                                 <SelectFieldWrapper
                                     name="group"
                                     label="Group *"

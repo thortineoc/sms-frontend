@@ -8,7 +8,7 @@
 }
 
 .Details__data {
-    background-color: #5599cc;
-    padding: 3%;
+    padding: 3% 0;
     cursor: pointer;
+    background-color: #fffeee;
 }

@@ -1,14 +1,17 @@
 import React from 'react';
 import './Details.css';
 
-const Details = ({user}) => {
+const Details = ({user, showEdit, setShowEdit}) => {
 
+    const handleClick = () => {
+        setShowEdit(true);
+    }
 
     return (
         <div className="Details">
             <div className="Details__field">
                 <div className="Details__label">User Id</div>
-                <div className="Details__data">{user.id ?? '-'}</div>
+                <div className="Details__data" onClick={handleClick}>{user.id ?? '-'}</div>
             </div>
             <div className="Details__field">
                 <div className="Details__label">Username</div>

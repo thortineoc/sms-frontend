@@ -8,6 +8,7 @@ import CreateForm from "../../components/CreateForm/CreateForm";
 import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
 import Details from "../../components/Details/Details";
 import Button from "../../../../components/Button/Button";
+import EditForm from "../../components/EditForm/EditForm";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -33,6 +34,7 @@ const StudentManagement = () => {
     const [columns, setColumns] = useState(["id", "firstName", "lastName", "group", "pesel"]);
     const [detailsModalShown, setDetailsModalShown] = useState(false);
     const [detailsUser, setDetailsUser] = useState({});
+    const [showEdit, setShowEdit] = useState(false);
 
     return (
         <div className="StudentManagement">
@@ -85,9 +87,14 @@ const StudentManagement = () => {
 
             {detailsModalShown &&
             <Modal
-                onClose={() => setDetailsModalShown(false)}
+                onClose={() => {
+                    setDetailsModalShown(false);
+                    setShowEdit(false)
+                }}
             >
-                <Details user={detailsUser} />
+                {!showEdit && <Details user={detailsUser} showEdit={showEdit} setShowEdit={setShowEdit} /> }
+                {showEdit && <EditForm user={detailsUser} groups={groups_mock} />}
+
             </Modal>
             }
 
@@ -100,7 +107,6 @@ const StudentManagement = () => {
     function onRowClick(user) {
         setDetailsModalShown(true);
         setDetailsUser(user);
-        //alert("clicked row " + userId);
     }
 
     async function getData() {
@@ -146,5 +152,12 @@ function getData_mock() {
         }
     ];
 }
+
+const groups_mock = [
+    "1A",
+    "1B",
+    "1C",
+    "1Z"
+]
 
 export default StudentManagement;
