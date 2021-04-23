@@ -82,7 +82,7 @@ const StudentManagement = () => {
                 </div>
             </Modal>}
             {userModalShown && <Modal onClose={() => setUserModalShown(false)}>
-                <CreateForm />
+                <CreateForm type="STUDENT" />
             </Modal>}
 
             {detailsModalShown &&
@@ -154,6 +154,7 @@ function getData_mock() {
 }
 
 const groups_mock = [
+    "",
     "1A",
     "1B",
     "1C",

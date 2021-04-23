@@ -53,7 +53,7 @@ const Details = ({user, showEdit, setShowEdit}) => {
                     </div>
                 </div>
                 <div className="Details__field">
-                    <div className="Details__label">Address e-mail</div>
+                    <div className="Details__label">E-mail address</div>
                     <div className="Details__data"
                          onClick={handleClick}>
                         {(user.customAttributes && user.customAttributes.email) ?? '-'}

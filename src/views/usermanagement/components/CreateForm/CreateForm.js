@@ -69,7 +69,7 @@ const validationSchema = Yup.object({
     })
 })
 
-const CreateForm = () => {
+const CreateForm = ({type}) => {
 
     return (
         <Formik
@@ -121,11 +121,12 @@ const CreateForm = () => {
                                     options={groups}
                                 />
 
+                                {type === 'TEACHER' &&
                                 <MultipleSelectField
                                     label="Subjects"
                                     name='customAttributes.subjects'
                                     options={subjects}
-                                />
+                                />}
 
                                 <div className="CreateForm__button-wrapper">
                                     <Button type="submit" label="Submit" disabled={formik.isSubmitting}/>
