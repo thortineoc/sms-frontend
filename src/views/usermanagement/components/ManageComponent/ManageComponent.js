@@ -22,9 +22,7 @@ const ManageComponent = (props) => {
     const [errorMessage, updateErrorMessage] = useState("")
 
     const fetchData = async () => {
-        //let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type;
-        //let url = "http://8gd4z.mocklab.io/json/1"
-        let url = "http://localhost:24034/usermanagement-service/groups"
+        let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type;
         const response = await axios.get(url)
 
         if (response.status === 204) {
@@ -48,11 +46,10 @@ const ManageComponent = (props) => {
     const onDelete = async (index) => {
         updateErrorMessage("");
         const itemsToUpdate = [...items]
-        let url = "http://8gd4z.mocklab.io/templated"
-        //let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/" + itemsToUpdate[index].id;
+        let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/" + itemsToUpdate[index];
 
         const response = await axios.delete(url);
-        if (response.status === 200) {
+        if (response.status === 204) {
             itemsToUpdate.splice(index, 1);
             updateItems(itemsToUpdate);
         } else {
@@ -61,17 +58,20 @@ const ManageComponent = (props) => {
     }
 
     const onSubmit = async (values, { resetForm}) => {
-        console.log(JSON.stringify(values));
-        let url = "http://8gd4z.mocklab.io/json"
-        //let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type;
-        const response = await axios.post(url, JSON.stringify(values));
-        if (response.status === 200) {
-            resetForm();
-            await fetchData();
+        let itemsToUpdate = [...items]
+        if(itemsToUpdate.includes(values.item)){
+            updateErrorMessage("This item already exists");
         } else {
-            updateErrorMessage("Cannot add this item");
+            let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/" + values.item;
+            const response = await axios.post(url, JSON.stringify(values));
+            if (response.status === 204) {
+                resetForm();
+                itemsToUpdate.push(values.item);
+                updateItems(itemsToUpdate);
+            } else {
+                updateErrorMessage("Cannot add this item");
+            }
         }
-
     }
 
     if (error) {
