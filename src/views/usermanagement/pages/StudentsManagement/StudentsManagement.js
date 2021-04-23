@@ -6,6 +6,7 @@ import "./StudentsManagement.css";
 import Modal from "../../components/Modal/Modal";
 import CreateForm from "../../components/CreateForm/CreateForm";
 import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
+import {useKeycloak} from "@react-keycloak/web";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -23,12 +24,20 @@ const allColumns = [
     "id", "firstName", "lastName", "middleName", "group", "pesel", "phoneNumber", "email", "username"
 ];
 
-const StudentManagement = () => {
+const StudentManagement = ({role}) => {
+    const {keycloak, initialized} = useKeycloak();
     let [filterParams, setFilterParams] = useState({});
     let [filterModalShown, setFilterModalShown] = useState(false);
     let [columnModalShown, setColumnModalShown] = useState(false);
     let [userModalShown, setUserModalShown] = useState(false);
     let [columns, setColumns] = useState(["id", "firstName", "lastName", "group", "pesel"]);
+
+    if (!initialized) {
+        return <div>Loading...</div>
+    }
+    if (!!initialized && !keycloak.authenticated && role !== "ADMIN") {
+        keycloak.login();
+    }
 
     return (
         <div className="StudentManagement">
@@ -51,9 +60,9 @@ const StudentManagement = () => {
                 <div>
                     <FiltersForm initValues={filterParams}
                                  onSubmit={values => {
-                        setFilterParams(values);
-                        setFilterModalShown(false);
-                    }} />
+                                     setFilterParams(values);
+                                     setFilterModalShown(false);
+                                 }}/>
                 </div>
             </Modal>}
             {columnModalShown && <Modal configuration={"RIGHT"}
@@ -73,7 +82,7 @@ const StudentManagement = () => {
             </Modal>}
             {userModalShown && <Modal contentConfiguration={"TRANSPARENT"}
                                       onClose={() => setUserModalShown(false)}>
-                <CreateForm />
+                <CreateForm/>
             </Modal>}
             <DisplayTable onRowClick={onRowClick}
                           tableContent={getData_mock()}
