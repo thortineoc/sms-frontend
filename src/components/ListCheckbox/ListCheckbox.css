@@ -1,0 +1,47 @@
+.ListCheckbox {
+    display: block;
+}
+
+.ListCheckbox > table {
+
+}
+
+.ListCheckbox_button {
+
+}
+
+.ListCheckbox_applyButton {
+    border: none;
+    cursor: pointer;
+    float: right;
+
+    margin: 0.5ch 2ch;
+    background-color: #5599cc;
+    padding: 1ch;
+    text-decoration: none;
+    color: #eeeeee;
+    font-size: 20px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.ListCheckbox_applyButton:hover {
+    background-color: #3366aa;
+}
+
+.ListCheckbox_buttonCell {
+    margin: 0;
+    padding: 0;
+}
+
+.ListCheckbox_itemName {
+    font-size: 20px;
+    padding: 0.7ch 0.7ch 0.7ch 0;
+    box-sizing: border-box;
+    margin-left: 0;
+}
+
+.ListCheckbox_row {
+    box-sizing: border-box;
+}
