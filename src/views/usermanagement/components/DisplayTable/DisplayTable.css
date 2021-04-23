@@ -49,6 +49,7 @@
 .DisplayTable_header > th:hover {
     background-color: rgb(43, 61, 161);
     color: #f0edff;
+    cursor: pointer;
 }
 
 .DisplayTable_header > th:last-child {
@@ -83,7 +84,6 @@
     border-left: 2px solid gray;
     text-align: left;
     text-decoration: none;
-    cursor: pointer;
 }
 
 .DisplayTable_row > td:last-child {

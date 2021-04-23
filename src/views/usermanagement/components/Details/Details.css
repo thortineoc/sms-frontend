@@ -1,5 +1,14 @@
-.Details {
+.Details__student-grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, 145px);
+}
 
+.Details__parent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 210px);
+    column-gap: 33px;
+    row-gap: 10px;
 }
 
 .Details__label {
@@ -10,5 +19,5 @@
 .Details__data {
     padding: 3% 0;
     cursor: pointer;
-    background-color: #fffeee;
+    background-color: #F5F5F5;
 }

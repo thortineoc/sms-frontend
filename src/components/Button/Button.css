@@ -4,9 +4,10 @@
     border-radius: 8px;
     padding: 1vw 1vw;
     border: none;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     max-width: 150px;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3), 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    font-weight: bold;
 }
 
 .Button:hover {

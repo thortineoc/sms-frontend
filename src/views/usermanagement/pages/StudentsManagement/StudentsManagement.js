@@ -53,7 +53,7 @@ const StudentManagement = () => {
 
             </div>
 
-            {filterModalShown && <Modal configuration={"RIGHT"}
+            {filterModalShown && <Modal configuration={"LEFT"}
                                         contentConfiguration={"TOP"}
                                         fitContent={true}
                                         opaqueBackground={false}
@@ -66,7 +66,7 @@ const StudentManagement = () => {
                     }} />
                 </div>
             </Modal>}
-            {columnModalShown && <Modal configuration={"RIGHT"}
+            {columnModalShown && <Modal configuration={"LEFT"}
                                         contentConfiguration={"TOP"}
                                         opaqueBackground={false}
                                         fitContent={true}

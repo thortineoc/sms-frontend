@@ -93,10 +93,11 @@ const fillRows = (items, maxRowCount, columns, onRowClick) => {
 
     for (let i = 0; i < items.length; i++) {
         let filledColumns = columns.map(column => <TableCell count={columns.length}
-                                                             content={items[i][column] ?? "-"}/>);
+                                                             content={items[i][column] ?? "-"} />);
         rows[i] = (
-            <tr onClick={() => onRowClick(items[i])} // changed from items[id] to items
-                className="DisplayTable_row" key={items[i]}>
+            <tr onClick={() => onRowClick(items[i]) } // changed from items[id] to items
+                className="DisplayTable_row" key={items[i]}
+                style={{cursor: 'pointer'}}>
                 {filledColumns}
             </tr>
         );
