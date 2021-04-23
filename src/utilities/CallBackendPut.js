@@ -6,7 +6,7 @@
 //     }
 // }, [initialized]);
 
-import callBackend from "./CallBackenk";
+import callBackend from "./CallBackend";
 
 const callBackendPut = (axiosInstance, url, setResponseData, data) => {
     callBackend(axiosInstance, url, setResponseData, data, "put")

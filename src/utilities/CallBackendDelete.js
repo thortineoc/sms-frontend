@@ -6,7 +6,7 @@
 //     }
 // }, [initialized]);
 
-import callBackend from "./CallBackenk";
+import callBackend from "./CallBackend";
 
 const callBackendDelete = (axiosInstance, url, setResponseData, data) => {
     callBackend(axiosInstance, url, setResponseData, data, "delete")
