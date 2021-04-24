@@ -29,7 +29,6 @@ const ManageComponent = (props) => {
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
 
-
     useEffect(async () => {
         fetchData();
     }, [initialized]);
@@ -37,9 +36,9 @@ const ManageComponent = (props) => {
 
     const fetchData = () => {
         console.log("fetch")
-        if (!!initialized) {
-            callBackendGet(axiosInstance, "usermanagement-service/groups", setGetResponse, null);
-        }
+            callBackendGet(axiosInstance, "usermanagement-service/" + props.type, null)
+                .then(response => setGetResponse(response))
+                .catch(error => console.log(error))
     }
 
     if (getResponse) {
@@ -54,11 +53,11 @@ const ManageComponent = (props) => {
     }
 
     const onDelete = async (index) => {
-
-        let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/";
         const itemsToUpdate = [...array]
         setErrorMessage("");
-        callBackendDelete(axiosInstance, "usermanagement-service/groups/" + itemsToUpdate[index], setDeleteResponse, null);
+        callBackendDelete(axiosInstance, "usermanagement-service/" + props.type + "/" + itemsToUpdate[index], null)
+            .then(response => setDeleteResponse(response))
+            .catch(error => console.log(error))
     }
 
     if (deleteResponse) {
@@ -79,7 +78,10 @@ const ManageComponent = (props) => {
             setErrorMessage("This item already exists.");
         } else {
             setErrorMessage("");
-            callBackendPost(axiosInstance, "usermanagement-service/groups/" + values.item, setPostResponse, null);
+            callBackendPost(axiosInstance, "usermanagement-service/" + props.type + "/" + values.item, null)
+                .then(response => setPostResponse(response))
+                .catch(error => console.log(error))
+
             resetForm();
         }
     }
