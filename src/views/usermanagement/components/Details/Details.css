@@ -1,7 +1,7 @@
 .Details__student-grid {
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, 145px);
+    grid-gap: 1px;
+    grid-template-columns: repeat(auto-fill, 130px);
 }
 
 .Details__parent-grid {

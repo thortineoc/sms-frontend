@@ -20,8 +20,8 @@
     width: 30%;
     min-height: 60%;
     z-index: 200;
-    overflow: scroll;
-    max-height: 500px;
+    /*overflow: scroll;
+    max-height: 900px;*/
 }
 
 
