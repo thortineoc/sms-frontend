@@ -26,7 +26,7 @@ const ManageComponent = (props) => {
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
 
-    useEffect(async () => {
+    useEffect( () => {
         fetchData();
     }, [initialized]);
 
