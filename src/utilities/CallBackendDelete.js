@@ -11,6 +11,6 @@
 import callBackend from "./CallBackend";
 
 const callBackendDelete = (axiosInstance, url, data) => {
-    callBackend(axiosInstance, url, data, "delete")
+    return callBackend(axiosInstance, url, data, "delete")
 }
 export default callBackendDelete;
