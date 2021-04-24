@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import "./ManageComponent.css"
 import {Form, Formik} from "formik";
 import axios from 'axios';
@@ -6,6 +6,10 @@ import {TrashIcon} from '@heroicons/react/solid'
 import Button from "../../../../components/Button/Button";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import * as Yup from "yup";
+import {useKeycloak} from "@react-keycloak/web";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendPost from "../../../../utilities/CallBackendPost";
+import callBackendGet from "../../../../utilities/CallBackendGet";
 
 const initialValues = {
     item: ''
@@ -17,31 +21,42 @@ const validationSchema = Yup.object({
 
 const ManageComponent = (props) => {
 
-    const [items, updateItems] = useState([]);
+    const [items, updateItems] = useState();
     const [error, updateError] = useState(false);
     const [errorMessage, updateErrorMessage] = useState("")
+    const {keycloak, initialized} = useKeycloak();
 
-    const fetchData = async () => {
-        let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type;
-        const response = await axios.get(url)
-
-        if (response.status === 204) {
-            updateError(true)
-            return
-        } else if(response.status > 204){
-            updateError(true)
-            return
+    // ### USAGE EXAMPLE ###
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const runBackend = useCallback((axiosInstance, url, data) => {
+        if (!!initialized) {
+            callBackendGet(axiosInstance, url, updateItems, data);
         }
-        updateItems(response.data)
+    }, [initialized]);
+
+
+    const fetchData =  () => {
+        runBackend(axiosInstance, "usermanagement-service/groups", null)
+        console.log(items);
+
+        // if (response.status === 204) {
+        //     updateError(true)
+        //     return
+        // } else if(response.status > 204){
+        //     updateError(true)
+        //     return
+        // }
+        // updateItems(response.data)
     }
 
-    useEffect( () => {
+    useEffect( async () => {
 
-        async function loadData() {
-            await fetchData()
-        }
-        loadData();
-    }, []);
+        // if (!!initialized && keycloak.authenticated) {
+        //     await callBackendGet(axiosInstance, "usermanagement-service/groups", updateItems, null);
+        // }
+        await runBackend(axiosInstance, "usermanagement-service/groups", null)
+        console.log(items);
+    }, [initialized, keycloak]);
 
     const onDelete = async (index) => {
         updateErrorMessage("");
@@ -84,46 +99,46 @@ const ManageComponent = (props) => {
         return (
             <div className="Component">
                 <h1>{props.type.charAt(0).toUpperCase() + props.type.slice(1)}</h1>
-                {errorMessage.length > 0 ? <p>{errorMessage}</p> : <></>}
-                <table className="SubjectsTable">
-                    <tbody>
-                    {items.map((item, index) => (
-                        <tr key={item}>
-                            <td>{item}</td>
-                            <td><TrashIcon onClick={() => onDelete(index)} style={{cursor: 'pointer', color: 'red'}}/>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                {/*{errorMessage.length > 0 ? <p>{errorMessage}</p> : <></>}*/}
+                {/*<table className="SubjectsTable">*/}
+                {/*    <tbody>*/}
+                {/*    {items.map((item, index) => (*/}
+                {/*        <tr key={item}>*/}
+                {/*            <td>{item}</td>*/}
+                {/*            <td><TrashIcon onClick={() => onDelete(index)} style={{cursor: 'pointer', color: 'red'}}/>*/}
+                {/*            </td>*/}
+                {/*        </tr>*/}
+                {/*    ))}*/}
+                {/*    </tbody>*/}
+                {/*</table>*/}
 
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    validateOnChange={false}
-                    onSubmit={onSubmit}
-                >
-                    {
-                        formik => {
-                            return (
-                                <Form>
-                                    <div>
-                                        {formik.errors && formik.errors.submit &&
-                                        <div className="error">{formik.errors.submit}</div>}
-                                        <TextFieldWrapper
-                                            label={"Add "+ props.type}
-                                            name={"item"}
-                                            type="text"
-                                        />
-                                        <div className="CreateForm__button-wrapper">
-                                            <Button type="submit" label="Add"/>
-                                        </div>
-                                    </div>
-                                </Form>
-                            )
-                        }
-                    }
-                </Formik>
+                {/*<Formik*/}
+                {/*    initialValues={initialValues}*/}
+                {/*    validationSchema={validationSchema}*/}
+                {/*    validateOnChange={false}*/}
+                {/*    onSubmit={onSubmit}*/}
+                {/*>*/}
+                {/*    {*/}
+                {/*        formik => {*/}
+                {/*            return (*/}
+                {/*                <Form>*/}
+                {/*                    <div>*/}
+                {/*                        {formik.errors && formik.errors.submit &&*/}
+                {/*                        <div className="error">{formik.errors.submit}</div>}*/}
+                {/*                        <TextFieldWrapper*/}
+                {/*                            label={"Add "+ props.type}*/}
+                {/*                            name={"item"}*/}
+                {/*                            type="text"*/}
+                {/*                        />*/}
+                {/*                        <div className="CreateForm__button-wrapper">*/}
+                {/*                            <Button type="submit" label="Add"/>*/}
+                {/*                        </div>*/}
+                {/*                    </div>*/}
+                {/*                </Form>*/}
+                {/*            )*/}
+                {/*        }*/}
+                {/*    }*/}
+                {/*</Formik>*/}
             </div>
         );
     }
