@@ -99,13 +99,12 @@ const ManageComponent = (props) => {
         <div className="Component">
             <h1>{props.type.charAt(0).toUpperCase() + props.type.slice(1)}</h1>
             <p>{errorMessage}</p>
-            <table className="SubjectsTable">
+            <table className={"ItemTable"}>
                 <tbody>
                 {array.map((item, index) => (
                     <tr key={item}>
                         <td>{item}</td>
-                        <td><TrashIcon onClick={() => onDelete(index)}
-                                       style={{cursor: 'pointer', color: 'red'}}/>
+                        <td><TrashIcon onClick={() => onDelete(index)} className={"Icon"}/>
                         </td>
                     </tr>
                 ))}
@@ -122,7 +121,7 @@ const ManageComponent = (props) => {
                 {
                     formik => {
                         return (
-                            <Form>
+                            <Form className={"NewItemForm"}>
                                 <div>
                                     {formik.errors && formik.errors.submit &&
                                     <div className="error">{formik.errors.submit}</div>}

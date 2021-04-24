@@ -28,3 +28,44 @@
     color: red;
     margin-bottom: 5%;
 }
+
+tr:nth-child(even) {
+    background-color: #ececec;
+}
+
+tr:nth-child(odd) {
+    background-color: #f8f7f7;
+}
+
+.ItemTable {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+    background-color: #5599cc;
+    border-collapse: collapse;
+    font-size: large;
+    padding-bottom: 10%;
+    overflow-x: auto;
+}
+
+.ItemTable_row {
+    display: table;
+    box-sizing: border-box;
+    height: 2rem;
+    width: 100%;
+
+}
+
+.ItemTable_td{
+    padding-top:20px;
+    padding-bottom:20px;
+    padding-right:20px
+}
+
+.Icon {
+    cursor: pointer;
+    color: red;
+    font-size: 12px;
+}
+
+.NewItemForm{
+    padding-top: 10%;
+}
