@@ -1,0 +1,27 @@
+.GroupsSubjectsTable {
+    float: none;
+    padding: 1% 5% 0 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.GroupsSubjectsTable__input {
+    margin-top: 40%;
+}
+
+
+.GroupsSubjectsTable__delete {
+    width: 6%;
+    height: 6%;
+    float: right;
+    cursor: pointer;
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+    transition: color .4s, transform 0.4s ease-in-out;
+}
+
+.GroupsSubjectsTable__delete:hover {
+    color: red;
+    -webkit-transform: scale(1.1);
+}
+

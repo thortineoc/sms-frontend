@@ -44,8 +44,7 @@ const validationSchema = Yup.object({
     })
 })
 
-const CreateForm = ({type}) => {
-    const {keycloak, initialized} = useKeycloak();
+const CreateForm = ({type, setCreateUserModalShown}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [groups, setGroups] = useState([]);
 
@@ -74,6 +73,7 @@ const CreateForm = ({type}) => {
                 });
         resetForm();
         setStatus({success: true});
+        setCreateUserModalShown(false);
     }
 
     return (

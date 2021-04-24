@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
-import "./ManageComponent.css"
+import "./GroupsSubjectsTable.css"
 import {Form, Formik} from "formik";
-import {TrashIcon} from '@heroicons/react/solid'
+import {TrashIcon} from '@heroicons/react/outline'
 import Button from "../../../../components/Button/Button";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import * as Yup from "yup";
@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
     item: Yup.string().required('Required'),
 })
 
-const ManageComponent = (props) => {
+const GroupsSubjectsTable = (props) => {
 
     const [array, setArray] = useState([]);
     const [errorMessage, setErrorMessage] = useState("Loading...")
@@ -31,19 +31,19 @@ const ManageComponent = (props) => {
     }, [initialized]);
 
     const fetchData = () => {
-            callBackendGet(axiosInstance, "usermanagement-service/" + props.type, null)
-                .then(response => {
-                    if (response.status === 200) {
-                        setArray(response.data)
-                        setErrorMessage("");
-                    } else if(response.status === 204) {
-                        setErrorMessage("There are no items.");
-                        setArray([])
-                    } else{
-                        setErrorMessage("There was an error during fetching the data.");
-                    }
-                })
-                .catch(error => console.log(error))
+        callBackendGet(axiosInstance, "usermanagement-service/" + props.type, null)
+            .then(response => {
+                if (response.status === 200) {
+                    setArray(response.data)
+                    setErrorMessage("");
+                } else if(response.status === 204) {
+                    setErrorMessage("There are no items.");
+                    setArray([])
+                } else{
+                    setErrorMessage("There was an error during fetching the data.");
+                }
+            })
+            .catch(error => console.log(error))
     }
 
     const onDelete = async (index) => {
@@ -83,17 +83,16 @@ const ManageComponent = (props) => {
         }
     }
 
-
     return (
-        <div className="Component">
+        <div className="GroupsSubjectsTable">
             <h1>{props.type.charAt(0).toUpperCase() + props.type.slice(1)}</h1>
             <p>{errorMessage}</p>
-            <table className={"ItemTable"}>
+            <table>
                 <tbody>
                 {array.map((item, index) => (
                     <tr key={item}>
                         <td>{item}</td>
-                        <td><TrashIcon onClick={() => onDelete(index)} className={"Icon"}/>
+                        <td><TrashIcon className="GroupsSubjectsTable__delete" onClick={() => onDelete(index)} />
                         </td>
                     </tr>
                 ))}
@@ -110,17 +109,19 @@ const ManageComponent = (props) => {
                 {
                     formik => {
                         return (
-                            <Form className={"NewItemForm"}>
+                            <Form>
                                 <div>
                                     {formik.errors && formik.errors.submit &&
                                     <div className="error">{formik.errors.submit}</div>}
-                                    <TextFieldWrapper
-                                        label={"Add " + props.type}
-                                        name={"item"}
-                                        type="text"
-                                    />
-                                    <div className="CreateForm__button-wrapper">
-                                        <Button type="submit" label="Add"/>
+                                    <div className="GroupsSubjectsTable__input">
+                                        <TextFieldWrapper
+                                            label={"Add " + props.type}
+                                            name={"item"}
+                                            type="text"
+                                        />
+                                        <div className="CreateForm__button-wrapper">
+                                            <Button type="submit" label="Add new"/>
+                                        </div>
                                     </div>
                                 </div>
                             </Form>
@@ -136,4 +137,4 @@ const ManageComponent = (props) => {
 }
 
 
-export default ManageComponent;
+export default GroupsSubjectsTable;

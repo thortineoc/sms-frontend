@@ -29,7 +29,7 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
     return (
         <div className="SelectFieldWrapper">
             <TextField {...configSelect} >
-                {options.map((item, index) => {
+                {options && options.map((item, index) => {
                     if(item === '') {
                         return (
                             <MenuItem key={index} value={item}>

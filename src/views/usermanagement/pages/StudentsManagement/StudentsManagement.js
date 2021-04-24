@@ -10,6 +10,7 @@ import Details from "../../components/Details/Details";
 import Button from "../../../../components/Button/Button";
 import EditForm from "../../components/EditForm/EditForm";
 import {useKeycloak} from "@react-keycloak/web";
+import GroupsSubjectsTable from "../../components/GroupsSubjectsTable/GroupsSubjectsTable";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -32,12 +33,12 @@ const StudentManagement = ({role}) => {
     const [filterParams, setFilterParams] = useState({});
     const [filterModalShown, setFilterModalShown] = useState(false);
     const [columnModalShown, setColumnModalShown] = useState(false);
-    const [userModalShown, setUserModalShown] = useState(false);
+    const [createUserModalShown, setCreateUserModalShown] = useState(false);
     const [columns, setColumns] = useState(["id", "firstName", "lastName", "group", "pesel"]);
     const [detailsModalShown, setDetailsModalShown] = useState(false);
     const [detailsUser, setDetailsUser] = useState({});
     const [showEdit, setShowEdit] = useState(false);
-
+    const [showGroups, setShowGroups] = useState(false);
 
     if (!initialized) {
         return <div>Loading...</div>
@@ -57,8 +58,8 @@ const StudentManagement = ({role}) => {
                 </div>
 
                 <div className="CreationButtons">
-                    <Button label='New account' onClick={() => setUserModalShown(true)} />
-                    <Button label='Manage groups' />
+                    <Button label='New account' onClick={() => setCreateUserModalShown(true)} />
+                    <Button label='Manage groups' onClick={() => setShowGroups(true)} />
                 </div>
 
             </div>
@@ -91,8 +92,13 @@ const StudentManagement = ({role}) => {
                                   }}/>
                 </div>
             </Modal>}
-            {userModalShown && <Modal onClose={() => setUserModalShown(false)}>
-                <CreateForm type='groups' />
+
+            {createUserModalShown && <Modal onClose={() => setCreateUserModalShown(false)}>
+                <CreateForm type='groups' setCreateUserModalShown={setCreateUserModalShown}/>
+            </Modal>}
+
+            {showGroups && <Modal onClose={() => setShowGroups(false)}>
+                <GroupsSubjectsTable type="groups" />
             </Modal>}
 
             {detailsModalShown &&
