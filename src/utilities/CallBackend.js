@@ -7,7 +7,6 @@ const callBackend = (axiosInstance, url, setResponseData, data, method) => {
         }
     )
         .then((response) => {
-                console.log(response);
                 setResponseData(response);
             }
         )

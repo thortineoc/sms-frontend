@@ -21,72 +21,76 @@ const validationSchema = Yup.object({
 
 const ManageComponent = (props) => {
 
-    const [items, updateItems] = useState();
+    const [items, setItems] = useState();
     const [error, updateError] = useState(false);
     const [errorMessage, updateErrorMessage] = useState("")
     const {keycloak, initialized} = useKeycloak();
 
     // ### USAGE EXAMPLE ###
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const runBackend = useCallback((axiosInstance, url, data) => {
-        if (!!initialized) {
-            callBackendGet(axiosInstance, url, updateItems, data);
-        }
-    }, [initialized]);
+    // const runBackend = useCallback((axiosInstance, url, data) => {
+    //     if (!!initialized) {
+    //         await callBackendGet(axiosInstance, url, setItems, data);
+    //     }
+    // }, [initialized]);
 
 
-    const fetchData =  () => {
-        runBackend(axiosInstance, "usermanagement-service/groups", null)
-        console.log(items);
-
-        // if (response.status === 204) {
-        //     updateError(true)
-        //     return
-        // } else if(response.status > 204){
-        //     updateError(true)
-        //     return
-        // }
-        // updateItems(response.data)
-    }
+    // const fetchData =  () => {
+    //     //runBackend(axiosInstance, "usermanagement-service/groups", null)
+    //     console.log(items);
+    //
+    //     // if (response.status === 204) {
+    //     //     updateError(true)
+    //     //     return
+    //     // } else if(response.status > 204){
+    //     //     updateError(true)
+    //     //     return
+    //     // }
+    //     // updateItems(response.data)
+    // }
 
     useEffect( async () => {
 
-        // if (!!initialized && keycloak.authenticated) {
-        //     await callBackendGet(axiosInstance, "usermanagement-service/groups", updateItems, null);
-        // }
-        await runBackend(axiosInstance, "usermanagement-service/groups", null)
-        console.log(items);
-    }, [initialized, keycloak]);
+        if (!!initialized) {
+            callBackendGet(axiosInstance, "usermanagement-service/groups", setItems, null);
+        }
+    }, [initialized]);
+
+    if(items)
+    {
+        console.log("HERE 2");
+        console.log(items.data);
+    }
 
     const onDelete = async (index) => {
-        updateErrorMessage("");
-        const itemsToUpdate = [...items]
-        let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/" + itemsToUpdate[index];
-
-        const response = await axios.delete(url);
-        if (response.status === 204) {
-            itemsToUpdate.splice(index, 1);
-            updateItems(itemsToUpdate);
-        } else {
-            updateErrorMessage("Cannot delete following item: " + itemsToUpdate[index].name);
-        }
+        // updateErrorMessage("");
+        // const itemsToUpdate = [...items]
+        // let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/" + itemsToUpdate[index];
+        //
+        // const response = await axios.delete(url);
+        // if (response.status === 204) {
+        //     itemsToUpdate.splice(index, 1);
+        //     updateItems(itemsToUpdate);
+        // } else {
+        //     updateErrorMessage("Cannot delete following item: " + itemsToUpdate[index].name);
+        // }
     }
 
     const onSubmit = async (values, { resetForm}) => {
-        let itemsToUpdate = [...items]
-        if(itemsToUpdate.includes(values.item)){
-            updateErrorMessage("This item already exists");
-        } else {
-            let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/" + values.item;
-            const response = await axios.post(url, JSON.stringify(values));
-            if (response.status === 204) {
-                resetForm();
-                itemsToUpdate.push(values.item);
-                updateItems(itemsToUpdate);
-            } else {
-                updateErrorMessage("Cannot add this item");
-            }
-        }
+        // let itemsToUpdate = [...items]
+        // if(itemsToUpdate.includes(values.item)){
+        //     updateErrorMessage("This item already exists");
+        // } else {
+        //     let url = "http://52.142.201.18:24020/usermanagement-service/" + props.type + "/" + values.item;
+        //     const response = await axios.post(url, JSON.stringify(values));
+        //     if (response.status === 204) {
+        //         resetForm();
+        //         itemsToUpdate.push(values.item);
+        //         updateItems(itemsToUpdate);
+        //     } else {
+        //         updateErrorMessage("Cannot add this item");
+        //     }
+        // }
     }
 
     if (error) {
