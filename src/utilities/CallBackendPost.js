@@ -11,6 +11,6 @@
 import callBackend from "./CallBackend";
 
 const callBackendPost = (axiosInstance, url, data) => {
-    callBackend(axiosInstance, url, data, "post")
+    return callBackend(axiosInstance, url, data, "post")
 }
 export default callBackendPost;
