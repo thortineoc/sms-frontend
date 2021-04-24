@@ -8,7 +8,7 @@
 
 import callBackend from "./CallBackend";
 
-const callBackendGet = (axiosInstance, url, setResponseData, data) => {
-    callBackend(axiosInstance, url, setResponseData, data, "get")
+const callBackendGet = (axiosInstance, url, data) => {
+    return callBackend(axiosInstance, url, data, "get")
 }
 export default callBackendGet;
