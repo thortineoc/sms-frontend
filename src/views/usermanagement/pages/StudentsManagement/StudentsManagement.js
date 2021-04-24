@@ -9,6 +9,7 @@ import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
 import Details from "../../components/Details/Details";
 import Button from "../../../../components/Button/Button";
 import EditForm from "../../components/EditForm/EditForm";
+import {useKeycloak} from "@react-keycloak/web";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -26,7 +27,8 @@ const allColumns = [
     "id", "firstName", "lastName", "middleName", "group", "pesel", "phoneNumber", "email", "username"
 ];
 
-const StudentManagement = () => {
+const StudentManagement = ({role}) => {
+    const {keycloak, initialized} = useKeycloak();
     const [filterParams, setFilterParams] = useState({});
     const [filterModalShown, setFilterModalShown] = useState(false);
     const [columnModalShown, setColumnModalShown] = useState(false);
@@ -35,6 +37,14 @@ const StudentManagement = () => {
     const [detailsModalShown, setDetailsModalShown] = useState(false);
     const [detailsUser, setDetailsUser] = useState({});
     const [showEdit, setShowEdit] = useState(false);
+
+
+    if (!initialized) {
+        return <div>Loading...</div>
+    }
+    if (!!initialized && !keycloak.authenticated && role !== "ADMIN") {
+        keycloak.login();
+    }
 
     return (
         <div className="StudentManagement">
@@ -82,7 +92,7 @@ const StudentManagement = () => {
                 </div>
             </Modal>}
             {userModalShown && <Modal onClose={() => setUserModalShown(false)}>
-                <CreateForm type="STUDENT" />
+                <CreateForm type='groups' />
             </Modal>}
 
             {detailsModalShown &&

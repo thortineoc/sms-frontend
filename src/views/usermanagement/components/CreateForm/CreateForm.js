@@ -1,12 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Formik, Form, FieldArray} from 'formik';
 import * as Yup from 'yup';
 import './CreateForm.css';
-import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import MultipleSelectField from "../../../../components/MultipleSelectField/MultipleSelectField";
+import {useKeycloak} from "@react-keycloak/web";
+import callBackendPost from "../../../../utilities/CallBackendPost";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendGet from "../../../../utilities/CallBackendGet";
 
 const initialValues = {
     id: '',
@@ -24,38 +27,11 @@ const initialValues = {
     }
 }
 
-const groups = [
-    "",
-    "1A",
-    "1B",
-    "1C",
-]
-
 const subjects = [
     'geography',
     'chemistry',
     'french'
 ]
-
-const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
-    console.log(JSON.stringify(values));
-    try {
-        await axios
-            .post(
-                "http://52.142.201.18:24020/usermanagement-service/users",
-                JSON.stringify(values), {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-        resetForm();
-        setStatus({success: true});
-    } catch(error) {
-        setStatus({success: false});
-        setSubmitting(false);
-        setErrors({submit: error.message});
-    }
-}
 
 const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
@@ -69,6 +45,36 @@ const validationSchema = Yup.object({
 })
 
 const CreateForm = ({type}) => {
+    const {keycloak, initialized} = useKeycloak();
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [groups, setGroups] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    const fetchData = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+            .then(response => {
+                console.log(response.data);
+                setGroups(response.data);
+            })
+            .catch(error => console.log(error))
+    }
+
+    const onSubmit = (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+        callBackendPost(  axiosInstance,
+                     "usermanagement-service/users",
+                          JSON.stringify(values))
+                .then(response => console.log(response))
+                .catch(error => {
+                    setStatus({success: false});
+                    setSubmitting(false);
+                    setErrors({submit: error.message});
+                });
+        resetForm();
+        setStatus({success: true});
+    }
 
     return (
         <Formik
