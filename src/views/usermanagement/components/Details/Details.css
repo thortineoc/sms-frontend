@@ -1,0 +1,43 @@
+.Details__student-grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, 145px);
+}
+
+.Details__parent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 210px);
+    column-gap: 33px;
+    row-gap: 10px;
+}
+
+.Details__label {
+    color: gray;
+    font-size: 1.2rem;
+}
+
+.Details__data {
+    padding: 3% 0;
+    cursor: pointer;
+    background-color: #F5F5F5;
+}
+
+.Details__delete-wrapper {
+    width: 100%;
+    margin: 3% 5% 0 0;
+}
+
+.Details__delete {
+    width: 8%;
+    height: 8%;
+    float: right;
+    cursor: pointer;
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+    transition: color .4s, transform 0.4s ease-in-out;
+}
+
+.Details__delete:hover {
+    color: red;
+    -webkit-transform: scale(1.2);
+}
+

@@ -6,7 +6,11 @@ import "./StudentsManagement.css";
 import Modal from "../../components/Modal/Modal";
 import CreateForm from "../../components/CreateForm/CreateForm";
 import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
+import Details from "../../components/Details/Details";
+import Button from "../../../../components/Button/Button";
+import EditForm from "../../components/EditForm/EditForm";
 import {useKeycloak} from "@react-keycloak/web";
+import GroupsSubjectsTable from "../../components/GroupsSubjectsTable/GroupsSubjectsTable";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -26,11 +30,15 @@ const allColumns = [
 
 const StudentManagement = ({role}) => {
     const {keycloak, initialized} = useKeycloak();
-    let [filterParams, setFilterParams] = useState({});
-    let [filterModalShown, setFilterModalShown] = useState(false);
-    let [columnModalShown, setColumnModalShown] = useState(false);
-    let [userModalShown, setUserModalShown] = useState(false);
-    let [columns, setColumns] = useState(["id", "firstName", "lastName", "group", "pesel"]);
+    const [filterParams, setFilterParams] = useState({});
+    const [filterModalShown, setFilterModalShown] = useState(false);
+    const [columnModalShown, setColumnModalShown] = useState(false);
+    const [createUserModalShown, setCreateUserModalShown] = useState(false);
+    const [columns, setColumns] = useState(["id", "firstName", "lastName", "group", "pesel"]);
+    const [detailsModalShown, setDetailsModalShown] = useState(false);
+    const [detailsUser, setDetailsUser] = useState({});
+    const [showEdit, setShowEdit] = useState(false);
+    const [showGroups, setShowGroups] = useState(false);
 
     if (!initialized) {
         return <div>Loading...</div>
@@ -41,18 +49,22 @@ const StudentManagement = ({role}) => {
 
     return (
         <div className="StudentManagement">
-            <div className="ActionButtons">
-                <div className="ActionButtons_genericButton">
-                    <button onClick={() => setFilterModalShown(true)}>Filters</button>
+            <h1 className="StudentManagement__header">Students' accounts</h1>
+            <div className="ButtonsGroup">
+
+                <div className="TableButtons">
+                    <Button label='Filters' onClick={() => setFilterModalShown(true)} />
+                    <Button label='Columns' onClick={() => setColumnModalShown(true)} />
                 </div>
-                <div className="ActionButtons_genericButton">
-                    <button onClick={() => setColumnModalShown(true)}>Columns</button>
+
+                <div className="CreationButtons">
+                    <Button label='New account' onClick={() => setCreateUserModalShown(true)} />
+                    <Button label='Manage groups' onClick={() => setShowGroups(true)} />
                 </div>
-                <div className="ActionButtons_genericButton">
-                    <button onClick={() => setUserModalShown(true)}>Create student</button>
-                </div>
+
             </div>
-            {filterModalShown && <Modal configuration={"RIGHT"}
+
+            {filterModalShown && <Modal configuration={"LEFT"}
                                         contentConfiguration={"TOP"}
                                         fitContent={true}
                                         opaqueBackground={false}
@@ -60,12 +72,12 @@ const StudentManagement = ({role}) => {
                 <div>
                     <FiltersForm initValues={filterParams}
                                  onSubmit={values => {
-                                     setFilterParams(values);
-                                     setFilterModalShown(false);
-                                 }}/>
+                        setFilterParams(values);
+                        setFilterModalShown(false);
+                    }} />
                 </div>
             </Modal>}
-            {columnModalShown && <Modal configuration={"RIGHT"}
+            {columnModalShown && <Modal configuration={"LEFT"}
                                         contentConfiguration={"TOP"}
                                         opaqueBackground={false}
                                         fitContent={true}
@@ -80,18 +92,42 @@ const StudentManagement = ({role}) => {
                                   }}/>
                 </div>
             </Modal>}
-            {userModalShown && <Modal contentConfiguration={"TRANSPARENT"}
-                                      onClose={() => setUserModalShown(false)}>
-                <CreateForm/>
+
+            {createUserModalShown && <Modal onClose={() => setCreateUserModalShown(false)}>
+                <CreateForm type='groups' setCreateUserModalShown={setCreateUserModalShown}/>
             </Modal>}
+
+            {showGroups && <Modal onClose={() => setShowGroups(false)}>
+                <GroupsSubjectsTable type="groups" />
+            </Modal>}
+
+            {detailsModalShown &&
+            <Modal
+                onClose={() => {
+                    setDetailsModalShown(false);
+                    setShowEdit(false)
+                }}
+            >
+                {!showEdit && <Details
+                    user={detailsUser}
+                    showEdit={showEdit}
+                    setShowEdit={setShowEdit}
+                    setDetailsModalShown={setDetailsModalShown}
+                /> }
+                {showEdit && <EditForm user={detailsUser} groups={groups_mock} />}
+
+            </Modal>
+            }
+
             <DisplayTable onRowClick={onRowClick}
                           tableContent={getData_mock()}
                           columns={columns}/>
         </div>
     );
 
-    function onRowClick(userId) {
-        alert("clicked row " + userId);
+    function onRowClick(user) {
+        setDetailsModalShown(true);
+        setDetailsUser(user);
     }
 
     async function getData() {
@@ -103,7 +139,7 @@ const StudentManagement = ({role}) => {
         let baseUrl = "http://52.142.201.18:24020/usermanagement-service/users";
         return baseUrl;
     }
-};
+}
 
 function getData_mock() {
     return [
@@ -116,9 +152,18 @@ function getData_mock() {
         },
         {
             id: 2,
+            userName: ':))',
             firstName: "Angelika",
             lastName: "Kubicka",
-            phoneNumber: "234567643"
+            role: 'STUDENT',
+            pesel: 12345678900,
+            customAttributes: {
+                email: 'ak@wp.pl',
+                group: '1B',
+                phoneNumber: "234567643",
+                middleName: "Noemi",
+                subjects: []
+            }
         },
         {
             id: 3,
@@ -128,5 +173,13 @@ function getData_mock() {
         }
     ];
 }
+
+const groups_mock = [
+    "",
+    "1A",
+    "1B",
+    "1C",
+    "1Z"
+]
 
 export default StudentManagement;

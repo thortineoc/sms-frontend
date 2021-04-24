@@ -21,13 +21,6 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
         onChange: handleChange
     }
 
-    if(configSelect.multiple) {
-        console.log("this is multiple ", name)
-    } else {
-        console.log("this is not multiple ", name)
-    }
-
-
     if(meta && meta.touched && meta.error) {
         configSelect.error = true;
         configSelect.helperText = meta.error;
@@ -36,12 +29,19 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
     return (
         <div className="SelectFieldWrapper">
             <TextField {...configSelect} >
-                {options.map((item, index) => {
-                  return (
-                      <MenuItem key={index} value={item}>
-                          {item}
-                      </MenuItem>
-                  )
+                {options && options.map((item, index) => {
+                    if(item === '') {
+                        return (
+                            <MenuItem key={index} value={item}>
+                                <em>None</em>
+                            </MenuItem>
+                        )
+                    }
+                    return (
+                          <MenuItem key={index} value={item}>
+                             {item}
+                          </MenuItem>
+                    )
                 })}
             </TextField>
         </div>

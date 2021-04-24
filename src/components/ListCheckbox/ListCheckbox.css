@@ -1,15 +1,26 @@
 .ListCheckbox {
-    display: block;
+    /*display: block;*/
+    display: flex;
+    flex-direction: column;
+    min-width: 280px;
 }
 
 .ListCheckbox > table {
 
 }
 
-.ListCheckbox_button {
-
+.FiltersForm__button-wrapper {
+    width: 100%;
+    margin-top: 5%;
 }
 
+.FiltersForm__button-wrapper button {
+    float: right;
+    max-width: 100px;
+}
+
+
+/*
 .ListCheckbox_applyButton {
     border: none;
     cursor: pointer;
@@ -33,7 +44,7 @@
 .ListCheckbox_buttonCell {
     margin: 0;
     padding: 0;
-}
+}*/
 
 .ListCheckbox_itemName {
     font-size: 20px;
@@ -45,3 +56,4 @@
 .ListCheckbox_row {
     box-sizing: border-box;
 }
+
