@@ -41,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@heroicons/react": "^1.0.1",
     "keycloak-js": "^12.0.4",
     "react-router-dom": "^5.2.0"
   }

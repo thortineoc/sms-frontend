@@ -1,15 +1,13 @@
-const callBackend = (axiosInstance, url, setResponseData, data, method) => {
-    !!axiosInstance && axiosInstance(
-        {
-            method: method,
-            url: url,
-            data: data
-        }
-    )
-        .then((response) => {
-                setResponseData(response);
-            }
-        )
-        .catch((error) => console.log(error));
+const callBackend = (axiosInstance, url, data, method) => {
+    if(!!axiosInstance)
+        return axiosInstance(
+            {
+                method: method,
+                url: url,
+                data: data
+            });
+    else{
+        return undefined;
+    }
 }
 export default callBackend;
