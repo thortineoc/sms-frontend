@@ -21,9 +21,6 @@ const validationSchema = Yup.object({
 
 const ManageComponent = (props) => {
 
-    const [getResponse, setGetResponse] = useState();
-    const [deleteResponse, setDeleteResponse] = useState();
-    const [postResponse, setPostResponse] = useState();
     const [array, setArray] = useState([]);
     const [errorMessage, setErrorMessage] = useState("Loading...")
     const {keycloak, initialized} = useKeycloak();
@@ -33,43 +30,36 @@ const ManageComponent = (props) => {
         fetchData();
     }, [initialized]);
 
-
     const fetchData = () => {
-        console.log("fetch")
             callBackendGet(axiosInstance, "usermanagement-service/" + props.type, null)
-                .then(response => setGetResponse(response))
+                .then(response => {
+                    if (response.status === 200) {
+                        setArray(response.data)
+                        setErrorMessage("");
+                    } else if(response.status === 204) {
+                        setErrorMessage("There are no items.");
+                        setArray([])
+                    } else{
+                        setErrorMessage("There was an error during fetching the data.");
+                    }
+                })
                 .catch(error => console.log(error))
-    }
-
-    if (getResponse) {
-        if (getResponse.status === 200) {
-            setArray(getResponse.data)
-            setErrorMessage("");
-        } else if(getResponse.status === 204) {
-            setErrorMessage("There are no items.");
-            setArray([])
-        }
-        setGetResponse(undefined);
     }
 
     const onDelete = async (index) => {
         const itemsToUpdate = [...array]
         setErrorMessage("");
         callBackendDelete(axiosInstance, "usermanagement-service/" + props.type + "/" + itemsToUpdate[index], null)
-            .then(response => setDeleteResponse(response))
+            .then(response => {
+                if (response.status === 204) {
+                    setErrorMessage("");
+                    fetchData();
+                } else {
+                    setErrorMessage("Cannot delete this item.");
+                }
+            })
             .catch(error => console.log(error))
     }
-
-    if (deleteResponse) {
-        if (deleteResponse.status === 204) {
-            setErrorMessage("");
-            fetchData();
-        } else {
-            setErrorMessage("Cannot delete this item.");
-        }
-        setDeleteResponse(undefined);
-    }
-
 
     const onSubmit = async (values, {resetForm}) => {
         let itemsToUpdate = [...array]
@@ -79,21 +69,18 @@ const ManageComponent = (props) => {
         } else {
             setErrorMessage("");
             callBackendPost(axiosInstance, "usermanagement-service/" + props.type + "/" + values.item, null)
-                .then(response => setPostResponse(response))
+                .then(response => {
+                    if (response.status === 204) {
+                        setErrorMessage("");
+                        fetchData();
+                    } else {
+                        setErrorMessage("There was an error during creating this item.");
+                    }
+                })
                 .catch(error => console.log(error))
 
             resetForm();
         }
-    }
-
-    if (postResponse) {
-        if (postResponse.status === 204) {
-            setErrorMessage("");
-            fetchData();
-        } else {
-            setErrorMessage("There was an error during creating this item.");
-        }
-        setPostResponse(undefined);
     }
 
 
