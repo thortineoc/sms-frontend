@@ -21,11 +21,16 @@ const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}
 }
 
 const validationSchema = Yup.object({
+    id: Yup.string().required('Required'),
+    userName: Yup.string().required('Required'),
     firstName: Yup.string().required('Required'),
-    secondName: Yup.string(),
     lastName: Yup.string().required('Required'),
-    email: Yup.string().email('Invalid format'),
-    phone: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
+    pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
+    customAttributes: Yup.object({
+        phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
+        email: Yup.string().email('Invalid format'),
+        middleName: Yup.string(),
+    })
 })
 
 const EditForm = ({user, groups}) => {
@@ -63,7 +68,7 @@ const EditForm = ({user, groups}) => {
                                         type="text"
                                     />
                                     <TextFieldWrapper
-                                        label="PESEL* "
+                                        label="PESEL *"
                                         name="pesel"
                                         type="text"
                                     />
@@ -78,18 +83,18 @@ const EditForm = ({user, groups}) => {
                                         type="text"
                                     />
                                     <TextFieldWrapper
-                                        label="User Id"
+                                        label="User Id *"
                                         name="id"
                                         type="text"
                                     />
                                     <TextFieldWrapper
-                                        label="Username"
+                                        label="Username *"
                                         name="userName"
                                         type="text"
                                     />
                                     <SelectFieldWrapper
-                                        name="group"
                                         label="Group"
+                                        name="customAttributes.group"
                                         options={groups}
                                     />
                                 </div>
@@ -107,12 +112,12 @@ const EditForm = ({user, groups}) => {
                                         type="text"
                                     />
                                     <TextFieldWrapper
-                                        label="User Id"
+                                        label="User Id *"
                                         name="id"
                                         type="text"
                                     />
                                     <TextFieldWrapper
-                                        label="Username"
+                                        label="Username *"
                                         name="userName"
                                         type="text"
                                     />

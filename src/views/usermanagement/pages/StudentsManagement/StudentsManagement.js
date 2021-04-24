@@ -92,7 +92,12 @@ const StudentManagement = () => {
                     setShowEdit(false)
                 }}
             >
-                {!showEdit && <Details user={detailsUser} showEdit={showEdit} setShowEdit={setShowEdit} /> }
+                {!showEdit && <Details
+                    user={detailsUser}
+                    showEdit={showEdit}
+                    setShowEdit={setShowEdit}
+                    setDetailsModalShown={setDetailsModalShown}
+                /> }
                 {showEdit && <EditForm user={detailsUser} groups={groups_mock} />}
 
             </Modal>

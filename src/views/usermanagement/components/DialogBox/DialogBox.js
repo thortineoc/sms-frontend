@@ -2,10 +2,11 @@ import React from 'react';
 import Button from "../../../../components/Button/Button";
 import './DialogBox.css';
 
-const DialogBox = ({setDisplayDialog, setDeleteUser}) => {
+const DialogBox = ({setDisplayDialog, setDeleteUser, setDetailsModalShown}) => {
 
     const handleAccept = () => {
-
+        //deletedelete
+        setDetailsModalShown(false);
     }
 
     const handleCancel = () => {

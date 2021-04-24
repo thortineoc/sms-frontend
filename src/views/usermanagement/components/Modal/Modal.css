@@ -20,6 +20,8 @@
     width: 30%;
     min-height: 60%;
     z-index: 200;
+    overflow: scroll;
+    max-height: 500px;
 }
 
 
@@ -58,6 +60,7 @@
     width: 40%;
     height: 45%;
     z-index: 200;
+    transform: scale(0.85);
 }
 
 .Modal_contentBottom {

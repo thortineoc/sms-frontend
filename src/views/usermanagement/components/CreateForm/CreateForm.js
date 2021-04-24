@@ -60,12 +60,11 @@ const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}
 const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     lastName: Yup.string().required('Required'),
-    //dateOfBirth: Yup.date().max(new Date(), 'Invalid date').required('Required'),
-    email: Yup.string().email('Invalid format'),
     pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
-    middleName: Yup.string(),
     customAttributes: Yup.object({
         phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
+        email: Yup.string().email('Invalid format'),
+        middleName: Yup.string(),
     })
 })
 

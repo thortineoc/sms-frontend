@@ -5,7 +5,7 @@ import {Dialog} from "@material-ui/core";
 import Modal from "../Modal/Modal";
 import DialogBox from "../DialogBox/DialogBox";
 
-const Details = ({user, showEdit, setShowEdit}) => {
+const Details = ({user, setShowEdit, setDetailsModalShown}) => {
     const [displayDialog, setDisplayDialog] = useState(false);
     const [deteleUser, setDeleteUser] = useState('');
 
@@ -28,7 +28,7 @@ const Details = ({user, showEdit, setShowEdit}) => {
                     <div className="Details__label">First name</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.firstName}
+                        {user.firstName ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
@@ -42,14 +42,14 @@ const Details = ({user, showEdit, setShowEdit}) => {
                     <div className="Details__label">Last name</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.lastName}
+                        {user.lastName ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">PESEL</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.pesel}
+                        {user.pesel ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
@@ -70,14 +70,14 @@ const Details = ({user, showEdit, setShowEdit}) => {
                     <div className="Details__label">User Id</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.id}
+                        {user.id ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Username</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.userName}
+                        {user.userName ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
@@ -109,14 +109,14 @@ const Details = ({user, showEdit, setShowEdit}) => {
                     <div className="Details__label">User Id</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.id}
+                        {user.id ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Username</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.userName}
+                        {user.userName ?? '-'}
                     </div>
                 </div>
             </div>
@@ -125,7 +125,11 @@ const Details = ({user, showEdit, setShowEdit}) => {
                  <TrashIcon className="Details__delete" onClick={() => setDisplayDialog(true)} />
             </div>
 
-            { displayDialog && <DialogBox setDisplayDialog={setDisplayDialog} setDeleteUser={setDeleteUser} /> }
+            { displayDialog && <DialogBox
+                setDisplayDialog={setDisplayDialog}
+                setDeleteUser={setDeleteUser}
+                setDetailsModalShown={setDetailsModalShown}
+            /> }
 
         </div>
     );
