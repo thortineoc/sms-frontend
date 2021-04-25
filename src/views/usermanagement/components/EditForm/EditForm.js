@@ -35,6 +35,13 @@ const validationSchema = Yup.object({
     })
 })
 
+const subjects = [
+    'maths',
+    'geography',
+    'biology',
+    'history'
+]
+
 const parent = {
     id: 3,
     userName: 'parent',
@@ -118,7 +125,8 @@ const EditForm = ({user, groups}) => {
                                                 <MultipleSelectField
                                                     label="Subjects"
                                                     name='customAttributes.subjects'
-                                                    options={user.customAttributes.subjects}
+                                                    options={subjects}
+                                                    initialValues={user.customAttributes.subjects}
                                                 />
                                             </div>
                                         )}

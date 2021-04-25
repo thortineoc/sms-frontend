@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useFormikContext} from "formik";
 import './MultipleSelectField.css';
 
-const MultipleSelectField = ({name, options, label}) => {
-    const [values, setValues] = useState([]);
+const MultipleSelectField = ({name, options, label, initialValues = []}) => {
+    const [values, setValues] = useState(initialValues);
     const { setFieldValue } = useFormikContext();
 
     useEffect(() => {
