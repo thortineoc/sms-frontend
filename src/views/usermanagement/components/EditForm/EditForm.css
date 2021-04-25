@@ -1,0 +1,12 @@
+.EditForm__button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2vh;
+}
+
+.EditForm__button-wrapper > button {
+    max-width: 100px;
+    max-height: 80px;
+    font-size: 12px;
+    padding: 1.2%;
+}

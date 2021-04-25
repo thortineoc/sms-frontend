@@ -6,6 +6,8 @@ import Modal from "../Modal/Modal";
 import DialogBox from "../DialogBox/DialogBox";
 
 const Details = ({user, setShowEdit, setDetailsModalShown}) => {
+    let mockRole = 'STUDENT';
+
     const [displayDialog, setDisplayDialog] = useState(false);
     const [deteleUser, setDeleteUser] = useState('');
 
@@ -13,10 +15,6 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
         if(!displayDialog) {
             setShowEdit(true);
         }
-    }
-
-    const openDialog = () => {
-        setDisplayDialog(true);
     }
 
     return (
@@ -47,8 +45,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">PESEL</div>
-                    <div className="Details__data"
-                         onClick={handleClick}>
+                    <div className="Details__data-not-modifiable">
                         {user.pesel ?? '-'}
                     </div>
                 </div>
@@ -67,16 +64,14 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                     </div>
                 </div>
                 <div className="Details__field">
-                    <div className="Details__label">User Id</div>
-                    <div className="Details__data"
-                         onClick={handleClick}>
+                    <div className="Details__label">User ID</div>
+                    <div className="Details__data-not-modifiable">
                         {user.id ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Username</div>
-                    <div className="Details__data"
-                         onClick={handleClick}>
+                    <div className="Details__data-not-modifiable">
                         {user.userName ?? '-'}
                     </div>
                 </div>
@@ -89,37 +84,49 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                 </div>
             </div>
 
-            <h3>Parent contact information</h3>
-            <div className="Details__parent-grid">
-                <div className="Details__field">
-                    <div className="Details__label">Address e-mail</div>
+
+            {mockRole === 'STUDENT' ? (
+                <>
+                    <h3>Parent contact information</h3>
+                    <div className="Details__parent-grid">
+                        <div className="Details__field">
+                            <div className="Details__label">Address e-mail</div>
+                            <div className="Details__data"
+                                 onClick={handleClick}>
+                                {(user.customAttributes && user.customAttributes.email) ?? '-'}
+                            </div>
+                        </div>
+                        <div className="Details__field">
+                            <div className="Details__label">Phone number</div>
+                            <div className="Details__data"
+                                 onClick={handleClick}>
+                                {(user.customAttributes && user.customAttributes.phoneNumber) ?? '-'}
+                            </div>
+                        </div>
+                        <div className="Details__field">
+                            <div className="Details__label">User ID</div>
+                            <div className="Details__data-not-modifiable">
+                                {user.id ?? '-'}
+                            </div>
+                        </div>
+                        <div className="Details__field">
+                            <div className="Details__label">Username</div>
+                            <div className="Details__data-not-modifiable">
+                                {user.userName ?? '-'}
+                            </div>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <div className="Details__teacher-field" >
+                    <div className="Details__label">Subjects</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.customAttributes && user.customAttributes.email) ?? '-'}
+                        {(  user.customAttributes.subjects &&
+                            user.customAttributes.subjects.map(subject => <div className="Details__subject">{subject}</div>)) ?? '-'}
                     </div>
                 </div>
-                <div className="Details__field">
-                    <div className="Details__label">Phone number</div>
-                    <div className="Details__data"
-                         onClick={handleClick}>
-                        {(user.customAttributes && user.customAttributes.phoneNumber) ?? '-'}
-                    </div>
-                </div>
-                <div className="Details__field">
-                    <div className="Details__label">User Id</div>
-                    <div className="Details__data"
-                         onClick={handleClick}>
-                        {user.id ?? '-'}
-                    </div>
-                </div>
-                <div className="Details__field">
-                    <div className="Details__label">Username</div>
-                    <div className="Details__data"
-                         onClick={handleClick}>
-                        {user.userName ?? '-'}
-                    </div>
-                </div>
-            </div>
+            )}
 
             <div className="Details__delete-wrapper">
                  <TrashIcon className="Details__delete" onClick={() => setDisplayDialog(true)} />

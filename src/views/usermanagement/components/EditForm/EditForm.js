@@ -6,6 +6,7 @@ import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldW
 import Button from "../../../../components/Button/Button";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import '../Details/Details.css';
+import './EditForm.css'
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
     console.log(values);
@@ -33,108 +34,147 @@ const validationSchema = Yup.object({
     })
 })
 
+const parent = {
+    id: 3,
+    userName: 'parent',
+    email: 'iamparent@abc.com',
+    phoneNumber: '555444333'
+}
+
+
 const EditForm = ({user, groups}) => {
     // fetch user data and groups
+
     return (
-        <Formik
-            initialValues={user}
-            validationSchema={validationSchema}
-            validateOnChange={false}
-            onSubmit={onSubmit}
-        >
-            {
-                formik => {
-                    return (
-                        <Form>
-                            <div className="EditForm">
-                                {formik.errors && formik.errors.submit &&
-                                <div className="error">{formik.errors.submit}</div>}
+        <>
+            <Formik
+                initialValues={user}
+                validationSchema={validationSchema}
+                validateOnChange={false}
+                onSubmit={onSubmit}
+            >
+                {
+                    formik => {
+                        return (
+                            <Form>
+                                <div className="EditForm">
+                                    {formik.errors && formik.errors.submit &&
+                                    <div className="error">{formik.errors.submit}</div>}
 
-                                <h3>Personal information</h3>
-                                <div className="Details__student-grid">
-                                    <TextFieldWrapper
-                                        label="First name *"
-                                        name="firstName"
-                                        type="text"
-                                    />
-                                    <TextFieldWrapper
-                                        label="Middle name"
-                                        name="customAttributes.middleName"
-                                        type="text"
-                                    />
-                                    <TextFieldWrapper
-                                        label="Last name *"
-                                        name="lastName"
-                                        type="text"
-                                    />
-                                    <TextFieldWrapper
-                                        label="PESEL *"
-                                        name="pesel"
-                                        type="text"
-                                    />
-                                    <TextFieldWrapper
-                                        label="E-mail address"
-                                        name="customAttributes.email"
-                                        type="email"
-                                    />
-                                    <TextFieldWrapper
-                                        label="Phone number"
-                                        name="customAttributes.phoneNumber"
-                                        type="text"
-                                    />
-                                    <TextFieldWrapper
-                                        label="User Id *"
-                                        name="id"
-                                        type="text"
-                                    />
-                                    <TextFieldWrapper
-                                        label="Username *"
-                                        name="userName"
-                                        type="text"
-                                    />
-                                    <SelectFieldWrapper
-                                        label="Group"
-                                        name="customAttributes.group"
-                                        options={groups}
-                                    />
+                                    <h3>Personal information</h3>
+                                    <div className="Details__student-grid">
+                                        <TextFieldWrapper
+                                            label="First name *"
+                                            name="firstName"
+                                            type="text"
+                                        />
+                                        <TextFieldWrapper
+                                            label="Middle name"
+                                            name="customAttributes.middleName"
+                                            type="text"
+                                        />
+                                        <TextFieldWrapper
+                                            label="Last name *"
+                                            name="lastName"
+                                            type="text"
+                                        />
+                                        <div className="Details__field">
+                                            <div className="Details__label-sm">PESEL</div>
+                                            <div className="Details__data-not-modifiable">
+                                                {user.pesel ?? '-'}
+                                            </div>
+                                        </div>
+                                        <TextFieldWrapper
+                                            label="E-mail address"
+                                            name="customAttributes.email"
+                                            type="email"
+                                        />
+                                        <TextFieldWrapper
+                                            label="Phone number"
+                                            name="customAttributes.phoneNumber"
+                                            type="text"
+                                        />
+                                        <div className="Details__field">
+                                            <div className="Details__label-sm">User ID</div>
+                                            <div className="Details__data-not-modifiable">
+                                                {user.id ?? '-'}
+                                            </div>
+                                        </div>
+                                        <div className="Details__field">
+                                            <div className="Details__label-sm">Username</div>
+                                            <div className="Details__data-not-modifiable">
+                                                {user.userName ?? '-'}
+                                            </div>
+                                        </div>
+                                        <SelectFieldWrapper
+                                            label="Group"
+                                            name="customAttributes.group"
+                                            options={groups}
+                                        />
+                                    </div>
+
+                                    <div className="EditForm__button-wrapper">
+                                        <Button type="submit" label="Save student changes" disabled={formik.isSubmitting}/>
+                                    </div>
+
                                 </div>
-
-                                <h3>Parent contact information</h3>
-                                <div className="Details__parent-grid">
-                                    <TextFieldWrapper
-                                        label="E-mail address"
-                                        name="customAttributes.email"
-                                        type="email"
-                                    />
-                                    <TextFieldWrapper
-                                        label="Phone number"
-                                        name="customAttributes.phoneNumber"
-                                        type="text"
-                                    />
-                                    <TextFieldWrapper
-                                        label="User Id *"
-                                        name="id"
-                                        type="text"
-                                    />
-                                    <TextFieldWrapper
-                                        label="Username *"
-                                        name="userName"
-                                        type="text"
-                                    />
-                                </div>
-
-
-                                <div className="CreateForm__button-wrapper">
-                                    <Button type="submit" label="Save changes" disabled={formik.isSubmitting}/>
-                                </div>
-
-                            </div>
-                        </Form>
-                    )
+                            </Form>
+                        )
+                    }
                 }
-            }
-        </Formik>
-    );
+            </Formik>
+
+            <Formik
+                initialValues={parent}
+                validateOnChange={true}
+                onSubmit={onSubmit}
+            >
+                {
+                    formik => {
+                        return (
+                            <Form>
+                                <div className="EditForm">
+                                    {formik.errors && formik.errors.submit &&
+                                    <div className="error">{formik.errors.submit}</div>}
+
+                                    <h3>Parent contact information</h3>
+                                    <div className="Details__parent-grid">
+                                        <TextFieldWrapper
+                                            label="E-mail address"
+                                            name="email"
+                                            type="email"
+                                        />
+                                        <TextFieldWrapper
+                                            label="Phone number"
+                                            name="phoneNumber"
+                                            type="text"
+                                        />
+                                        <div className="Details__field">
+                                            <div className="Details__label-sm">User ID</div>
+                                            <div className="Details__data-not-modifiable">
+                                                {parent.id ?? '-'}
+                                            </div>
+                                        </div>
+                                        <div className="Details__field">
+                                            <div className="Details__label-sm">Username</div>
+                                            <div className="Details__data-not-modifiable">
+                                                {parent.userName ?? '-'}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="EditForm__button-wrapper">
+                                        <Button type="submit" label="Save parent changes" disabled={formik.isSubmitting}/>
+                                    </div>
+
+                                </div>
+                            </Form>
+                        )
+                    }
+                }
+            </Formik>
+        </>
+    )
 }
 
 export default EditForm;

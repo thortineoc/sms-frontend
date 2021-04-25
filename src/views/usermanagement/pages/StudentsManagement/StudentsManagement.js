@@ -162,7 +162,7 @@ function getData_mock() {
                 group: '1B',
                 phoneNumber: "234567643",
                 middleName: "Noemi",
-                subjects: []
+                subjects: ['maths', 'biology']
             }
         },
         {
