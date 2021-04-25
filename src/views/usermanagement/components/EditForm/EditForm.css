@@ -10,3 +10,7 @@
     font-size: 12px;
     padding: 1.2%;
 }
+
+.EditForm__subjects {
+    min-height: 140px;
+}

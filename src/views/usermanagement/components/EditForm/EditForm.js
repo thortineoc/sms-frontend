@@ -7,6 +7,7 @@ import Button from "../../../../components/Button/Button";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import '../Details/Details.css';
 import './EditForm.css'
+import MultipleSelectField from "../../../../components/MultipleSelectField/MultipleSelectField";
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
     console.log(values);
@@ -44,6 +45,7 @@ const parent = {
 
 const EditForm = ({user, groups}) => {
     // fetch user data and groups
+    let mockRole = 'STUDENT';
 
     return (
         <>
@@ -111,10 +113,20 @@ const EditForm = ({user, groups}) => {
                                             name="customAttributes.group"
                                             options={groups}
                                         />
+                                        {mockRole === 'TEACHER' && (
+                                            <div className="EditForm__subjects">
+                                                <MultipleSelectField
+                                                    label="Subjects"
+                                                    name='customAttributes.subjects'
+                                                    options={user.customAttributes.subjects}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="EditForm__button-wrapper">
-                                        <Button type="submit" label="Save student changes" disabled={formik.isSubmitting}/>
+                                        <Button type="submit" label={"Save " + mockRole.toLowerCase() + " changes"}
+                                                disabled={formik.isSubmitting}/>
                                     </div>
 
                                 </div>
@@ -124,55 +136,58 @@ const EditForm = ({user, groups}) => {
                 }
             </Formik>
 
-            <Formik
-                initialValues={parent}
-                validateOnChange={true}
-                onSubmit={onSubmit}
-            >
-                {
-                    formik => {
-                        return (
-                            <Form>
-                                <div className="EditForm">
-                                    {formik.errors && formik.errors.submit &&
-                                    <div className="error">{formik.errors.submit}</div>}
+            {mockRole === 'STUDENT' && (
+                <Formik
+                    initialValues={parent}
+                    validateOnChange={true}
+                    onSubmit={onSubmit}
+                >
+                    {
+                        formik => {
+                            return (
+                                <Form>
+                                    <div className="EditForm">
+                                        {formik.errors && formik.errors.submit &&
+                                        <div className="error">{formik.errors.submit}</div>}
 
-                                    <h3>Parent contact information</h3>
-                                    <div className="Details__parent-grid">
-                                        <TextFieldWrapper
-                                            label="E-mail address"
-                                            name="email"
-                                            type="email"
-                                        />
-                                        <TextFieldWrapper
-                                            label="Phone number"
-                                            name="phoneNumber"
-                                            type="text"
-                                        />
-                                        <div className="Details__field">
-                                            <div className="Details__label-sm">User ID</div>
-                                            <div className="Details__data-not-modifiable">
-                                                {parent.id ?? '-'}
+                                        <h3>Parent contact information</h3>
+                                        <div className="Details__parent-grid">
+                                            <TextFieldWrapper
+                                                label="E-mail address"
+                                                name="email"
+                                                type="email"
+                                            />
+                                            <TextFieldWrapper
+                                                label="Phone number"
+                                                name="phoneNumber"
+                                                type="text"
+                                            />
+                                            <div className="Details__field">
+                                                <div className="Details__label-sm">User ID</div>
+                                                <div className="Details__data-not-modifiable">
+                                                    {parent.id ?? '-'}
+                                                </div>
+                                            </div>
+                                            <div className="Details__field">
+                                                <div className="Details__label-sm">Username</div>
+                                                <div className="Details__data-not-modifiable">
+                                                    {parent.userName ?? '-'}
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="Details__field">
-                                            <div className="Details__label-sm">Username</div>
-                                            <div className="Details__data-not-modifiable">
-                                                {parent.userName ?? '-'}
-                                            </div>
+
+                                        <div className="EditForm__button-wrapper">
+                                            <Button type="submit" label="Save parent changes"
+                                                    disabled={formik.isSubmitting}/>
                                         </div>
-                                    </div>
 
-                                    <div className="EditForm__button-wrapper">
-                                        <Button type="submit" label="Save parent changes" disabled={formik.isSubmitting}/>
                                     </div>
-
-                                </div>
-                            </Form>
-                        )
+                                </Form>
+                            )
+                        }
                     }
-                }
-            </Formik>
+                </Formik>
+            )}
         </>
     )
 }
