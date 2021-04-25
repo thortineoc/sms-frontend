@@ -1,9 +1,5 @@
 .GroupsSubjectsTable {
-    float: none;
     padding: 1% 5% 0 5%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
 .GroupsSubjectsTable__input {
