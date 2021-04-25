@@ -16,11 +16,10 @@ const columnNameTranslations = {
 const DisplayTable = ({onRowClick, columns, tableContent}) => {
     let [sortColumn, setSortColumn] = useState(null);
     let [sortOrder, setSortOrder] = useState(null);
-    let [items, setItems] = useState(tableContent);
 
     const UserRows = () => {
-        let sorted = getSortedItems(sortColumn, sortOrder, items);
-        return fillRows(sorted, 20, columns, onRowClick);
+        let sorted = getSortedItems(sortColumn, sortOrder, tableContent);
+        return fillRows(sorted, 23, columns, onRowClick);
     }
 
     const ColumnNames = () => {
@@ -31,7 +30,6 @@ const DisplayTable = ({onRowClick, columns, tableContent}) => {
                 handleColumnClick(column,
                     sortColumn, setSortColumn,
                     sortOrder, setSortOrder)}>{name}</th>);
-
         });
         return (
             <tr className="DisplayTable_header">
@@ -64,9 +62,6 @@ const getColumnName = (column, sortColumn, sortOrder) => {
 
 const calcCellWidth = (count) => {
     return (100 / count) + "%";
-    // return count < 7
-    //     ? (100 / count) + "%"
-    //     : "200px";
 }
 
 const TableCell = ({count, content}) => {

@@ -1,0 +1,34 @@
+.SearchWidget {
+    box-sizing: border-box;
+
+    margin-left: 5%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.SearchWidget_field {
+    border: 3px solid #5599cc;
+
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 1ch;
+}
+
+.SearchWidget_submit {
+    cursor: pointer;
+
+    border: 3px solid #5599cc;
+    border-radius: 5px;
+    font-size: 25px;
+    color: #3366aa;
+    font-weight: bold;
+    width: 3rem;
+    height: 3rem;
+}
+
+.SearchWidget_submit:disabled {
+    border: none;
+    background-color: white;
+    color: white;
+}

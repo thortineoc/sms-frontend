@@ -6,12 +6,9 @@ import PresenceView from "../presence/PresenceView";
 import TimetableView from "../timetables/TimetableView";
 import GradesView from "../grades/GradesView";
 
-import CreateStudentsForm from "../usermanagement/components/CreateStudentsForm/CreateStudentsForm";
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
-import CreateForm from "../usermanagement/components/CreateForm/CreateForm";
-import EditForm from "../usermanagement/components/EditForm/EditForm";
 
 const ViewRouter = () => {
     return (
