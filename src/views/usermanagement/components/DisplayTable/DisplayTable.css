@@ -82,6 +82,7 @@
 .DisplayTable_row > td {
     padding-left: 1rem;
     border-left: 2px solid gray;
+    word-wrap: anywhere;
     text-align: left;
     text-decoration: none;
 }

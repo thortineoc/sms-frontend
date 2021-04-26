@@ -9,8 +9,17 @@ import GradesView from "../grades/GradesView";
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
+import {useKeycloak} from "@react-keycloak/web";
 
 const ViewRouter = () => {
+
+    const {keycloak, initialized} = useKeycloak();
+    if (!initialized) {
+        return <div>Loading...</div>
+    }
+    if (!!initialized && !keycloak.authenticated) {
+        keycloak.login();
+    }
     return (
         <Switch>
             <Route path="/api/homework-service">
@@ -33,9 +42,6 @@ const ViewRouter = () => {
             </Route>
             <Route path="/api/usermanagement-service/timetables">
                 <TimetablesManagement />
-            </Route>
-            <Route path="/api/usermanagement-service/temp">
-
             </Route>
         </Switch>
     );

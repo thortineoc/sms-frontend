@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import DisplayTable from "../../components/DisplayTable/DisplayTable";
 import FiltersForm from "../../components/FiltersForm/FiltersForm";
 import "./StudentsManagement.css";
@@ -56,13 +56,15 @@ const StudentManagement = () => {
         }
     }, [initialized]);
 
-    if (!!firstLoad && !!initialized) {
-        const params = removeEmptyStrings(filterParams);
-        callBackendPost(axiosInstance, "/usermanagement-service/users/filter", params)
-            .then(response => setUsers(flatten(response.data)))
-            .catch(error => console.log(error));
-        firstLoad = false;
-    }
+    useEffect(() => {
+        if (!!initialized) {
+            const params = removeEmptyStrings(filterParams);
+            callBackendPost(axiosInstance, "/usermanagement-service/users/filter", params)
+                .then(response => setUsers(flatten(response.data)))
+                .catch(error => console.log(error));
+            firstLoad = false;
+        }
+    }, [initialized]);
 
     if (!initialized) {
         return <div>Loading...</div>
@@ -182,34 +184,6 @@ const removeEmptyStrings = (obj) => {
         .filter((k) => obj[k] !== "")
         .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
 }
-
-const usersMock = [
-    {
-        id: 1,
-        firstName: "Tomasz",
-        lastName: "Wojna",
-        email: "twojna@interia.pl",
-        phoneNumber: "506590639"
-    },
-    {
-        id: 2,
-        username: ':))',
-        firstName: "Angelika",
-        lastName: "Kubicka",
-        role: 'STUDENT',
-        pesel: 12345678900,
-        email: 'ak@wp.pl',
-        group: '1B',
-        phoneNumber: "234567643",
-        middleName: "Noemi",
-    },
-    {
-        id: 3,
-        firstName: "Michał",
-        lastName: "Stadryniak",
-        email: "some-email@some-website.com",
-    }
-];
 
 const groups_mock = [
     "",
