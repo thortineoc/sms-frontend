@@ -7,7 +7,7 @@ const columnNameTranslations = {
     lastName: "Last Name",
     middleName: "Middle Name",
     pesel: "PESEL",
-    username: "Username",
+    userName: "Username",
     phoneNumber: "Phone Number",
     email: "E-mail Address",
     group: "Group"

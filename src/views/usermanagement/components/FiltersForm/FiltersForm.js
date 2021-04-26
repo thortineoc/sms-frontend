@@ -1,11 +1,10 @@
 import { Formik, Form } from "formik";
 import "./FiltersForm.css";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import {useState} from "react";
 import Button from "../../../../components/Button/Button";
 
 const defaultInitValues = {
-    username: "",
+    userName: "",
     firstName: "",
     lastName: "",
     middleName: "",
@@ -18,7 +17,7 @@ const defaultInitValues = {
 
 const columnNames = {
     id: "User ID",
-    username: "Username",
+    userName: "Username",
     firstName: "First Name",
     lastName: "Last Name",
     middleName: "Middle Name",
@@ -65,7 +64,7 @@ const FormFields = () => {
                         <TextFieldWrapper name="middleName" placeholder={columnNames["middleName"]}/>
                     </td>
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="username" placeholder={columnNames["username"]}/>
+                        <TextFieldWrapper name="userName" placeholder={columnNames["userName"]}/>
                     </td>
                 </tr>
                 <tr className="TextField_row">
@@ -95,30 +94,6 @@ const FormFields = () => {
         </table>
     )
 }
-
-// const TextFieldDoubleWrapper = ({name, ...rest}) => {
-//     let [hasText, setHasText] = useState(false);
-//     let [shouldReset, setShouldReset] = useState(false);
-//
-//     return (
-//         <>
-//             <td className="TextField_cell">
-//                 <TextFieldWrapper onChange={e => setHasText(e.target.value)}
-//                                   name={name}
-//                                   resetValue={shouldReset}
-//                                   setResetValue={() => {
-//                                       setShouldReset(false);
-//                                       setHasText(false);
-//                                   }}
-//                                   placeholder={columnNames[name] ?? "unknown"} {...rest} />
-//             </td>
-//             <td>
-//                 <ClearButton onClick={() => setShouldReset(true)}
-//                              disabled={!hasText}/>
-//             </td>
-//         </>
-//     );
-// };
 
 const ClearButton = ({disabled, onClick}) => {
     return (

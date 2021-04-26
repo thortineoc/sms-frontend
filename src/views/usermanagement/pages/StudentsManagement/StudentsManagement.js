@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import DisplayTable from "../../components/DisplayTable/DisplayTable";
 import FiltersForm from "../../components/FiltersForm/FiltersForm";
 import "./StudentsManagement.css";
@@ -19,7 +19,7 @@ const columnNameTranslations = {
     firstName: "First Name",
     lastName: "Last Name",
     middleName: "Middle Name",
-    username: "Username",
+    userName: "Username",
     pesel: "PESEL",
     phoneNumber: "Phone Number",
     email: "E-mail Address",
@@ -27,7 +27,7 @@ const columnNameTranslations = {
 }
 
 const allColumns = [
-    "id", "firstName", "lastName", "middleName", "group", "pesel", "phoneNumber", "email", "username"
+    "id", "firstName", "lastName", "middleName", "group", "pesel", "phoneNumber", "email", "userName"
 ];
 
 let firstLoad = true;
@@ -38,7 +38,7 @@ const StudentManagement = () => {
     const [filterModalShown, setFilterModalShown] = useState(false);
     const [columnModalShown, setColumnModalShown] = useState(false);
     const [createUserModalShown, setCreateUserModalShown] = useState(false);
-    const [columns, setColumns] = useState(["firstName", "lastName", "group", "pesel"]);
+    const [columns, setColumns] = useState(JSON.parse(sessionStorage.getItem("SMS_tableColumns")) ?? ["firstName", "lastName", "group", "pesel"]);
     const [detailsModalShown, setDetailsModalShown] = useState(false);
     const [detailsUser, setDetailsUser] = useState({});
     const [showEdit, setShowEdit] = useState(false);
@@ -114,6 +114,7 @@ const StudentManagement = () => {
                                   items={allColumns}
                                   itemTranslations={columnNameTranslations}
                                   onApply={newColumns => {
+                                      sessionStorage.setItem("SMS_tableColumns", JSON.stringify(newColumns));
                                       setColumns(newColumns);
                                       setColumnModalShown(false);
                                   }}/>
