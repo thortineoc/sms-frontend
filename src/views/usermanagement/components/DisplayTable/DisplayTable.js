@@ -90,7 +90,7 @@ const fillRows = (items, maxRowCount, columns, onRowClick) => {
         let filledColumns = columns.map(column => <TableCell count={columns.length}
                                                              content={items[i][column] ?? "-"} />);
         rows[i] = (
-            <tr onClick={() => onRowClick(items[i]) } // changed from items[id] to items
+            <tr onClick={() => onRowClick(items[i])}
                 className="DisplayTable_row"
                 key={items[i]["id"]}
                 style={{cursor: 'pointer'}}>
@@ -122,19 +122,25 @@ const getSortedItems = (column, order, items) => {
 
     let sorted = [...items];
     if (order === "DESC") {
-        sorted.sort((left, right) =>
-            (left[column] > right[column])
+        sorted.sort((left, right) => {
+            const leftItem = left[column].toLowerCase();
+            const rightItem = right[column].toLowerCase();
+            return (leftItem > rightItem)
                 ? 1
-                : ((left[column] < right[column])
+                : ((leftItem < rightItem)
                     ? -1
-                    : 0));
+                    : 0);
+    });
     } else if (order === "ASC") {
-        sorted.sort((left, right) =>
-            (left[column] < right[column])
+        sorted.sort((left, right) => {
+            const leftItem = left[column].toLowerCase();
+            const rightItem = right[column].toLowerCase();
+            return (leftItem < rightItem)
                 ? 1
-                : ((left[column] > right[column])
+                : ((leftItem > rightItem)
                     ? -1
-                    : 0));
+                    : 0);
+        });
     }
     return sorted;
 }
