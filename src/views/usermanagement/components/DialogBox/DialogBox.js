@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import Button from "../../../../components/Button/Button";
 import './DialogBox.css';
+import {useKeycloak} from "@react-keycloak/web";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
-const DialogBox = ({setDisplayDialog, setDeleteUser, setDetailsModalShown}) => {
+const DialogBox = ({user, setDisplayDialog, setDeleteUser, setDetailsModalShown}) => {
+    const {keycloak, initialized} = useKeycloak();
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const runBackend = useCallback((axiosInstance, url, data) => {
+        if (!!initialized) {
+            callBackendDelete(axiosInstance, url, data)
+                .then(response => console.log(response))
+                .catch(error => console.log(error));
+        }
+    }, [initialized]);
 
     const handleAccept = () => {
-        //deletedelete
+        runBackend(axiosInstance, "/usermanagement-service/users/" + user.id, null);
         setDetailsModalShown(false);
     }
 

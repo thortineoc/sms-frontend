@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import './Details.css';
 import { TrashIcon } from "@heroicons/react/outline";
 import {Dialog} from "@material-ui/core";
 import Modal from "../Modal/Modal";
 import DialogBox from "../DialogBox/DialogBox";
+import {useKeycloak} from "@react-keycloak/web";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendPost from "../../../../utilities/CallBackendPost";
+import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
 const Details = ({user, setShowEdit, setDetailsModalShown}) => {
     const [displayDialog, setDisplayDialog] = useState(false);
-    const [deteleUser, setDeleteUser] = useState('');
+    const [deleteUser, setDeleteUser] = useState('');
 
     const handleClick = () => {
         if(!displayDialog) {
@@ -35,7 +39,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                     <div className="Details__label">Middle name</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.customAttributes && user.customAttributes.middleName) ?? '-'}
+                        {(user.middleName) ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
@@ -56,14 +60,14 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                     <div className="Details__label">E-mail address</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.customAttributes && user.customAttributes.email) ?? '-'}
+                        {(user.email) ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Phone number</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.customAttributes && user.customAttributes.phoneNumber) ?? '-'}
+                        {(user.phoneNumber) ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
@@ -84,7 +88,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                     <div className="Details__label">Group</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.customAttributes && user.customAttributes.group) ?? '-'}
+                        {(user.group) ?? '-'}
                     </div>
                 </div>
             </div>
@@ -95,14 +99,14 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                     <div className="Details__label">Address e-mail</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.customAttributes && user.customAttributes.email) ?? '-'}
+                        {(user.email) ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Phone number</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.customAttributes && user.customAttributes.phoneNumber) ?? '-'}
+                        {(user.phoneNumber) ?? '-'}
                     </div>
                 </div>
                 <div className="Details__field">
@@ -122,10 +126,14 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
             </div>
 
             <div className="Details__delete-wrapper">
-                 <TrashIcon className="Details__delete" onClick={() => setDisplayDialog(true)} />
+                 <TrashIcon className="Details__delete" onClick={() => {
+                     setDisplayDialog(true);
+
+                 }} />
             </div>
 
             { displayDialog && <DialogBox
+                user={user}
                 setDisplayDialog={setDisplayDialog}
                 setDeleteUser={setDeleteUser}
                 setDetailsModalShown={setDetailsModalShown}

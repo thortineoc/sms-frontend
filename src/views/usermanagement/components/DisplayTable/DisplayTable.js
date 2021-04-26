@@ -75,7 +75,7 @@ const getEmptyRows = (rowCount, colCount) => {
     let rows = [];
     for (let i = 0; i < rowCount; i++) {
         rows.push(
-            <tr className="DisplayTable_row" key={i}>
+            <tr className="DisplayTable_row" key={Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}>
                 {emptyColumns}
             </tr>
         );
@@ -91,7 +91,8 @@ const fillRows = (items, maxRowCount, columns, onRowClick) => {
                                                              content={items[i][column] ?? "-"} />);
         rows[i] = (
             <tr onClick={() => onRowClick(items[i]) } // changed from items[id] to items
-                className="DisplayTable_row" key={items[i]}
+                className="DisplayTable_row"
+                key={items[i]["id"]}
                 style={{cursor: 'pointer'}}>
                 {filledColumns}
             </tr>

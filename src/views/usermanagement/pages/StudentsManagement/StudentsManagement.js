@@ -32,9 +32,9 @@ const allColumns = [
 
 let firstLoad = true;
 
-const StudentManagement = ({data}) => {
-    const [users, setUsers] = useState({data});
-    const [filterParams, setFilterParams] = useState({});
+const StudentManagement = () => {
+    const [users, setUsers] = useState({});
+    const [filterParams, setFilterParams] = useState({role: "STUDENT"});
     const [filterModalShown, setFilterModalShown] = useState(false);
     const [columnModalShown, setColumnModalShown] = useState(false);
     const [createUserModalShown, setCreateUserModalShown] = useState(false);
@@ -47,16 +47,18 @@ const StudentManagement = ({data}) => {
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const runBackend = useCallback((axiosInstance, url, data) => {
+        data = removeEmptyStrings(data);
         if (!!initialized) {
             callBackendPost(axiosInstance, url, data)
-                     .then(response => setUsers(response.data))
+                     .then(response => setUsers(flatten(response.data)))
                      .catch(error => console.log(error));
         }
     }, [initialized]);
 
     if (!!firstLoad && !!initialized) {
-        callBackendPost(axiosInstance, "/usermanagement-service/users/filter", filterParams)
-            .then(response => setUsers(response.data))
+        const params = removeEmptyStrings(filterParams);
+        callBackendPost(axiosInstance, "/usermanagement-service/users/filter", params)
+            .then(response => setUsers(flatten(response.data)))
             .catch(error => console.log(error));
         firstLoad = false;
     }
@@ -76,14 +78,12 @@ const StudentManagement = ({data}) => {
                          onChange={(event) => {
                              setFilterParams({...filterParams, search: event.target.value});
                              runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
-                         }}
-                         onClick={() => {
-                             runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
                          }}/>
             <div className="ButtonsGroup">
                 <div className="TableButtons">
                     <Button label='Filters' onClick={() => setFilterModalShown(true)} />
                     <Button label='Columns' onClick={() => setColumnModalShown(true)} />
+                    <Button label='Refresh' onClick={() => runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams)} />
                 </div>
                 <div className="CreationButtons">
                     <Button label='New account' onClick={() => setCreateUserModalShown(true)} />
@@ -98,9 +98,10 @@ const StudentManagement = ({data}) => {
                 <div>
                     <FiltersForm initValues={filterParams}
                                  onSubmit={values => {
-                        setFilterParams({...filterParams, values});
-                        setFilterModalShown(false);
-                    }} />
+                                     setFilterParams(values);
+                                     runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
+                                     setFilterModalShown(false);
+                                 }} />
                 </div>
             </Modal>}
             {columnModalShown && <Modal configuration={"LEFT"}
@@ -119,7 +120,10 @@ const StudentManagement = ({data}) => {
                 </div>
             </Modal>}
 
-            {createUserModalShown && <Modal onClose={() => setCreateUserModalShown(false)}>
+            {createUserModalShown && <Modal onClose={() => {
+                setCreateUserModalShown(false);
+                runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
+            }} >
                 <CreateForm type='groups' setCreateUserModalShown={setCreateUserModalShown}/>
             </Modal>}
 
@@ -155,7 +159,23 @@ const StudentManagement = ({data}) => {
         setDetailsModalShown(true);
         setDetailsUser(user);
     }
-};
+}
+
+const flatten = (users) => {
+    return users.map(user => {
+        if (!!user["customAttributes"]) {
+            return {...user["customAttributes"], ...user};
+        } else {
+            return user;
+        }
+    });
+}
+
+const removeEmptyStrings = (obj) => {
+    return Object.keys(obj)
+        .filter((k) => obj[k] != null)
+        .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
+}
 
 const usersMock = [
     {
