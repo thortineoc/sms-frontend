@@ -122,7 +122,7 @@ const getSortedItems = (column, order, items) => {
 
     let sorted = [...items];
     if (order === "DESC") {
-        sorted.sort((left, right) => {
+        sorted && sorted.sort((left, right) => {
             const leftItem = left[column].toLowerCase();
             const rightItem = right[column].toLowerCase();
             return (leftItem > rightItem)
@@ -132,7 +132,7 @@ const getSortedItems = (column, order, items) => {
                     : 0);
     });
     } else if (order === "ASC") {
-        sorted.sort((left, right) => {
+        sorted && sorted.sort((left, right) => {
             const leftItem = left[column].toLowerCase();
             const rightItem = right[column].toLowerCase();
             return (leftItem < rightItem)

@@ -58,7 +58,10 @@ const GroupsSubjectsTable = (props) => {
                     setErrorMessage("Cannot delete this item.");
                 }
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error);
+                setErrorMessage("Cannot delete this item");
+            })
     }
 
     const onSubmit = async (values, {resetForm}) => {

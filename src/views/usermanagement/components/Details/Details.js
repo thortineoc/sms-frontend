@@ -82,8 +82,11 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                 <div className="Details__field">
                     <div className="Details__label">Group</div>
                     <div className="Details__data"
-                         onClick={handleClick}>
-                        {(user.group) ?? '-'}
+                         onClick={handleClick}
+                         style={{height: '20px'}}
+                    >
+                        {user.group ?? '-'}
+
                     </div>
                 </div>
             </div>
