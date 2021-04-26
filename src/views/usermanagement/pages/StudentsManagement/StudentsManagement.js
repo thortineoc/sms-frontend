@@ -44,13 +44,15 @@ const StudentManagement = () => {
     const [showEdit, setShowEdit] = useState(false);
     const [showGroups, setShowGroups] = useState(false);
 
+
+
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const runBackend = useCallback((axiosInstance, url, data) => {
         data = removeEmptyStrings(data);
         if (!!initialized) {
             callBackendPost(axiosInstance, url, data)
-                     .then(response => setUsers(flatten(response.data)))
+                     .then(response => { response.data ? setUsers(flatten(response.data)) : setUsers({})})
                      .catch(error => console.log(error));
         }
     }, [initialized]);
@@ -73,7 +75,6 @@ const StudentManagement = () => {
     return (
         <div className="StudentManagement">
             <h1 className="StudentManagement__header">Students' accounts</h1>
-
 
             <div className="ButtonsGroup">
                 <div className="TableButtons">
