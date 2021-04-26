@@ -76,8 +76,9 @@ const StudentManagement = () => {
 
             <SearchField disabled={!filterParams["search"]}
                          onChange={(event) => {
-                             setFilterParams({...filterParams, search: event.target.value});
-                             runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
+                             const newParams = {...filterParams, search: event.target.value}
+                             runBackend(axiosInstance, "/usermanagement-service/users/filter", newParams);
+                             setFilterParams(newParams);
                          }}/>
             <div className="ButtonsGroup">
                 <div className="TableButtons">
@@ -98,9 +99,9 @@ const StudentManagement = () => {
                 <div>
                     <FiltersForm initValues={filterParams}
                                  onSubmit={values => {
-                                     setFilterParams(values);
-                                     runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
+                                     runBackend(axiosInstance, "/usermanagement-service/users/filter", values);
                                      setFilterModalShown(false);
+                                     setFilterParams(values);
                                  }} />
                 </div>
             </Modal>}
@@ -108,7 +109,7 @@ const StudentManagement = () => {
                                         contentConfiguration={"TOP"}
                                         opaqueBackground={false}
                                         fitContent={true}
-                                        onClose={() => setColumnModalShown(false)}>
+                                        onClose={() => setColumnModalShown(false)} >
                 <div>
                     <ListCheckbox initValues={columns}
                                   items={allColumns}
@@ -117,7 +118,7 @@ const StudentManagement = () => {
                                       sessionStorage.setItem("SMS_tableColumns", JSON.stringify(newColumns));
                                       setColumns(newColumns);
                                       setColumnModalShown(false);
-                                  }}/>
+                                  }} />
                 </div>
             </Modal>}
 
@@ -125,7 +126,7 @@ const StudentManagement = () => {
                 setCreateUserModalShown(false);
                 runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
             }} >
-                <CreateForm type='groups' setCreateUserModalShown={setCreateUserModalShown}/>
+                <CreateForm type='groups' setCreateUserModalShown={setCreateUserModalShown} />
             </Modal>}
 
             {showGroups && <Modal onClose={() => setShowGroups(false)}>
@@ -152,7 +153,7 @@ const StudentManagement = () => {
 
             <DisplayTable onRowClick={onRowClick}
                           tableContent={users}
-                          columns={columns}/>
+                          columns={columns} />
         </div>
     );
 
