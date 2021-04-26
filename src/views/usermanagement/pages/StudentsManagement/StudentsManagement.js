@@ -13,6 +13,7 @@ import callBackendPost from "../../../../utilities/CallBackendPost";
 import useAxios from "../../../../utilities/useAxios";
 import GroupsSubjectsTable from "../../components/GroupsSubjectsTable/GroupsSubjectsTable";
 import SearchField from "../../../../components/SearchField/SearchField";
+import {SearchIcon} from "@heroicons/react/solid";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -43,7 +44,6 @@ const StudentManagement = () => {
     const [detailsUser, setDetailsUser] = useState({});
     const [showEdit, setShowEdit] = useState(false);
     const [showGroups, setShowGroups] = useState(false);
-
 
 
     const {keycloak, initialized} = useKeycloak();
@@ -80,11 +80,16 @@ const StudentManagement = () => {
                 <div className="TableButtons">
                     <Button label='Filters' onClick={() => setFilterModalShown(true)} />
                     <Button label='Columns' onClick={() => setColumnModalShown(true)} />
-                    <Button label='Refresh' onClick={() => runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams)} />
-                    <SearchField disabled={!filterParams["search"]}
-                                 onChange={(event) => {
-                                     setFilterParams({...filterParams, search: event.target.value});
-                                 }}/>
+                    <div className="StudentManagement__SearchField">
+                        <SearchField disabled={!filterParams["search"]}
+                                     onChange={(event) => {
+                                         setFilterParams({...filterParams, search: event.target.value});
+                                     }}
+                        />
+                        <div className="SearchIcon-wrapper">
+                            <SearchIcon className="SearchIcon" onClick={() => runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams)} />
+                        </div>
+                    </div>
                 </div>
                 <div className="CreationButtons">
                     <Button label='New account' onClick={() => setCreateUserModalShown(true)} />

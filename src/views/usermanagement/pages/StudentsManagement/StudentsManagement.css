@@ -106,6 +106,28 @@
     margin-top: 5%;
 }
 
-.TableButtons > * {
-    margin-right: 5%;
+.TableButtons > button {
+    margin-right: 1%;
+}
+
+.SearchIcon {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.SearchIcon:hover {
+    color: rgb(63, 81, 181);
+}
+
+.StudentManagement__SearchField {
+    min-width: 300px;
+    display: flex;
+    transform: translate(0, 10px);
+}
+
+.SearchIcon-wrapper {
+    display: flex;
+    align-items: center;
 }
