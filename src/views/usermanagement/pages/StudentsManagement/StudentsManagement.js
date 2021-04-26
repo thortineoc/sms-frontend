@@ -74,16 +74,16 @@ const StudentManagement = () => {
         <div className="StudentManagement">
             <h1 className="StudentManagement__header">Students' accounts</h1>
 
-            <SearchField disabled={!filterParams["search"]}
-                         onChange={(event) => {
-                             setFilterParams({...filterParams, search: event.target.value});
-                             runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
-                         }}/>
+
             <div className="ButtonsGroup">
                 <div className="TableButtons">
                     <Button label='Filters' onClick={() => setFilterModalShown(true)} />
                     <Button label='Columns' onClick={() => setColumnModalShown(true)} />
                     <Button label='Refresh' onClick={() => runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams)} />
+                    <SearchField disabled={!filterParams["search"]}
+                                 onChange={(event) => {
+                                     setFilterParams({...filterParams, search: event.target.value});
+                                 }}/>
                 </div>
                 <div className="CreationButtons">
                     <Button label='New account' onClick={() => setCreateUserModalShown(true)} />

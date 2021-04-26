@@ -7,7 +7,9 @@ const SearchField = ({onChange}) => {
         <div className="SearchWidget">
             <div className="SearchWidget_field">
                 <TextField placeholder="Search..."
-                           onChange={onChange}/>
+                           onChange={onChange}
+                           fullWidth
+                />
             </div>
         </div>
     );
