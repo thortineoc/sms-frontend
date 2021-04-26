@@ -12,9 +12,15 @@
 }
 
 .Details__label {
-    color: gray;
+    color: #757575;
     font-size: 1.2rem;
 }
+
+.Details__label-sm {
+    color: #757575;
+    font-size: 80%;
+}
+
 
 .Details__data {
     padding: 3% 0;
@@ -22,9 +28,23 @@
     background-color: #F5F5F5;
 }
 
+.Details__data-not-modifiable {
+    padding: 3% 0;
+    background-color: #FFF;
+}
+
 .Details__delete-wrapper {
     width: 100%;
     margin: 3% 5% 0 0;
+}
+
+.Details__teacher-field {
+    width: 100%;
+    min-height: 140px;
+}
+
+.Details__subject {
+    margin-bottom: 1%;
 }
 
 .Details__delete {
