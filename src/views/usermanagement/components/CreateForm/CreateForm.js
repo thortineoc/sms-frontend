@@ -122,7 +122,7 @@ const CreateForm = ({type, setCreateUserModalShown}) => {
                                 />
                                 <SelectFieldWrapper
                                     label="Group"
-                                    name="group"
+                                    name="customAttributes.group"
                                     options={groups}
                                 />
 
