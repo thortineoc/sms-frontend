@@ -17,9 +17,10 @@
 .ActionButtons_genericButton > button {
     border: none;
     cursor: pointer;
-    margin: 1ch;
-    background-color: #5599cc;
+    margin: 0.5ch 1ch;
     padding: 1ch;
+
+    background-color: #5599cc;
     text-decoration: none;
     color: #eeeeee;
     font-size: 20px;
@@ -37,7 +38,46 @@
     margin-right: 6rem;
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: flex-end;
+}
+
+.TableExtraComponents {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SearchWidget {
+    box-sizing: border-box;
+
+    margin-left: 5%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.SearchWidget_field {
+    border: 3px solid #5599cc;
+
+    padding: 2%;
+    border-radius: 5px;
+    margin-right: 1ch;
+}
+
+.SearchWidget_submit {
+    cursor: pointer;
+    border: 3px solid #5599cc;
+    border-radius: 5px;
+    font-size: 25px;
+    color: #3366aa;
+    font-weight: bold;
+    width: 3rem;
+    height: 3rem;
+}
+
+.SearchWidget_submit:disabled {
+    border: none;
+    background-color: white;
+    color: white;
 }
 */
 .StudentManagement__header {
