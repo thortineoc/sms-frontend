@@ -12,13 +12,13 @@ import GroupIcon from '@material-ui/icons/Group';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import SchoolIcon from '@material-ui/icons/School';
 import {lighten, makeStyles} from "@material-ui/core/styles";
-import Modal from "../Modal/Modal";
 import FiltersForm from "../FiltersForm/FiltersForm";
 import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
 import CreateForm from "../CreateForm/CreateForm";
 import GroupsSubjectsTable from "../GroupsSubjectsTable/GroupsSubjectsTable";
 import Details from "../Details/Details";
 import EditForm from "../EditForm/EditForm";
+import Modal from "../../../../components/Modal/Modal";
 
 const allColumns = [
     "id", "firstName", "lastName", "middleName", "group", "pesel", "phoneNumber", "email", "userName"
@@ -125,25 +125,11 @@ const EnhancedTableToolbar = (props) => {
                 </IconButton>
             </Tooltip>
 
-            {filterModalShown && <Modal configuration={"LEFT"}
-                                        contentConfiguration={"TOP"}
-                                        fitContent={true}
-                                        opaqueBackground={false}
-                                        onClose={() => setFilterModalShown(false)}>
-                <div>
-                    <FiltersForm initValues={filterParams}
-                                 onSubmit={values => {
-                                     props.handleFiltersParamsChanged(values)
-                                     setFilterModalShown(false);
-                                     setFilterParams(values);
-                                 }} />
-                </div>
-            </Modal>}
-            {columnModalShown && <Modal configuration={"LEFT"}
-                                        contentConfiguration={"TOP"}
-                                        opaqueBackground={false}
-                                        fitContent={true}
-                                        onClose={() => setColumnModalShown(false)} >
+            <Modal setIsOpen={setCreateUserModalShown} isOpen={createUserModalShown}>
+                <CreateForm/>
+            </Modal>
+
+            <Modal setIsOpen={setColumnModalShown} isOpen={columnModalShown}>
                 <div>
                     <ListCheckbox initValues={columns}
                                   items={allColumns}
@@ -154,36 +140,13 @@ const EnhancedTableToolbar = (props) => {
                                       setColumnModalShown(false);
                                   }} />
                 </div>
-            </Modal>}
-
-            {createUserModalShown && <Modal onClose={() => {
-                setCreateUserModalShown(false);
-
-            }} >
-                <CreateForm type={props.type} setCreateUserModalShown={setCreateUserModalShown} requireRefresh={props.requireRefresh}/>
-            </Modal>}
-
-            {showGroups && <Modal onClose={() => setShowGroups(false)}>
-                <GroupsSubjectsTable type={props.type === "STUDENT" ? "groups" : "subjects"} />
-            </Modal>}
-
-            {detailsModalShown &&
-            <Modal
-                onClose={() => {
-                    setDetailsModalShown(false);
-                    setShowEdit(false)
-                }}
-            >
-                {!showEdit && <Details
-                    user={detailsUser}
-                    showEdit={showEdit}
-                    setShowEdit={setShowEdit}
-                    setDetailsModalShown={setDetailsModalShown}
-                /> }
-                {showEdit && <EditForm user={detailsUser} />}
-
             </Modal>
-            }
+
+            <Modal setIsOpen={setShowGroups} isOpen={showGroups}>
+                <GroupsSubjectsTable type={props.type==="STUDENT" ? "groups" : "subjects"}/>
+            </Modal>
+
+
         </Toolbar>
 
     );
