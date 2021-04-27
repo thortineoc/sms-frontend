@@ -77,13 +77,7 @@ export default function LeftMenu(props) {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="h4" noWrap>
-                        {currentView}
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
@@ -93,8 +87,7 @@ export default function LeftMenu(props) {
                 anchor="left"
             >
                 <div className={classes.drawerContainer}>
-                    <Toolbar />
-                <Divider />
+
                 <List>
                     <ListItem button key="profile_key">
                         <ListItemIcon><AccountBox/></ListItemIcon>
