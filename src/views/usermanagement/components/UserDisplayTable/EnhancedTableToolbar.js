@@ -64,7 +64,7 @@ const EnhancedTableToolbar = (props) => {
     const [columnModalShown, setColumnModalShown] = useState(false);
     const [createUserModalShown, setCreateUserModalShown] = useState(false);
     const [columns, setColumns] = useState(JSON.parse(sessionStorage.getItem("SMS_tableColumns")) ?? ["firstName", "lastName", "group", "pesel"]);
-    const [searchValue, setSearchValue] = useState("Value");
+    const [searchValue, setSearchValue] = useState("");
 
     const [showGroups, setShowGroups] = useState(false);
 
@@ -94,8 +94,10 @@ const EnhancedTableToolbar = (props) => {
             <SearchBar
                 value={searchValue}
                 onChange={(newValue) => setSearchValue(newValue)}
-                onRequestSearch={() => console.log(searchValue)}
-                onCancelSearch={() => console.log(searchValue)}
+                onRequestSearch={() => {
+                    props.searchUpdated(searchValue)
+                }}
+                onCancelSearch={() => props.searchUpdated("")}
             />
 
             <Tooltip title="Add new user">
@@ -134,7 +136,7 @@ const EnhancedTableToolbar = (props) => {
 
 
             <Modal setIsOpen={setCreateUserModalShown} isOpen={createUserModalShown}>
-                <CreateForm/>
+                <CreateForm type={props.type}/>
             </Modal>
 
             <Modal setIsOpen={setColumnModalShown} isOpen={columnModalShown}>

@@ -196,8 +196,12 @@ export default function UserDisplayTable(props) {
     const fetchData = () => {
         callBackendPost(axiosInstance, "usermanagement-service/users/filter", removeEmptyStrings(filterParams))
             .then(response => {
-                console.log(flatten(response.data));
-                setArray(flatten(response.data))
+                if(response.status===200){
+                    setArray(flatten(response.data))
+                } else if(response.status===204){
+                    setArray([])
+                }
+
             })
             .catch(error => console.log(error))
     }
@@ -210,7 +214,8 @@ export default function UserDisplayTable(props) {
 
     const handleSearch = (value) =>{
         console.log(value)
-
+        setFilterParams({...filterParams, search: value});
+        console.log(filterParams);
     }
 
     const handleClick = (row) => {
@@ -239,6 +244,7 @@ export default function UserDisplayTable(props) {
                     type={props.type}
                     handleFiltersParamsChanged={handleFiltersParamsChanged}
                     requireRefresh={handleRequireRefresh}
+                    searchUpdated={handleSearch}
                 />
                 <TableContainer>
                     <Table
