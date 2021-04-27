@@ -147,7 +147,7 @@ const UserManagement = (props) => {
                 fetchData();
                 //runBackend(axiosInstance, "/usermanagement-service/users/filter", filterParams);
             }} >
-                <CreateForm type='groups' setCreateUserModalShown={setCreateUserModalShown} />
+                <CreateForm type={props.type} setCreateUserModalShown={setCreateUserModalShown} />
             </Modal>}
 
             {showGroups && <Modal onClose={() => setShowGroups(false)}>

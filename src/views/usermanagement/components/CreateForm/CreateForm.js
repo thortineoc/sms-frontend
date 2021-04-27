@@ -46,17 +46,17 @@ const validationSchema = Yup.object({
 
 const CreateForm = ({type, setCreateUserModalShown}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const [groups, setGroups] = useState([]);
+    const [items, setItems] = useState([]);
 
     useEffect(() => {
         fetchData();
     }, [])
 
     const fetchData = () => {
-        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+        callBackendGet(axiosInstance, "usermanagement-service/" + (type==="STUDENT" ? "groups" : "subjects"), null)
             .then(response => {
                 console.log(response.data);
-                setGroups(response.data);
+                setItems(response.data);
             })
             .catch(error => console.log(error))
     }
@@ -120,17 +120,18 @@ const CreateForm = ({type, setCreateUserModalShown}) => {
                                     name="customAttributes.phoneNumber"
                                     type="text"
                                 />
+                                {type === 'STUDENT' &&
                                 <SelectFieldWrapper
                                     label="Group"
                                     name="customAttributes.group"
-                                    options={groups}
-                                />
+                                    options={items}
+                                />}
 
                                 {type === 'TEACHER' &&
                                 <MultipleSelectField
                                     label="Subjects"
                                     name='customAttributes.subjects'
-                                    options={subjects}
+                                    options={items}
                                 />}
 
                                 <div className="CreateForm__button-wrapper">
