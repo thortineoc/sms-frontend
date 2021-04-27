@@ -58,7 +58,6 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
     const [filterParams, setFilterParams] = useState({role: props.type});
     const [filterModalShown, setFilterModalShown] = useState(false);
     const [columnModalShown, setColumnModalShown] = useState(false);
@@ -190,8 +189,6 @@ const EnhancedTableToolbar = (props) => {
     );
 };
 
-EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-};
+
 
 export default EnhancedTableToolbar;
