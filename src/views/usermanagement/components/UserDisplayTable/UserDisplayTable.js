@@ -13,11 +13,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import Modal from "../../../../components/Modal/Modal";
-import FiltersForm from "../FiltersForm/FiltersForm";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
 import Details from "../Details/Details";
 
@@ -63,13 +59,6 @@ function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-    { id: 'firstName', numeric: false, disablePadding: true, label: 'First Name' },
-    { id: 'lastName', numeric: true, disablePadding: false, label: 'Last Name' },
-    { id: 'pesel', numeric: true, disablePadding: false, label: 'Pesel' },
-    { id: 'userName', numeric: true, disablePadding: false, label: 'Username' },
-    { id: 'group', numeric: true, disablePadding: false, label: 'Group' },
-];
 
 function EnhancedTableHead(props) {
     const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -80,12 +69,10 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-
-                {headCells.map((headCell) => (
+                {props.displayColumns.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? '10px' : 'default'}
+                        align={'left'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
@@ -118,15 +105,9 @@ EnhancedTableHead.propTypes = {
 };
 
 
-
-
-
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-
-
-
     },
     paper: {
         width: '100%',
@@ -169,6 +150,19 @@ export default function UserDisplayTable(props) {
     const [detailsModalShown, setDetailsModalShown] = useState(false);
     const [detailsUser, setDetailsUser] = useState({});
     const [showEdit, setShowEdit] = useState(false);
+    const [displayColumns, setDisplayColumns] = useState((props.type==="STUDENT" ? [
+        {id: 'firstName', label: 'First Name'},
+        {id: 'lastName',  label: 'Last Name'},
+        {id: 'pesel', label: 'Pesel'},
+        {id: 'userName', label: 'Username'},
+        {id: 'group', label: 'Group'},
+    ] : [
+        {id: 'firstName', label: 'First Name'},
+        {id: 'lastName',  label: 'Last Name'},
+        {id: 'pesel', label: 'Pesel'},
+        {id: 'userName', label: 'Username'},
+    ]));
+
 
     useEffect( () => {
         fetchData();
@@ -196,6 +190,7 @@ export default function UserDisplayTable(props) {
             .then(response => {
                 if(response.status===200){
                     setArray(flatten(response.data))
+                    console.log(rows);
                 } else if(response.status===204){
                     setArray([])
                 }
@@ -243,6 +238,8 @@ export default function UserDisplayTable(props) {
                     handleFiltersParamsChanged={handleFiltersParamsChanged}
                     requireRefresh={handleRequireRefresh}
                     searchUpdated={handleSearch}
+                    displayColumns={displayColumns}
+                    setDisplayColumns={setDisplayColumns}
                 />
                 <TableContainer>
                     <Table
@@ -257,7 +254,7 @@ export default function UserDisplayTable(props) {
                             order={order}
                             orderBy={orderBy}
                             onRequestSort={handleRequestSort}
-
+                            displayColumns={displayColumns}
                             rowCount={rows.length}
                         />
 
@@ -276,13 +273,11 @@ export default function UserDisplayTable(props) {
                                             key={row.id}
                                         >
 
-                                            <TableCell component="th" id={labelId} scope="row" padding="10px">
-                                                {row.firstName}
-                                            </TableCell>
-                                            <TableCell align="right">{row.lastName}</TableCell>
-                                            <TableCell align="right">{row.pesel}</TableCell>
-                                            <TableCell align="right">{row.userName}</TableCell>
-                                            <TableCell align="right">{row.group}</TableCell>
+                                            {displayColumns.map((column, index) =>
+                                                (index === 0 ? <TableCell component="th" id={labelId} scope="row" padding="10px">{row[column.id]}</TableCell>
+                                                        : <TableCell align="left">{row[column.id]}</TableCell>
+                                                ))}
+
                                         </TableRow>
                                     );
                                 })}
