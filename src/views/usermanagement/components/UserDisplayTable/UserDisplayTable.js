@@ -208,7 +208,10 @@ export default function UserDisplayTable(props) {
         setOrderBy(property);
     };
 
+    const handleSearch = (value) =>{
+        console.log(value)
 
+    }
 
     const handleClick = (row) => {
         console.log(row)

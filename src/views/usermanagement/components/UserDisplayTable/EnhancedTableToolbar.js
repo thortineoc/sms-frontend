@@ -5,7 +5,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 import PropTypes from "prop-types";
 import React, {useState} from "react";
-import DeleteIcon from '@material-ui/icons/Delete';
+
 import FilterListIcon from '@material-ui/icons/FilterList';
 import ViewWeekIcon from '@material-ui/icons/ViewWeek';
 import GroupIcon from '@material-ui/icons/Group';
@@ -19,6 +19,7 @@ import GroupsSubjectsTable from "../GroupsSubjectsTable/GroupsSubjectsTable";
 import Details from "../Details/Details";
 import EditForm from "../EditForm/EditForm";
 import Modal from "../../../../components/Modal/Modal";
+import SearchBar from "material-ui-search-bar";
 
 const allColumns = [
     "id", "firstName", "lastName", "middleName", "group", "pesel", "phoneNumber", "email", "userName"
@@ -63,6 +64,7 @@ const EnhancedTableToolbar = (props) => {
     const [columnModalShown, setColumnModalShown] = useState(false);
     const [createUserModalShown, setCreateUserModalShown] = useState(false);
     const [columns, setColumns] = useState(JSON.parse(sessionStorage.getItem("SMS_tableColumns")) ?? ["firstName", "lastName", "group", "pesel"]);
+    const [searchValue, setSearchValue] = useState("Value");
 
     const [showGroups, setShowGroups] = useState(false);
 
@@ -88,6 +90,13 @@ const EnhancedTableToolbar = (props) => {
             <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
                 {props.type.charAt(0) + props.type.slice(1).toLowerCase() + "s' accounts"}
             </Typography>
+
+            <SearchBar
+                value={searchValue}
+                onChange={(newValue) => setSearchValue(newValue)}
+                onRequestSearch={() => console.log(searchValue)}
+                onCancelSearch={() => console.log(searchValue)}
+            />
 
             <Tooltip title="Add new user">
                 <IconButton aria-label="add">
@@ -122,6 +131,7 @@ const EnhancedTableToolbar = (props) => {
                     <FilterListIcon onClick={handleFilterClicked}/>
                 </IconButton>
             </Tooltip>
+
 
             <Modal setIsOpen={setCreateUserModalShown} isOpen={createUserModalShown}>
                 <CreateForm/>
