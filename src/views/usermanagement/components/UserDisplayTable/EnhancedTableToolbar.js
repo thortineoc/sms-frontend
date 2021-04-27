@@ -146,6 +146,9 @@ const EnhancedTableToolbar = (props) => {
                 <GroupsSubjectsTable type={props.type==="STUDENT" ? "groups" : "subjects"}/>
             </Modal>
 
+            <Modal setIsOpen={setFilterModalShown} isOpen={filterModalShown}>
+                <FiltersForm/>
+            </Modal>
 
         </Toolbar>
 

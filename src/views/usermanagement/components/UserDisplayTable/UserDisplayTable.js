@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import Modal from "../Modal/Modal";
+import Modal from "../../../../components/Modal/Modal";
 import FiltersForm from "../FiltersForm/FiltersForm";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
 
@@ -163,7 +163,6 @@ export default function UserDisplayTable(props) {
     const [errorMessage, setErrorMessage] = useState("Loading...")
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const [filterModalShown, setFilterModalShown] = useState(false);
     const [filterParams, setFilterParams] = useState({role: props.type});
     const [requireRefresh, setRequireRefresh] = useState(false)
 
