@@ -88,7 +88,7 @@ const EnhancedTableToolbar = (props) => {
             className={clsx(classes.root)}
         >
             <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                {props.type.toLowerCase() + "s' accounts"}
+                {props.type.charAt(0) + props.type.slice(1).toLowerCase() + "s' accounts"}
             </Typography>
 
             <Tooltip title="Add new user">

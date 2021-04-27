@@ -84,7 +84,7 @@ function EnhancedTableHead(props) {
                     <TableCell
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'default'}
+                        padding={headCell.disablePadding ? '10px' : 'default'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
@@ -123,12 +123,18 @@ EnhancedTableHead.propTypes = {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '90%',
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -35%)",
+
     },
     paper: {
         width: '100%',
         marginBottom: theme.spacing(2),
     },
     table: {
+
         minWidth: 750,
     },
     visuallyHidden: {
@@ -240,15 +246,7 @@ export default function UserDisplayTable(props) {
 
                             rowCount={rows.length}
                         />
-                        {filterModalShown && <Modal configuration={"LEFT"}
-                                                    contentConfiguration={"TOP"}
-                                                    fitContent={true}
-                                                    opaqueBackground={false}
-                                                    onClose={() => setFilterModalShown(false)}>
-                            <div>
-                                <FiltersForm />
-                            </div>
-                        </Modal>}
+
                         <TableBody>
                             {stableSort(rows, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -264,7 +262,7 @@ export default function UserDisplayTable(props) {
                                             key={row.id}
                                         >
 
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            <TableCell component="th" id={labelId} scope="row" padding="10px">
                                                 {row.firstName}
                                             </TableCell>
                                             <TableCell align="right">{row.lastName}</TableCell>
