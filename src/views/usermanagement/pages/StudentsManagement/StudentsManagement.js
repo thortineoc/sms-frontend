@@ -14,6 +14,7 @@ import useAxios from "../../../../utilities/useAxios";
 import GroupsSubjectsTable from "../../components/GroupsSubjectsTable/GroupsSubjectsTable";
 import SearchField from "../../../../components/SearchField/SearchField";
 import {SearchIcon} from "@heroicons/react/solid";
+import UserManagement from "../../layouts/UsersManagement/UserManagement";
 
 const columnNameTranslations = {
     id: "User ID",
@@ -34,6 +35,7 @@ const allColumns = [
 let firstLoad = true;
 
 const StudentManagement = () => {
+    /*
     const [users, setUsers] = useState({});
     const [filterParams, setFilterParams] = useState({role: "STUDENT"});
     const [filterModalShown, setFilterModalShown] = useState(false);
@@ -44,32 +46,12 @@ const StudentManagement = () => {
     const [detailsUser, setDetailsUser] = useState({});
     const [showEdit, setShowEdit] = useState(false);
     const [showGroups, setShowGroups] = useState(false);
+*/
 
-    const {keycloak, initialized} = useKeycloak();
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const runBackend = useCallback((axiosInstance, url, data) => {
-        if (!!initialized) {
-            const params = removeEmptyStrings(data);
-            callBackendPost(axiosInstance, url, params)
-                     .then(response => { response.data ? setUsers(flatten(response.data)) : setUsers({})})
-                     .catch(error => console.log(error));
-        }
-    }, [initialized]);
 
-    if (!!firstLoad && !!initialized) {
-        const params = removeEmptyStrings(filterParams);
-        callBackendPost(axiosInstance, "/usermanagement-service/users/filter", params)
-            .then(response => setUsers(flatten(response.data)))
-            .catch(error => console.log(error));
-        firstLoad = false;
-    }
 
-    if (!initialized) {
-        return <div>Loading...</div>
-    }
-    if (!!initialized && !keycloak.authenticated) {
-        keycloak.login();
-    }
+
+/*
 
     return (
         <div className="StudentManagement">
@@ -165,6 +147,12 @@ const StudentManagement = () => {
         setDetailsModalShown(true);
         setDetailsUser(user);
     }
+
+ */
+
+    return (
+        <UserManagement type={"STUDENT"}/>
+    )
 }
 
 const flatten = (users) => {
@@ -183,40 +171,5 @@ const removeEmptyStrings = (obj) => {
         .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
 }
 
-const usersMock = [
-    {
-        id: 1,
-        firstName: "Tomasz",
-        lastName: "Wojna",
-        email: "twojna@interia.pl",
-        phoneNumber: "506590639"
-    },
-    {
-        id: 2,
-        username: ':))',
-        firstName: "Angelika",
-        lastName: "Kubicka",
-        role: 'STUDENT',
-        pesel: 12345678900,
-        email: 'ak@wp.pl',
-        group: '1B',
-        phoneNumber: "234567643",
-        middleName: "Noemi",
-    },
-    {
-        id: 3,
-        firstName: "Michał",
-        lastName: "Stadryniak",
-        email: "some-email@some-website.com",
-    }
-];
-
-const groups_mock = [
-    "",
-    "1A",
-    "1B",
-    "1C",
-    "1Z"
-]
 
 export default StudentManagement;
