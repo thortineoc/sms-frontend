@@ -123,11 +123,9 @@ EnhancedTableHead.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '90%',
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -35%)",
+        width: '100%',
+
+
 
     },
     paper: {
