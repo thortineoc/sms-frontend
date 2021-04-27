@@ -11,27 +11,25 @@ import callBackendPost from "../../../../utilities/CallBackendPost";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 
-const initialValues = {
-    id: '',
-    userName: '',
-    firstName: '',
-    lastName: '',
-    role: 'STUDENT',
-    pesel: '',
-    customAttributes: {
-        email: '',
-        group: '',
-        phoneNumber: '',
-        middleName: '',
-        subjects: []
+const initialValues = (role) => {
+
+    return {
+        id: '',
+        userName: '',
+        firstName: '',
+        lastName: '',
+        role: role,
+        pesel: '',
+        customAttributes: {
+            email: '',
+            group: '',
+            phoneNumber: '',
+            middleName: '',
+            subjects: []
+        }
     }
 }
 
-const subjects = [
-    'geography',
-    'chemistry',
-    'french'
-]
 
 const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
@@ -49,6 +47,7 @@ const CreateForm = ({type, setCreateUserModalShown}) => {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
+        console.log(initialValues(type))
         fetchData();
     }, [])
 
@@ -78,7 +77,7 @@ const CreateForm = ({type, setCreateUserModalShown}) => {
 
     return (
         <Formik
-            initialValues={initialValues}
+            initialValues={initialValues(type)}
             validationSchema={validationSchema}
             validateOnChange={false}
             onSubmit={onSubmit}
