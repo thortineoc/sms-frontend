@@ -73,8 +73,6 @@ const StudentManagement = () => {
 
     return (
         <div className="StudentManagement">
-            <h1 className="StudentManagement__header">Students' accounts</h1>
-
             <div className="ButtonsGroup">
                 <div className="TableButtons">
                     <Button label='Filters' onClick={() => setFilterModalShown(true)} />
