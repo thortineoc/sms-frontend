@@ -63,25 +63,23 @@ const EnhancedTableToolbar = (props) => {
     const [columnModalShown, setColumnModalShown] = useState(false);
     const [createUserModalShown, setCreateUserModalShown] = useState(false);
     const [columns, setColumns] = useState(JSON.parse(sessionStorage.getItem("SMS_tableColumns")) ?? ["firstName", "lastName", "group", "pesel"]);
-    const [detailsModalShown, setDetailsModalShown] = useState(false);
-    const [detailsUser, setDetailsUser] = useState({});
-    const [showEdit, setShowEdit] = useState(false);
+
     const [showGroups, setShowGroups] = useState(false);
 
     const handleCreateUserClicked = () =>{
-        setCreateUserModalShown(!createUserModalShown)
+        setCreateUserModalShown(true)
     }
 
     const handleFilterClicked = () =>{
-        setFilterModalShown(!filterModalShown)
+        setFilterModalShown(true)
     }
 
     const handleItemsClicked = () =>{
-        setShowGroups(!showGroups)
+        setShowGroups(true)
     }
 
     const handleColumnsClicked = () => {
-        setColumnModalShown(!columnModalShown)
+        setColumnModalShown(true)
     }
     return (
         <Toolbar
@@ -147,7 +145,7 @@ const EnhancedTableToolbar = (props) => {
             </Modal>
 
             <Modal setIsOpen={setFilterModalShown} isOpen={filterModalShown}>
-                <FiltersForm/>
+                <FiltersForm onSubmit={props.handleFiltersParamsChanged} setIsActive={setFilterModalShown}/>
             </Modal>
 
         </Toolbar>

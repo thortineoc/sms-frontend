@@ -19,6 +19,7 @@ import Switch from '@material-ui/core/Switch';
 import Modal from "../../../../components/Modal/Modal";
 import FiltersForm from "../FiltersForm/FiltersForm";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
+import Details from "../Details/Details";
 
 const removeEmptyStrings = (obj) => {
     return Object.keys(obj)
@@ -126,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         top: "50%",
         left: "50%",
-        transform: "translate(-50%, -40%)",
+        transform: "translate(-50%, -35%)",
 
     },
     paper: {
@@ -164,7 +165,12 @@ export default function UserDisplayTable(props) {
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [filterParams, setFilterParams] = useState({role: props.type});
-    const [requireRefresh, setRequireRefresh] = useState(false)
+    const [requireRefresh, setRequireRefresh] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
+    const [selectedUser, setSelectedUser] = useState();
+    const [detailsModalShown, setDetailsModalShown] = useState(false);
+    const [detailsUser, setDetailsUser] = useState({});
+    const [showEdit, setShowEdit] = useState(false);
 
     useEffect( () => {
         fetchData();
@@ -206,6 +212,8 @@ export default function UserDisplayTable(props) {
 
     const handleClick = (row) => {
         console.log(row)
+        setSelectedUser(row)
+        setShowDetails(true);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -289,6 +297,9 @@ export default function UserDisplayTable(props) {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
+            <Modal isOpen={showDetails} setIsOpen={setShowDetails}>
+                <Details user={selectedUser} setShowEdit={setShowEdit} setDetailsModalShown={setShowDetails}/>
+            </Modal>
 
         </div>
     );
