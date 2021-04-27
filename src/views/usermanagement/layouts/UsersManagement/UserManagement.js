@@ -12,6 +12,7 @@ import CreateForm from "../../components/CreateForm/CreateForm";
 import GroupsSubjectsTable from "../../components/GroupsSubjectsTable/GroupsSubjectsTable";
 import Details from "../../components/Details/Details";
 import EditForm from "../../components/EditForm/EditForm";
+import UserDisplayTable from "../../components/UserDisplayTable/UserDisplayTable";
 
 const flatten = (users) => {
     return users.map(user => {
@@ -171,6 +172,7 @@ const UserManagement = (props) => {
 
             </Modal>
             }
+            <UserDisplayTable type={props.type}/>
         </div>
     );
 };

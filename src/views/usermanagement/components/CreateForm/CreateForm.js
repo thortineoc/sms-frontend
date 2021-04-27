@@ -42,7 +42,7 @@ const validationSchema = Yup.object({
     })
 })
 
-const CreateForm = ({type, setCreateUserModalShown}) => {
+const CreateForm = ({type, setCreateUserModalShown, requireRefresh}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [items, setItems] = useState([]);
 
@@ -64,7 +64,10 @@ const CreateForm = ({type, setCreateUserModalShown}) => {
         callBackendPost(  axiosInstance,
                      "usermanagement-service/users",
                           JSON.stringify(values))
-                .then(response => console.log(response))
+                .then(response => {
+                    requireRefresh()
+                    console.log(response)
+                })
                 .catch(error => {
                     setStatus({success: false});
                     setSubmitting(false);
