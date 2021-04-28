@@ -10,6 +10,36 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import {lighten, makeStyles} from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import Toolbar from "@material-ui/core/Toolbar";
+
+const useStyles = makeStyles({
+    table: {
+        minWidth: 300,
+    },
+
+
+    title: {
+        flex: '1 1 100%',
+        margin: "5px",
+    },
+
+    error:{
+        color: 'red',
+        margin: '5px'
+    }
+});
+
 
 const initialValues = {
     item: ''
@@ -85,24 +115,37 @@ const GroupsSubjectsTable = (props) => {
             resetForm();
         }
     }
+    const classes = useStyles();
 
     return (
-        <div className="GroupsSubjectsTable">
-            <h1>{props.type.charAt(0).toUpperCase() + props.type.slice(1)}</h1>
-            <p>{errorMessage}</p>
-            <table>
-                <tbody>
-                {array.map((item, index) => (
-                    <tr key={item}>
-                        <td>{item}</td>
-                        <td><TrashIcon className="GroupsSubjectsTable__delete" onClick={() => onDelete(index)} />
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
 
-
+        <div>
+            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                {props.type.charAt(0).toUpperCase() + props.type.slice(1)}
+            </Typography>
+            {errorMessage.length>0 ? (
+                <Typography className={classes.error} variant="p" id="tableTitle" component="div">
+                    {errorMessage}
+                </Typography>
+            ):(
+                <div/>
+            )}
+            <Table className={classes.table} size="small" aria-label="a dense table">
+                <TableBody>
+                    {array.map((row, index) => (
+                        <TableRow key={row}>
+                            <TableCell component="th" scope="row">
+                                {row}
+                            </TableCell>
+                            <TableCell align="right">
+                                <IconButton size={"small"}>
+                                    <DeleteIcon onClick={() => onDelete(index)}/>
+                                </IconButton>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -132,10 +175,8 @@ const GroupsSubjectsTable = (props) => {
                     }
                 }
             </Formik>
+        </div>);
 
-
-        </div>
-    )
 
 }
 
