@@ -8,9 +8,11 @@ const GradesTableRow = ({subject, grades}) => {
             <td className="TableRow__subject-cell">{subject}</td>
             <td className="TableRow__grades-cell">
                 {grades.map(obj =>
-                <Grade value={obj.grade} weight={obj.weight} />
+                <Grade value={obj} />
             )}
             </td>
+            <td>4.6</td>
+            <td>5</td>
         </tr>
     );
 };

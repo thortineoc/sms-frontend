@@ -10,7 +10,6 @@ const GradesTable = ({data, columns}) => {
         classes.push(element);
     })
 
-
     return (
         <table className="GradesTable">
             <thead>

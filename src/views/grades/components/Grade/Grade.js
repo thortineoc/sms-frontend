@@ -1,13 +1,18 @@
 import React from 'react';
 import './Grade.css';
+import MouseOverPopover from "../Popover/Popover";
 
-const Grade = ({value, weight}) => {
-    const classes = `Grade Grade-weight${weight}`
+const Grade = ({value}) => {
+    const classes = `Grade Grade-weight${value.weight}`
+
+    const gradeIcon = value.grade
 
     return (
-        <div className={classes}>
-            {value}
-        </div>
+        <MouseOverPopover weight={value.weight} description={value.description}>
+            <div className={classes}>
+                {value.grade}
+            </div>
+        </MouseOverPopover>
     );
 };
 
