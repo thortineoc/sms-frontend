@@ -47,7 +47,7 @@ const validationSchema = Yup.object({
 const CreateForm = ({type, setCreateUserModalShown}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [groups, setGroups] = useState([]);
-
+    let mockUser = 'TEACHER';
     useEffect(() => {
         fetchData();
     }, [])
@@ -126,7 +126,7 @@ const CreateForm = ({type, setCreateUserModalShown}) => {
                                     options={groups}
                                 />
 
-                                {type === 'TEACHER' &&
+                                {mockUser === 'TEACHER' &&
                                 <MultipleSelectField
                                     label="Subjects"
                                     name='customAttributes.subjects'

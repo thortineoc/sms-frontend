@@ -1,0 +1,8 @@
+.Grade {
+    margin: 1px;
+    border: 1px solid black;
+}
+
+.Grade-weight1 {
+    border: 1px solid red;
+}

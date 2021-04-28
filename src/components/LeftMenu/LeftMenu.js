@@ -6,6 +6,7 @@ import {useKeycloak} from "@react-keycloak/web";
 import getKeycloakRoles from "../../utilities/GetRoles";
 
 const LeftMenu = () => {
+    /*
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
 
@@ -14,7 +15,8 @@ const LeftMenu = () => {
             getKeycloakRoles(keycloak, setRole)
         }
     }, [keycloak, initialized])
-
+*/
+    let role = 'STUDENT';
     return (
         <div className="LeftMenu">
             {role === 'ADMIN' ? (
