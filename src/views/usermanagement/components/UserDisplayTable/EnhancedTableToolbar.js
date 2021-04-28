@@ -136,7 +136,7 @@ const EnhancedTableToolbar = (props) => {
 
 
             <Modal setIsOpen={setCreateUserModalShown} isOpen={createUserModalShown}>
-                <CreateForm type={props.type}/>
+                <CreateForm type={props.type} requireRefresh={props.requireRefresh} setCreateUserModalShown={setCreateUserModalShown}/>
             </Modal>
 
             <Modal setIsOpen={setColumnModalShown} isOpen={columnModalShown}>

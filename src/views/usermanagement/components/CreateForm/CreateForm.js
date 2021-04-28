@@ -65,17 +65,22 @@ const CreateForm = ({type, setCreateUserModalShown, requireRefresh}) => {
                      "usermanagement-service/users",
                           JSON.stringify(values))
                 .then(response => {
-                    requireRefresh()
-                    console.log(response)
+                    if(response.status===204){
+                        requireRefresh()
+                        setCreateUserModalShown(false)
+                        console.log(response)
+                    } else {
+                        setStatus({success: false});
+                        setSubmitting(false);
+                        setErrors({submit: "Cannot create this user"});
+                    }
                 })
                 .catch(error => {
                     setStatus({success: false});
                     setSubmitting(false);
-                    setErrors({submit: error.message});
+                    setErrors({submit: "Cannot create this user"});
                 });
         resetForm();
-        setStatus({success: true});
-        setCreateUserModalShown(false);
     }
 
     return (
