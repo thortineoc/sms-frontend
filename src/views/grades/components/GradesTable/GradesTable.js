@@ -6,7 +6,6 @@ const GradesTable = ({data, columns}) => {
     const classes = [];
     columns.forEach(element => {
         element = ('GradesTable__' + element.replace(/\s/, ''));
-        console.log(element);
         classes.push(element);
     })
 

@@ -21,7 +21,7 @@ let mockData = {
             subject: 'maths',
             teacherId: '123',
             studentId: '1234',
-            grade: 4,
+            grade: 4.75,
             description: 'za sprawdzian',
             weight: 1
         },
@@ -37,6 +37,21 @@ let mockData = {
             description: 'za prace domowa',
             weight: 2
         }
+    ],
+
+    'biology': [
+        {
+            id: 4,
+            subject: 'biology',
+            teacherId: '12352312',
+            studentId: '1234',
+            grade: 3,
+            description: 'za prace domowa',
+            weight: 4
+        }
+    ],
+
+    'english': [
     ]
 }
 
