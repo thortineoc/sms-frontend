@@ -20,7 +20,6 @@ const Grade = ({value}) => {
     if(!Number.isInteger(result)) {
         result = convertGrade(result)
     }
-    console.log(result);
 
     return (
         <MouseOverPopover weight={value.weight} description={value.description}>

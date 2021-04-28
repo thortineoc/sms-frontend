@@ -15,6 +15,33 @@ let mockData = {
             description: 'za prace domowa',
             weight: 2
         },
+        {
+            id: 1,
+            subject: 'maths',
+            teacherId: '123',
+            studentId: '1234',
+            grade: 5,
+            description: 'za prace domowa',
+            weight: 2
+        },
+        {
+            id: 1,
+            subject: 'maths',
+            teacherId: '123',
+            studentId: '1234',
+            grade: 5,
+            description: 'za prace domowa',
+            weight: 2
+        },
+        {
+            id: 1,
+            subject: 'maths',
+            teacherId: '123',
+            studentId: '1234',
+            grade: 1,
+            description: 'za prace domowa',
+            weight: 4
+        },
 
         {
             id: 2,
