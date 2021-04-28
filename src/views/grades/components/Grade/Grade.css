@@ -1,8 +1,13 @@
 .Grade {
-    margin: 1px;
+    margin: 2px;
     border: 1px solid black;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    float: left;
 }
 
 .Grade-weight1 {
     border: 1px solid red;
 }
+

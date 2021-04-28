@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
-import TableRow from "../../components/TableRow/TableRow";
+import GradesTableRow from "../../components/GradesTableRow/GradesTableRow";
 import DisplayTable from "../../../usermanagement/components/DisplayTable/DisplayTable";
 
 let mockData = {
@@ -42,7 +42,9 @@ let mockData = {
 
 const COLUMN_TITLES = [
     'Subjects',
-    'Grades'
+    'Grades',
+    'Mean',
+    'Final grade'
 ]
 
 

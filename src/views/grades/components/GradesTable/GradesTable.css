@@ -3,4 +3,22 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 80%;
+    text-align: left;
+}
+
+.GradesTable__Subjects {
+    width: 20%;
+}
+
+.GradesTable__Grades {
+
+}
+
+.GradesTable__Mean {
+    width: 8%
+}
+
+.GradesTable__Finalgrade {
+    width: 8%
 }
