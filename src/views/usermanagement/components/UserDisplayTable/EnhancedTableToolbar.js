@@ -43,7 +43,6 @@ const EnhancedTableToolbar = (props) => {
     const [columnModalShown, setColumnModalShown] = useState(false);
     const [createUserModalShown, setCreateUserModalShown] = useState(false);
     const [searchValue, setSearchValue] = useState("");
-
     const [showGroups, setShowGroups] = useState(false);
 
     const handleCreateUserClicked = () =>{
