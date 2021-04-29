@@ -11,27 +11,25 @@ import callBackendPost from "../../../../utilities/CallBackendPost";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 
-const initialValues = {
-    id: '',
-    userName: '',
-    firstName: '',
-    lastName: '',
-    role: 'STUDENT',
-    pesel: '',
-    customAttributes: {
-        email: '',
-        group: '',
-        phoneNumber: '',
-        middleName: '',
-        subjects: []
+const initialValues = (role) => {
+
+    return {
+        id: '',
+        userName: '',
+        firstName: '',
+        lastName: '',
+        role: role,
+        pesel: '',
+        customAttributes: {
+            email: '',
+            group: '',
+            phoneNumber: '',
+            middleName: '',
+            subjects: []
+        }
     }
 }
 
-const subjects = [
-    'geography',
-    'chemistry',
-    'french'
-]
 
 const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
@@ -44,19 +42,20 @@ const validationSchema = Yup.object({
     })
 })
 
-const CreateForm = ({type, setCreateUserModalShown}) => {
+const CreateForm = ({type, setCreateUserModalShown, requireRefresh}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const [groups, setGroups] = useState([]);
-    let mockUser = 'TEACHER';
+    const [items, setItems] = useState([]);
+
     useEffect(() => {
+        console.log(initialValues(type))
         fetchData();
     }, [])
 
     const fetchData = () => {
-        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+        callBackendGet(axiosInstance, "usermanagement-service/" + (type==="STUDENT" ? "groups" : "subjects"), null)
             .then(response => {
                 console.log(response.data);
-                setGroups(response.data);
+                setItems(response.data);
             })
             .catch(error => console.log(error))
     }
@@ -65,20 +64,28 @@ const CreateForm = ({type, setCreateUserModalShown}) => {
         callBackendPost(  axiosInstance,
                      "usermanagement-service/users",
                           JSON.stringify(values))
-                .then(response => console.log(response))
+                .then(response => {
+                    if(response.status===204){
+                        requireRefresh()
+                        setCreateUserModalShown(false)
+                        console.log(response)
+                    } else {
+                        setStatus({success: false});
+                        setSubmitting(false);
+                        setErrors({submit: "Cannot create this user"});
+                    }
+                })
                 .catch(error => {
                     setStatus({success: false});
                     setSubmitting(false);
-                    setErrors({submit: error.message});
+                    setErrors({submit: "Cannot create this user"});
                 });
         resetForm();
-        setStatus({success: true});
-        setCreateUserModalShown(false);
     }
 
     return (
         <Formik
-            initialValues={initialValues}
+            initialValues={initialValues(type)}
             validationSchema={validationSchema}
             validateOnChange={false}
             onSubmit={onSubmit}
@@ -120,17 +127,18 @@ const CreateForm = ({type, setCreateUserModalShown}) => {
                                     name="customAttributes.phoneNumber"
                                     type="text"
                                 />
+                                {type === 'STUDENT' &&
                                 <SelectFieldWrapper
                                     label="Group"
                                     name="customAttributes.group"
-                                    options={groups}
-                                />
+                                    options={items}
+                                />}
 
-                                {mockUser === 'TEACHER' &&
+                                {type === 'TEACHER' &&
                                 <MultipleSelectField
                                     label="Subjects"
                                     name='customAttributes.subjects'
-                                    options={subjects}
+                                    options={items}
                                 />}
 
                                 <div className="CreateForm__button-wrapper">

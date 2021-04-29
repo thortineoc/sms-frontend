@@ -1,11 +1,10 @@
 import React from 'react';
+import UserManagement from "../../layouts/UsersManagement/UserManagement";
 
 const TeacherManagement = () => {
     return (
-        <div className="TeacherManagement">
-            
-        </div>
-    );
+        <UserManagement type={"TEACHER"}/>
+    )
 };
 
 export default TeacherManagement;

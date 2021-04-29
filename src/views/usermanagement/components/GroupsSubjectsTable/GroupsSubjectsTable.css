@@ -3,7 +3,7 @@
 }
 
 .GroupsSubjectsTable__input {
-    margin-top: 40%;
+    margin-top: 20px;
 }
 
 .GroupsSubjectsTable__delete {
@@ -15,7 +15,3 @@
     transition: color .4s, transform 0.4s ease-in-out;
 }
 
-.GroupsSubjectsTable__delete:hover {
-    color: red;
-    -webkit-transform: scale(1.1);
-}

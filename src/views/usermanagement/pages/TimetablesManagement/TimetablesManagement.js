@@ -4,6 +4,7 @@ import './temp.css';
 import Modal from "../../../../components/Modal/Modal";
 import CreateForm from "../../components/CreateForm/CreateForm";
 import EditForm from "../../components/EditForm/EditForm";
+import ColumnsCheckbox from "../../components/ColumnsCheckbox/ColumnsCheckbox";
 
 const TimetablesManagement = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +24,7 @@ const TimetablesManagement = () => {
             }} />
 
             <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-                {content === 'add' && <CreateForm />}
+                {content === 'add' && <ColumnsCheckbox />}
                 {content === 'edit' && <EditForm />}
             </Modal>
 
