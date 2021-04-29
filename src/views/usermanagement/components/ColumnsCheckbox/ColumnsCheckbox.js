@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
 
+//example row in displayCoulumn: {id: 'lastName', display: true, label: 'Last Name'}
+//TODO: change value "display" on submit
 //function to update: props.setDisplayColumns()
 
 const ColumnsCheckbox = (props) => {
