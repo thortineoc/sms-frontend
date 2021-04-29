@@ -5,6 +5,7 @@ import Modal from "../../../../components/Modal/Modal";
 import CreateForm from "../../components/CreateForm/CreateForm";
 import EditForm from "../../components/EditForm/EditForm";
 import ColumnsCheckbox from "../../components/ColumnsCheckbox/ColumnsCheckbox";
+import GradesCreateEditForm from "../../../grades/components/GradesCreateEditForm/GradesCreateEditForm";
 
 const TimetablesManagement = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +25,7 @@ const TimetablesManagement = () => {
             }} />
 
             <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-                {content === 'add' && <ColumnsCheckbox />}
+                {content === 'add' && <GradesCreateEditForm/>}
                 {content === 'edit' && <EditForm />}
             </Modal>
 
