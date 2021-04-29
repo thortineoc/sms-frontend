@@ -11,28 +11,11 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import SchoolIcon from '@material-ui/icons/School';
 import {lighten, makeStyles} from "@material-ui/core/styles";
 import FiltersForm from "../FiltersForm/FiltersForm";
-import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
 import CreateForm from "../CreateForm/CreateForm";
 import GroupsSubjectsTable from "../GroupsSubjectsTable/GroupsSubjectsTable";
 import Modal from "../../../../components/Modal/Modal";
 import SearchBar from "material-ui-search-bar";
 import ColumnsCheckbox from "../ColumnsCheckbox/ColumnsCheckbox";
-
-const allColumns = [
-    "id", "firstName", "lastName", "middleName", "group", "pesel", "phoneNumber", "email", "userName"
-];
-
-const columnNameTranslations = {
-    id: "User ID",
-    firstName: "First Name",
-    lastName: "Last Name",
-    middleName: "Middle Name",
-    userName: "Username",
-    pesel: "PESEL",
-    phoneNumber: "Phone Number",
-    email: "E-mail Address",
-    group: "Group"
-}
 
 const useToolbarStyles = makeStyles((theme) => ({
     root: {
@@ -56,11 +39,9 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
     const classes = useToolbarStyles();
-    const [filterParams, setFilterParams] = useState({role: props.type});
     const [filterModalShown, setFilterModalShown] = useState(false);
     const [columnModalShown, setColumnModalShown] = useState(false);
     const [createUserModalShown, setCreateUserModalShown] = useState(false);
-    const [columns, setColumns] = useState(JSON.parse(sessionStorage.getItem("SMS_tableColumns")) ?? ["firstName", "lastName", "group", "pesel"]);
     const [searchValue, setSearchValue] = useState("");
 
     const [showGroups, setShowGroups] = useState(false);
