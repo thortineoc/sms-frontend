@@ -3,9 +3,7 @@ import clsx from "clsx";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
-import PropTypes from "prop-types";
 import React, {useState} from "react";
-
 import FilterListIcon from '@material-ui/icons/FilterList';
 import ViewWeekIcon from '@material-ui/icons/ViewWeek';
 import GroupIcon from '@material-ui/icons/Group';
@@ -16,10 +14,9 @@ import FiltersForm from "../FiltersForm/FiltersForm";
 import ListCheckbox from "../../../../components/ListCheckbox/ListCheckbox";
 import CreateForm from "../CreateForm/CreateForm";
 import GroupsSubjectsTable from "../GroupsSubjectsTable/GroupsSubjectsTable";
-import Details from "../Details/Details";
-import EditForm from "../EditForm/EditForm";
 import Modal from "../../../../components/Modal/Modal";
 import SearchBar from "material-ui-search-bar";
+import ColumnsCheckbox from "../ColumnsCheckbox/ColumnsCheckbox";
 
 const allColumns = [
     "id", "firstName", "lastName", "middleName", "group", "pesel", "phoneNumber", "email", "userName"
@@ -140,16 +137,7 @@ const EnhancedTableToolbar = (props) => {
             </Modal>
 
             <Modal setIsOpen={setColumnModalShown} isOpen={columnModalShown}>
-                <div>
-                    <ListCheckbox initValues={columns}
-                                  items={allColumns}
-                                  itemTranslations={columnNameTranslations}
-                                  onApply={newColumns => {
-                                      sessionStorage.setItem("SMS_tableColumns", JSON.stringify(newColumns));
-                                      setColumns(newColumns);
-                                      setColumnModalShown(false);
-                                  }} />
-                </div>
+                <ColumnsCheckbox displayColumns={props.displayColumns} setDisplayColumns={props.setDisplayColumns}/>
             </Modal>
 
             <Modal setIsOpen={setShowGroups} isOpen={showGroups}>
