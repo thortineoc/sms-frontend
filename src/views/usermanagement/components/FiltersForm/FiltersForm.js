@@ -27,12 +27,14 @@ const columnNames = {
     group: "Group"
 }
 
-const FiltersForm = ({initValues = defaultInitValues, onSubmit}) => {
+const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) => {
     return (
         <div className="FiltersForm">
             <Formik initialValues={initValues}
                     onSubmit={values => {
                         onSubmit(values);
+                        setIsActive(false);
+
                     }}>
                 {({values, isSubmitting}) => (
                     <Form>

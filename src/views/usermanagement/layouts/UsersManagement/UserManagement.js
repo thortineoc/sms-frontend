@@ -1,10 +1,21 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useKeycloak} from "@react-keycloak/web";
+import UserDisplayTable from "../../components/UserDisplayTable/UserDisplayTable";
 
-const UserManagement = () => {
+const UserManagement = (props) => {
+
+    const {keycloak, initialized} = useKeycloak();
+
+    if (!initialized) {
+        return <div>Loading...</div>
+    }
+    if (!!initialized && !keycloak.authenticated) {
+        keycloak.login();
+    }
+
     return (
-        <div className="UserManagement">
+            <UserDisplayTable type={props.type}/>
 
-        </div>
     );
 };
 
