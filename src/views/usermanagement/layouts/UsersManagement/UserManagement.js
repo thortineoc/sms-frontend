@@ -15,7 +15,6 @@ const UserManagement = (props) => {
 
     return (
             <UserDisplayTable type={props.type}/>
-
     );
 };
 

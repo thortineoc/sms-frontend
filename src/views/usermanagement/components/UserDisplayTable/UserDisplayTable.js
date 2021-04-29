@@ -107,8 +107,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
     table: {
-
         minWidth: 750,
+        cursor: 'pointer'
     },
     visuallyHidden: {
         border: 0,
@@ -124,7 +124,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserDisplayTable(props) {
-
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('firstName');
@@ -213,6 +212,7 @@ export default function UserDisplayTable(props) {
         console.log(row)
         setSelectedUser(row)
         setShowDetails(true);
+        setShowEdit(false);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -304,12 +304,23 @@ export default function UserDisplayTable(props) {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-            <Modal isOpen={showDetails} setIsOpen={setShowDetails}>
-                <Details user={selectedUser} setShowEdit={setShowEdit} setDetailsModalShown={setShowDetails}/>
-            </Modal>
-            <Modal isOpen={showEdit} setIsOpen={setShowEdit}>
-                <EditForm user={selectedUser}/>
-            </Modal>
+
+            {showDetails &&
+            <Modal isOpen={showDetails}
+                   setIsOpen={setShowDetails}
+                   onClose={() => {
+                       setShowDetails(false);
+                       setShowEdit(false)
+                   }}
+                >
+                {!showEdit &&
+                <Details
+                    user={selectedUser}
+                    setShowEdit={setShowEdit}
+                    setDetailsModalShown={setShowDetails}
+                />}
+                {showEdit && <EditForm user={selectedUser} />}
+            </Modal>}
 
         </div>
     );
