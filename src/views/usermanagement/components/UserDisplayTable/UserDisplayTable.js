@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import Modal from "../../../../components/Modal/Modal";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
 import Details from "../Details/Details";
+import EditForm from "../EditForm/EditForm";
 
 const removeEmptyStrings = (obj) => {
     return Object.keys(obj)
@@ -306,6 +307,9 @@ export default function UserDisplayTable(props) {
             </Paper>
             <Modal isOpen={showDetails} setIsOpen={setShowDetails}>
                 <Details user={selectedUser} setShowEdit={setShowEdit} setDetailsModalShown={setShowDetails}/>
+            </Modal>
+            <Modal isOpen={showEdit} setIsOpen={setShowEdit}>
+                <EditForm user={selectedUser}/>
             </Modal>
 
         </div>
