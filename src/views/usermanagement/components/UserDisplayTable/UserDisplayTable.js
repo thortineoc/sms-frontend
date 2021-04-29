@@ -139,8 +139,6 @@ export default function UserDisplayTable(props) {
     const [requireRefresh, setRequireRefresh] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [selectedUser, setSelectedUser] = useState();
-    const [detailsModalShown, setDetailsModalShown] = useState(false);
-    const [detailsUser, setDetailsUser] = useState({});
     const [showEdit, setShowEdit] = useState(false);
     const [displayColumns, setDisplayColumns] = useState((props.type === "STUDENT" ? [
         {id: 'firstName', display: true, label: 'First Name'},
