@@ -11,17 +11,19 @@ const GradesTableRow = ({subject, grades}) => {
         <tr className="TableRow">
             <td className="TableRow__subject-cell">{subject}</td>
             <td className="TableRow__grades-cell">
-                {grades.map(obj =>
-                <Grade value={obj} />
+                {grades['regular'].map(obj =>
+                <Grade value={obj} type="regular"/>
             )}
             </td>
-            <td>{((grades.length !== 0) &&
+            <td>{((grades['regular'].length !== 0) &&
                 countAverage(
-                    grades.map(grade => grade.grade * grade.weight).reduce((a, b) => a + b),
-                    grades.map(grade => grade.weight).reduce((a, b) => a + b)
+                    grades['regular'].map(grade => grade.grade * grade.weight).reduce((a, b) => a + b),
+                    grades['regular'].map(grade => grade.weight).reduce((a, b) => a + b)
                 )) ?? ''}
             </td>
-            <td></td>
+            <td>
+                {Object.keys(grades['final']).length !== 0 && <Grade value={grades['final']} type="final"/>}
+            </td>
         </tr>
     );
 };

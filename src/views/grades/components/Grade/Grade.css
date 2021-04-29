@@ -1,5 +1,5 @@
 .Grade {
-    margin: 0 3px;
+    margin: 1px 3px;
     padding: 2px;
     width: 25px;
     height: 25px;
@@ -33,7 +33,7 @@
 }
 
 .Grade-weight3:hover {
-    background-color: #fff1cc;
+    background-color: #f9ef9b;
 }
 
 .Grade-weight4 {
@@ -42,4 +42,12 @@
 
 .Grade-weight4:hover {
     background-color:  #77dd77;
+}
+
+.Grade-final {
+    background-color: #ff6d6e;
+}
+
+.Grade-final:hover {
+    background-color: #ff514d;
 }

@@ -13,8 +13,8 @@ const convertGrade = value => {
     return gradeArr.join('');
 }
 
-const Grade = ({value}) => {
-    const classes = `Grade Grade-weight${value.weight}`
+const Grade = ({value, type}) => {
+    const classes = `Grade Grade-weight${value.weight} Grade-${type}`
 
     let result = value.grade;
     if(!Number.isInteger(result)) {
