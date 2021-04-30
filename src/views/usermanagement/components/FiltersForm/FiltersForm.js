@@ -37,14 +37,19 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) =>
                     onSubmit={values => {
                         onSubmit(values);
                         setIsActive(false);
-
-                    }}>
+                    }}
+                    onReset={() => {
+                        onSubmit(defaultInitValues);
+                        setIsActive(false);
+                    }}
+            >
                 {({values, isSubmitting}) => (
                     <Form>
                         <h3>Filters</h3>
                         <FormFields className="FiltersForm_fields"/>
                         <div className="FiltersForm__button-wrapper">
-                            <Button label="Apply" type="submit" disabled={isSubmitting} />
+                            <Button label="Reset" type="reset" disabled={isSubmitting} style={{margin:"5px"}}/>
+                            <Button label="Apply" type="submit" disabled={isSubmitting} style={{margin:"5px"}}/>
                         </div>
                     </Form>
                 )}
