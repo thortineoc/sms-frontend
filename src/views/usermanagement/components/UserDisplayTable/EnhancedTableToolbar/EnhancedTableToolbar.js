@@ -121,6 +121,7 @@ const EnhancedTableToolbar = (props) => {
                 <ColumnsCheckbox
                     displayColumns={props.displayColumns}
                     setDisplayColumns={props.setDisplayColumns}
+                    fetchData={props.fetchData}
                     setIsActive={setColumnModalShown}
                 />
             </Modal>

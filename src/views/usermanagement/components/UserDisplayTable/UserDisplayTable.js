@@ -238,6 +238,7 @@ export default function UserDisplayTable(props) {
                     searchUpdated={handleSearch}
                     displayColumns={displayColumns}
                     setDisplayColumns={setDisplayColumns}
+                    fetchData={fetchData}
                 />
                 <TableContainer>
                     <Table

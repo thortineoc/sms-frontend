@@ -6,12 +6,13 @@ import './ColumnsCheckbox.css'
 //TODO: change value "display" on submit
 //function to update: props.setDisplayColumns()
 
-const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive}) => {
+const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive, fetchData}) => {
     const [values, setValues] = useState(displayColumns);
 
     const handleSubmit = () => {
         setDisplayColumns(values);
         setIsActive(false);
+        fetchData();
     }
 
     useEffect(() => {
