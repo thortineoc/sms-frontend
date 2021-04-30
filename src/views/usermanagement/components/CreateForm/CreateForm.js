@@ -12,7 +12,6 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 
 const initialValues = (role) => {
-
     return {
         id: '',
         userName: '',
@@ -42,17 +41,17 @@ const validationSchema = Yup.object({
     })
 })
 
-const CreateForm = ({type, setCreateUserModalShown, requireRefresh}) => {
+const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        console.log(initialValues(type))
+        console.log(initialValues(role))
         fetchData();
     }, [])
 
     const fetchData = () => {
-        callBackendGet(axiosInstance, "usermanagement-service/" + (type==="STUDENT" ? "groups" : "subjects"), null)
+        callBackendGet(axiosInstance, "usermanagement-service/" + (role==="STUDENT" ? "groups" : "subjects"), null)
             .then(response => {
                 console.log(response.data);
                 setItems(response.data);
@@ -85,7 +84,7 @@ const CreateForm = ({type, setCreateUserModalShown, requireRefresh}) => {
 
     return (
         <Formik
-            initialValues={initialValues(type)}
+            initialValues={initialValues(role)}
             validationSchema={validationSchema}
             validateOnChange={false}
             onSubmit={onSubmit}
@@ -127,14 +126,14 @@ const CreateForm = ({type, setCreateUserModalShown, requireRefresh}) => {
                                     name="customAttributes.phoneNumber"
                                     type="text"
                                 />
-                                {type === 'STUDENT' &&
+                                {role === 'STUDENT' &&
                                 <SelectFieldWrapper
                                     label="Group"
                                     name="customAttributes.group"
                                     options={items}
                                 />}
 
-                                {type === 'TEACHER' &&
+                                {role === 'TEACHER' &&
                                 <MultipleSelectField
                                     label="Subjects"
                                     name='customAttributes.subjects'

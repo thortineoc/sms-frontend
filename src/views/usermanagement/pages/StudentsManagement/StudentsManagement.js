@@ -4,7 +4,7 @@ import UserManagement from "../../layouts/UsersManagement/UserManagement";
 
 const StudentManagement = () => {
     return (
-        <UserManagement type={"STUDENT"}/>
+        <UserManagement role="STUDENT" />
     )
 }
 

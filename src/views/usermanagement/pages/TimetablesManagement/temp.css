@@ -1,8 +1,0 @@
-.temp {
-    display: flex;
-    flex-direction: column;
-    width: 60px;
-    height: 300px;
-    justify-content: space-evenly;
-    margin: 50px;
-}

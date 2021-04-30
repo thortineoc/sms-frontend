@@ -9,8 +9,7 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
-const Details = ({user, setShowEdit, setDetailsModalShown}) => {
-    let mockRole = 'STUDENT';
+const Details = ({user, setShowEdit, setDetailsModalShown, role}) => {
 
     const [displayDialog, setDisplayDialog] = useState(false);
     const [deleteUser, setDeleteUser] = useState('');
@@ -30,69 +29,68 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                     <div className="Details__label">First name</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.firstName ?? '-'}
+                        {user.firstName}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Middle name</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.middleName) ?? '-'}
+                        {user.middleName}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Last name</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {user.lastName ?? '-'}
+                        {user.lastName}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">PESEL</div>
                     <div className="Details__data-not-modifiable">
-                        {user.pesel ?? '-'}
+                        {user.pesel}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">E-mail address</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.email) ?? '-'}
+                        {user.email}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Phone number</div>
                     <div className="Details__data"
                          onClick={handleClick}>
-                        {(user.phoneNumber) ?? '-'}
+                        {user.phoneNumber}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">User ID</div>
                     <div className="Details__data-not-modifiable">
-                        {user.id ?? '-'}
+                        {user.id}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Username</div>
                     <div className="Details__data-not-modifiable">
-                        {user.userName ?? '-'}
+                        {user.userName}
                     </div>
                 </div>
                 <div className="Details__field">
                     <div className="Details__label">Group</div>
                     <div className="Details__data"
                          onClick={handleClick}
-                         style={{height: '20px'}}
                     >
-                        {user.group ?? '-'}
+                        {user.group}
 
                     </div>
                 </div>
             </div>
 
 
-            {mockRole === 'STUDENT' ? (
+            {role === 'STUDENT' ? (
                 <>
                     <h3>Parent contact information</h3>
                     <div className="Details__parent-grid">
@@ -100,26 +98,26 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
                             <div className="Details__label">Address e-mail</div>
                             <div className="Details__data"
                                  onClick={handleClick}>
-                                {(user.email) ?? '-'}
+                                {user.email}
                             </div>
                         </div>
                         <div className="Details__field">
                             <div className="Details__label">Phone number</div>
                             <div className="Details__data"
                                  onClick={handleClick}>
-                                {(user.phoneNumber) ?? '-'}
+                                {user.phoneNumber}
                             </div>
                         </div>
                         <div className="Details__field">
                             <div className="Details__label">User ID</div>
                             <div className="Details__data-not-modifiable">
-                                {user.id ?? '-'}
+                                {user.id}
                             </div>
                         </div>
                         <div className="Details__field">
                             <div className="Details__label">Username</div>
                             <div className="Details__data-not-modifiable">
-                                {user.userName ?? '-'}
+                                {user.userName}
                             </div>
                         </div>
                     </div>

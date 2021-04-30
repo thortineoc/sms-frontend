@@ -1,16 +1,56 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import Button from "../../../../components/Button/Button";
+import './ColumnsCheckbox.css'
 
 //example row in displayCoulumn: {id: 'lastName', display: true, label: 'Last Name'}
 //TODO: change value "display" on submit
 //function to update: props.setDisplayColumns()
 
-const ColumnsCheckbox = (props) => {
+const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive}) => {
+    const [values, setValues] = useState(displayColumns);
 
+    const handleSubmit = () => {
+        setDisplayColumns(values);
+        setIsActive(false);
+    }
+
+    useEffect(() => {
+        console.log("columns: ", values)
+    },[values]);
 
     return(
-        props.displayColumns.map(column=>(
-            <div>{column.id} {column.label} {column.display ? "on" : "off"}</div>
-    )))
+        <div className="ColumnsCheckbox">
+            <h3>Columns</h3>
+            <div className="ColumnsCheckbox__grid">
+                {values.map((column, index) =>(
+                <div className="ColumnsCheckbox__row">
+                    <input
+                        type="checkbox"
+                        name={index}
+                        defaultChecked={column.display}
+                        onClick={(e) => {
+                            if(e.target.checked) {
+                                let result = values;
+                                result[e.target.name] = {...(values[e.target.name]), display: true}
+                                setValues(result);
+                            } else {
+                                let result = values;
+                                result[e.target.name] = {...(values[e.target.name]), display: false}
+                                setValues(result);
+                            }
+                        }}
+                    />
+                    {column.label}
+                </div>
+
+                ))}
+            </div>
+            <div className="ColumnsCheckbox__button">
+                <Button label='Apply' onClick={handleSubmit}/>
+            </div>
+
+        </div>
+    )
 }
 
 export default ColumnsCheckbox;
