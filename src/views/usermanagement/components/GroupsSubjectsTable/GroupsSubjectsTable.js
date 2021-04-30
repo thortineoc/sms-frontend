@@ -1,7 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import "./GroupsSubjectsTable.css"
 import {Form, Formik} from "formik";
-import {TrashIcon} from '@heroicons/react/outline'
 import Button from "../../../../components/Button/Button";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import * as Yup from "yup";
@@ -14,14 +13,10 @@ import {lighten, makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import Toolbar from "@material-ui/core/Toolbar";
 
 const useStyles = makeStyles({
     table: {
@@ -35,7 +30,6 @@ const useStyles = makeStyles({
     },
 
     error:{
-        color: 'red',
         margin: '5px'
     }
 });
