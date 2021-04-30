@@ -1,10 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import {TableHead} from "@material-ui/core";
-import PropTypes from 'prop-types';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import {lighten, makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,13 +13,14 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import Modal from "../../../../components/Modal/Modal";
-import EnhancedTableToolbar from "./EnhancedTableToolbar";
+import EnhancedTableToolbar from "./EnhancedTableToolbar/EnhancedTableToolbar";
 import Details from "../Details/Details";
+import EditForm from "../EditForm/EditForm";
 
 const removeEmptyStrings = (obj) => {
     return Object.keys(obj)
         .filter((k) => obj[k] !== "")
-        .reduce((a, k) => ({ ...a, [k]: obj[k] }), {});
+        .reduce((a, k) => ({...a, [k]: obj[k]}), {});
 }
 
 const flatten = (users) => {
@@ -59,9 +59,8 @@ function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-
 function EnhancedTableHead(props) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+    const {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -69,40 +68,34 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                {props.displayColumns.map((headCell) => (
-                    <TableCell
-                        key={headCell.id}
-                        align={'left'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-                            ) : null}
-                        </TableSortLabel>
-                    </TableCell>
-                ))}
+                {props.displayColumns.map(function (headCell, i) {
+                    if (headCell.display === true) {
+                        return (
+                            <TableCell
+                                key={headCell.id}
+                                align={'left'}
+                                sortDirection={orderBy === headCell.id ? order : false}
+                            >
+                                <TableSortLabel
+                                    active={orderBy === headCell.id}
+                                    direction={orderBy === headCell.id ? order : 'asc'}
+                                    onClick={createSortHandler(headCell.id)}
+                                >
+                                    {headCell.label}
+                                    {orderBy === headCell.id ? (
+                                        <span className={classes.visuallyHidden}>
+                {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                    </span>
+                                    ) : null}
+                                </TableSortLabel>
+                            </TableCell>
+                        )
+                    }
+                })}
             </TableRow>
         </TableHead>
     );
 }
-
-EnhancedTableHead.propTypes = {
-    classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
-};
 
 
 const useStyles = makeStyles((theme) => ({
@@ -114,8 +107,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
     table: {
-
         minWidth: 750,
+        cursor: 'pointer'
     },
     visuallyHidden: {
         border: 0,
@@ -131,40 +124,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserDisplayTable(props) {
-
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('firstName');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setArray] = useState([]);
     const [errorMessage, setErrorMessage] = useState("Loading...")
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const [filterParams, setFilterParams] = useState({role: props.type});
+    const [filterParams, setFilterParams] = useState({role: props.role});
     const [requireRefresh, setRequireRefresh] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [selectedUser, setSelectedUser] = useState();
-    const [detailsModalShown, setDetailsModalShown] = useState(false);
-    const [detailsUser, setDetailsUser] = useState({});
     const [showEdit, setShowEdit] = useState(false);
-    const [displayColumns, setDisplayColumns] = useState((props.type==="STUDENT" ? [
-        {id: 'firstName', label: 'First Name'},
-        {id: 'lastName',  label: 'Last Name'},
-        {id: 'pesel', label: 'Pesel'},
-        {id: 'userName', label: 'Username'},
-        {id: 'group', label: 'Group'},
+    const [displayColumns, setDisplayColumns] = useState((props.role === "STUDENT" ? [
+        {id: 'firstName', display: true, label: 'First Name'},
+        {id: 'middleName', display: false, label: 'Middle name'},
+        {id: 'lastName', display: true, label: 'Last Name'},
+        {id: 'email', display: false, label: 'E-mail'},
+        {id: 'phoneNumber', display: false, label: 'Phone'},
+        {id: 'group', display: true, label: 'Group'},
+        {id: 'pesel', display: true, label: 'Pesel'},
+        {id: 'userName', display: true, label: 'Username'},
+        {id: 'id', display: false, label: 'ID'},
     ] : [
-        {id: 'firstName', label: 'First Name'},
-        {id: 'lastName',  label: 'Last Name'},
-        {id: 'pesel', label: 'Pesel'},
-        {id: 'userName', label: 'Username'},
+        {id: 'firstName', display: true, label: 'First Name'},
+        {id: 'middleName', display: false, label: 'Middle name'},
+        {id: 'lastName', display: true, label: 'Last Name'},
+        {id: 'email', display: false, label: 'E-mail'},
+        {id: 'phoneNumber', display: false, label: 'Phone'},
+        {id: 'pesel', display: true, label: 'Pesel'},
+        {id: 'userName', display: true, label: 'Username'},
+        {id: 'id', display: false, label: 'ID'},
     ]));
 
 
-    useEffect( () => {
+    useEffect(() => {
         fetchData();
     }, [initialized]);
 
@@ -181,17 +178,17 @@ export default function UserDisplayTable(props) {
         setFilterParams(values);
     }
 
-    const handleRequireRefresh = () =>{
+    const handleRequireRefresh = () => {
         setRequireRefresh(true);
     }
 
     const fetchData = () => {
         callBackendPost(axiosInstance, "usermanagement-service/users/filter", removeEmptyStrings(filterParams))
             .then(response => {
-                if(response.status===200){
+                if (response.status === 200) {
                     setArray(flatten(response.data))
                     console.log(rows);
-                } else if(response.status===204){
+                } else if (response.status === 204) {
                     setArray([])
                 }
 
@@ -205,7 +202,7 @@ export default function UserDisplayTable(props) {
         setOrderBy(property);
     };
 
-    const handleSearch = (value) =>{
+    const handleSearch = (value) => {
         console.log(value)
         setFilterParams({...filterParams, search: value});
         console.log(filterParams);
@@ -215,6 +212,7 @@ export default function UserDisplayTable(props) {
         console.log(row)
         setSelectedUser(row)
         setShowDetails(true);
+        setShowEdit(false);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -234,7 +232,7 @@ export default function UserDisplayTable(props) {
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar
                     numSelected={selected.length}
-                    type={props.type}
+                    role={props.role}
                     handleFiltersParamsChanged={handleFiltersParamsChanged}
                     requireRefresh={handleRequireRefresh}
                     searchUpdated={handleSearch}
@@ -245,7 +243,7 @@ export default function UserDisplayTable(props) {
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+                        size={'medium'}
                         aria-label="enhanced table"
                     >
                         <EnhancedTableHead
@@ -267,23 +265,30 @@ export default function UserDisplayTable(props) {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={()=>handleClick(row)}
+                                            onClick={() => handleClick(row)}
                                             role="checkbox"
                                             tabIndex={-1}
                                             key={row.id}
                                         >
 
-                                            {displayColumns.map((column, index) =>
-                                                (index === 0 ? <TableCell component="th" id={labelId} scope="row" padding="10px">{row[column.id]}</TableCell>
-                                                        : <TableCell align="left">{row[column.id]}</TableCell>
-                                                ))}
+                                            {displayColumns.map(function(column, index) {
+
+                                                if(column.display===true){
+                                                    return(
+                                                        (index === 0 ? <TableCell component="th" id={labelId} scope="row"
+                                                                                  padding="10px">{row[column.id]}</TableCell>
+                                                                : <TableCell align="left">{row[column.id]}</TableCell>
+                                                        ))
+                                                }
+
+                                            })}
 
                                         </TableRow>
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                                    <TableCell colSpan={6} />
+                                <TableRow style={{height: (53) * emptyRows}}>
+                                    <TableCell colSpan={6}/>
                                 </TableRow>
                             )}
                         </TableBody>
@@ -299,9 +304,24 @@ export default function UserDisplayTable(props) {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-            <Modal isOpen={showDetails} setIsOpen={setShowDetails}>
-                <Details user={selectedUser} setShowEdit={setShowEdit} setDetailsModalShown={setShowDetails}/>
-            </Modal>
+
+            {showDetails &&
+            <Modal isOpen={showDetails}
+                   setIsOpen={setShowDetails}
+                   onClose={() => {
+                       setShowDetails(false);
+                       setShowEdit(false)
+                   }}
+                >
+                {!showEdit &&
+                <Details
+                    user={selectedUser}
+                    setShowEdit={setShowEdit}
+                    setDetailsModalShown={setShowDetails}
+                    role={props.role}
+                />}
+                {showEdit && <EditForm user={selectedUser} role={props.role} />}
+            </Modal>}
 
         </div>
     );

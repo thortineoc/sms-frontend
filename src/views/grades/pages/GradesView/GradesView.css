@@ -1,0 +1,28 @@
+.GradesView {
+
+}
+
+.GradesView table {
+    border-collapse: collapse !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.GradesView th, td {
+    border-collapse: collapse !important;
+    border-radius: 10px;
+    padding: 1%;
+}
+
+.GradesView td {
+    border: 1px solid lightgray;
+    border-bottom: none;
+}
+
+.GradesView td:first-child {
+    border-left: none;
+}
+
+.GradesView td:last-child {
+    border-right: none;
+}

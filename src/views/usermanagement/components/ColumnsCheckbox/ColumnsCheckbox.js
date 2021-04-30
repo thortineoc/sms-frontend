@@ -1,84 +1,55 @@
-import React, {useEffect} from 'react';
-import {Checkbox, FormControl, FormControlLabel, FormGroup} from "@material-ui/core";
-import {elementType} from "prop-types";
-import formik, { Formik, Field, Form, FieldArray } from "formik";
-import { useFormik } from 'formik';
+import React, {useEffect, useState} from 'react';
+import Button from "../../../../components/Button/Button";
+import './ColumnsCheckbox.css'
 
-const all = [
-    {id: 'firstName', label: 'First Name'},
-    {id: 'lastName',  label: 'Last Name'},
-    {id: 'pesel', label: 'Pesel'},
-    {id: 'userName', label: 'Username'},
-    {id: 'group', label: 'Group'},
-    {id: 'middleName', label: 'Middle name'},
-    {id: 'email', label: 'E-mail'},
-    {id: 'phoneNumber', label: 'Phone no.'},
-    {id: 'id', label: 'Id'},
-]
+//example row in displayCoulumn: {id: 'lastName', display: true, label: 'Last Name'}
+//TODO: change value "display" on submit
+//function to update: props.setDisplayColumns()
 
-const data = [
-    {id: 'firstName', label: 'First Name'},
-    {id: 'lastName',  label: 'Last Name'},
-    {id: 'pesel', label: 'Pesel'},
-    {id: 'userName', label: 'Username'},
-    {id: 'group', label: 'Group'},
-]
+const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive}) => {
+    const [values, setValues] = useState(displayColumns);
 
-const isItemInData = (item) => {
-    for(const element in data){
-        if(data.hasOwnProperty(element)){
-
-            if(data[element].id===item.id){
-                return true;
-            }
-        }
-
+    const handleSubmit = () => {
+        setDisplayColumns(values);
+        setIsActive(false);
     }
-    return false;
-}
 
-const ColumnsCheckbox = (props) => {
-    // return (
-    //     <FormControl onSubmit={values => console.log(values)}>
-    //     <FormGroup onSubmit={values => console.log(values)}>
-    //         {all.map(a=>(
-    //             <FormControlLabel
-    //                 control={<Checkbox name="id" checked={isItemInData(a)} />}
-    //                 label={a.label}
-    //             />
-    //         ))}
-    //         <button type="submit"  className="UserManagementCreate__submit">
-    //             Submit
-    //         </button>
-    //     </FormGroup>
-    //
-    //     </FormControl>
-    // )
+    useEffect(() => {
+        console.log("columns: ", values)
+    },[values]);
 
-    return (
-        <Formik
-            initialValues={{
-                checked: [],
-            }}
-            onSubmit={(values) => {
-                alert(JSON.stringify(values, null, 2));
-            }}>
-            {({ values }) => (
-                <Form>
-                    {all.map(a=>(
-                        <FormControlLabel
-                            control={<Checkbox name="checked" value={Formik.values} />}
-                            label={a.label}
-                        />
+    return(
+        <div className="ColumnsCheckbox">
+            <h3>Columns</h3>
+            <div className="ColumnsCheckbox__grid">
+                {values.map((column, index) =>(
+                <div className="ColumnsCheckbox__row">
+                    <input
+                        type="checkbox"
+                        name={index}
+                        defaultChecked={column.display}
+                        onClick={(e) => {
+                            if(e.target.checked) {
+                                let result = values;
+                                result[e.target.name] = {...(values[e.target.name]), display: true}
+                                setValues(result);
+                            } else {
+                                let result = values;
+                                result[e.target.name] = {...(values[e.target.name]), display: false}
+                                setValues(result);
+                            }
+                        }}
+                    />
+                    {column.label}
+                </div>
 
+                ))}
+            </div>
+            <div className="ColumnsCheckbox__button">
+                <Button label='Apply' onClick={handleSubmit}/>
+            </div>
 
-                    ))}
-                    <button type="submit"  className="UserManagementCreate__submit">
-                                    Submit
-                            </button>
-                </Form>
-            )}
-        </Formik>
+        </div>
     )
 }
 
