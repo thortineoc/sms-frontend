@@ -239,6 +239,7 @@ export default function UserDisplayTable(props) {
                     displayColumns={displayColumns}
                     setDisplayColumns={setDisplayColumns}
                     fetchData={fetchData}
+                    filterParams={filterParams}
                 />
                 <TableContainer>
                     <Table

@@ -131,7 +131,10 @@ const EnhancedTableToolbar = (props) => {
             </Modal>
 
             <Modal setIsOpen={setFilterModalShown} isOpen={filterModalShown}>
-                <FiltersForm onSubmit={props.handleFiltersParamsChanged} setIsActive={setFilterModalShown}
+                <FiltersForm
+                    onSubmit={props.handleFiltersParamsChanged}
+                    setIsActive={setFilterModalShown}
+                    initValues={props.filterParams}
                 />
             </Modal>
 
