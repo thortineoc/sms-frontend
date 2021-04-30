@@ -93,7 +93,7 @@ const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
                 formik => {
                     return (
                         <Form>
-                            <h3>{"Create new " + role.toLowerCase()}</h3>
+                            <h3 style={{margin: "1px"}}>{"Create new " + role.toLowerCase()}</h3>
                             <div className="CreateForm">
                                 {formik.errors && formik.errors.submit &&
                                 <div className="error">{formik.errors.submit}</div>}
