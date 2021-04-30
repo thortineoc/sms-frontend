@@ -3,7 +3,7 @@ import UserManagement from "../../layouts/UsersManagement/UserManagement";
 
 const TeacherManagement = () => {
     return (
-        <UserManagement type={"TEACHER"}/>
+        <UserManagement role="TEACHER" />
     )
 };
 

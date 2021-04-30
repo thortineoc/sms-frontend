@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useKeycloak} from "@react-keycloak/web";
 import UserDisplayTable from "../../components/UserDisplayTable/UserDisplayTable";
 
-const UserManagement = (props) => {
+const UserManagement = ({role}) => {
 
     const {keycloak, initialized} = useKeycloak();
 
@@ -14,8 +14,8 @@ const UserManagement = (props) => {
     }
 
     return (
-            <UserDisplayTable type={props.type}/>
+            <UserDisplayTable role={role}/>
     );
-};
+}
 
 export default UserManagement;

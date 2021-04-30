@@ -13,7 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import Modal from "../../../../components/Modal/Modal";
-import EnhancedTableToolbar from "./EnhancedTableToolbar";
+import EnhancedTableToolbar from "./EnhancedTableToolbar/EnhancedTableToolbar";
 import Details from "../Details/Details";
 import EditForm from "../EditForm/EditForm";
 
@@ -134,12 +134,12 @@ export default function UserDisplayTable(props) {
     const [errorMessage, setErrorMessage] = useState("Loading...")
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const [filterParams, setFilterParams] = useState({role: props.type});
+    const [filterParams, setFilterParams] = useState({role: props.role});
     const [requireRefresh, setRequireRefresh] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [selectedUser, setSelectedUser] = useState();
     const [showEdit, setShowEdit] = useState(false);
-    const [displayColumns, setDisplayColumns] = useState((props.type === "STUDENT" ? [
+    const [displayColumns, setDisplayColumns] = useState((props.role === "STUDENT" ? [
         {id: 'firstName', display: true, label: 'First Name'},
         {id: 'middleName', display: false, label: 'Middle name'},
         {id: 'lastName', display: true, label: 'Last Name'},
@@ -232,7 +232,7 @@ export default function UserDisplayTable(props) {
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar
                     numSelected={selected.length}
-                    type={props.type}
+                    role={props.role}
                     handleFiltersParamsChanged={handleFiltersParamsChanged}
                     requireRefresh={handleRequireRefresh}
                     searchUpdated={handleSearch}
@@ -318,8 +318,9 @@ export default function UserDisplayTable(props) {
                     user={selectedUser}
                     setShowEdit={setShowEdit}
                     setDetailsModalShown={setShowDetails}
+                    role={props.role}
                 />}
-                {showEdit && <EditForm user={selectedUser} />}
+                {showEdit && <EditForm user={selectedUser} role={props.role} />}
             </Modal>}
 
         </div>

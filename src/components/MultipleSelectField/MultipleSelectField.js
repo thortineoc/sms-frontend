@@ -8,6 +8,7 @@ const MultipleSelectField = ({name, options, label, initialValues = []}) => {
 
     useEffect(() => {
         setFieldValue(name, values);
+        console.log("HEHEHE: ", values);
     },[values]);
 
     const handleClick = e => {
@@ -19,15 +20,12 @@ const MultipleSelectField = ({name, options, label, initialValues = []}) => {
         }
     }
 
-    const displayValues = () => {
-        return values.join(', ');
-    }
-
     return (
         <div className="MultipleSelectField">
             <label className="MultipleSelectField__label">
                 {label}
             </label>
+            <div data-tap-disabled="true">
             <select className="MultipleSelectField__input">
                 {options.map((item, index) => {
                     return (
@@ -37,7 +35,8 @@ const MultipleSelectField = ({name, options, label, initialValues = []}) => {
                     )
                 })}
             </select>
-            <p>{displayValues()}</p>
+            </div>
+            <div>{values.join(', ')}</div>
         </div>
     );
 }

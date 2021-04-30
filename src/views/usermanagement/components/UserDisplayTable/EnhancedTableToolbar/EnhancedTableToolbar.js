@@ -10,12 +10,13 @@ import GroupIcon from '@material-ui/icons/Group';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import SchoolIcon from '@material-ui/icons/School';
 import {lighten, makeStyles} from "@material-ui/core/styles";
-import FiltersForm from "../FiltersForm/FiltersForm";
-import CreateForm from "../CreateForm/CreateForm";
-import GroupsSubjectsTable from "../GroupsSubjectsTable/GroupsSubjectsTable";
-import Modal from "../../../../components/Modal/Modal";
+import FiltersForm from "../../FiltersForm/FiltersForm";
+import CreateForm from "../../CreateForm/CreateForm";
+import GroupsSubjectsTable from "../../GroupsSubjectsTable/GroupsSubjectsTable";
+import Modal from "../../../../../components/Modal/Modal";
 import SearchBar from "material-ui-search-bar";
-import ColumnsCheckbox from "../ColumnsCheckbox/ColumnsCheckbox";
+import ColumnsCheckbox from "../../ColumnsCheckbox/ColumnsCheckbox";
+import './EnhancedTableToolbar.css';
 
 const useToolbarStyles = makeStyles((theme) => ({
     root: {
@@ -65,7 +66,7 @@ const EnhancedTableToolbar = (props) => {
             className={clsx(classes.root)}
         >
             <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                {props.type.charAt(0) + props.type.slice(1).toLowerCase() + "s' accounts"}
+                {props.role.charAt(0) + props.role.slice(1).toLowerCase() + "s' accounts"}
             </Typography>
 
             <SearchBar
@@ -83,17 +84,17 @@ const EnhancedTableToolbar = (props) => {
                 </IconButton>
             </Tooltip>
 
-            {props.type==="STUDENT" &&
-            <Tooltip title="Mange groups">
-                <IconButton aria-label="manage">
-                    <GroupIcon onClick={handleItemsClicked}/>
+            {props.role === "STUDENT" &&
+            <Tooltip title="Mange groups" >
+                <IconButton aria-label="manage" className="Toolbar__icon">
+                    <GroupIcon onClick={handleItemsClicked} />
                 </IconButton>
             </Tooltip>
             }
 
-            {props.type==="TEACHER" &&
+            {props.role === "TEACHER" &&
             <Tooltip title="Mange subjects">
-                <IconButton aria-label="manage">
+                <IconButton aria-label="manage" >
                     <SchoolIcon onClick={handleItemsClicked}/>
                 </IconButton>
             </Tooltip>
@@ -113,19 +114,24 @@ const EnhancedTableToolbar = (props) => {
 
 
             <Modal setIsOpen={setCreateUserModalShown} isOpen={createUserModalShown}>
-                <CreateForm type={props.type} requireRefresh={props.requireRefresh} setCreateUserModalShown={setCreateUserModalShown}/>
+                <CreateForm role={props.role} requireRefresh={props.requireRefresh} setCreateUserModalShown={setCreateUserModalShown}/>
             </Modal>
 
             <Modal setIsOpen={setColumnModalShown} isOpen={columnModalShown}>
-                <ColumnsCheckbox displayColumns={props.displayColumns} setDisplayColumns={props.setDisplayColumns}/>
+                <ColumnsCheckbox
+                    displayColumns={props.displayColumns}
+                    setDisplayColumns={props.setDisplayColumns}
+                    setIsActive={setColumnModalShown}
+                />
             </Modal>
 
             <Modal setIsOpen={setShowGroups} isOpen={showGroups}>
-                <GroupsSubjectsTable type={props.type==="STUDENT" ? "groups" : "subjects"}/>
+                <GroupsSubjectsTable role={props.role === "STUDENT" ? "groups" : "subjects"}/>
             </Modal>
 
             <Modal setIsOpen={setFilterModalShown} isOpen={filterModalShown}>
-                <FiltersForm onSubmit={props.handleFiltersParamsChanged} setIsActive={setFilterModalShown}/>
+                <FiltersForm onSubmit={props.handleFiltersParamsChanged} setIsActive={setFilterModalShown}
+                />
             </Modal>
 
         </Toolbar>

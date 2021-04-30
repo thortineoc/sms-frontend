@@ -61,7 +61,7 @@ const GroupsSubjectsTable = (props) => {
     }, [initialized]);
 
     const fetchData = () => {
-        callBackendGet(axiosInstance, "usermanagement-service/" + props.type, null)
+        callBackendGet(axiosInstance, "usermanagement-service/" + props.role, null)
             .then(response => {
                 if (response.status === 200) {
                     setArray(response.data)
@@ -79,7 +79,7 @@ const GroupsSubjectsTable = (props) => {
     const onDelete = async (index) => {
         const itemsToUpdate = [...array]
         setErrorMessage("");
-        callBackendDelete(axiosInstance, "usermanagement-service/" + props.type + "/" + itemsToUpdate[index], null)
+        callBackendDelete(axiosInstance, "usermanagement-service/" + props.role + "/" + itemsToUpdate[index], null)
             .then(response => {
                 if (response.status === 204) {
                     setErrorMessage("");
@@ -101,7 +101,7 @@ const GroupsSubjectsTable = (props) => {
             setErrorMessage("This item already exists.");
         } else {
             setErrorMessage("");
-            callBackendPost(axiosInstance, "usermanagement-service/" + props.type + "/" + values.item, null)
+            callBackendPost(axiosInstance, "usermanagement-service/" + props.role + "/" + values.item, null)
                 .then(response => {
                     if (response.status === 204) {
                         setErrorMessage("");
@@ -121,7 +121,7 @@ const GroupsSubjectsTable = (props) => {
 
         <div>
             <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                {props.type.charAt(0).toUpperCase() + props.type.slice(1)}
+                {props.role.charAt(0).toUpperCase() + props.role.slice(1)}
             </Typography>
             {errorMessage.length>0 ? (
                 <Typography className={classes.error} variant="p" id="tableTitle" component="div">
@@ -161,7 +161,7 @@ const GroupsSubjectsTable = (props) => {
                                     <div className="error">{formik.errors.submit}</div>}
                                     <div className="GroupsSubjectsTable__input">
                                         <TextFieldWrapper
-                                            label={"Add " + props.type}
+                                            label={"Add " + props.role}
                                             name={"item"}
                                             type="text"
                                         />

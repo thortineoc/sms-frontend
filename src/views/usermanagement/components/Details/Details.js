@@ -9,8 +9,7 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
-const Details = ({user, setShowEdit, setDetailsModalShown}) => {
-    let mockRole = 'STUDENT';
+const Details = ({user, setShowEdit, setDetailsModalShown, role}) => {
 
     const [displayDialog, setDisplayDialog] = useState(false);
     const [deleteUser, setDeleteUser] = useState('');
@@ -91,7 +90,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown}) => {
             </div>
 
 
-            {mockRole === 'STUDENT' ? (
+            {role === 'STUDENT' ? (
                 <>
                     <h3>Parent contact information</h3>
                     <div className="Details__parent-grid">
