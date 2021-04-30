@@ -114,9 +114,7 @@ const GroupsSubjectsTable = (props) => {
     return (
 
         <div>
-            <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                {props.role.charAt(0).toUpperCase() + props.role.slice(1)}
-            </Typography>
+            <h3>{props.role.charAt(0).toUpperCase() + props.role.slice(1)}</h3>
             {errorMessage.length>0 ? (
                 <Typography className={classes.error} variant="p" id="tableTitle" component="div">
                     {errorMessage}
