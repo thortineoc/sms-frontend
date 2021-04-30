@@ -10,7 +10,7 @@ const init = {
     weight: 1,
     description: "",
     grade: "",
-    studentID: "LSFKJNVLKJWNV",
+    studentID: "LSFKJNVLKJWV",
 }
 
 const validationSchema = Yup.object({
