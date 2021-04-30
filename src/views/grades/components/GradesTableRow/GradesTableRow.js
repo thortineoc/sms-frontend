@@ -22,7 +22,10 @@ const GradesTableRow = ({subject, grades}) => {
                 )) ?? ''}
             </td>
             <td>
-                {Object.keys(grades['final']).length !== 0 && <Grade value={grades['final']} type="final"/>}
+                {Object.keys(grades['final']).length !== 0 &&
+                /*{grades['final'] !== undefined &&
+                grades['final'] !== null &&*/
+                <Grade value={grades['final']} type="final"/>}
             </td>
         </tr>
     );
