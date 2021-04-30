@@ -238,6 +238,8 @@ export default function UserDisplayTable(props) {
                     searchUpdated={handleSearch}
                     displayColumns={displayColumns}
                     setDisplayColumns={setDisplayColumns}
+                    fetchData={fetchData}
+                    filterParams={filterParams}
                 />
                 <TableContainer>
                     <Table
@@ -319,8 +321,9 @@ export default function UserDisplayTable(props) {
                     setShowEdit={setShowEdit}
                     setDetailsModalShown={setShowDetails}
                     role={props.role}
+                    fetchData={fetchData}
                 />}
-                {showEdit && <EditForm user={selectedUser} role={props.role} />}
+                {showEdit && <EditForm user={selectedUser} role={props.role} fetchData={fetchData}/>}
             </Modal>}
 
         </div>
