@@ -46,6 +46,7 @@ const GradesCreateEditForm = (props) => {
             validationSchema={validationSchema}
             validateOnChange={false}
             onSubmit={values => console.log(values)}
+            onReset={() => console.log("delete")}
         >
             {
                 formik => {
@@ -81,7 +82,9 @@ const GradesCreateEditForm = (props) => {
 
 
                                 <div className="CreateForm__button-wrapper">
-                                    <Button type="submit" label={(props.type==="MODIFY" ? "Save" : "Add")} disabled={formik.isSubmitting}/>
+                                    {props.type==="MODIFY"
+                                        && <Button type="reset" label="Delete" disabled={formik.isSubmitting} style={{margin:"5px"}}/>}
+                                    <Button type="submit" label={(props.type==="MODIFY" ? "Save" : "Add")} disabled={formik.isSubmitting} style={{margin:"5px"}}/>
                                 </div>
 
                             </div>
