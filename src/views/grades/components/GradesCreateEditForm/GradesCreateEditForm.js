@@ -2,15 +2,22 @@ import React, { useEffect, useState} from 'react';
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import {Form, Formik} from "formik";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import MultipleSelectField from "../../../../components/MultipleSelectField/MultipleSelectField";
 import Button from "../../../../components/Button/Button";
 import * as Yup from "yup";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendGet from "../../../../utilities/CallBackendGet";
 
-const init = {
-    weight: 1,
-    description: "",
-    grade: "",
-    studentID: "LSFKJNVLKJWV",
+const init = (id, type) => {
+    return(
+        {
+            weight: 1,
+            description: "",
+            grade: "",
+            studentId: id,
+            type: type,
+        }
+    )
+
 }
 
 const validationSchema = Yup.object({
@@ -18,10 +25,24 @@ const validationSchema = Yup.object({
     grade: Yup.string().matches(/^[+-]?[1-6]$/, 'Invalid format').required('Required'),
 })
 
-const GradesCreateEditForm = () => {
+const GradesCreateEditForm = (props) => {
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    const fetchData = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/subjects", null)
+            .then(response => {
+                setItems(response.data);
+            })
+            .catch(error => console.log(error))
+    }
     return (
         <Formik
-            initialValues={init}
+            initialValues={(props.type === "MODIFY" ? props.existingGrade : init(props.newGradeStudentId, props.type))}
             validationSchema={validationSchema}
             validateOnChange={false}
             onSubmit={values => console.log(values)}
@@ -30,6 +51,7 @@ const GradesCreateEditForm = () => {
                 formik => {
                     return (
                         <Form>
+                            <h3>{(props.type==="MODIFY" ? "Modify" : (props.type==="FINAL" ? "Add final" : "Add regular")) + " grade"}</h3>
                             <div className="CreateForm">
                                 {formik.errors && formik.errors.submit &&
                                 <div className="error">{formik.errors.submit}</div>}
@@ -45,6 +67,12 @@ const GradesCreateEditForm = () => {
                                     options={[1,2,3,4,5,6]}
                                 />
 
+                                <SelectFieldWrapper
+                                    label="Subject"
+                                    name="subject"
+                                    options={items}
+                                />
+
                                 <TextFieldWrapper
                                     label="Description"
                                     name="description"
@@ -52,10 +80,8 @@ const GradesCreateEditForm = () => {
                                 />
 
 
-                                <input type={"hidden"} id={"studentID"}/>
-
                                 <div className="CreateForm__button-wrapper">
-                                    <Button type="submit" label="Submit" disabled={formik.isSubmitting}/>
+                                    <Button type="submit" label={(props.type==="MODIFY" ? "Save" : "Add")} disabled={formik.isSubmitting}/>
                                 </div>
 
                             </div>
