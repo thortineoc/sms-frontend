@@ -1,8 +1,18 @@
-/*
 .FiltersForm {
-
+    display: flex;
+    justify-content: space-evenly;
 }
 
+.TextField_cell > * {
+   margin: 10px;
+}
+
+.FiltersForm__button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/*
 .FiltersForm_fields {
     display: flex;
 }
@@ -23,7 +33,7 @@
     box-sizing: border-box;
     font-weight: bold;
 }*/
-
+/*
 .FiltersForm__button-wrapper {
     float: right;
     margin-right: 4%;
@@ -85,4 +95,5 @@
 .ClearButton_mock {
     width: 17px;
     height: 17px;
-}
+}*/
+

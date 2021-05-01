@@ -1,0 +1,54 @@
+.Grade {
+    margin: 1px 3px;
+    padding: 2px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    float: left;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: default;
+    display: block;
+}
+
+.Grade-weight1 {
+    background-color: #FEC8D8;
+}
+
+.Grade-weight1:hover {
+    background-color: #FF9AA2;
+}
+
+.Grade-weight2 {
+    background-color: #dedee8;
+}
+
+.Grade-weight2:hover {
+    background-color: #B0C7ED;
+}
+
+.Grade-weight3 {
+    background-color: #fbe37c;
+}
+
+.Grade-weight3:hover {
+    background-color: #f5d15d;
+}
+
+.Grade-weight4 {
+    background-color: #c5eabd;
+}
+
+.Grade-weight4:hover {
+    background-color:  #77dd77;
+}
+
+.Grade-final {
+    background-color: #ff6d6e;
+}
+
+.Grade-final:hover {
+    background-color: #ff514d;
+}

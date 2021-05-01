@@ -13,7 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import Modal from "../../../../components/Modal/Modal";
-import EnhancedTableToolbar from "./EnhancedTableToolbar";
+import EnhancedTableToolbar from "./EnhancedTableToolbar/EnhancedTableToolbar";
 import Details from "../Details/Details";
 import EditForm from "../EditForm/EditForm";
 
@@ -107,8 +107,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
     table: {
-
         minWidth: 750,
+        cursor: 'pointer'
     },
     visuallyHidden: {
         border: 0,
@@ -124,7 +124,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function UserDisplayTable(props) {
-
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('firstName');
@@ -135,12 +134,12 @@ export default function UserDisplayTable(props) {
     const [errorMessage, setErrorMessage] = useState("Loading...")
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const [filterParams, setFilterParams] = useState({role: props.type});
+    const [filterParams, setFilterParams] = useState({role: props.role});
     const [requireRefresh, setRequireRefresh] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
     const [selectedUser, setSelectedUser] = useState();
     const [showEdit, setShowEdit] = useState(false);
-    const [displayColumns, setDisplayColumns] = useState((props.type === "STUDENT" ? [
+    const [displayColumns, setDisplayColumns] = useState((props.role === "STUDENT" ? [
         {id: 'firstName', display: true, label: 'First Name'},
         {id: 'middleName', display: false, label: 'Middle name'},
         {id: 'lastName', display: true, label: 'Last Name'},
@@ -213,6 +212,7 @@ export default function UserDisplayTable(props) {
         console.log(row)
         setSelectedUser(row)
         setShowDetails(true);
+        setShowEdit(false);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -232,12 +232,14 @@ export default function UserDisplayTable(props) {
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar
                     numSelected={selected.length}
-                    type={props.type}
+                    role={props.role}
                     handleFiltersParamsChanged={handleFiltersParamsChanged}
                     requireRefresh={handleRequireRefresh}
                     searchUpdated={handleSearch}
                     displayColumns={displayColumns}
                     setDisplayColumns={setDisplayColumns}
+                    fetchData={fetchData}
+                    filterParams={filterParams}
                 />
                 <TableContainer>
                     <Table
@@ -304,12 +306,25 @@ export default function UserDisplayTable(props) {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-            <Modal isOpen={showDetails} setIsOpen={setShowDetails}>
-                <Details user={selectedUser} setShowEdit={setShowEdit} setDetailsModalShown={setShowDetails}/>
-            </Modal>
-            <Modal isOpen={showEdit} setIsOpen={setShowEdit}>
-                <EditForm user={selectedUser}/>
-            </Modal>
+
+            {showDetails &&
+            <Modal isOpen={showDetails}
+                   setIsOpen={setShowDetails}
+                   onClose={() => {
+                       setShowDetails(false);
+                       setShowEdit(false)
+                   }}
+                >
+                {!showEdit &&
+                <Details
+                    user={selectedUser}
+                    setShowEdit={setShowEdit}
+                    setDetailsModalShown={setShowDetails}
+                    role={props.role}
+                    fetchData={fetchData}
+                />}
+                {showEdit && <EditForm user={selectedUser} role={props.role} fetchData={fetchData}/>}
+            </Modal>}
 
         </div>
     );

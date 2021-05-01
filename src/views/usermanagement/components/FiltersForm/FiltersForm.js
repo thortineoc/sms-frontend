@@ -2,6 +2,7 @@ import { Formik, Form } from "formik";
 import "./FiltersForm.css";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import Button from "../../../../components/Button/Button";
+import React from "react";
 
 const defaultInitValues = {
     userName: "",
@@ -28,6 +29,8 @@ const columnNames = {
 }
 
 const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) => {
+    console.log(initValues)
+    console.log(defaultInitValues)
     return (
         <div className="FiltersForm">
             <Formik initialValues={initValues}
@@ -38,6 +41,7 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) =>
                     }}>
                 {({values, isSubmitting}) => (
                     <Form>
+                        <h3>Filters</h3>
                         <FormFields className="FiltersForm_fields"/>
                         <div className="FiltersForm__button-wrapper">
                             <Button label="Apply" type="submit" disabled={isSubmitting} />

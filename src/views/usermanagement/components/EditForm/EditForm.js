@@ -50,9 +50,8 @@ const parent = {
 }
 
 
-const EditForm = ({user, groups}) => {
-    // fetch user data and groups
-    let mockRole = 'STUDENT';
+const EditForm = ({user, groups, role}) => {
+
 
     return (
         <>
@@ -120,7 +119,7 @@ const EditForm = ({user, groups}) => {
                                             name="customAttributes.group"
                                             options={groups}
                                         />
-                                        {mockRole === 'TEACHER' && (
+                                        {role === 'TEACHER' && (
                                             <div className="EditForm__subjects">
                                                 <MultipleSelectField
                                                     label="Subjects"
@@ -133,7 +132,7 @@ const EditForm = ({user, groups}) => {
                                     </div>
 
                                     <div className="EditForm__button-wrapper">
-                                        <Button type="submit" label={"Save " + mockRole.toLowerCase() + " changes"}
+                                        <Button type="submit" label={"Save " + role.toLowerCase() + " changes"}
                                                 disabled={formik.isSubmitting}/>
                                     </div>
 
@@ -144,7 +143,7 @@ const EditForm = ({user, groups}) => {
                 }
             </Formik>
 
-            {mockRole === 'STUDENT' && (
+            {role === 'STUDENT' && (
                 <Formik
                     initialValues={parent}
                     validateOnChange={true}

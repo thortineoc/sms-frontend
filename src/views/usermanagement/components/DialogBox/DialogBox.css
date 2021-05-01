@@ -13,6 +13,7 @@
     flex-direction: column;
     padding: 2%;
     justify-content: center;
+    text-align: center;
 }
 
 .DialogBox__options {

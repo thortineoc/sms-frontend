@@ -1,17 +1,18 @@
 .Button {
-    background-color: rgb(63, 81, 181);
+    background: rgb(2,0,36);
+    background: linear-gradient(36deg, rgba(2,0,36,1) 0%, rgba(103,88,91,1) 50%, rgba(2,0,36,1) 100%);
     color: white;
     border-radius: 8px;
     padding: 1vw 1vw;
     border: none;
     font-size: 0.9rem;
     max-width: 150px;
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3), 0 2px 5px 0 rgba(0, 0, 0, 0.2);
     font-weight: bold;
 }
 
 .Button:hover {
-    color: #f0edff;
+    color: #cccccc;
     cursor: pointer;
-    background-color: rgb(43, 61, 161);
+    background: rgb(2,0,36);
+    background: linear-gradient(36deg, rgba(2,0,36,1) 0%, rgba(83,68,71,1) 50%, rgba(2,0,36,1) 100%);
 }

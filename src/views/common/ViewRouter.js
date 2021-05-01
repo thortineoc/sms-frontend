@@ -4,7 +4,7 @@ import React from "react";
 import HomeworkView from "../homework/HomeworkView";
 import PresenceView from "../presence/PresenceView";
 import TimetableView from "../timetables/TimetableView";
-import GradesView from "../grades/GradesView";
+import GradesView from "../grades/pages/GradesView/GradesView";
 
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
