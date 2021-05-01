@@ -30,6 +30,7 @@ const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive, fetchD
                             style ={{
                                 color: "#020024FF",
                             }}
+                            color="primary"
                             name={index}
                             defaultChecked={column.display}
                             onChange={(e) => {
