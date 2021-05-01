@@ -29,6 +29,8 @@ const columnNames = {
 }
 
 const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) => {
+    console.log(initValues)
+    console.log(defaultInitValues)
     return (
         <div className="FiltersForm">
             <Formik initialValues={initValues}
