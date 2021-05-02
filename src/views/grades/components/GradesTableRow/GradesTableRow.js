@@ -6,10 +6,16 @@ const countAverage = (sum, divider) => {
     return (sum / divider).toFixed(2);
 }
 
-const GradesTableRow = ({subject, grades}) => {
+const GradesTableRow = ({subject, grades, role}) => {
     return (
         <tr className="TableRow">
-            <td className="TableRow__subject-cell">{subject}</td>
+            <td className="TableRow__subject-cell">
+                {role === 'STUDENT' ? (
+                    subject
+                ) : (
+                    `${subject.firstName} ${subject.lastName}`
+                )}
+            </td>
             <td className="TableRow__grades-cell">
                 {grades['regular'].map(obj =>
                 <Grade value={obj} type="regular"/>
