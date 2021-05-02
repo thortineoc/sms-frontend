@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, ThemeProvider, useTheme} from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,6 +7,15 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import {useFormikContext} from "formik";
+import {createMuiTheme} from "@material-ui/core";
+import {blue} from "@material-ui/core/colors";
+
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+        secondary: blue
+    }
+});
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -52,9 +61,10 @@ const MultipleSelect = (props) => {
     }, []);
 
     return (
+        <ThemeProvider theme={theme}>
         <div>
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-mutiple-chip-label">{props.label}</InputLabel>
+                <InputLabel id="demo-mutiple-chip-label" color="secondary">{props.label}</InputLabel>
                 <Select
                     labelId="demo-mutiple-chip-label"
                     multiple
@@ -78,6 +88,7 @@ const MultipleSelect = (props) => {
                 </Select>
             </FormControl>
         </div>
+        </ThemeProvider>
     );
 };
 

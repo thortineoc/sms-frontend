@@ -64,39 +64,67 @@ const FormFields = () => {
             <tbody>
                 <tr className="TextField_row">
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="firstName" placeholder={columnNames["firstName"]}/>
+                        <TextFieldWrapper
+                            name="firstName"
+                            label={columnNames["firstName"]}
+                            type="text"/>
                     </td>
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="lastName" placeholder={columnNames["lastName"]}/>
-                    </td>
-                </tr>
-                <tr className="TextField_row">
-                    <td className="TextField_cell">
-                        <TextFieldWrapper name="middleName" placeholder={columnNames["middleName"]}/>
-                    </td>
-                    <td className="TextField_cell">
-                        <TextFieldWrapper name="userName" placeholder={columnNames["userName"]}/>
+                        <TextFieldWrapper
+                            name="lastName"
+                            label={columnNames["lastName"]}
+                            type="text"/>
                     </td>
                 </tr>
                 <tr className="TextField_row">
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="id" placeholder={columnNames["id"]}/>
+                        <TextFieldWrapper
+                            name="middleName"
+                            label={columnNames["middleName"]}
+                            type="text"/>
                     </td>
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="phoneNumber" placeholder={columnNames["phoneNumber"]}/>
-                    </td>
-                </tr>
-                <tr className="TextField_row">
-                    <td className="TextField_cell">
-                        <TextFieldWrapper name="email" placeholder={columnNames["email"]}/>
-                    </td>
-                    <td className="TextField_cell">
-                        <TextFieldWrapper name="group" placeholder={columnNames["group"]}/>
+                        <TextFieldWrapper
+                            name="userName"
+                            label={columnNames["userName"]}
+                            type="text"/>
                     </td>
                 </tr>
                 <tr className="TextField_row">
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="pesel" placeholder={columnNames["pesel"]}/>
+                        <TextFieldWrapper
+                            name="id"
+                            label={columnNames["id"]}
+                            type="text"/>
+                    </td>
+                    <td className="TextField_cell">
+                        <TextFieldWrapper
+                            name="phoneNumber"
+                            label={columnNames["phoneNumber"]}
+                            type="text"/>
+                    </td>
+                </tr>
+                <tr className="TextField_row">
+                    <td className="TextField_cell">
+                        <TextFieldWrapper
+                            name="email"
+                            label={columnNames["email"]}
+                            type="text"/>
+
+                    </td>
+                    <td className="TextField_cell">
+                        <TextFieldWrapper
+                            name="group"
+                            label={columnNames["group"]}
+                            type="text"/>
+                    </td>
+                </tr>
+                <tr className="TextField_row">
+                    <td className="TextField_cell">
+                        <TextFieldWrapper
+                            name="pesel"
+                            label={columnNames["pesel"]}
+                            type="text"/>
                     </td>
                     <td className="TextField_cell"/>
                     <td className="ClearButton_mock"/>
