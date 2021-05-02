@@ -1,5 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import React from "react";
+import {useKeycloak} from "@react-keycloak/web";
 
 import HomeworkView from "../homework/HomeworkView";
 import PresenceView from "../presence/PresenceView";
@@ -11,6 +12,14 @@ import TeacherManagement from "../usermanagement/pages/TeachersManagement/Teache
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
 
 const ViewRouter = () => {
+    const {keycloak, initialized} = useKeycloak();
+    if (!initialized) {
+        return <div>Loading...</div>
+    }
+    if (!!initialized && !keycloak.authenticated) {
+        keycloak.login();
+    }
+
     return (
         <Switch>
             <Route path="/api/homework-service">
@@ -33,9 +42,6 @@ const ViewRouter = () => {
             </Route>
             <Route path="/api/usermanagement-service/timetables">
                 <TimetablesManagement />
-            </Route>
-            <Route path="/api/usermanagement-service/temp">
-
             </Route>
         </Switch>
     );

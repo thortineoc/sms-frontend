@@ -74,7 +74,7 @@ export default function LeftMenu(props) {
         }
     }
 
-    let mock = 'STUDENT';
+    let mock = 'ADMIN';
     return (
         <div className={classes.root}>
             <CssBaseline />
