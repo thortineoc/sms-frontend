@@ -2,10 +2,10 @@ import React, { useEffect, useState} from 'react';
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import {Form, Formik} from "formik";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import Button from "../../../../components/Button/Button";
 import * as Yup from "yup";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 
 const init = (id, type) => {
     return(
@@ -83,8 +83,8 @@ const GradesCreateEditForm = (props) => {
 
                                 <div className="CreateForm__button-wrapper">
                                     {props.type==="MODIFY"
-                                        && <Button type="reset" label="Delete" disabled={formik.isSubmitting} style={{margin:"5px"}}/>}
-                                    <Button type="submit" label={(props.type==="MODIFY" ? "Save" : "Add")} disabled={formik.isSubmitting} style={{margin:"5px"}}/>
+                                        && <ButtonWrapper type="reset" label="Delete" disabled={formik.isSubmitting} style={{margin:"5px"}}/>}
+                                    <ButtonWrapper type="submit" label={(props.type==="MODIFY" ? "Save" : "Add")} disabled={formik.isSubmitting} style={{margin:"5px"}}/>
                                 </div>
 
                             </div>
