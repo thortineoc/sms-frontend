@@ -6,28 +6,28 @@ const countAverage = (sum, divider) => {
     return (sum / divider).toFixed(2);
 }
 
-const GradesTableRow = ({firstCol, grades, role}) => {
+const GradesTableRow = ({subject, grades}) => {
     return (
         <tr className="TableRow">
-            <td className="TableRow__subject-cell">
-                {role === 'STUDENT' ? (
-                    firstCol
-                ) : (
-                    `${firstCol.firstName} ${firstCol.lastName}`
-                )}
+            <td className="TableRow__cell">{subject}</td>
+            <td className="TableRow__cell">
+
+                <table className="TableRow__inner-table">
+                    <tr className="TableRow__inner-row">
+                        {grades['regular'].map(obj =>
+                            <td className="TableRow__inner-cell"><Grade value={obj} type="regular"/></td>
+                        )}
+                    </tr>
+                </table>
+
             </td>
-            <td className="TableRow__grades-cell">
-                {grades['regular'].map(obj =>
-                <Grade value={obj} type="regular"/>
-            )}
-            </td>
-            <td>{((grades['regular'].length !== 0) &&
+            <td className="TableRow__cell">{((grades['regular'].length !== 0) &&
                 countAverage(
                     grades['regular'].map(grade => grade.grade * grade.weight).reduce((a, b) => a + b),
                     grades['regular'].map(grade => grade.weight).reduce((a, b) => a + b)
                 )) ?? ''}
             </td>
-            <td>
+            <td className="TableRow__cell">
                 {Object.keys(grades['final']).length !== 0 &&
                 /*{grades['final'] !== undefined &&
                 grades['final'] !== null &&*/
