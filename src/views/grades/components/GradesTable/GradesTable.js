@@ -21,11 +21,11 @@ const GradesTable = ({data, columns, role}) => {
             <tbody>
             {role === 'STUDENT' ? (
                         Object.keys(data).map((item, index) => (
-                            <GradesTableRow subject={item} grades={data[item]} role={role} />
+                            <GradesTableRow firstCol={item} grades={data[item]} role={role} />
                         ))
                     ) : (
                         data.map(item => (
-                            <GradesTableRow subject={item['student']} grades={item['grades']} role={role} />
+                            <GradesTableRow firstCol={item['student']} grades={item['grades']} role={role} />
                         ))
                     )
             }

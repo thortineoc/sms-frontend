@@ -6,14 +6,14 @@ const countAverage = (sum, divider) => {
     return (sum / divider).toFixed(2);
 }
 
-const GradesTableRow = ({subject, grades, role}) => {
+const GradesTableRow = ({firstCol, grades, role}) => {
     return (
         <tr className="TableRow">
             <td className="TableRow__subject-cell">
                 {role === 'STUDENT' ? (
-                    subject
+                    firstCol
                 ) : (
-                    `${subject.firstName} ${subject.lastName}`
+                    `${firstCol.firstName} ${firstCol.lastName}`
                 )}
             </td>
             <td className="TableRow__grades-cell">
