@@ -64,7 +64,7 @@ const MultipleSelect = (props) => {
         <ThemeProvider theme={theme}>
         <div>
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-mutiple-chip-label" color="secondary">{props.label}</InputLabel>
+                <InputLabel id="demo-mutiple-chip-label" color="primary">{props.label}</InputLabel>
                 <Select
                     labelId="demo-mutiple-chip-label"
                     multiple

@@ -35,7 +35,7 @@ const TextFieldWrapper = ({name, resetValue = false, setResetValue, ...rest}) =>
     return (
         <ThemeProvider theme={theme}>
         <div className="TextFieldWrapper">
-            <TextField {...configField} color="secondary"/>
+            <TextField {...configField} color="primary"/>
         </div>
         </ThemeProvider>
     );
