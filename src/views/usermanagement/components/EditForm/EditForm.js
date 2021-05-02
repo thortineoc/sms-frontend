@@ -37,12 +37,6 @@ const validationSchema = Yup.object({
     })
 })
 
-const subjects = [
-    'maths',
-    'geography',
-    'biology',
-    'history'
-]
 
 const parent = {
     id: 3,
@@ -53,6 +47,7 @@ const parent = {
 
 
 const EditForm = ({user, groups, role}) => {
+    console.log(user)
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [items, setItems] = useState([]);
 
