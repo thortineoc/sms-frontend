@@ -2,7 +2,10 @@ import { Formik, Form } from "formik";
 import "./FiltersForm.css";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendGet from "../../../../utilities/CallBackendGet";
 
 const defaultInitValues = {
     userName: "",
@@ -28,9 +31,25 @@ const columnNames = {
     group: "Group"
 }
 
-const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) => {
+const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive, role}) => {
     console.log(initValues)
     console.log(defaultInitValues)
+
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    const fetchData = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+            .then(response => {
+                console.log(response.data);
+                setItems(response.data);
+            })
+            .catch(error => console.log(error))
+    }
     return (
         <div className="FiltersForm">
             <Formik initialValues={initValues}
@@ -46,7 +65,7 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) =>
                 {({values, isSubmitting}) => (
                     <Form>
                         <h3>Filters</h3>
-                        <FormFields className="FiltersForm_fields"/>
+                        <FormFields className="FiltersForm_fields" role={role} groups={items}/>
                         <div className="FiltersForm__button-wrapper">
                             <ButtonWrapper label="Reset" type="reset" disabled={isSubmitting} style={{margin:"5px"}}/>
                             <ButtonWrapper label="Apply" type="submit" disabled={isSubmitting} style={{margin:"5px"}}/>
@@ -58,7 +77,7 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) =>
     );
 }
 
-const FormFields = () => {
+const FormFields = ({role, groups}) => {
     return (
         <table>
             <tbody>
@@ -114,18 +133,21 @@ const FormFields = () => {
                     </td>
                     <td className="TextField_cell">
                         <TextFieldWrapper
-                            name="group"
-                            label={columnNames["group"]}
-                            type="text"/>
-                    </td>
-                </tr>
-                <tr className="TextField_row">
-                    <td className="TextField_cell">
-                        <TextFieldWrapper
                             name="pesel"
                             label={columnNames["pesel"]}
                             type="text"/>
                     </td>
+
+                </tr>
+                <tr className="TextField_row">
+                    {role==="STUDENT" &&
+                    (<td className="TextField_cell">
+                        <SelectFieldWrapper
+                            label="Group"
+                            name="group"
+                            options={groups}
+                        />
+                    </td>)}
                     <td className="TextField_cell"/>
                     <td className="ClearButton_mock"/>
                 </tr>
