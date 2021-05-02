@@ -78,6 +78,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
                         {user.userName}
                     </div>
                 </div>
+                {role === 'STUDENT' &&
                 <div className="Details__field">
                     <div className="Details__label">Group</div>
                     <div className="Details__data"
@@ -86,7 +87,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
                         {user.group}
 
                     </div>
-                </div>
+                </div>}
             </div>
 
 
@@ -125,10 +126,10 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
             ) : (
                 <div className="Details__teacher-field" >
                     <div className="Details__label">Subjects</div>
-                    <div className="Details__data"
+                    <div className="Details__data-subjects"
                          onClick={handleClick}>
                         {(  user.subjects &&
-                            user.subjects.map(subject => <div className="Details__subject">{subject}</div>)) ?? '-'}
+                            user.subjects.map(subject => <span>{subject + ' '}</span>)) }
                     </div>
                 </div>
             )}

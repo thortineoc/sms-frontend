@@ -130,18 +130,17 @@ const EditForm = ({user, groups, role}) => {
                                             name="customAttributes.group"
                                             options={items}
                                         />)}
-                                        {role === 'TEACHER' && (
-                                            <div className="EditForm__subjects">
-                                                <MultipleSelect
-                                                    label="Subjects"
-                                                    name="customAttributes.subjects"
-                                                    options={items}
-                                                    initialValues={user.customAttributes.subjects}
-                                                />
-                                            </div>
-                                        )}
                                     </div>
-
+                                    {role === 'TEACHER' && (
+                                        <div className="EditForm__subjects">
+                                            <MultipleSelect
+                                                label="Subjects"
+                                                name="customAttributes.subjects"
+                                                options={items}
+                                                initialValues={user.customAttributes.subjects}
+                                            />
+                                        </div>
+                                    )}
                                     <div className="EditForm__button-wrapper">
                                         <ButtonWrapper type="submit" label={"Save " + role.toLowerCase() + " changes"}
                                                        disabled={formik.isSubmitting}/>
