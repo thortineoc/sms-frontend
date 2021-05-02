@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -38,7 +38,7 @@ const MenuProps = {
 
 const MultipleSelect = (props) => {
     const classes = useStyles();
-    const [picked, setPicked] = useState([])
+    const [picked, setPicked] = useState(props.initialValues !== undefined ? props.initialValues : []);
 
     const { setFieldValue } = useFormikContext();
 
@@ -46,6 +46,10 @@ const MultipleSelect = (props) => {
         setPicked(event.target.value);
         setFieldValue(props.name, event.target.value)
     };
+
+    useEffect(() => {
+        setFieldValue(props.name, props.initialValues !== undefined ? props.initialValues : [])
+    }, []);
 
     return (
         <div>
