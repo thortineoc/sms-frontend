@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import Button from "../../../../components/Button/Button";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import '../Details/Details.css';
 import './EditForm.css'
@@ -143,8 +143,8 @@ const EditForm = ({user, groups, role}) => {
                                     </div>
 
                                     <div className="EditForm__button-wrapper">
-                                        <Button type="submit" label={"Save " + role.toLowerCase() + " changes"}
-                                                disabled={formik.isSubmitting}/>
+                                        <ButtonWrapper type="submit" label={"Save " + role.toLowerCase() + " changes"}
+                                                       disabled={formik.isSubmitting}/>
                                     </div>
 
                                 </div>
@@ -195,8 +195,8 @@ const EditForm = ({user, groups, role}) => {
                                         </div>
 
                                         <div className="EditForm__button-wrapper">
-                                            <Button type="submit" label="Save parent changes"
-                                                    disabled={formik.isSubmitting}/>
+                                            <ButtonWrapper type="submit" label="Save parent changes"
+                                                           disabled={formik.isSubmitting}/>
                                         </div>
 
                                     </div>

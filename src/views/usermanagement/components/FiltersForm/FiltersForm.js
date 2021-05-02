@@ -1,7 +1,7 @@
 import { Formik, Form } from "formik";
 import "./FiltersForm.css";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import Button from "../../../../components/Button/Button";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import React from "react";
 
 const defaultInitValues = {
@@ -48,8 +48,8 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) =>
                         <h3>Filters</h3>
                         <FormFields className="FiltersForm_fields"/>
                         <div className="FiltersForm__button-wrapper">
-                            <Button label="Reset" type="reset" disabled={isSubmitting} style={{margin:"5px"}}/>
-                            <Button label="Apply" type="submit" disabled={isSubmitting} style={{margin:"5px"}}/>
+                            <ButtonWrapper label="Reset" type="reset" disabled={isSubmitting} style={{margin:"5px"}}/>
+                            <ButtonWrapper label="Apply" type="submit" disabled={isSubmitting} style={{margin:"5px"}}/>
                         </div>
                     </Form>
                 )}
