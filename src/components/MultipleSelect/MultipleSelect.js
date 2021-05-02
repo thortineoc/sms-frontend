@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
+import {useFormikContext} from "formik";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -37,10 +38,13 @@ const MenuProps = {
 
 const MultipleSelect = (props) => {
     const classes = useStyles();
+    const [picked, setPicked] = useState([])
 
+    const { setFieldValue } = useFormikContext();
 
     const handleChange = (event) => {
-        props.setItems(event.target.value);
+        setPicked(event.target.value);
+        setFieldValue(props.name, event.target.value)
     };
 
     return (
@@ -49,9 +53,8 @@ const MultipleSelect = (props) => {
                 <InputLabel id="demo-mutiple-chip-label">{props.title}</InputLabel>
                 <Select
                     labelId="demo-mutiple-chip-label"
-                    id="demo-mutiple-chip"
                     multiple
-                    value={props.items}
+                    value={picked}
                     onChange={handleChange}
                     input={<Input id="select-multiple-chip" />}
                     renderValue={(selected) => (
@@ -63,7 +66,7 @@ const MultipleSelect = (props) => {
                     )}
                     MenuProps={MenuProps}
                 >
-                    {props.allValues.map((name) => (
+                    {props.options.map((name) => (
                         <MenuItem key={name} value={name} >
                             {name}
                         </MenuItem>
