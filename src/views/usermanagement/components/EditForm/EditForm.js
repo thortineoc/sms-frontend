@@ -138,8 +138,8 @@ const EditForm = ({user, groups, role}) => {
                                         {role === 'TEACHER' && (
                                             <div className="EditForm__subjects">
                                                 <MultipleSelect
-                                                    title={"Subjects"}
-                                                    name={"customAttributes.subjects"}
+                                                    label="Subjects"
+                                                    name="customAttributes.subjects"
                                                     options={items}
                                                     initialValues={user.customAttributes.subjects}
                                                 />

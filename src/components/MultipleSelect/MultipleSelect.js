@@ -54,7 +54,7 @@ const MultipleSelect = (props) => {
     return (
         <div>
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-mutiple-chip-label">{props.title}</InputLabel>
+                <InputLabel id="demo-mutiple-chip-label">{props.label}</InputLabel>
                 <Select
                     labelId="demo-mutiple-chip-label"
                     multiple

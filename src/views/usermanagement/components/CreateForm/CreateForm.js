@@ -138,8 +138,8 @@ const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
 
                                 {role === 'TEACHER' &&
                                 <MultipleSelect
-                                    title={"Subjects"}
-                                    name={"customAttributes.subjects"}
+                                    label="Subjects"
+                                    name="customAttributes.subjects"
                                     options={items}
                                 />}
 
