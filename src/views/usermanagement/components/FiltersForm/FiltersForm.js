@@ -1,8 +1,11 @@
 import { Formik, Form } from "formik";
 import "./FiltersForm.css";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import Button from "../../../../components/Button/Button";
-import React from "react";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
+import React, {useEffect, useState} from "react";
+import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendGet from "../../../../utilities/CallBackendGet";
 
 const defaultInitValues = {
     userName: "",
@@ -28,21 +31,44 @@ const columnNames = {
     group: "Group"
 }
 
-const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) => {
+const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive, role}) => {
+    console.log(initValues)
+    console.log(defaultInitValues)
+
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    const fetchData = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+            .then(response => {
+                console.log(response.data);
+                setItems(response.data);
+            })
+            .catch(error => console.log(error))
+    }
     return (
         <div className="FiltersForm">
             <Formik initialValues={initValues}
                     onSubmit={values => {
                         onSubmit(values);
                         setIsActive(false);
-
-                    }}>
+                    }}
+                    onReset={() => {
+                        onSubmit(defaultInitValues);
+                        setIsActive(false);
+                    }}
+            >
                 {({values, isSubmitting}) => (
                     <Form>
                         <h3>Filters</h3>
-                        <FormFields className="FiltersForm_fields"/>
+                        <FormFields className="FiltersForm_fields" role={role} groups={items}/>
                         <div className="FiltersForm__button-wrapper">
-                            <Button label="Apply" type="submit" disabled={isSubmitting} />
+                            <ButtonWrapper label="Reset" type="reset" disabled={isSubmitting} style={{margin:"5px"}}/>
+                            <ButtonWrapper label="Apply" type="submit" disabled={isSubmitting} style={{margin:"5px"}}/>
                         </div>
                     </Form>
                 )}
@@ -51,46 +77,77 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive}) =>
     );
 }
 
-const FormFields = () => {
+const FormFields = ({role, groups}) => {
     return (
         <table>
             <tbody>
                 <tr className="TextField_row">
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="firstName" placeholder={columnNames["firstName"]}/>
+                        <TextFieldWrapper
+                            name="firstName"
+                            label={columnNames["firstName"]}
+                            type="text"/>
                     </td>
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="lastName" placeholder={columnNames["lastName"]}/>
+                        <TextFieldWrapper
+                            name="lastName"
+                            label={columnNames["lastName"]}
+                            type="text"/>
                     </td>
                 </tr>
                 <tr className="TextField_row">
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="middleName" placeholder={columnNames["middleName"]}/>
+                        <TextFieldWrapper
+                            name="middleName"
+                            label={columnNames["middleName"]}
+                            type="text"/>
                     </td>
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="userName" placeholder={columnNames["userName"]}/>
+                        <TextFieldWrapper
+                            name="userName"
+                            label={columnNames["userName"]}
+                            type="text"/>
                     </td>
                 </tr>
                 <tr className="TextField_row">
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="id" placeholder={columnNames["id"]}/>
+                        <TextFieldWrapper
+                            name="id"
+                            label={columnNames["id"]}
+                            type="text"/>
                     </td>
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="phoneNumber" placeholder={columnNames["phoneNumber"]}/>
+                        <TextFieldWrapper
+                            name="phoneNumber"
+                            label={columnNames["phoneNumber"]}
+                            type="text"/>
                     </td>
                 </tr>
                 <tr className="TextField_row">
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="email" placeholder={columnNames["email"]}/>
+                        <TextFieldWrapper
+                            name="email"
+                            label={columnNames["email"]}
+                            type="text"/>
+
                     </td>
                     <td className="TextField_cell">
-                        <TextFieldWrapper name="group" placeholder={columnNames["group"]}/>
+                        <TextFieldWrapper
+                            name="pesel"
+                            label={columnNames["pesel"]}
+                            type="text"/>
                     </td>
+
                 </tr>
                 <tr className="TextField_row">
-                    <td className="TextField_cell">
-                        <TextFieldWrapper name="pesel" placeholder={columnNames["pesel"]}/>
-                    </td>
+                    {role==="STUDENT" &&
+                    (<td className="TextField_cell">
+                        <SelectFieldWrapper
+                            label="Group"
+                            name="group"
+                            options={groups}
+                        />
+                    </td>)}
                     <td className="TextField_cell"/>
                     <td className="ClearButton_mock"/>
                 </tr>

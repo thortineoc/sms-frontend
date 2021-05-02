@@ -1,7 +1,16 @@
 import React from 'react';
 import './SelectFieldWrapper.css';
-import { TextField, MenuItem } from "@material-ui/core";
+import {TextField, MenuItem, createMuiTheme} from "@material-ui/core";
 import { useField, useFormikContext } from "formik";
+import {blue} from "@material-ui/core/colors";
+import {ThemeProvider} from "@material-ui/styles";
+
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+        secondary: blue
+    }
+});
 
 const SelectFieldWrapper = ({name, options, ...rest}) => {
 
@@ -27,8 +36,9 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
     }
 
     return (
+        <ThemeProvider theme={theme}>
         <div className="SelectFieldWrapper">
-            <TextField {...configSelect} >
+            <TextField {...configSelect} color="primary">
                 {options && options.map((item, index) => {
                     if(item === '') {
                         return (
@@ -45,6 +55,7 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
                 })}
             </TextField>
         </div>
+        </ThemeProvider>
     );
 }
 

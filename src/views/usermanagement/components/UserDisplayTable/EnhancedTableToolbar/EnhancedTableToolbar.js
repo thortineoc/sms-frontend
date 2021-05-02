@@ -121,6 +121,7 @@ const EnhancedTableToolbar = (props) => {
                 <ColumnsCheckbox
                     displayColumns={props.displayColumns}
                     setDisplayColumns={props.setDisplayColumns}
+                    fetchData={props.fetchData}
                     setIsActive={setColumnModalShown}
                 />
             </Modal>
@@ -130,7 +131,11 @@ const EnhancedTableToolbar = (props) => {
             </Modal>
 
             <Modal setIsOpen={setFilterModalShown} isOpen={filterModalShown}>
-                <FiltersForm onSubmit={props.handleFiltersParamsChanged} setIsActive={setFilterModalShown}
+                <FiltersForm
+                    onSubmit={props.handleFiltersParamsChanged}
+                    setIsActive={setFilterModalShown}
+                    initValues={props.filterParams}
+                    role={props.role}
                 />
             </Modal>
 

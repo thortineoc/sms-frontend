@@ -9,7 +9,7 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
-const Details = ({user, setShowEdit, setDetailsModalShown, role}) => {
+const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => {
 
     const [displayDialog, setDisplayDialog] = useState(false);
     const [deleteUser, setDeleteUser] = useState('');
@@ -136,7 +136,6 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role}) => {
             <div className="Details__delete-wrapper">
                  <TrashIcon className="Details__delete" onClick={() => {
                      setDisplayDialog(true);
-
                  }} />
             </div>
 
@@ -145,6 +144,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role}) => {
                 setDisplayDialog={setDisplayDialog}
                 setDeleteUser={setDeleteUser}
                 setDetailsModalShown={setDetailsModalShown}
+                fetchData={fetchData}
             /> }
 
         </div>

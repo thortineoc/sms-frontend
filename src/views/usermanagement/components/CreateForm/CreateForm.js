@@ -3,13 +3,14 @@ import {Formik, Form, FieldArray} from 'formik';
 import * as Yup from 'yup';
 import './CreateForm.css';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import Button from "../../../../components/Button/Button";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import MultipleSelectField from "../../../../components/MultipleSelectField/MultipleSelectField";
 import {useKeycloak} from "@react-keycloak/web";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
+import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
 
 const initialValues = (role) => {
     return {
@@ -60,6 +61,7 @@ const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
     }
 
     const onSubmit = (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+        console.log(JSON.stringify(values))
         callBackendPost(  axiosInstance,
                      "usermanagement-service/users",
                           JSON.stringify(values))
@@ -93,6 +95,7 @@ const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
                 formik => {
                     return (
                         <Form>
+                            <h3 style={{margin: "1px"}}>{"Create new " + role.toLowerCase()}</h3>
                             <div className="CreateForm">
                                 {formik.errors && formik.errors.submit &&
                                 <div className="error">{formik.errors.submit}</div>}
@@ -134,14 +137,14 @@ const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
                                 />}
 
                                 {role === 'TEACHER' &&
-                                <MultipleSelectField
+                                <MultipleSelect
                                     label="Subjects"
-                                    name='customAttributes.subjects'
+                                    name="customAttributes.subjects"
                                     options={items}
                                 />}
 
                                 <div className="CreateForm__button-wrapper">
-                                    <Button type="submit" label="Submit" disabled={formik.isSubmitting}/>
+                                    <ButtonWrapper type="submit" label="Submit" disabled={formik.isSubmitting}/>
                                 </div>
 
                             </div>

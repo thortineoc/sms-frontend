@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './ListCheckbox.css';
-import Button from "../Button/Button";
+import ButtonWrapper from "../Button/ButtonWrapper";
 
 const ListCheckbox = ({initValues = [], items, itemTranslations = items, onApply}) => {
     let [values, setValues] = useState(initValues);
@@ -33,7 +33,7 @@ const ListCheckbox = ({initValues = [], items, itemTranslations = items, onApply
                 {wrapInTableCells()}
             </table>
             <div className="FiltersForm__button-wrapper">
-                <Button label="Apply" onClick={() => onApply(values)} />
+                <ButtonWrapper label="Apply" onClick={() => onApply(values)} />
             </div>
         </div>
     );
