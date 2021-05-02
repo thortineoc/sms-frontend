@@ -8,7 +8,8 @@ import {ThemeProvider} from "@material-ui/styles";
 
 const theme = createMuiTheme({
     palette: {
-        primary: blue
+        primary: blue,
+        secondary: blue
     }
 });
 
@@ -34,7 +35,7 @@ const TextFieldWrapper = ({name, resetValue = false, setResetValue, ...rest}) =>
     return (
         <ThemeProvider theme={theme}>
         <div className="TextFieldWrapper">
-            <TextField {...configField} />
+            <TextField {...configField} color="secondary"/>
         </div>
         </ThemeProvider>
     );
