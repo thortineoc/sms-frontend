@@ -23,8 +23,10 @@ const Grade = ({value, type}) => {
 
     return (
         <MouseOverPopover weight={value.weight} description={value.description}>
-            <div className={classes}>
-                {result}
+            <div className="Grade-wrapper">
+                <div className={classes}>
+                    {result}
+                </div>
             </div>
         </MouseOverPopover>
     );

@@ -5,14 +5,18 @@
     transform: translate(0, -50%);
     width: 80%;
     text-align: left;
+    border-collapse: collapse !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.TableRow__cell {
+    border: 1px solid lightgray;
+    border-bottom: none;
 }
 
 .GradesTable__Subjects {
     width: 20%;
-}
-
-.GradesTable__Grades {
-
 }
 
 .GradesTable__Mean {
