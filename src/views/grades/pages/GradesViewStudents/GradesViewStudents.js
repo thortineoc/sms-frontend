@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../GradesViewStyles/GradesView.css';
+import '../GradesViewCommonStyles/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
 
 let mockData = {

@@ -13,17 +13,23 @@ const convertGrade = value => {
     return gradeArr.join('');
 }
 
-const Grade = ({value, type}) => {
-    const classes = `Grade Grade-weight${value.weight} Grade-${type}`
+const Grade = ({role, value, type}) => {
+    const classes = `Grade Grade-weight${value.weight} Grade-${type} Grade-${role}`
 
     let result = value.grade;
     if(!Number.isInteger(result)) {
         result = convertGrade(result)
     }
 
+    const handleClick = () => {
+        if(role === 'TEACHER') {
+            alert("Clicked!");
+        }
+    }
+
     return (
         <MouseOverPopover weight={value.weight} description={value.description}>
-            <div className="Grade-wrapper">
+            <div className="Grade-wrapper" onClick={handleClick}>
                 <div className={classes}>
                     {result}
                 </div>

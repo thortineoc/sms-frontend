@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../GradesViewStyles/GradesView.css';
+import '../GradesViewCommonStyles/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
 
 let mockData = [{
@@ -67,7 +67,48 @@ let mockData = [{
             weight: 1
         }
     },
-}]
+},
+    {
+        'student': {
+            firstName: 'Julia',
+            lastName: 'Doeeoeoe'
+        },
+        'grades':
+            {
+                'regular': [
+                    {
+                        id: 1,
+                        subject: 'maths',
+                        teacherId: '123',
+                        studentId: '1234',
+                        grade: 2.75,
+                        description: 'za prace domowa',
+                        weight: 3
+                    },
+                    {
+                        id: 1,
+                        subject: 'maths',
+                        teacherId: '123',
+                        studentId: '1234',
+                        grade: 2,
+                        description: 'za prace domowa',
+                        weight: 4
+                    },
+                    {
+                        id: 2,
+                        subject: 'maths',
+                        teacherId: '123',
+                        studentId: '1234',
+                        grade: 4.75,
+                        description: 'za sprawdzian',
+                        weight: 1
+                    },
+                ],
+                'final': {}
+            },
+    }
+
+]
 
 
 
