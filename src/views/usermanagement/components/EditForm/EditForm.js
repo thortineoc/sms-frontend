@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -7,7 +7,9 @@ import Button from "../../../../components/Button/Button";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import '../Details/Details.css';
 import './EditForm.css'
-import MultipleSelectField from "../../../../components/MultipleSelectField/MultipleSelectField";
+import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
+import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
     console.log(values);
@@ -35,12 +37,6 @@ const validationSchema = Yup.object({
     })
 })
 
-const subjects = [
-    'maths',
-    'geography',
-    'biology',
-    'history'
-]
 
 const parent = {
     id: 3,
@@ -51,7 +47,21 @@ const parent = {
 
 
 const EditForm = ({user, groups, role}) => {
+    console.log(user)
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [items, setItems] = useState([]);
 
+    useEffect(()=>{
+        fetchItems();
+    },[])
+    const fetchItems = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/" + (role==="STUDENT" ? "groups" : "subjects"), null)
+            .then(response => {
+                console.log(response.data);
+                setItems(response.data);
+            })
+            .catch(error => console.log(error))
+    }
 
     return (
         <>
@@ -114,17 +124,18 @@ const EditForm = ({user, groups, role}) => {
                                                 {user.userName ?? '-'}
                                             </div>
                                         </div>
+                                        {role === 'STUDENT' && (
                                         <SelectFieldWrapper
                                             label="Group"
                                             name="customAttributes.group"
-                                            options={groups}
-                                        />
+                                            options={items}
+                                        />)}
                                         {role === 'TEACHER' && (
                                             <div className="EditForm__subjects">
-                                                <MultipleSelectField
+                                                <MultipleSelect
                                                     label="Subjects"
-                                                    name='customAttributes.subjects'
-                                                    options={subjects}
+                                                    name="customAttributes.subjects"
+                                                    options={items}
                                                     initialValues={user.customAttributes.subjects}
                                                 />
                                             </div>

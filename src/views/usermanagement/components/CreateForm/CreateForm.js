@@ -10,6 +10,7 @@ import {useKeycloak} from "@react-keycloak/web";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
+import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
 
 const initialValues = (role) => {
     return {
@@ -60,6 +61,7 @@ const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
     }
 
     const onSubmit = (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+        console.log(JSON.stringify(values))
         callBackendPost(  axiosInstance,
                      "usermanagement-service/users",
                           JSON.stringify(values))
@@ -135,9 +137,9 @@ const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
                                 />}
 
                                 {role === 'TEACHER' &&
-                                <MultipleSelectField
+                                <MultipleSelect
                                     label="Subjects"
-                                    name='customAttributes.subjects'
+                                    name="customAttributes.subjects"
                                     options={items}
                                 />}
 
