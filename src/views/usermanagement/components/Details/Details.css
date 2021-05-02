@@ -37,6 +37,15 @@
     word-break: break-all;
 }
 
+.Details__data-subjects {
+    min-height: 30px;
+    cursor: pointer;
+    background-color: #F5F5F5;
+    border-radius: 3px;
+    padding: 2px;
+}
+
+
 .Details__data-not-modifiable {
     background-color: #FFF;
     display: flex;

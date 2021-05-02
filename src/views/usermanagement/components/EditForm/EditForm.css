@@ -7,10 +7,6 @@
 .EditForm__button-wrapper > button {
     max-width: 100px;
     max-height: 80px;
-    font-size: 12px;
+    font-size: 0.7rem;
     padding: 1.2%;
-}
-
-.EditForm__subjects {
-    min-height: 140px;
 }
