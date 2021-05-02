@@ -3,7 +3,7 @@ import {Formik, Form, FieldArray} from 'formik';
 import * as Yup from 'yup';
 import './CreateForm.css';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import Button from "../../../../components/Button/Button";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import MultipleSelectField from "../../../../components/MultipleSelectField/MultipleSelectField";
 import {useKeycloak} from "@react-keycloak/web";
@@ -144,7 +144,7 @@ const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
                                 />}
 
                                 <div className="CreateForm__button-wrapper">
-                                    <Button type="submit" label="Submit" disabled={formik.isSubmitting}/>
+                                    <ButtonWrapper type="submit" label="Submit" disabled={formik.isSubmitting}/>
                                 </div>
 
                             </div>

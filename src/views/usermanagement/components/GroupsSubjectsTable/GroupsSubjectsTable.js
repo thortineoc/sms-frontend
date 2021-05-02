@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import "./GroupsSubjectsTable.css"
 import {Form, Formik} from "formik";
-import Button from "../../../../components/Button/Button";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import * as Yup from "yup";
 import {useKeycloak} from "@react-keycloak/web";
@@ -158,7 +158,7 @@ const GroupsSubjectsTable = (props) => {
                                             type="text"
                                         />
                                         <div className="CreateForm__button-wrapper">
-                                            <Button type="submit" label="Add new"/>
+                                            <ButtonWrapper type="submit" label="Add new"/>
                                         </div>
                                     </div>
                                 </div>
