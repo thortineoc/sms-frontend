@@ -1,38 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {getQueriesForElement, render, fireEvent, waitFor, screen} from "@testing-library/react";
+import {getQueriesForElement, render, fireEvent, waitFor, screen, getByText} from "@testing-library/react";
 import UserManagement from "./views/usermanagement/layouts/UsersManagement/UserManagement";
+import userEvent from '@testing-library/user-event'
 
 it('renders without crashing', () => {
     render(<App />);
 });
-
-/*it('can login', () => {
-    render(<App />);
-    fireEvent.click(screen.getByText('Log in'));
-});*/
 /*
-it('goes to grades view', () => {
-   render(<App />);
-
-   fireEvent.click(screen.getByText('Grades'));
+it('can login', () => {
+    render(<UserManagement />);
+    //tu już nie działa
 });
-
-it('goes to homework view', () => {
-   render(<App />);
-
-   fireEvent.click(screen.getByText('Homework'));
-});
-
-it('goes to presences view', () => {
-   render(<App />);
-
-   fireEvent.click(screen.getByText('Presences'));
-});
-
-it('goes to timetables view', () => {
-   render(<App />);
-
-   fireEvent.click(screen.getByText('Timetables'));
-});*/
+*/
