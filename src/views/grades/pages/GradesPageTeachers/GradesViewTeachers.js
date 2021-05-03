@@ -22,7 +22,7 @@ let mockData = [{
                 weight: 2
             },
             {
-                id: 1,
+                id: 2,
                 subject: 'maths',
                 teacherId: '123',
                 studentId: '1234',
@@ -31,7 +31,7 @@ let mockData = [{
                 weight: 2
             },
             {
-                id: 1,
+                id: 3,
                 subject: 'maths',
                 teacherId: '123',
                 studentId: '1234',
@@ -40,7 +40,7 @@ let mockData = [{
                 weight: 2
             },
             {
-                id: 1,
+                id: 4,
                 subject: 'maths',
                 teacherId: '123',
                 studentId: '1234',
@@ -50,7 +50,7 @@ let mockData = [{
             },
 
             {
-                id: 2,
+                id: 5,
                 subject: 'maths',
                 teacherId: '123',
                 studentId: '1234',
@@ -60,7 +60,7 @@ let mockData = [{
             },
         ],
         'final': {
-            id: 2,
+            id: 6,
             subject: 'maths',
             teacherId: '123',
             studentId: '1234',
@@ -79,7 +79,7 @@ let mockData = [{
             {
                 'regular': [
                     {
-                        id: 1,
+                        id: 7,
                         subject: 'maths',
                         teacherId: '123',
                         studentId: '1234',
@@ -88,7 +88,7 @@ let mockData = [{
                         weight: 3
                     },
                     {
-                        id: 1,
+                        id: 8,
                         subject: 'maths',
                         teacherId: '123',
                         studentId: '1234',
@@ -97,7 +97,7 @@ let mockData = [{
                         weight: 4
                     },
                     {
-                        id: 2,
+                        id: 9,
                         subject: 'maths',
                         teacherId: '123',
                         studentId: '1234',

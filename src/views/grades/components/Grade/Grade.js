@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Grade.css';
 import MouseOverPopover from "../Popover/Popover";
+import '../../../../components/Modal/Modal';
+import Modal from "../../../../components/Modal/Modal";
+import GradesCreateEditForm from "../GradesCreateEditForm/GradesCreateEditForm";
 
 const convertGrade = value => {
     const gradeArr = value.toString().split('.');
@@ -14,6 +17,8 @@ const convertGrade = value => {
 }
 
 const Grade = ({role, value, type}) => {
+    const [show, setShow] = useState(false);
+    const [grade, setGrade] = useState({});
     const classes = `Grade Grade-weight${value.weight} Grade-${type} Grade-${role}`
 
     let result = value.grade;
@@ -21,21 +26,33 @@ const Grade = ({role, value, type}) => {
         result = convertGrade(result)
     }
 
-    const handleClick = () => {
+    const handleClick = (value) => {
         if(role === 'TEACHER') {
-            alert("Clicked!");
+            setGrade(value);
+            setShow(true);
         }
     }
 
     return (
-        <MouseOverPopover weight={value.weight} description={value.description}>
-            <div className="Grade-wrapper" onClick={handleClick}>
-                <div className={classes}>
-                    {result}
+        <>
+            <MouseOverPopover weight={value.weight} description={value.description}>
+                <div className="Grade-wrapper" onClick={() => handleClick(value)}>
+                    <div className={classes}>
+                        {result}
+                    </div>
                 </div>
-            </div>
-        </MouseOverPopover>
-    );
+            </MouseOverPopover>
+            {show && (
+                <Modal isOpen={show} setIsOpen={setShow}>
+                    <GradesCreateEditForm
+                        type={"MODIFY"}
+                        existingGrade={grade}
+                        setIsOpen={setShow}
+                    />
+                </Modal>
+            )}
+        </>
+    )
 };
 
 export default Grade;

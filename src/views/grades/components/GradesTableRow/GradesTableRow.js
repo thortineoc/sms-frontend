@@ -1,9 +1,7 @@
 import React from 'react';
 import Grade from "../Grade/Grade";
 import './GradesTableRow.css';
-import {AddCircle} from "@material-ui/icons";
-import '../../pages/GradesViewCommonStyles/AddCircle.css';
-import {PlusCircleIcon} from "@heroicons/react/solid";
+import AddCircle from "../AddCircle/AddCircle";
 
 const countAverage = (sum, divider) => {
     return (sum / divider).toFixed(2);
@@ -27,7 +25,7 @@ const GradesTableRow = ({role, firstCol, grades}) => {
                             <td className="TableRow__inner-cell"><Grade role={role} value={obj} type="regular"/></td>
                         )}
                         {role === 'TEACHER' && (
-                            <div className="addCircle" style={{alignSelf: 'flex-end'}}> <PlusCircleIcon /> </div>
+                            <AddCircle />
                         )}
                     </tr>
                 </table>
@@ -47,7 +45,7 @@ const GradesTableRow = ({role, firstCol, grades}) => {
                 <Grade role={role} value={grades['final']} type="final"/>
                 ) : (
                     role === 'TEACHER' && (
-                        <div className="addCircle"> <PlusCircleIcon /> </div>
+                        <AddCircle />
                     )
                 )}
             </td>
