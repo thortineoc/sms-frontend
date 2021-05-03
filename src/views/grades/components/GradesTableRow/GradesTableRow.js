@@ -25,7 +25,7 @@ const GradesTableRow = ({role, firstCol, grades}) => {
                             <td className="TableRow__inner-cell"><Grade role={role} value={obj} type="regular"/></td>
                         )}
                         {role === 'TEACHER' && (
-                            <AddCircle />
+                            <AddCircle studentId={firstCol} type="REGULAR" />
                         )}
                     </tr>
                 </table>
@@ -45,7 +45,7 @@ const GradesTableRow = ({role, firstCol, grades}) => {
                 <Grade role={role} value={grades['final']} type="final"/>
                 ) : (
                     role === 'TEACHER' && (
-                        <AddCircle />
+                        <AddCircle studentId={firstCol} type="FINAL" />
                     )
                 )}
             </td>
