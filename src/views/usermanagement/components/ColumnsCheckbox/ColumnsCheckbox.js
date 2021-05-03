@@ -1,11 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import Button from "../../../../components/Button/Button";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import './ColumnsCheckbox.css'
-import {Checkbox} from "@material-ui/core";
+import {Checkbox, createMuiTheme} from "@material-ui/core";
+import {ThemeProvider} from "@material-ui/styles";
+import {blue} from "@material-ui/core/colors";
 
 //example row in displayCoulumn: {id: 'lastName', display: true, label: 'Last Name'}
 //TODO: change value "display" on submit
 //function to update: props.setDisplayColumns()
+
+const theme = createMuiTheme({
+    palette: {
+        primary: blue
+    }
+});
 
 const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive, fetchData}) => {
     const [values, setValues] = useState(displayColumns);
@@ -21,15 +29,14 @@ const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive, fetchD
     }, [values]);
 
     return (
+        <ThemeProvider theme={theme}>
         <div className="ColumnsCheckbox">
             <h3>Columns</h3>
             <div className="ColumnsCheckbox__grid">
                 {values.map((column, index) => (
                     <div className="ColumnsCheckbox__row">
                         <Checkbox
-                            style ={{
-                                color: "#020024FF",
-                            }}
+                            color="primary"
                             name={index}
                             defaultChecked={column.display}
                             onChange={(e) => {
@@ -54,10 +61,11 @@ const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive, fetchD
                 ))}
             </div>
             <div className="ColumnsCheckbox__button">
-                <Button label='Apply' onClick={handleSubmit}/>
+                <ButtonWrapper label='Apply' onClick={handleSubmit}/>
             </div>
 
         </div>
+        </ThemeProvider>
     )
 }
 

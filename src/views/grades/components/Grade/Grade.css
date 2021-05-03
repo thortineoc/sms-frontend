@@ -1,5 +1,5 @@
 .Grade {
-    margin: 1px 3px;
+    margin: 0 3px;
     padding: 2px;
     width: 25px;
     height: 25px;
@@ -51,4 +51,15 @@
 
 .Grade-final:hover {
     background-color: #ff514d;
+}
+
+.Grade-wrapper {
+    width: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.Grade-wrapper td {
+    border: none;
 }

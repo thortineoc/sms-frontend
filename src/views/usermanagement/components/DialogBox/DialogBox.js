@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import Button from "../../../../components/Button/Button";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import './DialogBox.css';
 import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
@@ -32,8 +32,8 @@ const DialogBox = ({user, setDisplayDialog, setDeleteUser, setDetailsModalShown,
         <div className="DialogBox">
             <strong>Are you sure that you want to delete this account?</strong>
             <div className="DialogBox__options">
-                <Button label='Yes' onClick={handleAccept}/>
-                <Button label='No' onClick={handleCancel}/>
+                <ButtonWrapper label='Yes' onClick={handleAccept}/>
+                <ButtonWrapper label='No' onClick={handleCancel}/>
             </div>
         </div>
     );

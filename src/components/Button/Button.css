@@ -1,18 +1,18 @@
-.Button {
-    background: rgb(2,0,36);
-    background: linear-gradient(36deg, rgba(2,0,36,1) 0%, rgba(103,88,91,1) 50%, rgba(2,0,36,1) 100%);
-    color: white;
-    border-radius: 8px;
-    padding: 1vw 1vw;
-    border: none;
-    font-size: 0.9rem;
-    max-width: 150px;
-    font-weight: bold;
-}
+/*.Button {*/
+/*    background: rgb(2,0,36);*/
+/*    background: linear-gradient(36deg, rgba(2,0,36,1) 0%, rgba(103,88,91,1) 50%, rgba(2,0,36,1) 100%);*/
+/*    color: white;*/
+/*    border-radius: 8px;*/
+/*    padding: 1vw 1vw;*/
+/*    border: none;*/
+/*    font-size: 0.9rem;*/
+/*    max-width: 150px;*/
+/*    font-weight: bold;*/
+/*}*/
 
-.Button:hover {
-    color: #cccccc;
-    cursor: pointer;
-    background: rgb(2,0,36);
-    background: linear-gradient(36deg, rgba(2,0,36,1) 0%, rgba(83,68,71,1) 50%, rgba(2,0,36,1) 100%);
-}
+/*.Button:hover {*/
+/*    color: #cccccc;*/
+/*    cursor: pointer;*/
+/*    background: rgb(2,0,36);*/
+/*    background: linear-gradient(36deg, rgba(2,0,36,1) 0%, rgba(83,68,71,1) 50%, rgba(2,0,36,1) 100%);*/
+/*}*/
