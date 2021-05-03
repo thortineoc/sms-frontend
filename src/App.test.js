@@ -8,10 +8,11 @@ it('renders without crashing', () => {
     render(<App />);
 });
 
-it('can login', () => {
-    render(UserManagement);
-});
-
+/*it('can login', () => {
+    render(<App />);
+    fireEvent.click(screen.getByText('Log in'));
+});*/
+/*
 it('goes to grades view', () => {
    render(<App />);
 
@@ -34,4 +35,4 @@ it('goes to timetables view', () => {
    render(<App />);
 
    fireEvent.click(screen.getByText('Timetables'));
-});
+});*/
