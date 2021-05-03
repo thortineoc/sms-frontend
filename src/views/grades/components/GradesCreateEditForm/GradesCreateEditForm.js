@@ -9,7 +9,7 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
-const init = (id, type) => {
+const init = (id, type, subject) => {
     return(
         {
             weight: 1,
@@ -17,20 +17,26 @@ const init = (id, type) => {
             grade: "",
             studentId: id,
             isFinal: (type === "FINAL"),
+            subject: subject,
         }
     )
 
 }
 
-const convertGrade = (value) => {
-    const grade = value.toString().split('.');
-    if(grade[1] && grade[1] === '5') {
-        grade[1] = '+';
-    } else {
-        grade[0] = parseInt(grade[0]) + 1;
-        grade[1] = '-';
+const convertGrade = (existing) => {
+    let e = Object.assign({}, existing);
+    const gradeArr = e.grade.toString().split('.');
+    if(gradeArr[1] && gradeArr[1] === '5') {
+        gradeArr[1] = '+';
+    } else if(gradeArr[1]){
+        gradeArr[0] = parseInt(gradeArr[0]) + 1;
+        gradeArr[1] = '-';
+    } else{
+        gradeArr[0] = parseInt(gradeArr[0])
     }
-    return grade.join('');
+    e.grade=gradeArr.join('');
+
+    return e;
 }
 
 const validationSchema = Yup.object({
@@ -44,16 +50,11 @@ const GradesCreateEditForm = (props) => {
     const [items, setItems] = useState([]);
     const [error, setError] = useState("");
 
+    /*
     useEffect(() => {
         fetchData();
     }, [])
 
-    useEffect(() =>{
-        if(props.existingGrade){
-            props.existingGrade.grade=convertGrade(props.existingGrade.grade);
-        }
-        console.log(props.existingGrade)
-    },[props.existingGrade])
 
     const fetchData = () => {
         callBackendGet(axiosInstance, "usermanagement-service/subjects", null)
@@ -63,7 +64,9 @@ const GradesCreateEditForm = (props) => {
             .catch(error => console.log(error))
     }
 
-    const onSubmit = (values) =>{
+     */
+
+    const onSubmit = (values, setSubmitting, setValues) =>{
         setError("");
         let newValue = 0.0;
         if(values.grade.length === 2){
@@ -76,9 +79,11 @@ const GradesCreateEditForm = (props) => {
         } else {
             newValue+=parseInt(values.grade.slice(0), 10)
         }
-        values.grade = newValue;
-        console.log(values)
-        callBackendPut(axiosInstance, "grades-service/grades", values)
+        let updatedValues = Object.assign({}, values);
+        updatedValues.grade = newValue;
+        console.log(newValue)
+        console.log(updatedValues)
+        callBackendPut(axiosInstance, "grades-service/grades", updatedValues)
             .then(response => {
                 if(response.status<205){
                     props.setIsOpen(false)
@@ -87,6 +92,8 @@ const GradesCreateEditForm = (props) => {
             .catch(error => {
                 setError("Cannot " + (props.type==="MODIFY" ? "modify" : "add") + " this grade");
                 console.log(error)
+                setSubmitting(false);
+                setValues(values)
             })
     }
 
@@ -105,10 +112,10 @@ const GradesCreateEditForm = (props) => {
 
     return (
         <Formik
-            initialValues={(props.type === "MODIFY" ? props.existingGrade : init(props.newGradeStudentId, props.type))}
+            initialValues={(props.type === "MODIFY" ? convertGrade(props.existingGrade) : init(props.newGradeStudentId, props.type, "Math"))}
             validationSchema={validationSchema}
             validateOnChange={false}
-            onSubmit={values => onSubmit(values)}
+            onSubmit={(values, {setSubmitting, setValues}) => onSubmit(values, setSubmitting, setValues)}
             onReset={values => onDelete(values)}
         >
             {
@@ -132,11 +139,6 @@ const GradesCreateEditForm = (props) => {
                                     options={[1,2,3,4,5,6]}
                                 />
 
-                                <SelectFieldWrapper
-                                    label="Subject"
-                                    name="subject"
-                                    options={items}
-                                />
 
                                 <TextFieldWrapper
                                     label="Description"
