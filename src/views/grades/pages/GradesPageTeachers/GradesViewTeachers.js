@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import '../GradesViewCommonStyles/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
+import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
+import {Select} from "@material-ui/core";
 
 let mockData = [{
     'student': {
@@ -119,6 +121,7 @@ const COLUMN_TITLES = [
     'Final grade'
 ]
 
+const options = ['1a', '1b', '1c'];
 
 const GradesViewTeachers = () => {
     const [data, setData] = useState([]);

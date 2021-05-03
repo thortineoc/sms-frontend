@@ -27,7 +27,7 @@ const GradesTableRow = ({role, firstCol, grades}) => {
                             <td className="TableRow__inner-cell"><Grade role={role} value={obj} type="regular"/></td>
                         )}
                         {role === 'TEACHER' && (
-                            <div className="addCircle"> <PlusCircleIcon /> </div>
+                            <div className="addCircle" style={{alignSelf: 'flex-end'}}> <PlusCircleIcon /> </div>
                         )}
                     </tr>
                 </table>
