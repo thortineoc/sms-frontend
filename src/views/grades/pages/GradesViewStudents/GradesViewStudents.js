@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import './GradesView.css';
+import '../GradesViewCommonStyles/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
 
 let mockData = {
@@ -122,7 +122,7 @@ const COLUMN_TITLES = [
 ]
 
 
-const GradesView = () => {
+const GradesViewStudents = () => {
     const [data, setData] = useState({});
 
     useEffect(() => {
@@ -132,9 +132,9 @@ const GradesView = () => {
 
     return (
         <div className="GradesView">
-            <GradesTable data={data} columns={COLUMN_TITLES} />
+            <GradesTable data={data} columns={COLUMN_TITLES} role="STUDENT"/>
         </div>
     )
 }
 
-export default GradesView;
+export default GradesViewStudents;
