@@ -4,10 +4,10 @@ import {Form, Formik} from "formik";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import * as Yup from "yup";
 import useAxios from "../../../../utilities/useAxios";
-import callBackendGet from "../../../../utilities/CallBackendGet";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import {createSvgIcon} from "@material-ui/core";
 
 const init = (id, type, subject) => {
     return(
@@ -23,9 +23,9 @@ const init = (id, type, subject) => {
 
 }
 
-const convertGrade = (existing) => {
-    let e = Object.assign({}, existing);
-    const gradeArr = e.grade.toString().split('.');
+const convertGradeToString = (gradeObject) => {
+    let newGradeObject = Object.assign({}, gradeObject);
+    const gradeArr = newGradeObject.grade.toString().split('.');
     if(gradeArr[1] && gradeArr[1] === '5') {
         gradeArr[1] = '+';
     } else if(gradeArr[1]){
@@ -34,9 +34,25 @@ const convertGrade = (existing) => {
     } else{
         gradeArr[0] = parseInt(gradeArr[0])
     }
-    e.grade=gradeArr.join('');
+    newGradeObject.grade=gradeArr.join('');
+    return newGradeObject;
+}
 
-    return e;
+const convertGradeToDouble = (gradeObject) =>{
+    let newGradeObject = Object.assign({}, gradeObject);
+    let newValue = 0.0;
+    if(newGradeObject.grade.length === 2){
+        if(newGradeObject.grade.slice(1)==="+"){
+            newValue+=0.5;
+        } else {
+            newValue-=0.25;
+        }
+        newValue+=parseInt(newGradeObject.grade.slice(0,1), 10)
+    } else {
+        newValue+=parseInt(newGradeObject.grade.slice(0), 10)
+    }
+    newGradeObject.grade = newValue;
+    return newGradeObject;
 }
 
 const validationSchema = Yup.object({
@@ -47,43 +63,12 @@ const validationSchema = Yup.object({
 
 const GradesCreateEditForm = (props) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const [items, setItems] = useState([]);
     const [error, setError] = useState("");
-
-    /*
-    useEffect(() => {
-        fetchData();
-    }, [])
-
-
-    const fetchData = () => {
-        callBackendGet(axiosInstance, "usermanagement-service/subjects", null)
-            .then(response => {
-                setItems(response.data);
-            })
-            .catch(error => console.log(error))
-    }
-
-     */
-
+    console.log(props.existingGrade);
     const onSubmit = (values, setSubmitting, setValues) =>{
         setError("");
-        let newValue = 0.0;
-        if(values.grade.length === 2){
-            if(values.grade.slice(1)==="+"){
-                newValue+=0.5;
-            } else {
-                newValue-=0.25;
-            }
-            newValue+=parseInt(values.grade.slice(0,1), 10)
-        } else {
-            newValue+=parseInt(values.grade.slice(0), 10)
-        }
-        let updatedValues = Object.assign({}, values);
-        updatedValues.grade = newValue;
-        console.log(newValue)
-        console.log(updatedValues)
-        callBackendPut(axiosInstance, "grades-service/grades", updatedValues)
+        console.log(convertGradeToDouble(values));
+        callBackendPut(axiosInstance, "grades-service/grades", convertGradeToDouble(values))
             .then(response => {
                 if(response.status<205){
                     props.setIsOpen(false)
@@ -112,7 +97,7 @@ const GradesCreateEditForm = (props) => {
 
     return (
         <Formik
-            initialValues={(props.type === "MODIFY" ? convertGrade(props.existingGrade) : init(props.newGradeStudentId, props.type, "Math"))}
+            initialValues={(props.type === "MODIFY" ? convertGradeToString(props.existingGrade) : init(props.newGradeStudentId, props.type, props.subject))}
             validationSchema={validationSchema}
             validateOnChange={false}
             onSubmit={(values, {setSubmitting, setValues}) => onSubmit(values, setSubmitting, setValues)}
@@ -122,7 +107,7 @@ const GradesCreateEditForm = (props) => {
                 formik => {
                     return (
                         <Form>
-                            <h3>{(props.type==="MODIFY" ? "Modify" : (props.type==="FINAL" ? "Add final" : "Add regular")) + " grade"}</h3>
+                            <h3>{(props.type==="MODIFY" ? (props.existingGrade.isFinal===true ? "Modify final" : "Modify regular") : (props.type==="FINAL" ? "Add final" : "Add regular")) + " grade"}</h3>
                             {(error.length>0 ? <p>{error}</p> : <div/>)}
                             <div className="CreateForm">
                                 {formik.errors && formik.errors.submit &&
@@ -132,13 +117,12 @@ const GradesCreateEditForm = (props) => {
                                     name="grade"
                                     type="text"
                                 />
-
+                                {props.type !== "FINAL" &&
                                 <SelectFieldWrapper
                                     label="Weight"
                                     name='weight'
                                     options={[1,2,3,4,5,6]}
-                                />
-
+                                />}
 
                                 <TextFieldWrapper
                                     label="Description"
@@ -161,6 +145,5 @@ const GradesCreateEditForm = (props) => {
         </Formik>
     );
 }
-
 
 export default GradesCreateEditForm;
