@@ -5,6 +5,8 @@ import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/Select
 import {InputLabel, MenuItem, Select} from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import SimpleSelect from "../../../../components/SimpleSelect/SimpleSelect";
+import getKeycloakSubjects from "../../../../utilities/GetSubjects";
+import {useKeycloak} from "@react-keycloak/web";
 
 let mockData = [{
     'student': {
@@ -124,19 +126,20 @@ const COLUMN_TITLES = [
 ]
 
 const classess = ['1a', '1b', '1c'];
-const subjects = ['maths', 'geo', 'inf'];
 
 const GradesViewTeachers = () => {
     const [data, setData] = useState([]);
     const [subject, setSubject] = useState('');
     const [group, setGroup] = useState('');
-    const [allSubjects, setAllSubjects] = useState([]);
+    const [allSubjects, setAllSubjects] = useState('');
     const [allGroups, setAllGroups] = useState([]);
 
-
-
-
-
+    const {keycloak, initialized} = useKeycloak();
+    useEffect(() => {
+         if (!!initialized) {
+           getKeycloakSubjects(keycloak, setAllSubjects)
+       }
+    }, [keycloak, initialized])
 
 
     const handleChange = (event) => {
@@ -152,7 +155,8 @@ const GradesViewTeachers = () => {
     return (
         <div className="GradesView">
             <div className="GradesView__selects">
-                <SimpleSelect label="Subjects" options={subjects} value={subject} setValue={setSubject} />
+                <SimpleSelect label="Subjects"
+                              options={allSubjects.toString().split(',')} value={subject} setValue={setSubject} />
                 <SimpleSelect label="Groups" options={classess} value={group} setValue={setGroup} />
             </div>
 
