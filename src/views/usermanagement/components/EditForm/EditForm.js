@@ -13,26 +13,6 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 
-const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
-    console.log("VALUES")
-    console.log(values);
-    // const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    // callBackendPut(axiosInstance, "usermanagement-service/users/update", {
-    //     values
-    // })
-    //     .then(response => {
-    //         console.log(response);
-    //         //setParent(response.data[0]);
-    //         resetForm();
-    //         setStatus({success: true})
-    //     })
-    //     .catch(error => {
-    //         setStatus({success: false});
-    //         setSubmitting(false);
-    //         setErrors({submit: error.message});
-    //     });
-}
-
 const validationSchema = Yup.object({
     id: Yup.string().required('Required'),
     userName: Yup.string().required('Required'),
@@ -57,8 +37,7 @@ const validationSchemaParent = Yup.object({
     })
 })
 
-const EditForm = ({user, groups, role}) => {
-    //console.log(user)
+const EditForm = ({user, groups, role, refresh}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [items, setItems] = useState([]);
     const [parent, setParent] = useState({});
@@ -66,6 +45,26 @@ const EditForm = ({user, groups, role}) => {
     delete user.group;
     delete user.middleName;
     delete user.phoneNumber;
+    user.customAttributes.relatedUser = user.relatedUser;
+    delete user.relatedUser;
+    delete user.subjects;
+
+    const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+        callBackendPut(axiosInstance, "usermanagement-service/users/update", {
+            ...values
+        })
+            .then(response => {
+                //setParent(response.data[0]);
+                setStatus({success: true})
+                refresh(true);
+            })
+            .catch(error => {
+                setStatus({success: false});
+                setSubmitting(false);
+                resetForm();
+                setErrors({submit: error.message});
+            });
+    }
 
     useEffect(() => {
         fetchItems();
@@ -74,7 +73,6 @@ const EditForm = ({user, groups, role}) => {
                 pesel: "parent_" + user.pesel
             })
                 .then(response => {
-                    console.log(response);
                     setParent(response.data[0]);
                 })
                 .catch(error => console.log(error));
@@ -83,7 +81,6 @@ const EditForm = ({user, groups, role}) => {
     const fetchItems = () => {
         callBackendGet(axiosInstance, "usermanagement-service/" + (role === "STUDENT" ? "groups" : "subjects"), null)
             .then(response => {
-                // console.log(response.data);
                 setItems(response.data);
             })
             .catch(error => console.log(error))
