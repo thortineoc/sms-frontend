@@ -78,37 +78,37 @@ const EnhancedTableToolbar = (props) => {
                 onCancelSearch={() => props.searchUpdated("")}
             />
 
-            <Tooltip title="Add new user">
+            <Tooltip title="Add new user" onClick={handleCreateUserClicked}>
                 <IconButton aria-label="add">
-                    <PersonAddIcon onClick={handleCreateUserClicked}/>
+                    <PersonAddIcon />
                 </IconButton>
             </Tooltip>
 
             {props.role === "STUDENT" &&
-            <Tooltip title="Mange groups" >
+            <Tooltip title="Mange groups" onClick={handleItemsClicked} >
                 <IconButton aria-label="manage" className="Toolbar__icon">
-                    <GroupIcon onClick={handleItemsClicked} />
+                    <GroupIcon />
                 </IconButton>
             </Tooltip>
             }
 
             {props.role === "TEACHER" &&
-            <Tooltip title="Mange subjects">
+            <Tooltip title="Mange subjects" onClick={handleItemsClicked}>
                 <IconButton aria-label="manage" >
-                    <SchoolIcon onClick={handleItemsClicked}/>
+                    <SchoolIcon />
                 </IconButton>
             </Tooltip>
             }
 
-            <Tooltip title="Columns">
+            <Tooltip title="Columns" onClick={handleColumnsClicked}>
                 <IconButton aria-label="columns">
-                    <ViewWeekIcon onClick={handleColumnsClicked}/>
+                    <ViewWeekIcon />
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Filter users">
+            <Tooltip title="Filter users" onClick={handleFilterClicked}>
                 <IconButton aria-label="filter list">
-                    <FilterListIcon onClick={handleFilterClicked}/>
+                    <FilterListIcon />
                 </IconButton>
             </Tooltip>
 
