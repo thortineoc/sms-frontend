@@ -7,7 +7,6 @@ import useAxios from "../../../../utilities/useAxios";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
-import {createSvgIcon} from "@material-ui/core";
 
 const init = (id, type, subject) => {
     return(
@@ -16,7 +15,7 @@ const init = (id, type, subject) => {
             description: "",
             grade: "",
             studentId: id,
-            isFinal: (type === "FINAL"),
+            isFinal: (type === "FINAL" ? true : false),
             subject: subject,
         }
     )
@@ -117,7 +116,7 @@ const GradesCreateEditForm = (props) => {
                                     name="grade"
                                     type="text"
                                 />
-                                {props.type !== "FINAL" &&
+                                {((props.type === "MODIFY" && props.existingGrade.isFinal===false ) || (props.type === "REGULAR" ) ) &&
                                 <SelectFieldWrapper
                                     label="Weight"
                                     name='weight'
