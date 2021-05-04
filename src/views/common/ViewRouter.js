@@ -16,6 +16,9 @@ const ViewRouter = () => {
     let role = 'TEACHER';
     return (
         <Switch>
+            <Route exact path="/">
+                HOMEPAGE
+            </Route>
             <Route path="/api/homework-service">
                 <HomeworkView />
             </Route>

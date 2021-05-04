@@ -4,7 +4,7 @@ const TimetablesManagement = () => {
 
     return (
         <div className="TimetablesManagement">
-
+            Timetables management
         </div>
     );
 };
