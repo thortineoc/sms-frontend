@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './Details.css';
 import { TrashIcon } from "@heroicons/react/outline";
 import {Dialog} from "@material-ui/core";
@@ -13,12 +13,26 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
 
     const [displayDialog, setDisplayDialog] = useState(false);
     const [deleteUser, setDeleteUser] = useState('');
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [parent, setParent] = useState({});
 
     const handleClick = () => {
         if(!displayDialog) {
             setShowEdit(true);
         }
     }
+
+    useEffect(() => {
+        if (role === "STUDENT") {
+            callBackendPost(axiosInstance, "usermanagement-service/users/filter", {
+                pesel: "parent_" + user.pesel
+            })
+                .then(response => {
+                    setParent(response.data[0]);
+                })
+                .catch(error => console.log(error));
+        }
+    }, [])
 
     return (
         <div className="Details">
@@ -98,26 +112,26 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
                             <div className="Details__label">Address e-mail</div>
                             <div className="Details__data"
                                  onClick={handleClick}>
-                                {user.email}
+                                {parent.email}
                             </div>
                         </div>
                         <div className="Details__field">
                             <div className="Details__label">Phone number</div>
                             <div className="Details__data"
                                  onClick={handleClick}>
-                                {user.phoneNumber}
+                                {parent.phoneNumber}
                             </div>
                         </div>
                         <div className="Details__field">
                             <div className="Details__label">User ID</div>
                             <div className="Details__data-not-modifiable">
-                                {user.id}
+                                {parent.id}
                             </div>
                         </div>
                         <div className="Details__field">
                             <div className="Details__label">Username</div>
                             <div className="Details__data-not-modifiable">
-                                {user.userName}
+                                {parent.userName}
                             </div>
                         </div>
                     </div>

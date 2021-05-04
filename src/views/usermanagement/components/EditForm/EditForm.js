@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Formik, Form } from 'formik';
+import {Formik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
@@ -10,18 +10,27 @@ import './EditForm.css'
 import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
+import callBackendPost from "../../../../utilities/CallBackendPost";
+import callBackendPut from "../../../../utilities/CallBackendPut";
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+    console.log("VALUES")
     console.log(values);
-    try {
-        await axios.put(".../{id}", values);
-        resetForm();
-        setStatus({success: true});
-    } catch(error) {
-        setStatus({success: false});
-        setSubmitting(false);
-        setErrors({submit: error.message});
-    }
+    // const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    // callBackendPut(axiosInstance, "usermanagement-service/users/update", {
+    //     values
+    // })
+    //     .then(response => {
+    //         console.log(response);
+    //         //setParent(response.data[0]);
+    //         resetForm();
+    //         setStatus({success: true})
+    //     })
+    //     .catch(error => {
+    //         setStatus({success: false});
+    //         setSubmitting(false);
+    //         setErrors({submit: error.message});
+    //     });
 }
 
 const validationSchema = Yup.object({
@@ -30,34 +39,51 @@ const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     lastName: Yup.string().required('Required'),
     pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
+    email: Yup.string().email('Invalid format'),
+    //custom
     customAttributes: Yup.object({
         phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
-        email: Yup.string().email('Invalid format'),
         middleName: Yup.string(),
+        groups: Yup.string()
     })
 })
 
-
-const parent = {
-    id: 3,
-    userName: 'parent',
-    email: 'iamparent@abc.com',
-    phoneNumber: '555444333'
-}
-
+const validationSchemaParent = Yup.object({
+    id: Yup.string(),
+    userName: Yup.string(),
+    email: Yup.string().email('Invalid format'),
+    customAttributes: Yup.object({
+        phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300')
+    })
+})
 
 const EditForm = ({user, groups, role}) => {
-    console.log(user)
+    //console.log(user)
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [items, setItems] = useState([]);
+    const [parent, setParent] = useState({});
 
-    useEffect(()=>{
+    delete user.group;
+    delete user.middleName;
+    delete user.phoneNumber;
+
+    useEffect(() => {
         fetchItems();
-    },[])
+        if (role === "STUDENT") {
+            callBackendPost(axiosInstance, "usermanagement-service/users/filter", {
+                pesel: "parent_" + user.pesel
+            })
+                .then(response => {
+                    console.log(response);
+                    setParent(response.data[0]);
+                })
+                .catch(error => console.log(error));
+        }
+    }, [])
     const fetchItems = () => {
-        callBackendGet(axiosInstance, "usermanagement-service/" + (role==="STUDENT" ? "groups" : "subjects"), null)
+        callBackendGet(axiosInstance, "usermanagement-service/" + (role === "STUDENT" ? "groups" : "subjects"), null)
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 setItems(response.data);
             })
             .catch(error => console.log(error))
@@ -104,7 +130,7 @@ const EditForm = ({user, groups, role}) => {
                                         </div>
                                         <TextFieldWrapper
                                             label="E-mail address"
-                                            name="customAttributes.email"
+                                            name="email"
                                             type="email"
                                         />
                                         <TextFieldWrapper
@@ -125,11 +151,11 @@ const EditForm = ({user, groups, role}) => {
                                             </div>
                                         </div>
                                         {role === 'STUDENT' && (
-                                        <SelectFieldWrapper
-                                            label="Group"
-                                            name="customAttributes.group"
-                                            options={items}
-                                        />)}
+                                            <SelectFieldWrapper
+                                                label="Group"
+                                                name="customAttributes.group"
+                                                options={items}
+                                            />)}
                                     </div>
                                     {role === 'TEACHER' && (
                                         <div className="EditForm__subjects">
@@ -156,7 +182,8 @@ const EditForm = ({user, groups, role}) => {
             {role === 'STUDENT' && (
                 <Formik
                     initialValues={parent}
-                    validateOnChange={true}
+                    validateOnChange={false}
+                    validationSchema={validationSchemaParent}
                     onSubmit={onSubmit}
                 >
                     {
@@ -176,7 +203,7 @@ const EditForm = ({user, groups, role}) => {
                                             />
                                             <TextFieldWrapper
                                                 label="Phone number"
-                                                name="phoneNumber"
+                                                name="customAttributes.phoneNumber"
                                                 type="text"
                                             />
                                             <div className="Details__field">
