@@ -151,7 +151,7 @@ const GradesViewTeachers = () => {
 
     return (
         <div className="GradesView">
-            <div className="GradesView__selects" style={{display: 'flex'}}>
+            <div className="GradesView__selects">
                 <SimpleSelect label="Subjects" options={subjects} value={subject} setValue={setSubject} />
                 <SimpleSelect label="Groups" options={classess} value={group} setValue={setGroup} />
             </div>
