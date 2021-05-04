@@ -74,7 +74,6 @@ export default function LeftMenu(props) {
         }
     }
 
-    let mock = 'STUDENT';
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -95,7 +94,7 @@ export default function LeftMenu(props) {
                         <ListItemText primary="User profile" />
                     </ListItem>
                     <Divider />
-                    {mock === 'ADMIN' ? (
+                    {role === 'ADMIN' ? (
                         <>
                             <ListItem button key="students_key">
                                 <ListItemIcon><People/></ListItemIcon>

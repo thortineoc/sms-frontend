@@ -2,7 +2,9 @@ import React, {useEffect, useState} from "react";
 import '../GradesViewCommonStyles/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
-import {Select} from "@material-ui/core";
+import {InputLabel, MenuItem, Select} from "@material-ui/core";
+import FormControl from "@material-ui/core/FormControl";
+import SimpleSelect from "../../../../components/SimpleSelect/SimpleSelect";
 
 let mockData = [{
     'student': {
@@ -121,10 +123,26 @@ const COLUMN_TITLES = [
     'Final grade'
 ]
 
-const options = ['1a', '1b', '1c'];
+const classess = ['1a', '1b', '1c'];
+const subjects = ['maths', 'geo', 'inf'];
 
 const GradesViewTeachers = () => {
     const [data, setData] = useState([]);
+    const [subject, setSubject] = useState('');
+    const [group, setGroup] = useState('');
+    const [allSubjects, setAllSubjects] = useState([]);
+    const [allGroups, setAllGroups] = useState([]);
+
+
+
+
+
+
+
+    const handleChange = (event) => {
+        setSubject(event.target.value);
+    };
+
 
     useEffect(() => {
         setData(mockData);
@@ -133,6 +151,12 @@ const GradesViewTeachers = () => {
 
     return (
         <div className="GradesView">
+            <div className="GradesView__selects" style={{display: 'flex'}}>
+                <SimpleSelect label="Subjects" options={subjects} value={subject} setValue={setSubject} />
+                <SimpleSelect label="Groups" options={classess} value={group} setValue={setGroup} />
+            </div>
+
+
             <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER"/>
         </div>
     )
