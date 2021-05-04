@@ -159,7 +159,6 @@ export default function LeftMenu(props) {
         }
     }
 
-
     return (
         <div className={classes.root}>
             <CssBaseline/>
