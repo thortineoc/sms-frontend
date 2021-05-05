@@ -44,9 +44,20 @@ const SimpleSelect = ({label, options, value, setValue, defaultValue}) => {
                     value={value}
                     onChange={handleChange}
                 >
-                    {options && options.map((item) => (
-                        <MenuItem value={item}>{item}</MenuItem>
-                    ))}
+                    {options && options.map((item, index) => {
+                        if (item === '') {
+                            return (
+                                <MenuItem key={index} value={item}>
+                                    <em>None</em>
+                                </MenuItem>
+                            )
+                        }
+                        return (
+                            <MenuItem key={index} value={item}>
+                                {item}
+                            </MenuItem>
+                        )
+                    })}
                 </Select>
             </FormControl>
         </ThemeProvider>

@@ -127,7 +127,6 @@ const COLUMN_TITLES = [
 const GradesViewStudents = () => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [data, setData] = useState({});
-    const [refresh, setRefresh] = useState(false);
 
     const fetchData = () => {
         callBackendGet(axiosInstance, 'grades-service/grades/student', null)
@@ -144,7 +143,7 @@ const GradesViewStudents = () => {
 
     return (
         <div className="GradesView">
-            <GradesTable data={data} columns={COLUMN_TITLES} role="STUDENT" setRefresh={setRefresh} />
+            <GradesTable data={data} columns={COLUMN_TITLES} role="STUDENT" />
         </div>
     )
 }

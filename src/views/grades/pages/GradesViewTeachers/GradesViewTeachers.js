@@ -172,8 +172,12 @@ const GradesViewTeachers = () => {
         fetchData();
     }, [group, subject])
 
-    const subjectsOptions = allSubjects ? allSubjects.toString().split(',') : ['opcja', 'opcja2'];
-    const groupsOptions = allGroups ? allGroups.toString().split(',') : ['opcja3', 'opcja4'];
+    const subjectsOptions = allSubjects ? allSubjects.toString().split(',') : [''];
+    const groupsOptions = allGroups ? allGroups.toString().split(',') : [''];
+
+    const handleRequireRefresh = () => {
+        setRefresh(true);
+    }
 
     return (
         <div className="GradesView">
@@ -189,7 +193,7 @@ const GradesViewTeachers = () => {
                               setValue={setGroup}
                 />
             </div>
-            <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER" subject={subject} setRefresh={setRefresh} />
+            <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER" subject={subject} setRefresh={handleRequireRefresh} />
         </div>
     )
 }
