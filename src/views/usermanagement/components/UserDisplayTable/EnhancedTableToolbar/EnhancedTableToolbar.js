@@ -66,7 +66,7 @@ const EnhancedTableToolbar = (props) => {
             className={clsx(classes.root)}
         >
             <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                {props.role.charAt(0) + props.role.slice(1).toLowerCase() + "s' accounts"}
+                {/*{props.role.charAt(0) + props.role.slice(1).toLowerCase() + "s' accounts"}*/}
             </Typography>
 
             <SearchBar
