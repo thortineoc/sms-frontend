@@ -11,3 +11,11 @@
 .GradesView td:last-child {
     border-right: none;
 }
+
+.GradesView__selects {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 28%;
+    min-width: 300px;
+}
