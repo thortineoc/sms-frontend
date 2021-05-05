@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {createMuiTheme} from "@material-ui/core";
+import {blue} from "@material-ui/core/colors";
+import {ThemeProvider} from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -16,17 +18,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SimpleSelect = ({label, options, value, setValue}) => {
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+        secondary: blue
+    }
+});
+
+const SimpleSelect = ({label, options, value, setValue, defaultValue}) => {
     const classes = useStyles();
-    const [selected, setSelected] = useState('');
+
+    useEffect(() => {
+        setValue(defaultValue);
+    }, [])
 
     const handleChange = e => {
-        //setSelected();
         setValue(e.target.value);
     }
 
     return (
-        <div>
+        <ThemeProvider theme={theme}>
             <FormControl className={classes.formControl}>
                 <InputLabel>{label}</InputLabel>
                 <Select
@@ -38,7 +49,7 @@ const SimpleSelect = ({label, options, value, setValue}) => {
                     ))}
                 </Select>
             </FormControl>
-        </div>
+        </ThemeProvider>
     );
 };
 

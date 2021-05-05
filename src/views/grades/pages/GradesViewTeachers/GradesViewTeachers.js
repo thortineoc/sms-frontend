@@ -7,6 +7,8 @@ import FormControl from "@material-ui/core/FormControl";
 import SimpleSelect from "../../../../components/SimpleSelect/SimpleSelect";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendGet from "../../../../utilities/CallBackendGet";
 
 let mockData = [{
     'student': {
@@ -116,8 +118,6 @@ let mockData = [{
 
 ]
 
-
-
 const COLUMN_TITLES = [
     'Students',
     'Grades',
@@ -125,42 +125,60 @@ const COLUMN_TITLES = [
     'Final grade'
 ]
 
-const classess = ['1a', '1b', '1c'];
-
 const GradesViewTeachers = () => {
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [data, setData] = useState([]);
     const [subject, setSubject] = useState('');
     const [group, setGroup] = useState('');
     const [allSubjects, setAllSubjects] = useState('');
-    const [allGroups, setAllGroups] = useState([]);
-
+    const [allGroups, setAllGroups] = useState('');
     const {keycloak, initialized} = useKeycloak();
     useEffect(() => {
          if (!!initialized) {
-           getKeycloakSubjects(keycloak, setAllSubjects)
+           getKeycloakSubjects(keycloak, setAllSubjects);
        }
     }, [keycloak, initialized])
 
+    const fetchGroups = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+            .then(response => {
+                setAllGroups(response.data);
+            })
+            .catch(error => console.log(error))
+    }
 
-    const handleChange = (event) => {
-        setSubject(event.target.value);
-    };
-
+    const fetchData = () => {
+        const url = `grades-service/grades/group/${group}/subject/${subject}`;
+        callBackendGet(axiosInstance, url, null)
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => console.log(error))
+    }
 
     useEffect(() => {
-        setData(mockData);
+        fetchGroups();
+        fetchData();
     }, [])
 
+    useEffect(() => {
+        fetchData();
+    }, [group, subject])
 
     return (
         <div className="GradesView">
             <div className="GradesView__selects">
                 <SimpleSelect label="Subjects"
-                              options={allSubjects.toString().split(',')} value={subject} setValue={setSubject} />
-                <SimpleSelect label="Groups" options={classess} value={group} setValue={setGroup} />
+                              options={allSubjects.toString().split(',')}
+                              value={subject}
+                              setValue={setSubject}
+                />
+                <SimpleSelect label="Groups"
+                              options={allGroups.toString().split(',')}
+                              value={group}
+                              setValue={setGroup}
+                />
             </div>
-
-
             <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER"/>
         </div>
     )
