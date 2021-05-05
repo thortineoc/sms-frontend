@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import List from '@material-ui/core/List';
@@ -9,9 +9,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {Link} from "react-router-dom";
 import {useKeycloak} from "@react-keycloak/web";
 import getKeycloakRoles from "../../utilities/GetRoles";
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+
 
 import './LeftMenu.css';
-import {AppBar, ListItemIcon, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, createMuiTheme, ListItemIcon, Toolbar, Typography, useTheme} from "@material-ui/core";
 import {
     AccountBox,
     Assignment,
@@ -22,16 +27,42 @@ import {
     School,
     TableChart
 } from "@material-ui/icons";
+import clsx from "clsx";
+import IconButton from "@material-ui/core/IconButton";
+import {blue} from "@material-ui/core/colors";
 
 const drawerWidth = 240;
+
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+        secondary: blue
+    }
+});
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
     appBar: {
-        paddingLeft: drawerWidth,
-        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+    appBarShift: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    hide: {
+        display: 'none',
     },
     drawer: {
         width: drawerWidth,
@@ -40,24 +71,55 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
     },
-    drawerContainer: {
-        overflow: 'auto',
+    drawerHeader: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: theme.spacing(0, 1),
+        // necessary for content to be below app bar
+        ...theme.mixins.toolbar,
+        justifyContent: 'flex-end',
     },
-    // necessary for content to be below app bar
-    toolbar: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
         padding: theme.spacing(3),
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: -drawerWidth,
+    },
+    contentLogout: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: 0,
+    },
+    contentShift: {
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
     },
 }));
 
 export default function LeftMenu(props) {
     const classes = useStyles();
-
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
-    const [currentView, setCurrentView] = useState("Student management");
+    const [currentView, setCurrentView] = useState("School Management System");
+    const [open, setOpen] = React.useState(false);
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         if (!!initialized) {
@@ -67,6 +129,7 @@ export default function LeftMenu(props) {
 
     const logOut = () => {
         const options = {redirectUri: "/"};
+        setCurrentView("School Management System")
         if (initialized && keycloak.authenticated) {
             keycloak.logout(options);
         } else {
@@ -78,13 +141,27 @@ export default function LeftMenu(props) {
         switch (role) {
             case 'ADMIN':
                 return (
-                    <List>
-                        <ListItem button key="profile_key">
-                            <ListItemIcon><AccountBox/></ListItemIcon>
-                            <ListItemText primary="User profile"/>
-                        </ListItem>
+                    <>
+                        <List>
+                            <Link onClick={() => setCurrentView("User profile")}
+                                  className="Link_noDecoration" to="/api/usermanagement-service/my-account"
+                                  role={role}>
+                                <ListItem button key="profile_key">
+                                    <ListItemIcon><AccountBox/></ListItemIcon>
+                                    <ListItemText primary="User profile"/>
+                                </ListItem>
+                            </Link>
+                            <Link onClick={() => setCurrentView("Dashboard")}
+                                  className="Link_noDecoration" to="/"
+                                  role={role}>
+                                <ListItem button key="dashboard_key">
+                                    <ListItemIcon><DashboardIcon/></ListItemIcon>
+                                    <ListItemText primary="Dashboard"/>
+                                </ListItem>
+                            </Link>
+                        </List>
                         <Divider/>
-                        <>
+                        <List>
                             <Link onClick={() => setCurrentView("Student management")}
                                   className="Link_noDecoration" to="/api/usermanagement-service/students"
                                   role={role}>
@@ -107,21 +184,34 @@ export default function LeftMenu(props) {
                                     <ListItemText primary="Timetable management"/>
                                 </ListItem>
                             </Link>
-                        </>
+                        </List>
                         <Divider/>
-                    </List>
-
+                    </>
                 )
             case "TEACHER":
             case "STUDENT":
                 return (
-                    <List>
-                        <ListItem button key="profile_key">
-                            <ListItemIcon><AccountBox/></ListItemIcon>
-                            <ListItemText primary="User profile"/>
-                        </ListItem>
+                    <>
+                        <List>
+                            <Link onClick={() => setCurrentView("User profile")}
+                                  className="Link_noDecoration" to="/api/usermanagement-service/my-account"
+                                  role={role}>
+                                <ListItem button key="profile_key">
+                                    <ListItemIcon><AccountBox/></ListItemIcon>
+                                    <ListItemText primary="User profile"/>
+                                </ListItem>
+                            </Link>
+                            <Link onClick={() => setCurrentView("Dashboard")}
+                                  className="Link_noDecoration" to="/"
+                                  role={role}>
+                                <ListItem button key="dashboard_key">
+                                    <ListItemIcon><DashboardIcon/></ListItemIcon>
+                                    <ListItemText primary="Dashboard"/>
+                                </ListItem>
+                            </Link>
+                        </List>
                         <Divider/>
-                        <>
+                        <List>
                             <Link onClick={() => setCurrentView("Timetables")}
                                   className="Link_noDecoration" to="/api/timetable-service" role={role}>
                                 <ListItem button key="timetables_key">
@@ -150,47 +240,105 @@ export default function LeftMenu(props) {
                                     <ListItemText primary="Presences"/>
                                 </ListItem>
                             </Link>
-                        </>
+                        </List>
                         <Divider/>
-                    </List>
+                    </>
                 )
             default:
                 return ("")
         }
     }
 
-    return (
-        <div className={classes.root}>
+return (
+    <div className={classes.root}>
+        <ThemeProvider theme={theme}>
             <CssBaseline/>
-
-            <Drawer
-                className={classes.drawer}
-                variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-                anchor="left"
+            <AppBar
+                color={"primary"}
+                position="fixed"
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}
             >
-                <div className={classes.drawerContainer}>
+                <Toolbar>
+                    {initialized && keycloak.authenticated ? (
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerOpen}
+                                edge="start"
+                                className={clsx(classes.menuButton, open && classes.hide)}
+                            >
+                                <MenuIcon/>
+                            </IconButton>) :
+                        (
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={logOut}
+                                edge="start"
+                                className={clsx(classes.menuButton, open && classes.hide)}
+                            >
+                                <ExitToApp/>
+                            </IconButton>
+                        )}
 
+                    <Typography variant="h6" noWrap>
+                        {currentView}
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            {initialized && keycloak.authenticated && (
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="left"
+                    open={open}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
 
-                    {renderMenu()}
+                    <div className={classes.drawerHeader}>
+                        <IconButton onClick={handleDrawerClose}>
+                            {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+                        </IconButton>
+                    </div>
+                    <div className={classes.drawerContainer}>
+                        <Divider/>
+                        {renderMenu()}
+                        <List>
+                            <Link className="Link_noDecoration" to="/" onClick={logOut}>
+                                <ListItem button key="logout_key">
+                                    <ListItemIcon><ExitToApp/></ListItemIcon>
+                                    <ListItemText
+                                                  primary={initialized && keycloak.authenticated ? "Log out" : "Log in"}/>
+                                </ListItem>
+                            </Link>
+                        </List>
+                    </div>
+                </Drawer>)}
+        </ThemeProvider>
 
-                    <List>
-                        <Link className="Link_noDecoration" to="/">
-                            <ListItem button key="logout_key">
-                                <ListItemIcon><ExitToApp/></ListItemIcon>
-                                <ListItemText onClick={logOut}
-                                              primary={initialized && keycloak.authenticated ? "Log out" : "Log in"}/>
-                            </ListItem>
-                        </Link>
-                    </List>
-                </div>
-            </Drawer>
-            <main className={classes.content}>
+        {initialized && keycloak.authenticated ? (
+            <main
+                className={clsx(classes.content, {
+                    [classes.contentShift]: open,
+                })}
+            >
+                <div className={classes.drawerHeader} />
                 {props.children}
             </main>
-        </div>
-    );
+        ) : (
+            <main
+                className={clsx(classes.contentLogout)}
+            >
+                <div className={classes.drawerHeader} />
+                {props.children}
+            </main>
+        )}
+
+    </div>
+);
 }
 

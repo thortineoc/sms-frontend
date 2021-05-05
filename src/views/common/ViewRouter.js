@@ -10,6 +10,7 @@ import StudentManagement from "../usermanagement/pages/StudentsManagement/Studen
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
 import GradesViewTeachers from "../grades/pages/GradesViewTeachers/GradesViewTeachers";
+import Dashboard from "../dashboard/Dashboard";
 
 const ViewRouter = () => {
 
@@ -17,17 +18,20 @@ const ViewRouter = () => {
     return (
         <Switch>
             <Route exact path="/">
-                HOMEPAGE
+                <Dashboard role={"Mateusz"}/>
             </Route>
             <Route path="/api/homework-service">
                 <HomeworkView />
             </Route>
+            <Route path="/api/usermanagement-service/my-account">
+                USER ACCOUNT
+            </Route>
             <Route path="/api/grades-service">
                 {role === 'STUDENT' ? (
                     <GradesViewStudents />
-                    ) : (
+                ) : (
                     <GradesViewTeachers />
-                    )
+                )
                 }
             </Route>
             <Route path="/api/timetable-service">
