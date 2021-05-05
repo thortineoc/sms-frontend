@@ -7,9 +7,9 @@ const getDashboard = (role) =>{
         case "ADMIN":
             return("DASHBOARD FOR ADMIN")
         case "STUDENT":
-            return("DASHBOARD FOR ADMIN")
+            return("DASHBOARD FOR STUDENT")
         case "TEACHER":
-            return("DASHBOARD FOR ADMIN")
+            return("DASHBOARD FOR TEACHER")
         case "PARENT":
             return("DASHBOARD FOR PARENT")
         default:
