@@ -17,10 +17,13 @@ const ViewRouter = () => {
     return (
         <Switch>
             <Route exact path="/">
-                HOMEPAGE
+                <HomeworkView />
             </Route>
             <Route path="/api/homework-service">
                 <HomeworkView />
+            </Route>
+            <Route path="/api/usermanagement-service/my-account">
+                USER ACCOUNT
             </Route>
             <Route path="/api/grades-service">
                 {role === 'STUDENT' ? (
