@@ -9,6 +9,7 @@ import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
+import {ref} from "yup";
 
 let mockData = [{
     'student': {
@@ -132,6 +133,7 @@ const GradesViewTeachers = () => {
     const [group, setGroup] = useState('');
     const [allSubjects, setAllSubjects] = useState('');
     const [allGroups, setAllGroups] = useState('');
+    const [refresh, setRefresh] = useState(false);
     const {keycloak, initialized} = useKeycloak();
     useEffect(() => {
          if (!!initialized) {
@@ -163,6 +165,11 @@ const GradesViewTeachers = () => {
 
     useEffect(() => {
         fetchData();
+        setRefresh(false);
+    }, [refresh])
+
+    useEffect(() => {
+        fetchData();
     }, [group, subject])
 
     return (
@@ -179,7 +186,7 @@ const GradesViewTeachers = () => {
                               setValue={setGroup}
                 />
             </div>
-            <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER"/>
+            <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER" subject={subject} setRefresh={setRefresh} />
         </div>
     )
 }
