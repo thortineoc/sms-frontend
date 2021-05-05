@@ -22,7 +22,7 @@ const GradesTableRow = ({role, firstCol, grades, subject, setRefresh}) => {
 
                 <table className="TableRow__inner-table">
                     <tr className="TableRow__inner-row">
-                        {grades['grades'].map(obj =>
+                        {grades && grades['grades'].map(obj =>
                             <td className="TableRow__inner-cell"><Grade role={role} value={obj} type="regular"/></td>
                         )}
                         {role === 'TEACHER' && (

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../GradesViewCommonStyles/GradesView.css';
+import '../GradesView/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import {InputLabel, MenuItem, Select} from "@material-ui/core";
@@ -172,16 +172,19 @@ const GradesViewTeachers = () => {
         fetchData();
     }, [group, subject])
 
+    const subjectsOptions = allSubjects ? allSubjects.toString().split(',') : ['opcja', 'opcja2'];
+    const groupsOptions = allGroups ? allGroups.toString().split(',') : ['opcja3', 'opcja4'];
+
     return (
         <div className="GradesView">
             <div className="GradesView__selects">
                 <SimpleSelect label="Subjects"
-                              options={allSubjects.toString().split(',')}
+                              options={subjectsOptions}
                               value={subject}
                               setValue={setSubject}
                 />
                 <SimpleSelect label="Groups"
-                              options={allGroups.toString().split(',')}
+                              options={groupsOptions}
                               value={group}
                               setValue={setGroup}
                 />

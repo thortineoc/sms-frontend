@@ -44,7 +44,7 @@ const SimpleSelect = ({label, options, value, setValue, defaultValue}) => {
                     value={value}
                     onChange={handleChange}
                 >
-                    {options.map((item) => (
+                    {options && options.map((item) => (
                         <MenuItem value={item}>{item}</MenuItem>
                     ))}
                 </Select>
