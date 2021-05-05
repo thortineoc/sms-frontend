@@ -9,7 +9,7 @@ import GradesViewStudents from "../grades/pages/GradesViewStudents/GradesViewStu
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
-import GradesViewTeachers from "../grades/pages/GradesPageTeachers/GradesViewTeachers";
+import GradesViewTeachers from "../grades/pages/GradesViewTeachers/GradesViewTeachers";
 import Dashboard from "../dashboard/Dashboard";
 
 const ViewRouter = () => {
@@ -29,9 +29,9 @@ const ViewRouter = () => {
             <Route path="/api/grades-service">
                 {role === 'STUDENT' ? (
                     <GradesViewStudents />
-                    ) : (
+                ) : (
                     <GradesViewTeachers />
-                    )
+                )
                 }
             </Route>
             <Route path="/api/timetable-service">
