@@ -90,7 +90,6 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
                 </div>}
             </div>
 
-
             {role === 'STUDENT' ? (
                 <>
                     <h3>Parent contact information</h3>

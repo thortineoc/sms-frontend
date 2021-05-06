@@ -10,7 +10,9 @@
     font-weight: bold;
     border: none;
     cursor: default;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .Grade-weight1 {
@@ -62,4 +64,8 @@
 
 .Grade-wrapper td {
     border: none;
+}
+
+.Grade-TEACHER {
+    cursor: pointer;
 }

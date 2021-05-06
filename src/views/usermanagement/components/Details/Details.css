@@ -24,7 +24,7 @@
 
 
 .Details__data {
-    height: 30px;
+    min-height: 30px;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -44,7 +44,6 @@
     border-radius: 3px;
     padding: 2px;
 }
-
 
 .Details__data-not-modifiable {
     background-color: #FFF;
