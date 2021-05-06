@@ -3,8 +3,9 @@ import './AddCircle.css';
 import {PlusCircleIcon} from "@heroicons/react/solid";
 import Modal from "../../../../components/Modal/Modal";
 import GradesCreateEditForm from "../GradesCreateEditForm/GradesCreateEditForm";
+import GradesTable from "../GradesTable/GradesTable";
 
-const AddCircle = ({studentId, type}) => {
+const AddCircle = ({studentId, type, subject, setRefresh}) => {
     const [show, setShow] = useState(false);
 
     const handleClick = () => {
@@ -22,6 +23,8 @@ const AddCircle = ({studentId, type}) => {
                         type={type}
                         setIsOpen={setShow}
                         newGradeStudentId={studentId}
+                        subject={subject}
+                        setRefresh={setRefresh}
                     />
                 </Modal>
             )}

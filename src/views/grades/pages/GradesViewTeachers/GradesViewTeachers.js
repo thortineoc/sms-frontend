@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../GradesViewCommonStyles/GradesView.css';
+import '../GradesView/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import {InputLabel, MenuItem, Select} from "@material-ui/core";
@@ -9,6 +9,7 @@ import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
+import {ref} from "yup";
 
 let mockData = [{
     'student': {
@@ -132,7 +133,9 @@ const GradesViewTeachers = () => {
     const [group, setGroup] = useState('');
     const [allSubjects, setAllSubjects] = useState('');
     const [allGroups, setAllGroups] = useState('');
+    const [refresh, setRefresh] = useState(false);
     const {keycloak, initialized} = useKeycloak();
+
     useEffect(() => {
          if (!!initialized) {
            getKeycloakSubjects(keycloak, setAllSubjects);
@@ -163,23 +166,35 @@ const GradesViewTeachers = () => {
 
     useEffect(() => {
         fetchData();
+        setRefresh(false);
+    }, [refresh])
+
+    useEffect(() => {
+        fetchData();
     }, [group, subject])
+
+    const subjectsOptions = allSubjects ? allSubjects.toString().split(',') : [''];
+    const groupsOptions = allGroups ? allGroups.toString().split(',') : [''];
+
+    const handleRequireRefresh = () => {
+        setRefresh(true);
+    }
 
     return (
         <div className="GradesView">
             <div className="GradesView__selects">
                 <SimpleSelect label="Subjects"
-                              options={allSubjects.toString().split(',')}
+                              options={subjectsOptions}
                               value={subject}
                               setValue={setSubject}
                 />
                 <SimpleSelect label="Groups"
-                              options={allGroups.toString().split(',')}
+                              options={groupsOptions}
                               value={group}
                               setValue={setGroup}
                 />
             </div>
-            <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER"/>
+            <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER" subject={subject} setRefresh={handleRequireRefresh} />
         </div>
     )
 }
