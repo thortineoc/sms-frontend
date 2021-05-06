@@ -9,13 +9,20 @@ import GradesView from "../grades/pages/GradesView/GradesView";
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
+import Dashboard from "../dashboard/Dashboard";
 
 const ViewRouter = () => {
 
     return (
         <Switch>
             <Route exact path="/">
-                HOMEPAGE
+                <Dashboard />
+            </Route>
+            <Route path="/api/homework-service">
+                <HomeworkView />
+            </Route>
+            <Route path="/api/usermanagement-service/my-account">
+                USER ACCOUNT
             </Route>
             <Route path="/api/homework-service">
                 <HomeworkView />

@@ -135,6 +135,7 @@ const GradesViewTeachers = () => {
     const [allGroups, setAllGroups] = useState('');
     const [refresh, setRefresh] = useState(false);
     const {keycloak, initialized} = useKeycloak();
+
     useEffect(() => {
          if (!!initialized) {
            getKeycloakSubjects(keycloak, setAllSubjects);
