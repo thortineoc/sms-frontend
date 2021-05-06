@@ -12,6 +12,8 @@ import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendPut from "../../../../utilities/CallBackendPut";
+import {responsiveFontSizes} from "@material-ui/core";
+import ParentForm from "./EditParentForm";
 
 const validationSchema = Yup.object({
     id: Yup.string().required('Required'),
@@ -50,20 +52,22 @@ const EditForm = ({user, groups, role, refresh}) => {
     delete user.subjects;
 
     const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
-        callBackendPut(axiosInstance, "usermanagement-service/users/update", {
-            ...values
-        })
-            .then(response => {
-                //setParent(response.data[0]);
-                setStatus({success: true})
-                refresh(true);
-            })
-            .catch(error => {
-                setStatus({success: false});
-                setSubmitting(false);
-                resetForm();
-                setErrors({submit: error.message});
-            });
+        console.log(values);
+        // callBackendPut(axiosInstance, "usermanagement-service/users/update", {
+        //     ...values
+        // })
+        //     .then(response => {
+        //         console.log(response);
+        //         setStatus({success: true});
+        //         refresh(true);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //         setStatus({success: false});
+        //         setSubmitting(false);
+        //         resetForm();
+        //         setErrors({submit: error.message});
+        //     });
     }
 
     useEffect(() => {
@@ -73,7 +77,9 @@ const EditForm = ({user, groups, role, refresh}) => {
                 pesel: "parent_" + user.pesel
             })
                 .then(response => {
-                    setParent(response.data[0]);
+                    let parent = response.data[0];
+                    parent.pesel = parent.pesel.substring(7);
+                    setParent(parent);
                 })
                 .catch(error => console.log(error));
         }
@@ -177,57 +183,8 @@ const EditForm = ({user, groups, role, refresh}) => {
             </Formik>
 
             {role === 'STUDENT' && (
-                <Formik
-                    initialValues={parent}
-                    validateOnChange={false}
-                    validationSchema={validationSchemaParent}
-                    onSubmit={onSubmit}
-                >
-                    {
-                        formik => {
-                            return (
-                                <Form>
-                                    <div className="EditForm">
-                                        {formik.errors && formik.errors.submit &&
-                                        <div className="error">{formik.errors.submit}</div>}
-
-                                        <h3>Parent contact information</h3>
-                                        <div className="Details__parent-grid">
-                                            <TextFieldWrapper
-                                                label="E-mail address"
-                                                name="email"
-                                                type="email"
-                                            />
-                                            <TextFieldWrapper
-                                                label="Phone number"
-                                                name="customAttributes.phoneNumber"
-                                                type="text"
-                                            />
-                                            <div className="Details__field">
-                                                <div className="Details__label-sm">User ID</div>
-                                                <div className="Details__data-not-modifiable">
-                                                    {parent.id ?? '-'}
-                                                </div>
-                                            </div>
-                                            <div className="Details__field">
-                                                <div className="Details__label-sm">Username</div>
-                                                <div className="Details__data-not-modifiable">
-                                                    {parent.userName ?? '-'}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="EditForm__button-wrapper">
-                                            <ButtonWrapper type="submit" label="Save parent changes"
-                                                           disabled={formik.isSubmitting}/>
-                                        </div>
-
-                                    </div>
-                                </Form>
-                            )
-                        }
-                    }
-                </Formik>
+                <ParentForm
+                user={parent}/>
             )}
         </>
     )
