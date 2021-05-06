@@ -4,28 +4,31 @@ import React from "react";
 import HomeworkView from "../homework/HomeworkView";
 import PresenceView from "../presence/PresenceView";
 import TimetableView from "../timetables/TimetableView";
-import GradesViewStudents from "../grades/pages/GradesViewStudents/GradesViewStudents";
+import GradesView from "../grades/pages/GradesView/GradesView";
 
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
-import GradesViewTeachers from "../grades/pages/GradesPageTeachers/GradesViewTeachers";
+import Dashboard from "../dashboard/Dashboard";
 
 const ViewRouter = () => {
 
-    let role = 'TEACHER';
     return (
         <Switch>
+            <Route exact path="/">
+                <Dashboard />
+            </Route>
+            <Route path="/api/homework-service">
+                <HomeworkView />
+            </Route>
+            <Route path="/api/usermanagement-service/my-account">
+                USER ACCOUNT
+            </Route>
             <Route path="/api/homework-service">
                 <HomeworkView />
             </Route>
             <Route path="/api/grades-service">
-                {role === 'STUDENT' ? (
-                    <GradesViewStudents />
-                    ) : (
-                    <GradesViewTeachers />
-                    )
-                }
+                <GradesView />
             </Route>
             <Route path="/api/timetable-service">
                 <TimetableView />
@@ -41,9 +44,6 @@ const ViewRouter = () => {
             </Route>
             <Route path="/api/usermanagement-service/timetables">
                 <TimetablesManagement />
-            </Route>
-            <Route path="/api/usermanagement-service/temp">
-
             </Route>
         </Switch>
     );
