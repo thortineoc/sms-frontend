@@ -12,8 +12,16 @@
     border-bottom: none;
 }
 
+.GradesTable__Students {
+    width: 20%;
+}
+
 .GradesTable__Subjects {
     width: 20%;
+}
+
+.GradesTable__Grades {
+    width: 63%;
 }
 
 .GradesTable__Mean {

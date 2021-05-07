@@ -35,7 +35,11 @@ const Grade = ({role, value, type, setRefresh}) => {
 
     return (
         <>
-            <MouseOverPopover weight={value.weight} description={value.description}>
+            <MouseOverPopover weight={value.weight}
+                              description={value.description}
+                              lastUpdated={value.modifyTime}
+                              subject={value.subject}
+            >
                 <div className="Grade-wrapper" onClick={() => handleClick(value)}>
                     <div className={classes}>
                         {result}
