@@ -8,6 +8,7 @@
 
 .TableRow__inner-cell {
     border: none;
+    word-wrap: break-word;
 }
 
 .TableRow__cell {

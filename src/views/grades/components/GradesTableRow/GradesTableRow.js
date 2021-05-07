@@ -2,7 +2,6 @@ import React from 'react';
 import Grade from "../Grade/Grade";
 import './GradesTableRow.css';
 import AddCircle from "../AddCircle/AddCircle";
-import GradesTable from "../GradesTable/GradesTable";
 
 const countAverage = (sum, divider) => {
     return (sum / divider).toFixed(2);
