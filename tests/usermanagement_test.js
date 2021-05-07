@@ -1,6 +1,7 @@
 Feature('usermanagement');
 
 Scenario('can login to admin account and logout', ({ I }) => {
+    //homepage
     //I.amOnPage('http://school-management-system.online:24020');
     I.amOnPage('http://localhost:3000/');
     I.click({id: 'open_drawer'});
@@ -9,6 +10,7 @@ Scenario('can login to admin account and logout', ({ I }) => {
     I.fillField('password', 'smsadmin');
     I.click('Sign In');
 
+    //admin dashboard
     I.see('School Management System');
     I.see('DASHBOARD FOR ADMIN');
     I.click({id: 'open_drawer'});
@@ -19,6 +21,7 @@ Scenario('can login to admin account and logout', ({ I }) => {
     I.see('Timetable management');
     I.see('Log out');
 
+    //homepage again
     I.click('Log out');
     I.see('School Management System');
     I.see('Welcome');
@@ -85,4 +88,35 @@ Scenario('can create students', ({ I }) => {
     I.fillField('Search', 'FrontTest');
     I.pressKey('Enter');
     I.see('FrontTestLN');
+});
+
+Scenario('can filter students', ({ I }) => {
+    //login
+    //I.amOnPage('http://school-management-system.online:24020');
+    I.amOnPage('http://localhost:3000/');
+    I.click({id: 'open_drawer'});
+
+    //login
+    I.fillField('username', 'smsadmin');
+    I.fillField('password', 'smsadmin');
+    I.click('Sign In');
+
+    //go to student management
+    I.see('DASHBOARD FOR ADMIN');
+    I.click({id: 'open_drawer'});
+    I.click('Student management');
+    I.see('Student management');
+
+    //filter students by email
+    I.see('2A');
+    I.click({id:'filter_users'});
+    //I.fillField('email', '@sms');
+    I.fillField('group', '1B');
+    I.click({id:'apply'});
+    I.dontSee('2A');
+
+    //reset filters
+    I.click({id:'filter_users'});
+    I.click({id:'reset'});
+    I.see('2A');
 });
