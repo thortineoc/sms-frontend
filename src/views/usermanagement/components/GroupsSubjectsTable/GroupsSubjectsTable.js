@@ -153,12 +153,17 @@ const GroupsSubjectsTable = (props) => {
                                     <div className="error">{formik.errors.submit}</div>}
                                     <div className="GroupsSubjectsTable__input">
                                         <TextFieldWrapper
+                                            id="add_new"
                                             label={"Add " + props.role}
                                             name={"item"}
                                             type="text"
                                         />
                                         <div className="CreateForm__button-wrapper">
-                                            <ButtonWrapper type="submit" label="Add new"/>
+                                            <ButtonWrapper
+                                                id="submit_new"
+                                                type="submit"
+                                                label="Add new"
+                                            />
                                         </div>
                                     </div>
                                 </div>

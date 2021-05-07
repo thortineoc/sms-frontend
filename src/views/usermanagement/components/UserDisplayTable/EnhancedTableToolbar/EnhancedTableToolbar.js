@@ -79,14 +79,21 @@ const EnhancedTableToolbar = (props) => {
             />
 
             <Tooltip title="Add new user" onClick={handleCreateUserClicked}>
-                <IconButton aria-label="add">
+                <IconButton
+                    id="add_user"
+                    aria-label="add"
+                >
                     <PersonAddIcon />
                 </IconButton>
             </Tooltip>
 
             {props.role === "STUDENT" &&
             <Tooltip title="Mange groups" onClick={handleItemsClicked} >
-                <IconButton aria-label="manage" className="Toolbar__icon">
+                <IconButton
+                    id="manage_groups"
+                    aria-label="manage"
+                    className="Toolbar__icon"
+                >
                     <GroupIcon />
                 </IconButton>
             </Tooltip>
@@ -94,20 +101,29 @@ const EnhancedTableToolbar = (props) => {
 
             {props.role === "TEACHER" &&
             <Tooltip title="Mange subjects" onClick={handleItemsClicked}>
-                <IconButton aria-label="manage" >
+                <IconButton
+                    id="manage_subjects"
+                    aria-label="manage"
+                >
                     <SchoolIcon />
                 </IconButton>
             </Tooltip>
             }
 
             <Tooltip title="Columns" onClick={handleColumnsClicked}>
-                <IconButton aria-label="columns">
+                <IconButton
+                    id="columns"
+                    aria-label="columns"
+                >
                     <ViewWeekIcon />
                 </IconButton>
             </Tooltip>
 
             <Tooltip title="Filter users" onClick={handleFilterClicked}>
-                <IconButton aria-label="filter list">
+                <IconButton
+                    id="filter_users"
+                    aria-label="filter list"
+                >
                     <FilterListIcon />
                 </IconButton>
             </Tooltip>
