@@ -150,9 +150,11 @@ const GradesViewTeachers = () => {
             .catch(error => console.log(error))
     }
 
-
     const fetchData = () => {
-        const url = `grades-service/grades/group/${group}/subject/${subject}`;
+        let url = null;
+        if(group && subject) {
+            url = `grades-service/grades/group/${group}/subject/${subject}`;
+        }
         callBackendGet(axiosInstance, url, null)
             .then(response => {
                 setData(response.data);
@@ -179,7 +181,7 @@ const GradesViewTeachers = () => {
     }, [allGroups])
 
     useEffect(() => {
-        setSubject(allSubjects.toString().split(',')[0])
+        allSubjects && setSubject(allSubjects.toString().split(',')[0])
     }, [allSubjects])
 
     const subjectsOptions = allSubjects ? allSubjects.toString().split(',') : [''];

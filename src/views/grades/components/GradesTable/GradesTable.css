@@ -7,17 +7,20 @@
     border-radius: 10px;
 }
 
-.TableRow__cell {
-    border: 1px solid lightgray;
-    border-bottom: none;
+.GradesTable__Students {
+    width: 20%;
 }
 
 .GradesTable__Subjects {
     width: 20%;
 }
 
+.GradesTable__Grades {
+    width: 62%;
+}
+
 .GradesTable__Mean {
-    width: 8%
+    width: 8%;
 }
 
 .GradesTable__Finalgrade {
