@@ -151,10 +151,7 @@ const GradesViewTeachers = () => {
     }
 
     const fetchData = () => {
-        let url = null;
-        if(group && subject) {
-            url = `grades-service/grades/group/${group}/subject/${subject}`;
-        }
+        const url = `grades-service/grades/group/${group}/subject/${subject}`;
         callBackendGet(axiosInstance, url, null)
             .then(response => {
                 setData(response.data);
@@ -164,16 +161,22 @@ const GradesViewTeachers = () => {
 
     useEffect(() => {
         fetchGroups();
-        fetchData();
+        if(group && subject) {
+            fetchData();
+        }
     }, [])
 
     useEffect(() => {
-        fetchData();
+        if(group && subject) {
+            fetchData();
+        }
         setRefresh(false);
     }, [refresh])
 
     useEffect(() => {
-        fetchData();
+        if(group && subject) {
+            fetchData();
+        }
     }, [group, subject])
 
     useEffect(() => {

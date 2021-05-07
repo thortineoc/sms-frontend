@@ -64,7 +64,6 @@ const GradesCreateEditForm = (props) => {
 
     const onSubmit = (values, setSubmitting, setValues) =>{
         setError("");
-        console.log(convertGradeToDouble(values));
         callBackendPut(axiosInstance, "grades-service/grades", JSON.stringify(convertGradeToDouble(values)))
             .then(response => {
                 if(response.status<205){
