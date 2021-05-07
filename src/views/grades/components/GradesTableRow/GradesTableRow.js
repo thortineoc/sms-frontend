@@ -38,7 +38,7 @@ const GradesTableRow = ({role, firstCol, grades, subject, setRefresh}) => {
             </td>
             <td className="TableRow__cell">
 
-                {grades['finalGrade'] != undefined ? (
+                {grades['finalGrade'] !== undefined ? (
                 <Grade role={role} value={grades['finalGrade']} type="final" setRefresh={setRefresh}/>
                 ) : (
                     role === 'TEACHER' && (
