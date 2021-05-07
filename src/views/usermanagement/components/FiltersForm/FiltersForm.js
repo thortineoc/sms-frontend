@@ -67,8 +67,20 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive, rol
                         <h3>Filters</h3>
                         <FormFields className="FiltersForm_fields" role={role} groups={items}/>
                         <div className="FiltersForm__button-wrapper">
-                            <ButtonWrapper label="Reset" type="reset" disabled={isSubmitting} style={{margin:"5px"}}/>
-                            <ButtonWrapper label="Apply" type="submit" disabled={isSubmitting} style={{margin:"5px"}}/>
+                            <ButtonWrapper
+                                id="reset"
+                                label="Reset"
+                                type="reset"
+                                disabled={isSubmitting}
+                                style={{margin:"5px"}}
+                            />
+                            <ButtonWrapper
+                                id="apply"
+                                label="Apply"
+                                type="submit"
+                                disabled={isSubmitting}
+                                style={{margin:"5px"}}
+                            />
                         </div>
                     </Form>
                 )}
