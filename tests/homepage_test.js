@@ -8,12 +8,9 @@ Scenario('is visible', ({I}) => {
     I.seeElement(locate({id: 'open_drawer'}));
 });
 
-Scenario('can make me log in', ({I}) => {
+Scenario('goes to login page', ({I}) => {
     //I.amOnPage('http://school-management-system.online:24020');
     I.amOnPage('http://localhost:3000/');
     I.click({id: 'open_drawer'})
     I.see('Sign in to your account');
-    I.fillField('username', 'smsadmin');
-    I.fillField('password', 'smsadmin');
-    I.click('Sign In');
 });
