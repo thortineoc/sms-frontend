@@ -16,7 +16,7 @@ const convertGrade = value => {
     return gradeArr.join('');
 }
 
-const Grade = ({role, value, type}) => {
+const Grade = ({role, value, type, setRefresh}) => {
     const [show, setShow] = useState(false);
     const [grade, setGrade] = useState({});
     const classes = `Grade Grade-weight${value.weight} Grade-${type} Grade-${role}`
@@ -35,7 +35,11 @@ const Grade = ({role, value, type}) => {
 
     return (
         <>
-            <MouseOverPopover weight={value.weight} description={value.description}>
+            <MouseOverPopover weight={value.weight}
+                              description={value.description}
+                              lastUpdated={value.modifyTime}
+                              subject={value.subject}
+            >
                 <div className="Grade-wrapper" onClick={() => handleClick(value)}>
                     <div className={classes}>
                         {result}
@@ -48,6 +52,7 @@ const Grade = ({role, value, type}) => {
                         type={"MODIFY"}
                         existingGrade={grade}
                         setIsOpen={setShow}
+                        setRefresh={setRefresh}
                     />
                 </Modal>
             )}

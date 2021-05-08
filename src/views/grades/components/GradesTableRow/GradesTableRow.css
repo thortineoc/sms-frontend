@@ -1,3 +1,17 @@
+.TableRow__cell {
+    border-collapse: collapse !important;
+    border-radius: 10px;
+    padding: 1%;
+    border: 1px solid lightgray;
+    border-bottom: none;
+}
+
+.TableRow__grades-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/*
 .TableRow__inner-table {
     border: none;
 }
@@ -8,13 +22,9 @@
 
 .TableRow__inner-cell {
     border: none;
+    word-wrap: break-word;
 }
 
-.TableRow__cell {
-    border-collapse: collapse !important;
-    border-radius: 10px;
-    padding: 1%;
-    border: 1px solid lightgray;
-    border-bottom: none;
-}
 
+
+*/

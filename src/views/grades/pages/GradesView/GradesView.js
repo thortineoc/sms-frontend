@@ -15,11 +15,12 @@ const GradesView = () => {
 
     return (
         <div>
-            {role === 'TEACHER' ? (
-                <GradesViewTeachers />
-            ) : (
-                <GradesViewStudents />
-            )}
+            {role === 'TEACHER' &&
+            <GradesViewTeachers />
+            }
+            {(role === 'STUDENT' || role === 'PARENT') &&
+            <GradesViewStudents />
+            }
         </div>
     );
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import Grade from "../Grade/Grade";
 import './GradesTableRow.css';
 import AddCircle from "../AddCircle/AddCircle";
-import GradesTable from "../GradesTable/GradesTable";
 
 const countAverage = (sum, divider) => {
     return (sum / divider).toFixed(2);
@@ -20,16 +19,14 @@ const GradesTableRow = ({role, firstCol, grades, subject, setRefresh}) => {
             </td>
             <td className="TableRow__cell">
 
-                <table className="TableRow__inner-table">
-                    <tr className="TableRow__inner-row">
+                <div className="TableRow__grades-container">
                         {grades && grades['grades'].map(obj =>
-                            <td className="TableRow__inner-cell"><Grade role={role} value={obj} type="regular"/></td>
+                          <Grade role={role} value={obj} setRefresh={setRefresh} type="regular"/>
                         )}
                         {role === 'TEACHER' && (
                             <AddCircle studentId={firstCol.id} type="REGULAR"  subject={subject} setRefresh={setRefresh} />
                         )}
-                    </tr>
-                </table>
+                </div>
 
 
             </td>
@@ -40,9 +37,9 @@ const GradesTableRow = ({role, firstCol, grades, subject, setRefresh}) => {
                 )) ?? ''}
             </td>
             <td className="TableRow__cell">
-                {/*Object.keys(grades['isFinal']).length !== 0 */}
+
                 {grades['finalGrade'] != undefined ? (
-                <Grade role={role} value={grades['finalGrade']} type="final"/>
+                <Grade role={role} value={grades['finalGrade']} type="final" setRefresh={setRefresh}/>
                 ) : (
                     role === 'TEACHER' && (
                         <AddCircle studentId={firstCol.id} type="FINAL"  subject={subject} setRefresh={setRefresh} />

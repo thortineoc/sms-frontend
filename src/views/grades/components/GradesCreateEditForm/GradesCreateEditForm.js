@@ -55,7 +55,7 @@ const convertGradeToDouble = (gradeObject) =>{
 
 const validationSchema = Yup.object({
     weight: Yup.number().required('Required'),
-    grade: Yup.string().matches(/^[1-6][+-]?$/, 'Invalid format').required('Required'),
+    grade: Yup.string().matches(/(^[2-5][+-]?$)|(^1\+$)|(^6-$)/, 'Invalid format').required('Required'),
 })
 
 const GradesCreateEditForm = (props) => {
@@ -64,7 +64,6 @@ const GradesCreateEditForm = (props) => {
 
     const onSubmit = (values, setSubmitting, setValues) =>{
         setError("");
-        console.log(convertGradeToDouble(values));
         callBackendPut(axiosInstance, "grades-service/grades", JSON.stringify(convertGradeToDouble(values)))
             .then(response => {
                 if(response.status<205){

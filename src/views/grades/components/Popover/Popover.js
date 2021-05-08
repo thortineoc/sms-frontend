@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function MouseOverPopover({children, weight, description}) {
+export default function MouseOverPopover({children, weight, description, lastUpdated, subject}) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -55,8 +55,10 @@ export default function MouseOverPopover({children, weight, description}) {
                 onClose={handlePopoverClose}
                 disableRestoreFocus
             >
-                <Typography> {description} </Typography>
+                <Typography> <b>subject:</b> {subject}  </Typography>
                 <Typography> <b>weight:</b> {weight}  </Typography>
+                <Typography> <b>date:</b> {lastUpdated.match(/[0-9]+-[0-9]+-[0-9]+/)}  </Typography>
+                <Typography> {description} </Typography>
             </Popover>
         </div>
     );
