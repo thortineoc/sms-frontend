@@ -3,34 +3,14 @@ import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldW
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import React from "react";
 import * as Yup from "yup";
-import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
-import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
-import useAxios from "../../../../utilities/useAxios";
-import callBackendPut from "../../../../utilities/CallBackendPut";
-
-const validationSchemaParent = Yup.object({
-    id: Yup.string(),//.required('Required'), //wtf formik
-    userName: Yup.string(),//.required('Required'), //wtf formik
-    firstName: Yup.string(),//.required('Required'),
-    lastName: Yup.string().required('Required'),
-    email: Yup.string().email('Invalid format'),
-    customAttributes: Yup.object({
-        phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300')
-    })
-})
 
 const validationSchema = Yup.object({
     id: Yup.string().required('Required'),
     userName: Yup.string().required('Required'),
-    //firstName: Yup.string().required('Required'),
-    //lastName: Yup.string().required('Required'),
-    //pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
     email: Yup.string().email('Invalid format'),
     //custom
     customAttributes: Yup.object({
         phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
-        //middleName: Yup.string(),
-        //groups: Yup.string()
     })
 })
 

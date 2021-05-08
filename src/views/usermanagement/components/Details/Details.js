@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import './Details.css';
-import { TrashIcon } from "@heroicons/react/outline";
+import {TrashIcon} from "@heroicons/react/outline";
 import {Dialog} from "@material-ui/core";
 import Modal from "../Modal/Modal";
 import DialogBox from "../DialogBox/DialogBox";
@@ -9,6 +9,7 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 import callBackendGet from "../../../../utilities/CallBackendGet";
+import axios from "axios";
 
 const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => {
 
@@ -18,23 +19,34 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
     const [parent, setParent] = useState({});
 
     const handleClick = () => {
-        if(!displayDialog) {
+        if (!displayDialog) {
             setShowEdit(true);
         }
     }
 
     useEffect(() => {
+        let unmounted = false;
+        let source = axios.CancelToken.source();
         if (role === "STUDENT") {
             callBackendGet(axiosInstance, "usermanagement-service/users/" + user.relatedUser, null)
                 .then(response => {
-                    setParent(response.data);
+                    if (!unmounted) {
+                        setParent(response.data);
+                    }
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    if (!unmounted) {
+                        console.log(error);
+                    }
+                });
         }
+        return function () {
+            unmounted = true;
+            source.cancel("Cancelling in cleanup");
+        };
     }, [])
 
-    if(Object.keys(parent).length === 0)
-    {
+    if (Object.keys(parent).length === 0) {
         return ("Please wait. We're doing our best :)");
     }
 
@@ -141,29 +153,29 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
                     </div>
                 </>
             ) : (
-                <div className="Details__teacher-field" >
+                <div className="Details__teacher-field">
                     <div className="Details__label">Subjects</div>
                     <div className="Details__data-subjects"
                          onClick={handleClick}>
-                        {(  user.subjects &&
-                            user.subjects.map(subject => <span>{subject + ' '}</span>)) }
+                        {(user.subjects &&
+                            user.subjects.map(subject => <span>{subject + ' '}</span>))}
                     </div>
                 </div>
             )}
 
             <div className="Details__delete-wrapper">
-                 <TrashIcon className="Details__delete" onClick={() => {
-                     setDisplayDialog(true);
-                 }} />
+                <TrashIcon className="Details__delete" onClick={() => {
+                    setDisplayDialog(true);
+                }}/>
             </div>
 
-            { displayDialog && <DialogBox
+            {displayDialog && <DialogBox
                 user={user}
                 setDisplayDialog={setDisplayDialog}
                 setDeleteUser={setDeleteUser}
                 setDetailsModalShown={setDetailsModalShown}
                 fetchData={fetchData}
-            /> }
+            />}
 
         </div>
     );

@@ -324,7 +324,8 @@ export default function UserDisplayTable(props) {
                     fetchData={fetchData}
                 />}
                 {showEdit && <EditForm user={selectedUser} role={props.role} fetchData={fetchData}
-                                       refresh={handleRequireRefresh}/>}
+                                       refresh={handleRequireRefresh} setShowEdit={setShowEdit}
+                                       setDetailsModalShown={setShowDetails}/>}
             </Modal>}
 
         </div>

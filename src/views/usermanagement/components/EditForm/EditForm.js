@@ -30,27 +30,19 @@ const validationSchema = Yup.object({
     })
 })
 
-const validationSchemaParent = Yup.object({
-    id: Yup.string(),
-    userName: Yup.string(),
-    email: Yup.string().email('Invalid format'),
-    customAttributes: Yup.object({
-        phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300')
-    })
-})
-
-const EditForm = ({user, groups, role, refresh}) => {
+const EditForm = ({user, groups, role, refresh, setShowEdit, setDetailsModalShown}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [items, setItems] = useState([]);
     const [parent, setParent] = useState({});
 
     const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
-        console.log(values);
         callBackendPut(axiosInstance, "usermanagement-service/users/update", {
             ...values
         })
             .then(response => {
                 setStatus({success: true});
+                setShowEdit(false);
+                setDetailsModalShown(false);
                 refresh(true);
             })
             .catch(error => {
