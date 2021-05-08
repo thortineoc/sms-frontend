@@ -22,7 +22,7 @@ const AssignEditHomeworkForm = (props) => {
 
     return (
         <Formik
-            initialValues={initial}
+            initialValues={props.type==="MODIFY" ? props.homeworkDetails : initial}
             //validationSchema={validationSchema}
             validateOnChange={false}
             onSubmit={(values, {setSubmitting, setValues}) => onSubmit(values, setSubmitting, setValues)}
