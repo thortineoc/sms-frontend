@@ -34,28 +34,7 @@ const validationSchema = Yup.object({
     })
 })
 
-const ParentForm = ({user, refresh}) => {
-
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
-
-    const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
-        console.log(values);
-        callBackendPut(axiosInstance, "usermanagement-service/users/update", {
-            ...values
-        })
-            .then(response => {
-                console.log(response);
-                setStatus({success: true});
-                refresh(true);
-            })
-            .catch(error => {
-                console.log(error);
-                setStatus({success: false});
-                setSubmitting(false);
-                resetForm();
-                setErrors({submit: error.message});
-            });
-    }
+const ParentForm = ({user, refresh, onSubmit}) => {
 
     if(Object.keys(user).length === 0)
     {

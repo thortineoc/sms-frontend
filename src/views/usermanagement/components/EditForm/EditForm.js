@@ -50,7 +50,6 @@ const EditForm = ({user, groups, role, refresh}) => {
             ...values
         })
             .then(response => {
-                console.log(response);
                 setStatus({success: true});
                 refresh(true);
             })
@@ -174,6 +173,7 @@ const EditForm = ({user, groups, role, refresh}) => {
             {role === 'STUDENT' && (
                 <ParentForm
                 user={parent}
+                onSubmit={onSubmit}
                 refresh={refresh}/>
             )}
         </>
