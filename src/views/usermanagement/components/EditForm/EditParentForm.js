@@ -5,42 +5,69 @@ import React from "react";
 import * as Yup from "yup";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendPut from "../../../../utilities/CallBackendPut";
 
 const validationSchemaParent = Yup.object({
-    id: Yup.string(),
-    userName: Yup.string(),
+    id: Yup.string(),//.required('Required'), //wtf formik
+    userName: Yup.string(),//.required('Required'), //wtf formik
+    firstName: Yup.string(),//.required('Required'),
+    lastName: Yup.string().required('Required'),
     email: Yup.string().email('Invalid format'),
     customAttributes: Yup.object({
         phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300')
     })
 })
 
-const ParentForm = ({user}) => {
+const validationSchema = Yup.object({
+    id: Yup.string().required('Required'),
+    userName: Yup.string().required('Required'),
+    //firstName: Yup.string().required('Required'),
+    //lastName: Yup.string().required('Required'),
+    //pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
+    email: Yup.string().email('Invalid format'),
+    //custom
+    customAttributes: Yup.object({
+        phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
+        //middleName: Yup.string(),
+        //groups: Yup.string()
+    })
+})
+
+const ParentForm = ({user, refresh}) => {
+
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
 
     const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
         console.log(values);
-        // callBackendPut(axiosInstance, "usermanagement-service/users/update", {
-        //     ...values
-        // })
-        //     .then(response => {
-        //         console.log(response);
-        //         setStatus({success: true});
-        //         refresh(true);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         setStatus({success: false});
-        //         setSubmitting(false);
-        //         resetForm();
-        //         setErrors({submit: error.message});
-        //     });
+        callBackendPut(axiosInstance, "usermanagement-service/users/update", {
+            ...values
+        })
+            .then(response => {
+                console.log(response);
+                setStatus({success: true});
+                refresh(true);
+            })
+            .catch(error => {
+                console.log(error);
+                setStatus({success: false});
+                setSubmitting(false);
+                resetForm();
+                setErrors({submit: error.message});
+            });
+    }
+
+    if(Object.keys(user).length === 0)
+    {
+        console.log("Waiting for backend...");
+        return ("Please wait. We're doing our best :)");
     }
 
     return (
         <>
             <Formik
                 initialValues={user}
-                validationSchema={validationSchemaParent}
+                validationSchema={validationSchema}
                 validateOnChange={false}
                 onSubmit={onSubmit}
             >
@@ -61,7 +88,7 @@ const ParentForm = ({user}) => {
                                         />
                                         <TextFieldWrapper
                                             label="Phone number"
-                                            name="phoneNumber"
+                                            name="customAttributes.phoneNumber"
                                             type="text"
                                         />
                                         <div className="Details__field">

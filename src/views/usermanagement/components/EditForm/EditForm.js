@@ -44,42 +44,31 @@ const EditForm = ({user, groups, role, refresh}) => {
     const [items, setItems] = useState([]);
     const [parent, setParent] = useState({});
 
-    delete user.group;
-    delete user.middleName;
-    delete user.phoneNumber;
-    user.customAttributes.relatedUser = user.relatedUser;
-    delete user.relatedUser;
-    delete user.subjects;
-
     const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
         console.log(values);
-        // callBackendPut(axiosInstance, "usermanagement-service/users/update", {
-        //     ...values
-        // })
-        //     .then(response => {
-        //         console.log(response);
-        //         setStatus({success: true});
-        //         refresh(true);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         setStatus({success: false});
-        //         setSubmitting(false);
-        //         resetForm();
-        //         setErrors({submit: error.message});
-        //     });
+        callBackendPut(axiosInstance, "usermanagement-service/users/update", {
+            ...values
+        })
+            .then(response => {
+                console.log(response);
+                setStatus({success: true});
+                refresh(true);
+            })
+            .catch(error => {
+                console.log(error);
+                setStatus({success: false});
+                setSubmitting(false);
+                resetForm();
+                setErrors({submit: error.message});
+            });
     }
 
     useEffect(() => {
         fetchItems();
         if (role === "STUDENT") {
-            callBackendPost(axiosInstance, "usermanagement-service/users/filter", {
-                pesel: "parent_" + user.pesel
-            })
+            callBackendGet(axiosInstance, "usermanagement-service/users/" + user.relatedUser, null)
                 .then(response => {
-                    let parent = response.data[0];
-                    parent.pesel = parent.pesel.substring(7);
-                    setParent(parent);
+                    setParent(response.data);
                 })
                 .catch(error => console.log(error));
         }
@@ -91,6 +80,9 @@ const EditForm = ({user, groups, role, refresh}) => {
             })
             .catch(error => console.log(error))
     }
+
+    console.log(user);
+    console.log(parent);
 
     return (
         <>
@@ -184,7 +176,8 @@ const EditForm = ({user, groups, role, refresh}) => {
 
             {role === 'STUDENT' && (
                 <ParentForm
-                user={parent}/>
+                user={parent}
+                refresh={refresh}/>
             )}
         </>
     )

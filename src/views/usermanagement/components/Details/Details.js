@@ -34,6 +34,12 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
         }
     }, [])
 
+    if(Object.keys(parent).length === 0)
+    {
+        console.log("Waiting for backend...");
+        return ("Please wait. We're doing our best :)");
+    }
+
     return (
         <div className="Details">
 
@@ -119,7 +125,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
                             <div className="Details__label">Phone number</div>
                             <div className="Details__data"
                                  onClick={handleClick}>
-                                {parent.phoneNumber}
+                                {parent.customAttributes.phoneNumber}
                             </div>
                         </div>
                         <div className="Details__field">
