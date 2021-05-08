@@ -17,10 +17,10 @@ const HomeworkDetailsAndResponses = (props) => {
 
     return (
         <div className="HomeworkDetailsAndResponses">
+            <ButtonWrapper label={"Delete"} className="HomeworkDetails__button"/>
             <ButtonWrapper label={"Edit"} onClick={() => setState(true)} className="HomeworkDetails__button"/>
 
             <h3>Homework details</h3>
-
 
             <div className="DetailsHomework__field">
                 <div className="DetailsHomework__label">Title</div>
@@ -37,16 +37,16 @@ const HomeworkDetailsAndResponses = (props) => {
             </div>
 
             <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Subject</div>
+                <div className="DetailsHomework__label">Group</div>
                 <div className="DetailsHomework__data_small">
-                    {homeworkData.subject}
+                    {homeworkData.group}
                 </div>
             </div>
 
             <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Group</div>
+                <div className="DetailsHomework__label">Subject</div>
                 <div className="DetailsHomework__data_small">
-                    {homeworkData.group}
+                    {homeworkData.subject}
                 </div>
             </div>
 
