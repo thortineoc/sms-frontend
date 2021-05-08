@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Form, Formik} from "formik";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import DatepickerWrapper from "../../../../components/DatepickerWrapper/DatepickerWrapper";
+import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
 
 
 const initial = {
@@ -14,10 +16,27 @@ const initial = {
 
 const AssignEditHomeworkForm = (props) => {
     const[error, setError] = useState("");
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [groups, setGroups] = useState([])
+
 
     const onSubmit = (values, setSubmitting, setValues) =>{
         console.log(values);
     }
+
+    const fetchGroups = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+            .then(response => {
+                console.log(response.data);
+                setGroups(response.data);
+            })
+            .catch(error => console.log(error))
+    }
+
+    useEffect(() => {
+        fetchGroups();
+    }, []);
+
 
 
     return (
@@ -52,7 +71,7 @@ const AssignEditHomeworkForm = (props) => {
                                 <SelectFieldWrapper
                                     label="Group"
                                     name="group"
-                                    options={[1,2,3,4]}
+                                    options={groups}
                                 />
 
                                 <SelectFieldWrapper
@@ -61,11 +80,6 @@ const AssignEditHomeworkForm = (props) => {
                                     options={props.subjects}
                                 />
 
-                                <TextFieldWrapper
-                                    label="Grade"
-                                    name="grade"
-                                    type="text"
-                                />
 
                                 <DatepickerWrapper
                                 name={"deadline"}
