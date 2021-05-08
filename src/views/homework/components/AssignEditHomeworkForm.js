@@ -3,10 +3,8 @@ import {Form, Formik} from "formik";
 import TextFieldWrapper from "../../../components/TextFieldWrapper/TextFieldWrapper";
 import SelectFieldWrapper from "../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import ButtonWrapper from "../../../components/Button/ButtonWrapper";
-import Button from "@material-ui/core/Button";
 import DatepickerWrapper from "../../../components/DatepickerWrapper/DatepickerWrapper";
 
-const subjects = ["Polish", "Math"];
 
 const initial = {
     group: "",
@@ -70,9 +68,10 @@ const AssignEditHomeworkForm = (props) => {
                                 />
 
                                 <DatepickerWrapper
-                                name={"date"}
-                                label={"due date"}
+                                name={"deadline"}
+                                label={"Deadline"}
                                 />
+
                                 <div className="CreateForm__button-wrapper">
                                     {props.type==="MODIFY"
                                     && <ButtonWrapper type="reset" label="Delete" disabled={formik.isSubmitting} style={{margin:"5px"}}/>}
