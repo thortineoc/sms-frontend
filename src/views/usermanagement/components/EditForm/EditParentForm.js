@@ -59,7 +59,6 @@ const ParentForm = ({user, refresh}) => {
 
     if(Object.keys(user).length === 0)
     {
-        console.log("Waiting for backend...");
         return ("Please wait. We're doing our best :)");
     }
 

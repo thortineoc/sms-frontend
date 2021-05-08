@@ -8,6 +8,7 @@ import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import callBackendGet from "../../../../utilities/CallBackendGet";
 
 const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => {
 
@@ -24,11 +25,9 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
 
     useEffect(() => {
         if (role === "STUDENT") {
-            callBackendPost(axiosInstance, "usermanagement-service/users/filter", {
-                pesel: "parent_" + user.pesel
-            })
+            callBackendGet(axiosInstance, "usermanagement-service/users/" + user.relatedUser, null)
                 .then(response => {
-                    setParent(response.data[0]);
+                    setParent(response.data);
                 })
                 .catch(error => console.log(error));
         }
@@ -36,7 +35,6 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
 
     if(Object.keys(parent).length === 0)
     {
-        console.log("Waiting for backend...");
         return ("Please wait. We're doing our best :)");
     }
 
