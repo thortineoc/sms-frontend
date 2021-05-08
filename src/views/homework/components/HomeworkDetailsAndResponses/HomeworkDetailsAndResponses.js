@@ -68,8 +68,9 @@ const HomeworkDetailsAndResponses = (props) => {
 
             <Modal isOpen={state} setIsOpen={setState}>
                 <AssignEditHomeworkForm
-                    type={"ADD"}
+                    type={"MODIFY"}
                     subjects={["Polish", "Math"]}
+                    homeworkDetails={homeworkData}
                 />
             </Modal>
         </div>
