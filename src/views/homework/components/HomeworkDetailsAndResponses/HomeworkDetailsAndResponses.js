@@ -22,7 +22,7 @@ const HomeworkDetailsAndResponses = (props) => {
             <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
             <ButtonWrapper label={"Edit"} onClick={() => setState(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
 
-            <h3>Homework details</h3>
+            <h3>Homework details {props.id}</h3>
 
             <div className="DetailsHomework__field">
                 <div className="DetailsHomework__label">Title</div>

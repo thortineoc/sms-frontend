@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 
-import HomeworkDetailsAndResponses from "./components/HomeworkDetailsAndResponses/HomeworkDetailsAndResponses";
+import {Link} from "react-router-dom";
+import ButtonWrapper from "../../components/Button/ButtonWrapper";
 
 
 const HomeworkView = (props) => {
 
-
     return (
-        <HomeworkDetailsAndResponses/>
+        <Link to="/api/homework/example">
+            <ButtonWrapper label={"link to /api/homework/example-id"}/>
+        </Link>
     )
 }
 
