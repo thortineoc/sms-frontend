@@ -14,13 +14,13 @@ const homeworkData = {
 }
 
 const HomeworkDetailsAndResponses = (props) => {
-    const [state, setState] = useState(false);
+    const [showEditDialog, setShowEditDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     return (
         <div className="HomeworkDetailsAndResponses">
             <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
-            <ButtonWrapper label={"Edit"} onClick={() => setState(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
+            <ButtonWrapper label={"Edit"} onClick={() => setShowEditDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
 
             <h3>Homework details {props.id}</h3>
 
@@ -62,7 +62,7 @@ const HomeworkDetailsAndResponses = (props) => {
 
 
 
-            <Modal isOpen={state} setIsOpen={setState}>
+            <Modal isOpen={showEditDialog} setIsOpen={setShowEditDialog}>
                 <AssignEditHomeworkForm
                     type={"MODIFY"}
                     subjects={["Polish", "Math"]}
