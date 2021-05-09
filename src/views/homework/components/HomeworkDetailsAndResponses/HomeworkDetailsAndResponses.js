@@ -3,6 +3,7 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import Modal from "../../../../components/Modal/Modal";
 import AssignEditHomeworkForm from "../AssignEditHomeworkForm/AssignEditHomeworkForm";
 import "./HomeworkDetailsAndResponses.css"
+import DeleteDialog from "../DeleteDialog/DeleteDialog";
 
 const homeworkData = {
     title: "Zadanie o czymś tam",
@@ -14,11 +15,12 @@ const homeworkData = {
 
 const HomeworkDetailsAndResponses = (props) => {
     const [state, setState] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     return (
         <div className="HomeworkDetailsAndResponses">
-            <ButtonWrapper label={"Delete"} className="HomeworkDetails__button"/>
-            <ButtonWrapper label={"Edit"} onClick={() => setState(true)} className="HomeworkDetails__button"/>
+            <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
+            <ButtonWrapper label={"Edit"} onClick={() => setState(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
 
             <h3>Homework details</h3>
 
@@ -60,12 +62,6 @@ const HomeworkDetailsAndResponses = (props) => {
 
 
 
-
-
-
-
-
-
             <Modal isOpen={state} setIsOpen={setState}>
                 <AssignEditHomeworkForm
                     type={"MODIFY"}
@@ -73,6 +69,11 @@ const HomeworkDetailsAndResponses = (props) => {
                     homeworkDetails={homeworkData}
                 />
             </Modal>
+
+            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
+            </Modal>
+
         </div>
     )
 }
