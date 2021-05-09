@@ -4,6 +4,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
+import {Link} from "react-router-dom";
 
 const mockData = [
     {'geography': [
@@ -60,7 +61,9 @@ const HomeworksList = () => {
                                 <TreeItem nodeId={1000 + groupIndex + 100 * subjectIndex} label={Object.keys(groupObj)}>
                                     {Object.keys(groupObj).map((groupKey) => (
                                         groupObj[groupKey].map((homework, homeworkIndex) => (
-                                                <TreeItem nodeId={homework['id']} label={homework['title']}/>
+                                                <Link to="/api/grades-service">
+                                                    <TreeItem nodeId={homework['id']} label={homework['title']}/>
+                                                </Link>
                                             )
                                         )
                                     ))}
