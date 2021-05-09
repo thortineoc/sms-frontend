@@ -46,7 +46,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
         };
     }, [])
 
-    if (Object.keys(parent).length === 0) {
+    if (Object.keys(parent).length === 0 && role==="STUDENT") {
         return ("Please wait. We're doing our best :)");
     }
 
