@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Formik, Form } from 'formik';
+import {Formik, Form} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
@@ -10,19 +10,10 @@ import './EditForm.css'
 import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
-
-const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
-    console.log(values);
-    try {
-        await axios.put(".../{id}", values);
-        resetForm();
-        setStatus({success: true});
-    } catch(error) {
-        setStatus({success: false});
-        setSubmitting(false);
-        setErrors({submit: error.message});
-    }
-}
+import callBackendPost from "../../../../utilities/CallBackendPost";
+import callBackendPut from "../../../../utilities/CallBackendPut";
+import {responsiveFontSizes} from "@material-ui/core";
+import ParentForm from "./EditParentForm";
 
 const validationSchema = Yup.object({
     id: Yup.string().required('Required'),
@@ -30,34 +21,52 @@ const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     lastName: Yup.string().required('Required'),
     pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
+    email: Yup.string().email('Invalid format'),
+    //custom
     customAttributes: Yup.object({
         phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
-        email: Yup.string().email('Invalid format'),
         middleName: Yup.string(),
+        groups: Yup.string()
     })
 })
 
-
-const parent = {
-    id: 3,
-    userName: 'parent',
-    email: 'iamparent@abc.com',
-    phoneNumber: '555444333'
-}
-
-
-const EditForm = ({user, groups, role}) => {
-    console.log(user)
+const EditForm = ({user, groups, role, refresh, setShowEdit, setDetailsModalShown}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [items, setItems] = useState([]);
+    const [parent, setParent] = useState({});
 
-    useEffect(()=>{
-        fetchItems();
-    },[])
-    const fetchItems = () => {
-        callBackendGet(axiosInstance, "usermanagement-service/" + (role==="STUDENT" ? "groups" : "subjects"), null)
+    const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
+        callBackendPut(axiosInstance, "usermanagement-service/users/update", {
+            ...values
+        })
             .then(response => {
-                console.log(response.data);
+                setStatus({success: true});
+                setShowEdit(false);
+                setDetailsModalShown(false);
+                refresh(true);
+            })
+            .catch(error => {
+                console.log(error);
+                setStatus({success: false});
+                setSubmitting(false);
+                resetForm();
+                setErrors({submit: error.message});
+            });
+    }
+
+    useEffect(() => {
+        fetchItems();
+        if (role === "STUDENT") {
+            callBackendGet(axiosInstance, "usermanagement-service/users/" + user.relatedUser, null)
+                .then(response => {
+                    setParent(response.data);
+                })
+                .catch(error => console.log(error));
+        }
+    }, [])
+    const fetchItems = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/" + (role === "STUDENT" ? "groups" : "subjects"), null)
+            .then(response => {
                 setItems(response.data);
             })
             .catch(error => console.log(error))
@@ -104,7 +113,7 @@ const EditForm = ({user, groups, role}) => {
                                         </div>
                                         <TextFieldWrapper
                                             label="E-mail address"
-                                            name="customAttributes.email"
+                                            name="email"
                                             type="email"
                                         />
                                         <TextFieldWrapper
@@ -125,11 +134,11 @@ const EditForm = ({user, groups, role}) => {
                                             </div>
                                         </div>
                                         {role === 'STUDENT' && (
-                                        <SelectFieldWrapper
-                                            label="Group"
-                                            name="customAttributes.group"
-                                            options={items}
-                                        />)}
+                                            <SelectFieldWrapper
+                                                label="Group"
+                                                name="customAttributes.group"
+                                                options={items}
+                                            />)}
                                     </div>
                                     {role === 'TEACHER' && (
                                         <div className="EditForm__subjects">
@@ -154,56 +163,10 @@ const EditForm = ({user, groups, role}) => {
             </Formik>
 
             {role === 'STUDENT' && (
-                <Formik
-                    initialValues={parent}
-                    validateOnChange={true}
-                    onSubmit={onSubmit}
-                >
-                    {
-                        formik => {
-                            return (
-                                <Form>
-                                    <div className="EditForm">
-                                        {formik.errors && formik.errors.submit &&
-                                        <div className="error">{formik.errors.submit}</div>}
-
-                                        <h3>Parent contact information</h3>
-                                        <div className="Details__parent-grid">
-                                            <TextFieldWrapper
-                                                label="E-mail address"
-                                                name="email"
-                                                type="email"
-                                            />
-                                            <TextFieldWrapper
-                                                label="Phone number"
-                                                name="phoneNumber"
-                                                type="text"
-                                            />
-                                            <div className="Details__field">
-                                                <div className="Details__label-sm">User ID</div>
-                                                <div className="Details__data-not-modifiable">
-                                                    {parent.id ?? '-'}
-                                                </div>
-                                            </div>
-                                            <div className="Details__field">
-                                                <div className="Details__label-sm">Username</div>
-                                                <div className="Details__data-not-modifiable">
-                                                    {parent.userName ?? '-'}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="EditForm__button-wrapper">
-                                            <ButtonWrapper type="submit" label="Save parent changes"
-                                                           disabled={formik.isSubmitting}/>
-                                        </div>
-
-                                    </div>
-                                </Form>
-                            )
-                        }
-                    }
-                </Formik>
+                <ParentForm
+                user={parent}
+                onSubmit={onSubmit}
+                refresh={refresh}/>
             )}
         </>
     )
