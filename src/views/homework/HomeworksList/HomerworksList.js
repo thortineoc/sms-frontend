@@ -7,12 +7,25 @@ import TreeItem from '@material-ui/lab/TreeItem';
 
 const mockData = [
     {'geography': [
-            {'3A': ['read about rocks', 'write about caves']},
-            {'2B' : ['write about rivers']}
+            {'3A': [{
+                'id': 12345679,
+                'title': 'write about caves'
+            }]},
+            {'2B' : [{
+                'id': 12345680,
+                'title': 'write about rivers'
+            },
+                    {
+                        'id': 12345688,
+                        'title': 'write about sees'
+                    }]}
         ]
     },
     {'english': [
-            {'1C' : ['write an email']}
+            {'1C' : [
+                    {'id': 123456781,
+                        'title': 'write an email'
+                    }]}
         ]
     }
 ]
@@ -28,6 +41,10 @@ const useStyles = makeStyles({
 const HomeworksList = () => {
     const classes = useStyles();
 
+    const handleClick = (id) => {
+
+    }
+
     return (
         <TreeView
             className={classes.root}
@@ -40,10 +57,10 @@ const HomeworksList = () => {
                     <TreeItem nodeId={subjectIndex} label={Object.keys(item)}>
                         {Object.keys(item).map((subjectKey) => (
                             item[subjectKey].map((groupObj, groupIndex) => (
-                                <TreeItem nodeId={1000 + groupIndex} label={Object.keys(groupObj)}>
+                                <TreeItem nodeId={1000 + groupIndex + 100 * subjectIndex} label={Object.keys(groupObj)}>
                                     {Object.keys(groupObj).map((groupKey) => (
                                         groupObj[groupKey].map((homework, homeworkIndex) => (
-                                                <TreeItem nodeId={2000 + homeworkIndex} label={homework}/>
+                                                <TreeItem nodeId={homework['id']} label={homework['title']}/>
                                             )
                                         )
                                     ))}
