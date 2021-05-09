@@ -66,6 +66,8 @@ const AssignEditHomeworkForm = (props) => {
                                     label="Description"
                                     name="description"
                                     type="text"
+                                    multiline
+                                    rowsMax={6}
                                 />
 
                                 <SelectFieldWrapper
