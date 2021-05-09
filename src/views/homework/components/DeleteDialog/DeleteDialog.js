@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import "./DeleteDialog.css"
 

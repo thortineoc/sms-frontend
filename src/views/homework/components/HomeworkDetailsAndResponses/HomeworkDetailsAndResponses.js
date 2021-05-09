@@ -9,8 +9,8 @@ const homeworkData = {
     title: "Zadanie o czymś tam",
     description: "To jest opis tego zadania",
     subject: "Polish",
-    group: "IIA",
-    deadline: "2021/10/10"
+    group: "1D",
+    deadline: "10/10/2021"
 }
 
 const HomeworkDetailsAndResponses = (props) => {
