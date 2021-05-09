@@ -1,7 +1,9 @@
-
+import HomeworksList from "./HomeworksList/HomerworksList";
 
 const HomeworkView = (props) => {
-    return <p>Homework view</p>
+    return (
+        <HomeworksList />
+    )
 }
 
 export default HomeworkView;
