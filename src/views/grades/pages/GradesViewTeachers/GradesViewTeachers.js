@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../GradesViewCommonStyles/GradesView.css';
+import '../GradesView/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import {InputLabel, MenuItem, Select} from "@material-ui/core";
@@ -9,114 +9,7 @@ import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
-
-let mockData = [{
-    'student': {
-        firstName: 'John',
-        lastName: 'Doe'
-    },
-    'grades':
-     {
-        'regular': [
-            {
-                id: 1,
-                subject: 'maths',
-                teacherId: '123',
-                studentId: '1234',
-                grade: 5,
-                description: 'za prace domowa',
-                weight: 2
-            },
-            {
-                id: 2,
-                subject: 'maths',
-                teacherId: '123',
-                studentId: '1234',
-                grade: 5,
-                description: 'za prace domowa',
-                weight: 2
-            },
-            {
-                id: 3,
-                subject: 'maths',
-                teacherId: '123',
-                studentId: '1234',
-                grade: 5,
-                description: 'za prace domowa',
-                weight: 2
-            },
-            {
-                id: 4,
-                subject: 'maths',
-                teacherId: '123',
-                studentId: '1234',
-                grade: 1,
-                description: 'za prace domowa',
-                weight: 4
-            },
-
-            {
-                id: 5,
-                subject: 'maths',
-                teacherId: '123',
-                studentId: '1234',
-                grade: 4.75,
-                description: 'za sprawdzian',
-                weight: 1
-            },
-        ],
-        'final': {
-            id: 6,
-            subject: 'maths',
-            teacherId: '123',
-            studentId: '1234',
-            grade: 4.75,
-            description: '',
-            weight: 1
-        }
-    },
-},
-    {
-        'student': {
-            firstName: 'Julia',
-            lastName: 'Doeeoeoe'
-        },
-        'grades':
-            {
-                'regular': [
-                    {
-                        id: 7,
-                        subject: 'maths',
-                        teacherId: '123',
-                        studentId: '1234',
-                        grade: 2.75,
-                        description: 'za prace domowa',
-                        weight: 3
-                    },
-                    {
-                        id: 8,
-                        subject: 'maths',
-                        teacherId: '123',
-                        studentId: '1234',
-                        grade: 2,
-                        description: 'za prace domowa',
-                        weight: 4
-                    },
-                    {
-                        id: 9,
-                        subject: 'maths',
-                        teacherId: '123',
-                        studentId: '1234',
-                        grade: 4.75,
-                        description: 'za sprawdzian',
-                        weight: 1
-                    },
-                ],
-                'final': {}
-            },
-    }
-
-]
+import {ref} from "yup";
 
 const COLUMN_TITLES = [
     'Students',
@@ -132,11 +25,13 @@ const GradesViewTeachers = () => {
     const [group, setGroup] = useState('');
     const [allSubjects, setAllSubjects] = useState('');
     const [allGroups, setAllGroups] = useState('');
+    const [refresh, setRefresh] = useState(false);
     const {keycloak, initialized} = useKeycloak();
+
     useEffect(() => {
-         if (!!initialized) {
-           getKeycloakSubjects(keycloak, setAllSubjects);
-       }
+        if (!!initialized) {
+            getKeycloakSubjects(keycloak, setAllSubjects);
+        }
     }, [keycloak, initialized])
 
     const fetchGroups = () => {
@@ -158,28 +53,54 @@ const GradesViewTeachers = () => {
 
     useEffect(() => {
         fetchGroups();
-        fetchData();
+        if(group && subject) {
+            fetchData();
+        }
     }, [])
 
     useEffect(() => {
-        fetchData();
+        if(group && subject) {
+            fetchData();
+        }
+        setRefresh(false);
+    }, [refresh])
+
+    useEffect(() => {
+        if(group && subject) {
+            fetchData();
+        }
     }, [group, subject])
+
+    useEffect(() => {
+        setGroup(allGroups[0])
+    }, [allGroups])
+
+    useEffect(() => {
+        allSubjects && setSubject(allSubjects.toString().split(',')[0])
+    }, [allSubjects])
+
+    const subjectsOptions = allSubjects ? allSubjects.toString().split(',') : [''];
+    const groupsOptions = allGroups ? allGroups.toString().split(',') : [''];
+
+    const handleRequireRefresh = () => {
+        setRefresh(true);
+    }
 
     return (
         <div className="GradesView">
             <div className="GradesView__selects">
                 <SimpleSelect label="Subjects"
-                              options={allSubjects.toString().split(',')}
+                              options={subjectsOptions}
                               value={subject}
                               setValue={setSubject}
                 />
                 <SimpleSelect label="Groups"
-                              options={allGroups.toString().split(',')}
+                              options={groupsOptions}
                               value={group}
                               setValue={setGroup}
                 />
             </div>
-            <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER"/>
+            <GradesTable data={data} columns={COLUMN_TITLES} role="TEACHER" subject={subject} setRefresh={handleRequireRefresh} />
         </div>
     )
 }

@@ -1,0 +1,8 @@
+.HomeworkList {
+    display: flex;
+    justify-content: space-between;
+}
+
+.HomeworkList__button {
+    max-height: 45px;
+}

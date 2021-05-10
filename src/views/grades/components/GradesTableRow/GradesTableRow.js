@@ -7,7 +7,7 @@ const countAverage = (sum, divider) => {
     return (sum / divider).toFixed(2);
 }
 
-const GradesTableRow = ({role, firstCol, grades}) => {
+const GradesTableRow = ({role, firstCol, grades, subject, setRefresh}) => {
     return (
         <tr className="TableRow">
             <td className="TableRow__cell">
@@ -19,16 +19,14 @@ const GradesTableRow = ({role, firstCol, grades}) => {
             </td>
             <td className="TableRow__cell">
 
-                <table className="TableRow__inner-table">
-                    <tr className="TableRow__inner-row">
-                        {grades['grades'].map(obj =>
-                            <td className="TableRow__inner-cell"><Grade role={role} value={obj} type="regular"/></td>
+                <div className="TableRow__grades-container">
+                        {grades && grades['grades'].map(obj =>
+                          <Grade role={role} value={obj} setRefresh={setRefresh} type="regular"/>
                         )}
                         {role === 'TEACHER' && (
-                            <AddCircle studentId={firstCol} type="REGULAR" />
+                            <AddCircle studentId={firstCol.id} type="REGULAR"  subject={subject} setRefresh={setRefresh} />
                         )}
-                    </tr>
-                </table>
+                </div>
 
 
             </td>
@@ -39,12 +37,12 @@ const GradesTableRow = ({role, firstCol, grades}) => {
                 )) ?? ''}
             </td>
             <td className="TableRow__cell">
-                {/*Object.keys(grades['isFinal']).length !== 0 */}
-                {grades['isFinal'] != undefined ? (
-                <Grade role={role} value={grades['isFinal']} type="final"/>
+
+                {grades['finalGrade'] != undefined ? (
+                <Grade role={role} value={grades['finalGrade']} type="final" setRefresh={setRefresh}/>
                 ) : (
                     role === 'TEACHER' && (
-                        <AddCircle studentId={firstCol} type="FINAL" />
+                        <AddCircle studentId={firstCol.id} type="FINAL"  subject={subject} setRefresh={setRefresh} />
                     )
                 )}
             </td>

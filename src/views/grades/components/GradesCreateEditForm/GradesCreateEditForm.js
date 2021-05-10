@@ -19,7 +19,6 @@ const init = (id, type, subject) => {
             subject: subject,
         }
     )
-
 }
 
 const convertGradeToString = (gradeObject) => {
@@ -56,21 +55,20 @@ const convertGradeToDouble = (gradeObject) =>{
 
 const validationSchema = Yup.object({
     weight: Yup.number().required('Required'),
-    grade: Yup.string().matches(/^[1-6][+-]?$/, 'Invalid format').required('Required'),
-    subject: Yup.string().required('Required'),
+    grade: Yup.string().matches(/(^[2-5][+-]?$)|(^1\+$)|(^6-$)/, 'Invalid format').required('Required'),
 })
 
 const GradesCreateEditForm = (props) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [error, setError] = useState("");
-    console.log(props.existingGrade);
+
     const onSubmit = (values, setSubmitting, setValues) =>{
         setError("");
-        console.log(convertGradeToDouble(values));
-        callBackendPut(axiosInstance, "grades-service/grades", convertGradeToDouble(values))
+        callBackendPut(axiosInstance, "grades-service/grades", JSON.stringify(convertGradeToDouble(values)))
             .then(response => {
                 if(response.status<205){
                     props.setIsOpen(false)
+                    props.setRefresh(true);
                 }
             })
             .catch(error => {
@@ -85,7 +83,9 @@ const GradesCreateEditForm = (props) => {
         callBackendDelete(axiosInstance, "grades-service/grades/" + values.id, null)
             .then(response => {
                 if(response.status<205){
+                    console.log(values.id);
                     props.setIsOpen(false)
+                    props.setRefresh(true);
                 }
             })
             .catch(error => {
@@ -106,7 +106,7 @@ const GradesCreateEditForm = (props) => {
                 formik => {
                     return (
                         <Form>
-                            <h3>{(props.type==="MODIFY" ? (props.existingGrade.isFinal===true ? "Modify final" : "Modify regular") : (props.type==="FINAL" ? "Add final" : "Add regular")) + " grade"}</h3>
+                            <h3>{(props.type==="MODIFY" ? (props.existingGrade.isFinal===true ? "Modify final" : "Modify") : (props.type==="FINAL" ? "Add final" : "Add")) + " grade"}</h3>
                             {(error.length>0 ? <p>{error}</p> : <div/>)}
                             <div className="CreateForm">
                                 {formik.errors && formik.errors.submit &&
@@ -119,8 +119,8 @@ const GradesCreateEditForm = (props) => {
                                 {((props.type === "MODIFY" && props.existingGrade.isFinal===false ) || (props.type === "REGULAR" ) ) &&
                                 <SelectFieldWrapper
                                     label="Weight"
-                                    name='weight'
-                                    options={[1,2,3,4,5,6]}
+                                    name="weight"
+                                    options={[1,2,3,4]}
                                 />}
 
                                 <TextFieldWrapper

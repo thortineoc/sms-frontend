@@ -1,24 +1,32 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useParams } from "react-router-dom";
 import React from "react";
 
-import HomeworkView from "../homework/HomeworkView";
+import HomeworkView from "../homework/pages/HomeworkView/HomeworkView";
 import PresenceView from "../presence/PresenceView";
 import TimetableView from "../timetables/TimetableView";
-import GradesViewStudents from "../grades/pages/GradesViewStudents/GradesViewStudents";
+import GradesView from "../grades/pages/GradesView/GradesView";
 
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
-import GradesViewTeachers from "../grades/pages/GradesViewTeachers/GradesViewTeachers";
 import Dashboard from "../dashboard/Dashboard";
+import HomeworkDetailsAndResponses
+    from "../homework/components/HomeworkDetailsAndResponses/HomeworkDetailsAndResponses";
+
+
+function HomeworkDetails() {
+    let { id } = useParams();
+    return (
+        <HomeworkDetailsAndResponses id={id}/>
+    )
+}
 
 const ViewRouter = () => {
 
-    let role = 'TEACHER';
     return (
         <Switch>
             <Route exact path="/">
-                <Dashboard role={"Mateusz"}/>
+                <Dashboard />
             </Route>
             <Route path="/api/homework-service">
                 <HomeworkView />
@@ -26,13 +34,14 @@ const ViewRouter = () => {
             <Route path="/api/usermanagement-service/my-account">
                 USER ACCOUNT
             </Route>
+            <Route path="/api/homework/:id">
+                <HomeworkDetails />
+            </Route>
+            <Route exact path="/api/homework-service">
+                <HomeworkView />
+            </Route>
             <Route path="/api/grades-service">
-                {role === 'STUDENT' ? (
-                    <GradesViewStudents />
-                ) : (
-                    <GradesViewTeachers />
-                )
-                }
+                <GradesView />
             </Route>
             <Route path="/api/timetable-service">
                 <TimetableView />
@@ -48,9 +57,6 @@ const ViewRouter = () => {
             </Route>
             <Route path="/api/usermanagement-service/timetables">
                 <TimetablesManagement />
-            </Route>
-            <Route path="/api/usermanagement-service/temp">
-
             </Route>
         </Switch>
     );
