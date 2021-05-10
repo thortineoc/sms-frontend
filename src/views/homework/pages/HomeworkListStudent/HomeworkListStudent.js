@@ -12,22 +12,20 @@ const mockData = [
             {
                     'id': 12345679,
                     'title': 'write about caves'
-                },
-             {
+            },
+            {
                     'id': 12345680,
                     'title': 'write about rivers'
-                }, {
+            }, {
                         'id': 12345688,
                         'title': 'write about sees'
-                    }
+            }
         ]
     },
     {'english': [
-
-                    {'id': 123456781,
-                        'title': 'write an email'
-                    }
-        ]
+        {'id': 123456781,
+            'title': 'write an email'
+        }]
     }
 ]
 
@@ -53,11 +51,11 @@ const HomeworksList = () => {
                 {
                     mockData.map((item) => (
                         <TreeItem nodeId={uuidv4()} label={Object.keys(item)}>
-                            {Object.keys(item).map((groupKey) => (
-                                item[groupKey].map((homework, homeworkIndex) => (
-                                    <Link to={`/api/homework/${homework['id']}`}>
-                                        <TreeItem nodeId={homework['id']} label={homework['title']}/>
-                                    </Link>
+                            {Object.keys(item).map((subject) => (
+                                item[subject].map((homework) => (
+                                        <Link to={`/api/homework/${homework['id']}`}>
+                                            <TreeItem nodeId={homework['id']} label={homework['title']}/>
+                                        </Link>
                                     )
                                 )
                             ))}
