@@ -5,7 +5,7 @@ import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
-const DialogBox = ({user, setDisplayDialog, setDeleteUser, setDetailsModalShown, fetchData}) => {
+const DialogBox = ({user, setDisplayDialog, setDeleteUser, setDetailsModalShown, fetchData, refresh}) => {
     const {keycloak, initialized} = useKeycloak();
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const runBackend = useCallback((axiosInstance, url, data) => {
@@ -22,6 +22,7 @@ const DialogBox = ({user, setDisplayDialog, setDeleteUser, setDetailsModalShown,
     const handleAccept = () => {
         runBackend(axiosInstance, "/usermanagement-service/users/" + user.id, null);
         setDetailsModalShown(false);
+        refresh();
     }
 
     const handleCancel = () => {

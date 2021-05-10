@@ -11,7 +11,7 @@ import callBackendDelete from "../../../../utilities/CallBackendDelete";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import axios from "axios";
 
-const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => {
+const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData, refresh}) => {
 
     const [displayDialog, setDisplayDialog] = useState(false);
     const [deleteUser, setDeleteUser] = useState('');
@@ -175,6 +175,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => 
                 setDeleteUser={setDeleteUser}
                 setDetailsModalShown={setDetailsModalShown}
                 fetchData={fetchData}
+                refresh={refresh}
             />}
 
         </div>
