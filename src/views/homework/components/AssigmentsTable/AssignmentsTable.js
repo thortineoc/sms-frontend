@@ -32,7 +32,7 @@ function createData(name, modificationDate, uploadedFile, comments, url) {
 }
 
 const rows = [
-    createData('Janusz Klejn', "01-01-2021", "file1", "comment1", "not"),
+    createData('Adam Preflight', "01-01-2021", "file1", "comment1", "not"),
     createData('User1', "01-01-2022", "1file2", "comment 2", "https://drive.google.com/u/0/uc?id=18JhF01yDrwwEAhlBb7Tf3eKTVhP7bYZH&export=download"),
     createData('User2', "01-01-2021", "2file3", "comment1", "/"),
     createData('User3', "01-01-2021", "3file4", "comment1", "/"),
@@ -76,7 +76,7 @@ function EnhancedTableHead(props) {
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.id === "name" ? 'left' : 'center'}
+                        align={'center'}
                         padding={headCell.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -300,7 +300,7 @@ function AssignmentsTable() {
                                             {/*        inputProps={{ 'aria-labelledby': labelId }}*/}
                                             {/*    />*/}
                                             {/*</TableCell>*/}
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            <TableCell component="th" id={labelId} align={"center"} scope="row" padding="none">
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="center">{row.modificationDate}</TableCell>
