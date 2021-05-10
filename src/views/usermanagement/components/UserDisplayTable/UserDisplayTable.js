@@ -266,6 +266,7 @@ export default function UserDisplayTable(props) {
 
                                     return (
                                         <TableRow
+                                            id={row.userName}
                                             hover
                                             onClick={() => handleClick(row)}
                                             role="checkbox"
