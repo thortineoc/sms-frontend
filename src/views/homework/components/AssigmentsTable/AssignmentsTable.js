@@ -139,7 +139,7 @@ const EnhancedTableToolbar = ({numSelected, selectedData}) => {
                 </Typography>
             ) : (
                 <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                    Nutrition
+                    Assignments
                 </Typography>
             )}
 
@@ -258,7 +258,7 @@ function AssignmentsTable() {
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} style={{marginTop: '1em'}}>
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} selectedData={selectedData} />
                 <TableContainer>
