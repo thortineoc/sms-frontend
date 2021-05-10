@@ -130,7 +130,7 @@ const GroupsSubjectsTable = (props) => {
                                 {row}
                             </TableCell>
                             <TableCell align="right">
-                                <IconButton size={"small"}>
+                                <IconButton id={'delete_'+row} size={"small"}>
                                     <DeleteIcon onClick={() => onDelete(index)}/>
                                 </IconButton>
                             </TableCell>
