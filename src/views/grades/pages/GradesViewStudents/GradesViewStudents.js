@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import '../GradesView/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
-import callBackendGet from "../../../../utilities/axios/CallBackendGet";
-import useAxios from "../../../../utilities/axios/useAxios";
+import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
 
 const COLUMN_TITLES = [
     'Subjects',

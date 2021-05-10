@@ -4,8 +4,8 @@ import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldW
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import DatepickerWrapper from "../../../../components/DatepickerWrapper/DatepickerWrapper";
-import callBackendGet from "../../../../utilities/axios/CallBackendGet";
-import useAxios from "../../../../utilities/axios/useAxios";
+import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
 
 
 const initial = {

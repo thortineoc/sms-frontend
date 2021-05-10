@@ -2,8 +2,8 @@ import React, {useCallback} from 'react';
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import './DialogBox.css';
 import {useKeycloak} from "@react-keycloak/web";
-import useAxios from "../../../../utilities/axios/useAxios";
-import callBackendDelete from "../../../../utilities/axios/CallBackendDelete";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
 const DialogBox = ({user, setDisplayDialog, setDeleteUser, setDetailsModalShown, fetchData}) => {
     const {keycloak, initialized} = useKeycloak();

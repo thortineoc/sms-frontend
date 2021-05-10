@@ -4,8 +4,8 @@ import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldW
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import React, {useEffect, useState} from "react";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
-import useAxios from "../../../../utilities/axios/useAxios";
-import callBackendGet from "../../../../utilities/axios/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendGet from "../../../../utilities/CallBackendGet";
 
 const defaultInitValues = {
     userName: "",

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useKeycloak} from "@react-keycloak/web";
-import useAxios from "../../../../utilities/axios/useAxios";
-import callBackendPost from "../../../../utilities/axios/CallBackendPost";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendPost from "../../../../utilities/CallBackendPost";
 import {TableHead} from "@material-ui/core";
 import {lighten, makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
