@@ -21,12 +21,12 @@ const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     lastName: Yup.string().required('Required'),
     pesel: Yup.string().matches(/^[0-9]{11}$/, 'Invalid format').required('Required'),
-    email: Yup.string().email('Invalid format'),
     //custom
     customAttributes: Yup.object({
         phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
         middleName: Yup.string(),
-        groups: Yup.string()
+        groups: Yup.string(),
+        email: Yup.string().email('Invalid format'),
     })
 })
 

@@ -5,10 +5,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 import {Link} from "react-router-dom";
-import ButtonWrapper from "../../../components/Button/ButtonWrapper";
-import './HomeworkList.css';
-import Modal from "../../../components/Modal/Modal";
-import AssignEditHomeworkForm from "../components/AssignEditHomeworkForm/AssignEditHomeworkForm";
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
+import './HomeworkListTeacher.css';
+import Modal from "../../../../components/Modal/Modal";
+import AssignEditHomeworkForm from "../../components/AssignEditHomeworkForm/AssignEditHomeworkForm";
 import { v4 as uuidv4 } from 'uuid';
 
 const mockData = [
