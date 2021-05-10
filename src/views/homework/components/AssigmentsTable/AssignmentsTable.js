@@ -32,8 +32,8 @@ function createData(name, modificationDate, uploadedFile, comments, url) {
 }
 
 const rows = [
-    createData('Janusz Klejn', "01-01-2021", "file1", "comment1", "/"),
-    createData('User1', "01-01-2022", "1file2", "comment 2", "/"),
+    createData('Janusz Klejn', "01-01-2021", "file1", "comment1", "not"),
+    createData('User1', "01-01-2022", "1file2", "comment 2", "https://drive.google.com/u/0/uc?id=18JhF01yDrwwEAhlBb7Tf3eKTVhP7bYZH&export=download"),
     createData('User2', "01-01-2021", "2file3", "comment1", "/"),
     createData('User3', "01-01-2021", "3file4", "comment1", "/"),
     createData('User5', "01-01-2021", "file5", "comment1", "/"),
@@ -65,14 +65,14 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all items' }}
-                    />
-                </TableCell>
+                {/*<TableCell padding="checkbox">*/}
+                {/*    <Checkbox*/}
+                {/*        indeterminate={numSelected > 0 && numSelected < rowCount}*/}
+                {/*        checked={rowCount > 0 && numSelected === rowCount}*/}
+                {/*        onChange={onSelectAllClick}*/}
+                {/*        inputProps={{ 'aria-label': 'select all items' }}*/}
+                {/*    />*/}
+                {/*</TableCell>*/}
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -111,12 +111,19 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = ({numSelected, selectedData}) => {
     const classes = useToolbarStyles();
-    const axiosDownloadInstance = useAxiosDownloadFile("https://drive.google.com/file/d/18JhF01yDrwwEAhlBb7Tf3eKTVhP7bYZH/view?usp=sharing");
+    const axiosDownloadInstance = useAxiosDownloadFile("http://52.142.201.18:24020/");
 
 
     const downloadAllHandle = () =>
     {
         console.log(selectedData);
+        selectedData.forEach(homework => {
+            console.log(homework.url);
+            downloadFile(axiosDownloadInstance, "/homework-service/" + homework.url).then(response => {
+                console.log(response);
+            })
+                .catch(error => console.log(error));
+        });
         //downloadFile(axiosDownloadInstance, "");
     };
 
@@ -138,8 +145,8 @@ const EnhancedTableToolbar = ({numSelected, selectedData}) => {
 
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon onClick={downloadAllHandle}/>
+                    <IconButton onClick={downloadAllHandle} aria-label="delete">
+                        <DeleteIcon />
                     </IconButton>
                 </Tooltip>
             ) : (
@@ -207,20 +214,30 @@ function AssignmentsTable() {
     const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
         let newSelected = [];
+        let newSelectedData;
+        newSelectedData = rows.filter(obj => obj.name === name);
 
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selected, name);
+            newSelectedData = newSelectedData.concat(selectedData);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
+            newSelectedData = newSelectedData.concat(selectedData.slice(1));
         } else if (selectedIndex === selected.length - 1) {
             newSelected = newSelected.concat(selected.slice(0, -1));
+            newSelectedData = newSelectedData.concat(selectedData.slice(0, -1));
         } else if (selectedIndex > 0) {
             newSelected = newSelected.concat(
                 selected.slice(0, selectedIndex),
                 selected.slice(selectedIndex + 1),
             );
+            newSelectedData = newSelectedData.concat(
+                selectedData.slice(0, selectedIndex),
+                selectedData.slice(selectedIndex + 1),
+            );
         }
         setSelected(newSelected);
+        setSelectedData(newSelectedData);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -271,18 +288,18 @@ function AssignmentsTable() {
                                         <TableRow
                                             hover
                                             onClick={(event) => handleClick(event, row.name)}
-                                            role="checkbox"
+                                            // role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    checked={isItemSelected}
-                                                    inputProps={{ 'aria-labelledby': labelId }}
-                                                />
-                                            </TableCell>
+                                            {/*<TableCell padding="checkbox">*/}
+                                            {/*    <Checkbox*/}
+                                            {/*        checked={isItemSelected}*/}
+                                            {/*        inputProps={{ 'aria-labelledby': labelId }}*/}
+                                            {/*    />*/}
+                                            {/*</TableCell>*/}
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
                                                 {row.name}
                                             </TableCell>
