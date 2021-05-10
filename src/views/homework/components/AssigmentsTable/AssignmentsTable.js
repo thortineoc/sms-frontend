@@ -21,6 +21,11 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import {Link} from "@material-ui/core";
+import getComparator from "../../../../utilities/tablesCommons/getComparator";
+import stableSort from "../../../../utilities/tablesCommons/stableSort";
+import useToolbarStyles from "../../../../utilities/tablesCommons/useToolbarStyles";
+import useAxiosDownloadFile from "../../../../utilities/axios/useAxiosDownloadFile";
+import downloadFile from "../../../../utilities/axios/DownloadFile";
 
 function createData(name, modificationDate, uploadedFile, comments, url) {
     return { name, modificationDate, uploadedFile, comments, url };
@@ -50,32 +55,6 @@ const headCells = [
     { id: 'uploadedFile', numeric: false, disablePadding: false, label: 'Uploaded file' },
     { id: 'comments', numeric: false, disablePadding: false, label: 'Comments' },
 ];
-
-function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
-function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-}
 
 function EnhancedTableHead(props) {
     const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -130,29 +109,16 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
 };
 
-const useToolbarStyles = makeStyles((theme) => ({
-    root: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(1),
-    },
-    highlight:
-        theme.palette.type === 'light'
-            ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-            }
-            : {
-                color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark,
-            },
-    title: {
-        flex: '1 1 100%',
-    },
-}));
-
-const EnhancedTableToolbar = (props) => {
+const EnhancedTableToolbar = ({numSelected, selectedData}) => {
     const classes = useToolbarStyles();
-    const { numSelected } = props;
+    const axiosDownloadInstance = useAxiosDownloadFile("https://drive.google.com/file/d/18JhF01yDrwwEAhlBb7Tf3eKTVhP7bYZH/view?usp=sharing");
+
+
+    const downloadAllHandle = () =>
+    {
+        console.log(selectedData);
+        //downloadFile(axiosDownloadInstance, "");
+    };
 
     return (
         <Toolbar
@@ -173,15 +139,11 @@ const EnhancedTableToolbar = (props) => {
             {numSelected > 0 ? (
                 <Tooltip title="Delete">
                     <IconButton aria-label="delete">
-                        <DeleteIcon />
+                        <DeleteIcon onClick={downloadAllHandle}/>
                     </IconButton>
                 </Tooltip>
             ) : (
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
+                ""
             )}
         </Toolbar>
     );
@@ -220,6 +182,7 @@ function AssignmentsTable() {
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('name');
     const [selected, setSelected] = React.useState([]);
+    const [selectedData, setSelectedData] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -234,9 +197,11 @@ function AssignmentsTable() {
         if (event.target.checked) {
             const newSelecteds = rows.map((n) => n.name);
             setSelected(newSelecteds);
+            setSelectedData(rows);
             return;
         }
         setSelected([]);
+        setSelectedData([]);
     };
 
     const handleClick = (event, name) => {
@@ -255,7 +220,6 @@ function AssignmentsTable() {
                 selected.slice(selectedIndex + 1),
             );
         }
-
         setSelected(newSelected);
     };
 
@@ -279,7 +243,7 @@ function AssignmentsTable() {
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected.length} selectedData={selectedData} />
                 <TableContainer>
                     <Table
                         className={classes.table}
@@ -323,7 +287,7 @@ function AssignmentsTable() {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="center">{row.modificationDate}</TableCell>
-                                            <TableCell  component={Link} href={row.url} align="center">{row.uploadedFile}</TableCell>
+                                            <TableCell  component={Link} href={row.url} download={row.name + "-" + row.uploadedFile} align="center">{row.uploadedFile}</TableCell>
                                             <TableCell align="center">{row.comments}</TableCell>
                                         </TableRow>
                                     );

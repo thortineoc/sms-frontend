@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useKeycloak} from "@react-keycloak/web";
-import useAxios from "../../../../utilities/useAxios";
-import callBackendPost from "../../../../utilities/CallBackendPost";
+import useAxios from "../../../../utilities/axios/useAxios";
+import callBackendPost from "../../../../utilities/axios/CallBackendPost";
 import {TableHead} from "@material-ui/core";
 import {lighten, makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -16,6 +16,8 @@ import Modal from "../../../../components/Modal/Modal";
 import EnhancedTableToolbar from "./EnhancedTableToolbar/EnhancedTableToolbar";
 import Details from "../Details/Details";
 import EditForm from "../EditForm/EditForm";
+import stableSort from "../../../../utilities/tablesCommons/stableSort";
+import getComparator from "../../../../utilities/tablesCommons/getComparator";
 
 const removeEmptyStrings = (obj) => {
     return Object.keys(obj)
@@ -31,32 +33,6 @@ const flatten = (users) => {
             return user;
         }
     });
-}
-
-function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
-
-function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) return order;
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
 }
 
 function EnhancedTableHead(props) {

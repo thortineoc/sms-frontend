@@ -7,8 +7,8 @@ import FormControl from "@material-ui/core/FormControl";
 import SimpleSelect from "../../../../components/SimpleSelect/SimpleSelect";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
-import useAxios from "../../../../utilities/useAxios";
-import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/axios/useAxios";
+import callBackendGet from "../../../../utilities/axios/CallBackendGet";
 import {ref} from "yup";
 
 const COLUMN_TITLES = [

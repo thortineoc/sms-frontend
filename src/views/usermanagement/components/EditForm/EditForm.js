@@ -8,8 +8,8 @@ import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/Select
 import '../Details/Details.css';
 import './EditForm.css'
 import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
-import callBackendGet from "../../../../utilities/CallBackendGet";
-import useAxios from "../../../../utilities/useAxios";
+import callBackendGet from "../../../../utilities/axios/CallBackendGet";
+import useAxios from "../../../../utilities/axios/useAxios";
 
 const onSubmit = async (values, {setSubmitting, resetForm, setErrors, setStatus}) => {
     console.log(values);

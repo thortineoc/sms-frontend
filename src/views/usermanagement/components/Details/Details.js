@@ -5,9 +5,9 @@ import {Dialog} from "@material-ui/core";
 import Modal from "../Modal/Modal";
 import DialogBox from "../DialogBox/DialogBox";
 import {useKeycloak} from "@react-keycloak/web";
-import useAxios from "../../../../utilities/useAxios";
-import callBackendPost from "../../../../utilities/CallBackendPost";
-import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import useAxios from "../../../../utilities/axios/useAxios";
+import callBackendPost from "../../../../utilities/axios/CallBackendPost";
+import callBackendDelete from "../../../../utilities/axios/CallBackendDelete";
 
 const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData}) => {
 

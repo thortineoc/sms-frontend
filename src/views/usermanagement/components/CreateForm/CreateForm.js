@@ -7,9 +7,9 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import MultipleSelectField from "../../../../components/MultipleSelectField/MultipleSelectField";
 import {useKeycloak} from "@react-keycloak/web";
-import callBackendPost from "../../../../utilities/CallBackendPost";
-import useAxios from "../../../../utilities/useAxios";
-import callBackendGet from "../../../../utilities/CallBackendGet";
+import callBackendPost from "../../../../utilities/axios/CallBackendPost";
+import useAxios from "../../../../utilities/axios/useAxios";
+import callBackendGet from "../../../../utilities/axios/CallBackendGet";
 import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
 
 const initialValues = (role) => {

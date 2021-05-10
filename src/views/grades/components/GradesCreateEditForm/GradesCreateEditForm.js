@@ -3,10 +3,10 @@ import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/Select
 import {Form, Formik} from "formik";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import * as Yup from "yup";
-import useAxios from "../../../../utilities/useAxios";
+import useAxios from "../../../../utilities/axios/useAxios";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
-import callBackendPut from "../../../../utilities/CallBackendPut";
-import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import callBackendPut from "../../../../utilities/axios/CallBackendPut";
+import callBackendDelete from "../../../../utilities/axios/CallBackendDelete";
 
 const init = (id, type, subject) => {
     return(
