@@ -19,7 +19,6 @@ const AssignEditHomeworkForm = (props) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [groups, setGroups] = useState([])
 
-
     const onSubmit = (values, setSubmitting, setValues) =>{
         console.log(values);
     }
@@ -36,7 +35,6 @@ const AssignEditHomeworkForm = (props) => {
     useEffect(() => {
         fetchGroups();
     }, []);
-
 
 
     return (

@@ -1,7 +1,7 @@
 import { Switch, Route, useParams } from "react-router-dom";
 import React from "react";
 
-import HomeworkView from "../homework/HomeworkView";
+import HomeworkView from "../homework/pages/HomeworkView/HomeworkView";
 import PresenceView from "../presence/PresenceView";
 import TimetableView from "../timetables/TimetableView";
 import GradesView from "../grades/pages/GradesView/GradesView";

@@ -7,10 +7,10 @@ import * as Yup from "yup";
 const validationSchema = Yup.object({
     id: Yup.string().required('Required'),
     userName: Yup.string().required('Required'),
-    email: Yup.string().email('Invalid format'),
     //custom
     customAttributes: Yup.object({
-        phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300'),
+        phoneNumber: Yup.string().matches(/^[0-9]{5,15}$/, 'Invalid format. Please provide a number as 100200300').nullable(),
+        email: Yup.string().email('Invalid format').nullable(),
     })
 })
 
