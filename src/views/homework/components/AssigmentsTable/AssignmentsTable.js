@@ -287,7 +287,7 @@ function AssignmentsTable() {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            // onClick={(event) => handleClick(event, row.name)}
                                             // role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
