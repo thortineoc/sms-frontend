@@ -4,6 +4,7 @@ import Modal from "../../../../components/Modal/Modal";
 import AssignEditHomeworkForm from "../AssignEditHomeworkForm/AssignEditHomeworkForm";
 import "./HomeworkDetailsAndResponses.css"
 import DeleteDialog from "../DeleteDialog/DeleteDialog";
+import AssignmentsTable from "../AssigmentsTable/AssignmentsTable";
 
 const homeworkData = {
     title: "Example homework",
@@ -71,6 +72,7 @@ const HomeworkDetailsAndResponses = (props) => {
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>
 
+            <AssignmentsTable/>
         </div>
     )
 }
