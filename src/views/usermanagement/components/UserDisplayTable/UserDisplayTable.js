@@ -163,7 +163,7 @@ export default function UserDisplayTable(props) {
             .then(response => {
                 if (response.status === 200) {
                     setArray(flatten(response.data))
-                    console.log(rows);
+                    // console.log(rows);
                 } else if (response.status === 204) {
                     setArray([])
                 }
@@ -185,7 +185,7 @@ export default function UserDisplayTable(props) {
     }
 
     const handleClick = (row) => {
-        console.log(row)
+        // console.log(row)
         setSelectedUser(row)
         setShowDetails(true);
         setShowEdit(false);
@@ -299,7 +299,9 @@ export default function UserDisplayTable(props) {
                     role={props.role}
                     fetchData={fetchData}
                 />}
-                {showEdit && <EditForm user={selectedUser} role={props.role} fetchData={fetchData}/>}
+                {showEdit && <EditForm user={selectedUser} role={props.role} fetchData={fetchData}
+                                       refresh={handleRequireRefresh} setShowEdit={setShowEdit}
+                                       setDetailsModalShown={setShowDetails}/>}
             </Modal>}
 
         </div>
