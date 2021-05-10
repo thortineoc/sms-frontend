@@ -18,6 +18,7 @@ const HomeworkDetailsAndResponses = (props) => {
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     return (
+        <div>
         <div className="HomeworkDetailsAndResponses">
 
             <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
@@ -72,6 +73,7 @@ const HomeworkDetailsAndResponses = (props) => {
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>
 
+        </div>
             <AssignmentsTable/>
         </div>
     )

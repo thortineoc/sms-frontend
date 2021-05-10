@@ -138,9 +138,10 @@ const EnhancedTableToolbar = ({numSelected, selectedData}) => {
                     {numSelected} selected
                 </Typography>
             ) : (
-                <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-                    Assignments
-                </Typography>
+                // <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+                //     Assignments
+                // </Typography>
+                <h3 style={{margin: "15px"}}>Assignments</h3>
             )}
 
             {numSelected > 0 ? (
@@ -167,6 +168,8 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         width: '100%',
         marginBottom: theme.spacing(2),
+        boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1)",
+        borderRadius: "10px",
     },
     table: {
         minWidth: 750,
@@ -192,7 +195,7 @@ function AssignmentsTable() {
     const [selectedData, setSelectedData] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -249,9 +252,9 @@ function AssignmentsTable() {
         setPage(0);
     };
 
-    const handleChangeDense = (event) => {
-        setDense(event.target.checked);
-    };
+    // const handleChangeDense = (event) => {
+    //     setDense(event.target.checked);
+    // };
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -327,10 +330,10 @@ function AssignmentsTable() {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
-            />
+            {/*<FormControlLabel*/}
+            {/*    control={<Switch checked={dense} onChange={handleChangeDense} />}*/}
+            {/*    label="Dense padding"*/}
+            {/*/>*/}
         </div>
     );
 }
