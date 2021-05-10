@@ -59,9 +59,6 @@ const HomeworkDetailsAndResponses = (props) => {
                 </div>
             </div>
 
-
-
-
             <Modal isOpen={showEditDialog} setIsOpen={setShowEditDialog}>
                 <AssignEditHomeworkForm
                     type={"MODIFY"}

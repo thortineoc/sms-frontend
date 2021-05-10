@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 import {Link} from "react-router-dom";
+import ButtonWrapper from "../../../components/Button/ButtonWrapper";
+import './HomeworkList.css';
+import Modal from "../../../components/Modal/Modal";
+import AssignEditHomeworkForm from "../components/AssignEditHomeworkForm/AssignEditHomeworkForm";
+import { v4 as uuidv4 } from 'uuid';
 
 const mockData = [
     {'geography': [
@@ -41,39 +46,46 @@ const useStyles = makeStyles({
 
 const HomeworksList = () => {
     const classes = useStyles();
-
-    const handleClick = (id) => {
-
-    }
+    const [showCreateDialog, setShowCreateDialog] = useState(false);
 
     return (
-        <TreeView
-            className={classes.root}
-            defaultCollapseIcon={<ExpandMoreIcon/>}
-            defaultExpandIcon={<ChevronRightIcon/>}
-        >
-            {
+        <div className="HomeworkList">
 
-                mockData.map((item, subjectIndex) => (
-                    <TreeItem nodeId={subjectIndex} label={Object.keys(item)}>
-                        {Object.keys(item).map((subjectKey) => (
-                            item[subjectKey].map((groupObj, groupIndex) => (
-                                <TreeItem nodeId={1000 + groupIndex + 100 * subjectIndex} label={Object.keys(groupObj)}>
-                                    {Object.keys(groupObj).map((groupKey) => (
-                                        groupObj[groupKey].map((homework, homeworkIndex) => (
-                                                <Link to="/api/grades-service">
-                                                    <TreeItem nodeId={homework['id']} label={homework['title']}/>
-                                                </Link>
+            <TreeView
+                className={classes.root}
+                defaultCollapseIcon={<ExpandMoreIcon/>}
+                defaultExpandIcon={<ChevronRightIcon/>}
+            >
+                {
+                    mockData.map((item) => (
+                        <TreeItem nodeId={uuidv4()} label={Object.keys(item)}>
+                            {Object.keys(item).map((subjectKey) => (
+                                item[subjectKey].map((groupObj, groupIndex) => (
+                                    <TreeItem nodeId={uuidv4()} label={Object.keys(groupObj)}>
+                                        {Object.keys(groupObj).map((groupKey) => (
+                                            groupObj[groupKey].map((homework, homeworkIndex) => (
+                                                    <Link to={`/api/homework/${homework['id']}`}>
+                                                        <TreeItem nodeId={homework['id']} label={homework['title']}/>
+                                                    </Link>
+                                                )
                                             )
-                                        )
-                                    ))}
-                                </TreeItem>
-                            ))
-                        ))}
-                    </TreeItem>
-                ))
-            }
-        </TreeView>
+                                        ))}
+                                    </TreeItem>
+                                ))
+                            ))}
+                        </TreeItem>
+                    ))
+                }
+            </TreeView>
+            <ButtonWrapper label='Add new' onClick={() => setShowCreateDialog(true)} className="HomeworkList__button" />
+
+            <Modal isOpen={showCreateDialog} setIsOpen={setShowCreateDialog}>
+                <AssignEditHomeworkForm
+                    type="ADD"
+                />
+            </Modal>
+
+        </div>
     );
 }
 
