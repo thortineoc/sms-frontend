@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import Modal from "../../../../components/Modal/Modal";
 import AssignEditHomeworkForm from "../AssignEditHomeworkForm/AssignEditHomeworkForm";
 import "./HomeworkDetailsAndResponses.css"
 import DeleteDialog from "../DeleteDialog/DeleteDialog";
 import AssignmentsTable from "../AssigmentsTable/AssignmentsTable";
+import getKeycloakRoles from "../../../../utilities/GetRoles";
+import {useKeycloak} from "@react-keycloak/web";
 
 const homeworkData = {
     title: "Example homework",
@@ -17,12 +19,25 @@ const homeworkData = {
 const HomeworkDetailsAndResponses = (props) => {
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const {keycloak, initialized} = useKeycloak();
+    const [role, setRole] = useState("");
+
+
+    useEffect(() => {
+        if (!!initialized) {
+            getKeycloakRoles(keycloak, setRole)
+        }
+    }, [keycloak, initialized])
+
     return (
         <div>
         <div className="HomeworkDetailsAndResponses">
 
-            <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
-            <ButtonWrapper label={"Edit"} onClick={() => setShowEditDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
+            {role==="TEACHER" &&
+            <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>}
+
+            {role==="TEACHER" &&
+            <ButtonWrapper label={"Edit"} onClick={() => setShowEditDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>}
 
             <h3>Homework details {props.id}</h3>
 
@@ -74,7 +89,8 @@ const HomeworkDetailsAndResponses = (props) => {
             </Modal>
 
         </div>
-            <AssignmentsTable/>
+            {role==="TEACHER" &&
+            <AssignmentsTable/>}
         </div>
     )
 }
