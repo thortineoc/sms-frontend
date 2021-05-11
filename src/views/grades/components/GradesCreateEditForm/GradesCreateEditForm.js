@@ -55,7 +55,7 @@ const convertGradeToDouble = (gradeObject) =>{
 
 const validationSchema = Yup.object({
     weight: Yup.number().required('Required'),
-    grade: Yup.string().matches(/(^[2-5][+-]?$)|(^1\+?$)|(^6-?$)/, 'Invalid format.').required('Required'),
+    grade: Yup.string().matches(/(^[2-5][+-]?$)|(^1\+?$)|(^6-?$)/, 'Invalid format').required('Required'),
 })
 
 const GradesCreateEditForm = (props) => {
