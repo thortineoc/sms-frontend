@@ -146,7 +146,6 @@ const HomeworkDetailsAndResponses = (props) => {
 
                                     />
 
-
                                 </div>
                             </Form>
                         )
@@ -155,49 +154,6 @@ const HomeworkDetailsAndResponses = (props) => {
             </Formik>
             </div>
         )
-        // return (
-        //     <div className="HomeworkDetailsAndResponses">
-        //
-        //         <ButtonWrapper label={"Save"} onClick={() => setShowEdit(false)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
-        //
-        //         <h3>Homework details kbekrjfnej</h3>
-        //
-        //         <div className="DetailsHomework__field">
-        //             <div className="DetailsHomework__label">Title</div>
-        //             <div className="DetailsHomework__data">
-        //                 {homeworkData.title}
-        //             </div>
-        //         </div>
-        //
-        //         <div className="DetailsHomework__field">
-        //             <div className="DetailsHomework__label">Description</div>
-        //             <div className="DetailsHomework__data">
-        //                 {homeworkData.description}
-        //             </div>
-        //         </div>
-        //
-        //         <div className="DetailsHomework__field">
-        //             <div className="DetailsHomework__label">Group</div>
-        //             <div className="DetailsHomework__data_small">
-        //                 {homeworkData.group}
-        //             </div>
-        //         </div>
-        //
-        //         <div className="DetailsHomework__field">
-        //             <div className="DetailsHomework__label">Subject</div>
-        //             <div className="DetailsHomework__data_small">
-        //                 {homeworkData.subject}
-        //             </div>
-        //         </div>
-        //
-        //         <div className="DetailsHomework__field">
-        //             <div className="DetailsHomework__label">Deadline</div>
-        //             <div className="DetailsHomework__data_small">
-        //                 {homeworkData.deadline}
-        //             </div>
-        //         </div>
-        //     </div>
-        // )
     }
 
     return (
