@@ -7,6 +7,10 @@ import DeleteDialog from "../DeleteDialog/DeleteDialog";
 import AssignmentsTable from "../AssigmentsTable/AssignmentsTable";
 import getKeycloakRoles from "../../../../utilities/GetRoles";
 import {useKeycloak} from "@react-keycloak/web";
+import {Form, Formik} from "formik";
+import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
+import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
+import DatepickerWrapper from "../../../../components/DatepickerWrapper/DatepickerWrapper";
 
 const homeworkData = {
     title: "Example homework",
@@ -17,11 +21,15 @@ const homeworkData = {
 }
 
 const HomeworkDetailsAndResponses = (props) => {
-    const [showEditDialog, setShowEditDialog] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
+    const[error, setError] = useState("");
 
+    const handleClick = () => {
+        setShowEdit(true)
+    }
 
     useEffect(() => {
         if (!!initialized) {
@@ -29,69 +37,179 @@ const HomeworkDetailsAndResponses = (props) => {
         }
     }, [keycloak, initialized])
 
+    const detailsPage = () =>{
+        return (
+            <div className="HomeworkDetailsAndResponses">
+
+                {role==="TEACHER" &&
+                <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>}
+
+                <h3>Homework details {props.id}</h3>
+
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Title</div>
+                    <div className="DetailsHomework__data" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                        {homeworkData.title}
+                    </div>
+                </div>
+
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Description</div>
+                    <div className="DetailsHomework__data" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                        {homeworkData.description}
+                    </div>
+                </div>
+
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Group</div>
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                        {homeworkData.group}
+                    </div>
+                </div>
+
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Subject</div>
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                        {homeworkData.subject}
+                    </div>
+                </div>
+
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Deadline</div>
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                        {homeworkData.deadline}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    const editPage = () => {
+        return (
+            <div className="HomeworkDetailsAndResponses">
+            <Formik
+                initialValues={homeworkData}
+                //validationSchema={validationSchema}
+                validateOnChange={false}
+                onSubmit={() => setShowEdit(false)}
+            >
+                {
+                    formik => {
+                        return (
+                            <Form>
+                                <ButtonWrapper type="submit" label="Save" disabled={formik.isSubmitting} className="HomeworkDetails__button" />
+                                <h3>Modify assignment</h3>
+                                {(error.length>0 ? <p>{error}</p> : <div/>)}
+                                <div>
+                                    {formik.errors && formik.errors.submit &&
+                                    <div className="error">{formik.errors.submit}</div>}
+
+                                    <TextFieldWrapper
+                                        label="Title"
+                                        name="title"
+                                        type="text"
+                                        style={{}}
+                                        className={"textFieldEditHomework"}
+                                    />
+
+                                    <TextFieldWrapper
+                                        label="Description"
+                                        name="description"
+                                        type="text"
+                                        multiline
+                                        rowsMax={6}
+                                        style={{}}
+                                        className={"textFieldEditHomework"}
+                                    />
+
+                                    <SelectFieldWrapper
+                                        label="Group"
+                                        name="group"
+                                        options={[1,2,3]}
+                                        style={{}}
+                                        className={"textFieldEditHomeworkSmall"}
+                                    />
+
+                                    <SelectFieldWrapper
+                                        label="Subject"
+                                        name="subject"
+                                        options={props.subjects}
+                                        style={{}}
+                                        className={"textFieldEditHomeworkSmall"}
+                                    />
+
+
+                                    <DatepickerWrapper
+                                        name={"deadline"}
+                                        label={"Deadline"}
+                                        style={{margin: "0"}}
+
+                                    />
+
+
+                                </div>
+                            </Form>
+                        )
+                    }
+                }
+            </Formik>
+            </div>
+        )
+        // return (
+        //     <div className="HomeworkDetailsAndResponses">
+        //
+        //         <ButtonWrapper label={"Save"} onClick={() => setShowEdit(false)} className="HomeworkDetails__button" style={{margin: "5px"}}/>
+        //
+        //         <h3>Homework details kbekrjfnej</h3>
+        //
+        //         <div className="DetailsHomework__field">
+        //             <div className="DetailsHomework__label">Title</div>
+        //             <div className="DetailsHomework__data">
+        //                 {homeworkData.title}
+        //             </div>
+        //         </div>
+        //
+        //         <div className="DetailsHomework__field">
+        //             <div className="DetailsHomework__label">Description</div>
+        //             <div className="DetailsHomework__data">
+        //                 {homeworkData.description}
+        //             </div>
+        //         </div>
+        //
+        //         <div className="DetailsHomework__field">
+        //             <div className="DetailsHomework__label">Group</div>
+        //             <div className="DetailsHomework__data_small">
+        //                 {homeworkData.group}
+        //             </div>
+        //         </div>
+        //
+        //         <div className="DetailsHomework__field">
+        //             <div className="DetailsHomework__label">Subject</div>
+        //             <div className="DetailsHomework__data_small">
+        //                 {homeworkData.subject}
+        //             </div>
+        //         </div>
+        //
+        //         <div className="DetailsHomework__field">
+        //             <div className="DetailsHomework__label">Deadline</div>
+        //             <div className="DetailsHomework__data_small">
+        //                 {homeworkData.deadline}
+        //             </div>
+        //         </div>
+        //     </div>
+        // )
+    }
+
     return (
         <div>
-        <div className="HomeworkDetailsAndResponses">
-
+            {showEdit ? editPage() : detailsPage()}
             {role==="TEACHER" &&
-            <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>}
-
-            {role==="TEACHER" &&
-            <ButtonWrapper label={"Edit"} onClick={() => setShowEditDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>}
-
-            <h3>Homework details {props.id}</h3>
-
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Title</div>
-                <div className="DetailsHomework__data">
-                    {homeworkData.title}
-                </div>
-            </div>
-
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Description</div>
-                <div className="DetailsHomework__data">
-                    {homeworkData.description}
-                </div>
-            </div>
-
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Group</div>
-                <div className="DetailsHomework__data_small">
-                    {homeworkData.group}
-                </div>
-            </div>
-
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Subject</div>
-                <div className="DetailsHomework__data_small">
-                    {homeworkData.subject}
-                </div>
-            </div>
-
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Deadline</div>
-                <div className="DetailsHomework__data_small">
-                    {homeworkData.deadline}
-                </div>
-            </div>
-
-            <Modal isOpen={showEditDialog} setIsOpen={setShowEditDialog}>
-                <AssignEditHomeworkForm
-                    type={"MODIFY"}
-                    subjects={["Polish", "Math"]}
-                    homeworkDetails={homeworkData}
-                />
-            </Modal>
-
+            <AssignmentsTable/>}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>
+        </div>
 
-        </div>
-            {role==="TEACHER" &&
-            <AssignmentsTable/>}
-        </div>
     )
 }
 

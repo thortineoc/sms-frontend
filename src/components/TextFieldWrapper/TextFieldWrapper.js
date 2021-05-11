@@ -34,8 +34,8 @@ const TextFieldWrapper = ({name, resetValue = false, setResetValue, ...rest}) =>
 
     return (
         <ThemeProvider theme={theme}>
-        <div className="TextFieldWrapper">
-            <TextField {...configField} color="primary"/>
+        <div >
+            <TextField {...configField} color="primary" style={(rest.style===undefined ? ({marginBottom: "5%"}) : ({...rest.style}))}/>
         </div>
         </ThemeProvider>
     );
