@@ -190,6 +190,7 @@ export default function LeftMenu(props) {
                 )
             case "TEACHER":
             case "STUDENT":
+            case "PARENT":
                 return (
                     <>
                         <List>
