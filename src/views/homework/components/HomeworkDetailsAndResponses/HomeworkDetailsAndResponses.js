@@ -11,12 +11,15 @@ import {Form, Formik} from "formik";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import DatepickerWrapper from "../../../../components/DatepickerWrapper/DatepickerWrapper";
+import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
+import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 
 const homeworkData = {
     title: "Example homework",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    subject: "Polish",
-    group: "1D",
+    subject: "Math",
+    group: "1A",
     deadline: "10/10/2021"
 }
 
@@ -26,6 +29,28 @@ const HomeworkDetailsAndResponses = (props) => {
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
     const[error, setError] = useState("");
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [groups, setGroups] = useState([]);
+    const [allSubjects, setAllSubjects] = useState([]);
+
+    useEffect(() => {
+        if (!!initialized) {
+            getKeycloakSubjects(keycloak, setAllSubjects);
+        }
+    }, [keycloak, initialized])
+
+    const fetchGroups = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+            .then(response => {
+                console.log(response.data);
+                setGroups(response.data);
+            })
+            .catch(error => console.log(error))
+    }
+
+    useEffect(() => {
+        fetchGroups();
+    }, []);
 
     const handleClick = () => {
         setShowEdit(true)
@@ -37,13 +62,12 @@ const HomeworkDetailsAndResponses = (props) => {
         }
     }, [keycloak, initialized])
 
+
     const detailsPage = () =>{
         return (
             <div className="HomeworkDetailsAndResponses">
-
                 {role==="TEACHER" &&
-                <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>}
-
+                <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button"/>}
                 <h3>Homework details {props.id}</h3>
 
                 <div className="DetailsHomework__field">
@@ -97,7 +121,7 @@ const HomeworkDetailsAndResponses = (props) => {
                     formik => {
                         return (
                             <Form>
-                                <ButtonWrapper type="submit" label="Save" disabled={formik.isSubmitting} className="HomeworkDetails__button" />
+                                <ButtonWrapper type="submit" label="Save" disabled={formik.isSubmitting} className="HomeworkDetails__button"/>
                                 <h3>Modify assignment</h3>
                                 {(error.length>0 ? <p>{error}</p> : <div/>)}
                                 <div>
@@ -108,8 +132,7 @@ const HomeworkDetailsAndResponses = (props) => {
                                         label="Title"
                                         name="title"
                                         type="text"
-                                        style={{}}
-                                        className={"textFieldEditHomework"}
+                                        style={{marginBottom: "2%", width: "70%"}}
                                     />
 
                                     <TextFieldWrapper
@@ -118,32 +141,28 @@ const HomeworkDetailsAndResponses = (props) => {
                                         type="text"
                                         multiline
                                         rowsMax={6}
-                                        style={{}}
-                                        className={"textFieldEditHomework"}
+                                        style={{marginBottom: "2%", width: "70%"}}
                                     />
 
                                     <SelectFieldWrapper
                                         label="Group"
                                         name="group"
-                                        options={[1,2,3]}
-                                        style={{}}
-                                        className={"textFieldEditHomeworkSmall"}
+                                        options={groups}
+                                        style={{marginBottom: "2%", width: "30%"}}
                                     />
 
                                     <SelectFieldWrapper
                                         label="Subject"
                                         name="subject"
-                                        options={props.subjects}
-                                        style={{}}
-                                        className={"textFieldEditHomeworkSmall"}
+                                        options={allSubjects.toString().split(',')}
+                                        style={{marginBottom: "2%", width: "30%"}}
                                     />
 
 
                                     <DatepickerWrapper
                                         name={"deadline"}
                                         label={"Deadline"}
-                                        style={{margin: "0"}}
-
+                                        style={{marginBottom: "2%", width: "30%"}}
                                     />
 
                                 </div>
