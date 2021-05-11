@@ -3,9 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeItem from '@material-ui/lab/TreeItem';
 import {Link} from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
+import StyledTreeItem from "../../../../components/StyledTreeItem/StyledTreeItem";
+import isAfterDeadline from "../../functions/isAfterDeadline";
 
 const mockData = [
     {'geography': [
@@ -50,16 +51,21 @@ const HomeworksList = () => {
             >
                 {
                     mockData.map((item) => (
-                        <TreeItem nodeId={uuidv4()} label={Object.keys(item)}>
+                        <StyledTreeItem nodeId={uuidv4()} label={Object.keys(item)}>
                             {Object.keys(item).map((subject) => (
                                 item[subject].map((homework) => (
                                         <Link to={`/api/homework/${homework['id']}`}>
-                                            <TreeItem nodeId={homework['id']} label={homework['title']}/>
+                                            <StyledTreeItem nodeId={homework['id']}
+                                                            labelText={homework['title']}
+                                                            labelInfo={homework['date']}
+                                                            bgColor={isAfterDeadline(homework['date'])[0]}
+                                                            color={isAfterDeadline(homework['date'])[1]}
+                                            />
                                         </Link>
                                     )
                                 )
                             ))}
-                        </TreeItem>
+                        </StyledTreeItem>
                     ))
                 }
             </TreeView>
