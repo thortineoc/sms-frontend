@@ -22,6 +22,12 @@ const AssignEditHomeworkForm = (props) => {
     const[error, setError] = useState("");
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [groups, setGroups] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    useEffect(() => {
+       console.log(selectedFile);
+    }, [selectedFile]);
+
 
 
     const onSubmit = (values, setSubmitting, setValues) =>{
@@ -43,6 +49,7 @@ const AssignEditHomeworkForm = (props) => {
 
 
     return (
+        <div>
         <Formik
             initialValues={initial}
             //validationSchema={validationSchema}
@@ -101,6 +108,20 @@ const AssignEditHomeworkForm = (props) => {
                 }
             }
         </Formik>
+            <div>
+                <input
+                    accept="*"
+                    id="contained-button-file"
+                    style={{display: "none"}}
+                    type="file"
+                    onChange={(e) => setSelectedFile(e.target.files[0])}
+                />
+                <label htmlFor="contained-button-file">
+                    <ButtonWrapper  variant="contained" color="primary" component="span" label={"upload"}/>
+                </label>
+                <p>{selectedFile ? selectedFile.name : ""}</p>
+            </div>
+        </div>
     )
 }
 
