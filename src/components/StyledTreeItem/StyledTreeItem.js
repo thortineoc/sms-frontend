@@ -19,20 +19,13 @@ const useTreeItemStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     labelInfo: {
-        color: 'gray'
+        color: props => props.dateColor,
     }
-    /*,
-    *  firstStyle: {
-        backgroundColor: props => props.bgColor,
-        color: props => props.color,
-    }
-    * */
 }));
 
 export default function StyledTreeItem(props) {
-    const classes = useTreeItemStyles();
-    const { labelText, labelInfo, bgColor, color, ...other } = props;
-    const { firstStyle } = useTreeItemStyles(props);
+    const classes = useTreeItemStyles(props);
+    const { labelText, labelInfo, bgColor, color, dateColor, ...other } = props;
 
     return (
         <TreeItem
@@ -42,7 +35,7 @@ export default function StyledTreeItem(props) {
                         {labelText}
                     </Typography>
                     <Typography className={classes.labelInfo}>
-                        {labelInfo}
+                        {labelInfo && labelInfo.substring(0,10)}
                     </Typography>
                 </div>
             }

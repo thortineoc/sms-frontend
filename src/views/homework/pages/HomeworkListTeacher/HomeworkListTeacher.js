@@ -17,17 +17,17 @@ const mockData = [
             {'3A': [{
                 'id': 12345679,
                 'title': 'write about caves',
-                    'date': '10-5-2021'
+                    'date': '2021-05-07T21:17:08.45264'
             }]},
             {'2B' : [{
                 'id': 12345680,
                 'title': 'write about rivers',
-                    'date': '12-6-2021'
+                    'date': '2021-05-27T21:17:08.45264'
             },
                     {
                         'id': 12345688,
                         'title': 'write about sees',
-                        'date': '22-5-2021'
+                        'date': '2021-04-20T21:17:08.45264'
                     }]}
         ]
     },
@@ -35,7 +35,7 @@ const mockData = [
             {'1C' : [
                     {'id': 123456781,
                         'title': 'write an email',
-                        'date': '23-5-2021'
+                        'date': '2021-06-25T21:17:08.45264'
                     }]}
         ]
     }
@@ -58,7 +58,7 @@ const HomeworksList = () => {
 
             <TreeView
                 className={classes.root}
-                defaultCollapseIcon={<ExpandMoreIcon style={{color: 'navy', fontWeight: 'bold'}}/>}
+                defaultCollapseIcon={<ExpandMoreIcon style={{color: 'navy'}} />}
                 defaultExpandIcon={<ChevronRightIcon style={{color: 'rgb(33,150,243)'}}/>}
             >
                 {
@@ -75,6 +75,7 @@ const HomeworksList = () => {
                                                                         labelInfo={homework['date']}
                                                                         bgColor={isAfterDeadline(homework['date'])[0]}
                                                                         color={isAfterDeadline(homework['date'])[1]}
+                                                                        dateColor={isAfterDeadline(homework['date'])[2]}
                                                         />
                                                     </Link>
                                                 )
