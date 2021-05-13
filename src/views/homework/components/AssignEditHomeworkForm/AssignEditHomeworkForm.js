@@ -9,11 +9,6 @@ import useAxios from "../../../../utilities/useAxios";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
 import axios from "axios";
-import {Grid, IconButton, Typography} from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import Toolbar from "@material-ui/core/Toolbar";
-import DeleteIcon from '@material-ui/icons/Delete';
 import UploadFile from "../../../../components/UploadFIle/UploadFile";
 
 const initial = {
@@ -33,30 +28,30 @@ const AssignEditHomeworkForm = (props) => {
     const {keycloak, initialized} = useKeycloak();
     const kcToken = keycloak?.token ?? '';
 
-
     useEffect(() => {
         if (!!initialized) {
             getKeycloakSubjects(keycloak, setAllSubjects);
         }
     }, [keycloak, initialized])
 
-    useEffect(() => {
-       if(selectedFile!==null){
-           const headers = {
-               'Content-Type': 'multipart/form-data',
-               Authorization: initialized ? `Bearer ${kcToken}` : undefined,
-           }
-           let formData = new FormData();
-           formData.append("file", selectedFile);
-           console.log(formData)
-           axios.post("http://localhost:24026/homework-service/homeworks/upload/4", formData, {
-               headers: headers})
-               .then(response => console.log(response))
-               .catch(error => console.log(error))
-       }
 
-    }, [selectedFile]);
-
+    const attachFile = (id) => {
+        if(selectedFile){
+            const headers = {
+                'Content-Type': 'multipart/form-data',
+                Authorization: initialized ? `Bearer ${kcToken}` : undefined,
+            }
+            let formData = new FormData();
+            formData.append("file", selectedFile);
+            axios.post("http://localhost:24026/homework-service/homeworks/upload/" + id, formData, {
+                headers: headers})
+                .then(response => {
+                    if(response.status>204){}
+                    setError("Cannot upload file.")
+                })
+                .catch(error => setError("Cannot upload file."))
+        }
+    }
 
     const onSubmit = (values, setSubmitting, setValues) =>{
         console.log(values);
