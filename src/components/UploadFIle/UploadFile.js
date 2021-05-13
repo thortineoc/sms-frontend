@@ -19,7 +19,7 @@ const UploadFile = (props) => {
                     onChange={(e) => props.setSelectedFile(e.target.files[0])}
                 />
                 <label htmlFor="contained-button-file">
-                    <ButtonWrapper variant="contained" color="primary" component="span" label={"UPLOAD FILE"}/>
+                    <ButtonWrapper variant="contained" color="primary" component="span" label={"ATTACH FILE"}/>
                 </label>
             </Grid>
             <Grid item style={{marginLeft: "2%"}}>
