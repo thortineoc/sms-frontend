@@ -190,6 +190,7 @@ export default function LeftMenu(props) {
                 )
             case "TEACHER":
             case "STUDENT":
+            case "PARENT":
                 return (
                     <>
                         <List>
@@ -263,8 +264,9 @@ return (
                 <Toolbar>
                     {initialized && keycloak.authenticated ? (
                             <IconButton
+                                id='open_drawer'
                                 color="inherit"
-                                aria-label="open drawer"
+                                aria-label="open_drawer"
                                 onClick={handleDrawerOpen}
                                 edge="start"
                                 className={clsx(classes.menuButton, open && classes.hide)}
@@ -273,8 +275,9 @@ return (
                             </IconButton>) :
                         (
                             <IconButton
+                                id='open_drawer'
                                 color="inherit"
-                                aria-label="open drawer"
+                                aria-label="open_drawer"
                                 onClick={logOut}
                                 edge="start"
                                 className={clsx(classes.menuButton, open && classes.hide)}

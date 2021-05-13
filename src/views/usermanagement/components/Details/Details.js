@@ -164,7 +164,7 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData, refr
             )}
 
             <div className="Details__delete-wrapper">
-                <TrashIcon className="Details__delete" onClick={() => {
+                <TrashIcon id="delete" className="Details__delete" onClick={() => {
                     setDisplayDialog(true);
                 }}/>
             </div>

@@ -117,7 +117,7 @@ export default function UserDisplayTable(props) {
     const [showEdit, setShowEdit] = useState(false);
     const [displayColumns, setDisplayColumns] = useState((props.role === "STUDENT" ? [
         {id: 'firstName', display: true, label: 'First Name'},
-        {id: 'middleName', display: false, label: 'Middle name'},
+        {id: 'middleName', display: false, label: 'Middle Name'},
         {id: 'lastName', display: true, label: 'Last Name'},
         {id: 'email', display: false, label: 'E-mail'},
         {id: 'phoneNumber', display: false, label: 'Phone'},
@@ -127,7 +127,7 @@ export default function UserDisplayTable(props) {
         {id: 'id', display: false, label: 'ID'},
     ] : [
         {id: 'firstName', display: true, label: 'First Name'},
-        {id: 'middleName', display: false, label: 'Middle name'},
+        {id: 'middleName', display: false, label: 'Middle Name'},
         {id: 'lastName', display: true, label: 'Last Name'},
         {id: 'email', display: false, label: 'E-mail'},
         {id: 'phoneNumber', display: false, label: 'Phone'},
@@ -242,6 +242,7 @@ export default function UserDisplayTable(props) {
 
                                     return (
                                         <TableRow
+                                            id={row.userName}
                                             hover
                                             onClick={() => handleClick(row)}
                                             role="checkbox"
