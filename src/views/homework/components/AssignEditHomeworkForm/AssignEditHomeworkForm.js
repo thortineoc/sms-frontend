@@ -8,6 +8,7 @@ import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
+import axios from "axios";
 
 
 const initial = {
@@ -22,12 +23,34 @@ const AssignEditHomeworkForm = (props) => {
     const[error, setError] = useState("");
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [groups, setGroups] = useState([]);
+    const [allSubjects, setAllSubjects] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
+    const {keycloak, initialized} = useKeycloak();
+    const kcToken = keycloak?.token ?? '';
+
 
     useEffect(() => {
-       console.log(selectedFile);
-    }, [selectedFile]);
+        if (!!initialized) {
+            getKeycloakSubjects(keycloak, setAllSubjects);
+        }
+    }, [keycloak, initialized])
 
+    useEffect(() => {
+       if(selectedFile!==null){
+           const headers = {
+               'Content-Type': 'multipart/form-data',
+               Authorization: initialized ? `Bearer ${kcToken}` : undefined,
+           }
+           let formData = new FormData();
+           formData.append("file", selectedFile);
+           console.log(formData)
+           axios.post("http://localhost:24026/homework-service/homeworks/upload/4", formData, {
+               headers: headers})
+               .then(response => console.log(response))
+               .catch(error => console.log(error))
+       }
+
+    }, [selectedFile]);
 
 
     const onSubmit = (values, setSubmitting, setValues) =>{
@@ -89,7 +112,7 @@ const AssignEditHomeworkForm = (props) => {
                                 <SelectFieldWrapper
                                     label="Subject"
                                     name="subject"
-                                    options={props.subjects}
+                                    options={allSubjects.toString().split(',')}
                                 />
 
 
