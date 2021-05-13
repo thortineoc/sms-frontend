@@ -61,7 +61,7 @@ const ColumnsCheckbox = ({displayColumns, setDisplayColumns, setIsActive, fetchD
                 ))}
             </div>
             <div className="ColumnsCheckbox__button">
-                <ButtonWrapper label='Apply' onClick={handleSubmit}/>
+                <ButtonWrapper id="apply" label='Apply' onClick={handleSubmit}/>
             </div>
 
         </div>

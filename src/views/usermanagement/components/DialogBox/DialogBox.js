@@ -33,8 +33,8 @@ const DialogBox = ({user, setDisplayDialog, setDeleteUser, setDetailsModalShown,
         <div className="DialogBox">
             <strong>Are you sure that you want to delete this account?</strong>
             <div className="DialogBox__options">
-                <ButtonWrapper label='Yes' onClick={handleAccept}/>
-                <ButtonWrapper label='No' onClick={handleCancel}/>
+                <ButtonWrapper id="yes" label='Yes' onClick={handleAccept}/>
+                <ButtonWrapper id="no" label='No' onClick={handleCancel}/>
             </div>
         </div>
     );
