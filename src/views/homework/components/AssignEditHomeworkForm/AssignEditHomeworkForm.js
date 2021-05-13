@@ -9,7 +9,12 @@ import useAxios from "../../../../utilities/useAxios";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
 import axios from "axios";
-
+import {Grid, IconButton, Typography} from "@material-ui/core";
+import Tooltip from "@material-ui/core/Tooltip";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import Toolbar from "@material-ui/core/Toolbar";
+import DeleteIcon from '@material-ui/icons/Delete';
+import UploadFile from "../../../../components/UploadFIle/UploadFile";
 
 const initial = {
     group: "",
@@ -120,7 +125,7 @@ const AssignEditHomeworkForm = (props) => {
                                 name={"deadline"}
                                 label={"Deadline"}
                                 />
-
+                                <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile}/>
                                 <div className="CreateForm__button-wrapper">
                                     <ButtonWrapper type="submit" label="Add" disabled={formik.isSubmitting} style={{margin:"5px"}}/>
                                 </div>
@@ -131,19 +136,6 @@ const AssignEditHomeworkForm = (props) => {
                 }
             }
         </Formik>
-            <div>
-                <input
-                    accept="*"
-                    id="contained-button-file"
-                    style={{display: "none"}}
-                    type="file"
-                    onChange={(e) => setSelectedFile(e.target.files[0])}
-                />
-                <label htmlFor="contained-button-file">
-                    <ButtonWrapper  variant="contained" color="primary" component="span" label={"upload"}/>
-                </label>
-                <p>{selectedFile ? selectedFile.name : ""}</p>
-            </div>
         </div>
     )
 }
