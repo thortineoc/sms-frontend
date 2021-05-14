@@ -35,6 +35,11 @@ function createGrade()
     console.log("GRADE ONCLICK");
 }
 
+function editGrade()
+{
+    console.log("GRADE EDIT");
+}
+
 const useRowStyles = makeStyles({
     root: {
         '& > *': {
@@ -62,7 +67,7 @@ function Row(props) {
                 <TableCell>{row.user.lastName}</TableCell>
                 <TableCell>{row.createdTime}</TableCell>
                 <TableCell>{row.lastUpdatedTime}</TableCell>
-                {row.grade ? <TableCell>{row.grade.grade}</TableCell> : <TableCell component={Link} onClick={() => createGrade()}>Grade</TableCell>}
+                {row.grade ? <TableCell component={Link} onClick={() => editGrade()}>{row.grade.grade}</TableCell> : <TableCell component={Link} onClick={() => createGrade()}>Grade</TableCell>}
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
@@ -99,7 +104,7 @@ const AnswersTable = ({answers}) => {
     let rows = answers;
     console.log(rows);
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{ borderRadius: "10px", marginTop: 5}}>
             <h3 style={{margin: "15px"}}>Answers</h3>
             <Table aria-label="collapsible table">
                 <TableHead>
