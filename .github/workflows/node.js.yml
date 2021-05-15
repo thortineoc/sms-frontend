@@ -27,4 +27,4 @@ jobs:
     - run: npm test
     - run: npm install playwright
     - name: run CodeceptJS tests
-      run: npx codeceptjs run
+      run: npx codeceptjs run --override '{"helpers": {"Playwright": {"show": false}}}'
