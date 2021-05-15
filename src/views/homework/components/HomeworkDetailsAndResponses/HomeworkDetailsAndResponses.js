@@ -10,7 +10,7 @@ import {useKeycloak} from "@react-keycloak/web";
 
 const homeworkData = {
     title: "Example homework",
-    group: "1D",
+    group: "3A",
     subject: "Polish",
     deadline: "10/10/2021",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -29,8 +29,9 @@ const homeworkData = {
             grade: "4"
         },
         user: {
+            id: "rafal1",
             firstName: "Rafal",
-            lastName: "Brzozowski"
+            lastName: "Carlos"
         },
         lastUpdatedTime: "21-21-2021",
         createdTime: "11-21-2021"
@@ -50,6 +51,7 @@ const homeworkData = {
             //     grade: "4"
             // },
             user: {
+                id: "rafal2",
                 firstName: "Rafal",
                 lastName: "Brzozowski"
             },
@@ -71,6 +73,8 @@ const HomeworkDetailsAndResponses = (props) => {
             getKeycloakRoles(keycloak, setRole)
         }
     }, [keycloak, initialized])
+
+    console.log(homeworkData.group);
 
     return (
         <div>
@@ -136,7 +140,9 @@ const HomeworkDetailsAndResponses = (props) => {
             </div>
             {role === "TEACHER" &&
             <AnswersTable
-                answers={homeworkData.answers}/>}
+                answers={homeworkData.answers}
+                subject={homeworkData.subject}
+                group={homeworkData.group}/>}
         </div>
     )
 }

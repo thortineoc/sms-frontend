@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -15,28 +15,19 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {Link} from "@material-ui/core";
+import AddCircle from "../../../grades/components/AddCircle/AddCircle";
+import useAxios from "../../../../utilities/useAxios";
+import callBackendPost from "../../../../utilities/CallBackendPost";
 
-function createData(firstName, lastName, modificationDate, uploadedFile, comments, url) {
-    return {firstName, lastName, modificationDate, uploadedFile, comments, url};
-}
-
-// const rows = [
-//     createData('Adam', "Wojtyla", "01-01-2021", "file1", "comment1", "not"),
-//     createData('User1', "User", "01-01-2022", "1file2", "comment 2", "https://drive.google.com/u/0/uc?id=18JhF01yDrwwEAhlBb7Tf3eKTVhP7bYZH&export=download")
-// ];
-
-function downloadHomework(uri)
-{
+function downloadHomework(uri) {
     console.log(uri);
 }
 
-function createGrade()
-{
+function createGrade() {
     console.log("GRADE ONCLICK");
 }
 
-function editGrade()
-{
+function editGrade() {
     console.log("GRADE EDIT");
 }
 
@@ -48,8 +39,7 @@ const useRowStyles = makeStyles({
     },
 });
 
-function Row(props) {
-    const {row} = props;
+function Row({row, subject}) {
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
 
@@ -65,9 +55,12 @@ function Row(props) {
                     {row.user.firstName}
                 </TableCell>
                 <TableCell>{row.user.lastName}</TableCell>
-                <TableCell>{row.createdTime}</TableCell>
-                <TableCell>{row.lastUpdatedTime}</TableCell>
-                {row.grade ? <TableCell component={Link} onClick={() => editGrade()}>{row.grade.grade}</TableCell> : <TableCell component={Link} onClick={() => createGrade()}>Grade</TableCell>}
+                <TableCell>{row.createdTime ? row.createdTime : "-"}</TableCell>
+                <TableCell>{row.lastUpdatedTime  ? row.lastUpdatedTime : "-" }</TableCell>
+                {row.grade ? <TableCell component={Link} onClick={() => editGrade()}>{row.grade.grade}</TableCell>
+                    : <TableCell>
+                        <AddCircle studentId={row.user.id} type="REGULAR" subject={subject}/>
+                    </TableCell>}
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
@@ -82,13 +75,14 @@ function Row(props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.files.map((userFiles) => (
-                                    <TableRow key={userFiles.uri}>
-                                        <TableCell component="th" scope="row">
-                                            {userFiles.filename}
-                                        </TableCell>
-                                        <TableCell component={Link} onClick={() => downloadHomework(userFiles.uri)}>download</TableCell>
-                                    </TableRow>
+                                    {row.files?.map((userFiles) => (
+                                        <TableRow key={userFiles.uri}>
+                                            <TableCell component="th" scope="row">
+                                                {userFiles.filename}
+                                            </TableCell>
+                                            <TableCell component={Link}
+                                                       onClick={() => downloadHomework(userFiles.uri)}>download</TableCell>
+                                        </TableRow>
                                     ))}
                                 </TableBody>
                             </Table>
@@ -100,11 +94,49 @@ function Row(props) {
     );
 }
 
-const AnswersTable = ({answers}) => {
-    let rows = answers;
-    console.log(rows);
+function mapUsersToAnswers(allUsers, answers) {
+    let usersWithAnswers = answers.map(answers => answers.user);
+    let usersWithoutAnswer = usersWithAnswers.concat(allUsers)
+        .filter(item => !usersWithAnswers.includes(item));
+    // map to empty answer
+    let allAns = answers.concat(usersWithoutAnswer.map(user => {
+            return {
+                "user":
+                    {
+                        firstName: user.firstName,
+                        lastName: user.lastName
+                    }
+            }
+        }));
+    return allAns
+}
+
+const AnswersTable = ({answers, subject, group}) => {
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const [allUsers, setAllUsers] = useState([]);
+
+    useEffect(() => {
+        callBackendPost(axiosInstance, "usermanagement-service/users/filter", {group: group})
+            .then(response => {
+                if (response.status === 200) {
+                    setAllUsers(response.data)
+                } else if (response.status === 204) {
+                    setAllUsers([])
+                }
+
+            })
+            .catch(error => console.log(error))
+    }, [])
+
+    if(allUsers == null || answers == null)
+    {
+        return ("Loading...");
+    }
+
+    let rows = mapUsersToAnswers(allUsers, answers);
+
     return (
-        <TableContainer component={Paper} style={{ borderRadius: "10px", marginTop: 5}}>
+        <TableContainer component={Paper} style={{borderRadius: "10px", marginTop: 5}}>
             <h3 style={{margin: "15px"}}>Answers</h3>
             <Table aria-label="collapsible table">
                 <TableHead>
@@ -119,7 +151,7 @@ const AnswersTable = ({answers}) => {
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row.name} row={row}/>
+                        <Row key={row.name} row={row} subject={subject}/>
                     ))}
                 </TableBody>
             </Table>
