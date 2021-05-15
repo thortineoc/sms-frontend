@@ -31,4 +31,4 @@ jobs:
     - run: npm install playwright
     - name: run CodeceptJS tests
       run: |
-        xvfb-run --auto-servernum -- npx codeceptjs run
+        npx codeceptjs run --override '{"helpers": {"Playwright": {"show": false}}}'
