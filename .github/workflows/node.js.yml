@@ -24,6 +24,6 @@ jobs:
     - run: npm ci
     - run: CI='' npm run build --if-present
     - run: npm test
-    - run: |
-        npx codeceptjs run --override '{"helpers": {"Puppeteer": {"show": false}}}' --steps
-        npm run codeceptjs
+    - uses: microsoft/playwright-github-action@v1
+    - name: run CodeceptJS tests
+      run: npx codeceptjs run
