@@ -74,8 +74,6 @@ const HomeworkDetailsAndResponses = (props) => {
         }
     }, [keycloak, initialized])
 
-    console.log(homeworkData.group);
-
     return (
         <div>
             <div className="HomeworkDetailsAndResponses">
@@ -142,7 +140,8 @@ const HomeworkDetailsAndResponses = (props) => {
             <AnswersTable
                 answers={homeworkData.answers}
                 subject={homeworkData.subject}
-                group={homeworkData.group}/>}
+                group={homeworkData.group}
+                toGrade={homeworkData.toEvaluate}/>}
         </div>
     )
 }

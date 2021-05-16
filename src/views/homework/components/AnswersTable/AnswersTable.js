@@ -39,7 +39,7 @@ const useRowStyles = makeStyles({
     },
 });
 
-function Row({row, subject}) {
+function Row({row, subject, toGrade}) {
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
 
@@ -57,16 +57,19 @@ function Row({row, subject}) {
                 <TableCell>{row.user.lastName}</TableCell>
                 <TableCell>{row.createdTime ? row.createdTime : "-"}</TableCell>
                 <TableCell>{row.lastUpdatedTime  ? row.lastUpdatedTime : "-" }</TableCell>
-                {row.grade ? <TableCell component={Link} onClick={() => editGrade()}>{row.grade.grade}</TableCell>
-                    : <TableCell>
-                        <AddCircle studentId={row.user.id} type="REGULAR" subject={subject}/>
-                    </TableCell>}
+                {toGrade &&
+                (row.grade ? <TableCell component={Link} onClick={() => editGrade()}>{row.grade.grade}</TableCell>
+                        : <TableCell>
+                            <AddCircle studentId={row.user.id} type="REGULAR" subject={subject}/>
+                        </TableCell>)}
+
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <h4 style={{margin: "15px"}}>User's files</h4>
+                            <p style={{margin: "15"}}>{row.review}</p>
+                            <h4 style={{margin: "15"}}>User's files</h4>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
@@ -111,7 +114,7 @@ function mapUsersToAnswers(allUsers, answers) {
     return allAns
 }
 
-const AnswersTable = ({answers, subject, group}) => {
+const AnswersTable = ({answers, subject, group, toGrade}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [allUsers, setAllUsers] = useState([]);
 
@@ -146,12 +149,12 @@ const AnswersTable = ({answers, subject, group}) => {
                         <TableCell>Last name</TableCell>
                         <TableCell>Create date</TableCell>
                         <TableCell>Modification date</TableCell>
-                        <TableCell>Grade</TableCell>
+                        {toGrade && <TableCell>Grade</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row.name} row={row} subject={subject}/>
+                        <Row key={row.name} row={row} subject={subject} toGrade={toGrade}/>
                     ))}
                 </TableBody>
             </Table>
