@@ -74,7 +74,6 @@ Scenario('can create and delete student', ({I}) => {
     //Search users for FrontTest (doesn't exist yet)
     I.fillField('Search', 'FrontTest');
     I.pressKey('Enter');
-    I.wait(1);
     I.dontSee('FrontTestLN');
 
     //create FrontTest
@@ -87,8 +86,8 @@ Scenario('can create and delete student', ({I}) => {
     I.click('Submit');
 
     //search for FrontTest
-    I.fillField('Search', 'FrontTest');
-    I.pressKey('Enter');
+    //I.fillField('Search', 'FrontTest');
+    //I.pressKey('Enter');
     I.see('FrontTestLN');
 
     //delete FrontTest
