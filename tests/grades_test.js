@@ -2,8 +2,8 @@ Feature('grades');
 
 Scenario('teacher can see grades', ({I}) => {
     //login
-    //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:3000/');
+    I.amOnPage('http://school-management-system.online');
+    //I.amOnPage('http://localhost:3000/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 't_12345678909');
@@ -28,10 +28,11 @@ Scenario('teacher can see grades', ({I}) => {
     I.see('2021-05-06');
 });
 
+
 Scenario('teacher can add, update an delete grades', ({I}) => {
     //login
-    //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:3000/');
+    I.amOnPage('http://school-management-system.online');
+    //I.amOnPage('http://localhost:3000/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 't_12345678909');
@@ -74,4 +75,24 @@ Scenario('teacher can add, update an delete grades', ({I}) => {
     I.see('Modify grade');
     I.click('Delete');
     I.dontSeeElement({id: 'grade_5'});
+});
+
+Scenario('student can see grades', ({I}) => {
+    //login
+    I.amOnPage('http://school-management-system.online');
+    //I.amOnPage('http://localhost:3000/');
+    I.click({id: 'open_drawer'});
+
+    I.fillField('username', 's_12368957894');
+    I.fillField('password', 'JemmFitz');
+    I.click('Sign In');
+
+    I.see('DASHBOARD FOR STUDENT');
+    I.click({id: 'open_drawer'});
+    I.see('Grades');
+    I.click('Grades');
+
+    I.seeElement({id: 'grade_3'});
+    I.moveCursorTo({id: 'grade_3'});
+    I.see('2021-05-06');
 });
