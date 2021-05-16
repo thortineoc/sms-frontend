@@ -87,14 +87,16 @@ const GradesViewTeachers = () => {
     }
 
     return (
-        <div className="GradesView">
-            <div className="GradesView__selects">
-                <SimpleSelect label="Subjects"
+        <div id="grades_view" className="GradesView">
+            <div id="grades_selects" className="GradesView__selects">
+                <SimpleSelect id="select_subject"
+                              label="Subjects"
                               options={subjectsOptions}
                               value={subject}
                               setValue={setSubject}
                 />
-                <SimpleSelect label="Groups"
+                <SimpleSelect id="select_group"
+                              label="Groups"
                               options={groupsOptions}
                               value={group}
                               setValue={setGroup}
