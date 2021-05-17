@@ -139,7 +139,7 @@ const AnswersTable = ({answers, subject, group, toGrade}) => {
     let rows = mapUsersToAnswers(allUsers, answers);
 
     return (
-        <TableContainer component={Paper} style={{borderRadius: "10px", marginTop: 5}}>
+        <TableContainer component={Paper} style={{borderRadius: "10px", marginTop: "10px", boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1)"}}>
             <h3 style={{margin: "15px"}}>Answers</h3>
             <Table aria-label="collapsible table">
                 <TableHead>

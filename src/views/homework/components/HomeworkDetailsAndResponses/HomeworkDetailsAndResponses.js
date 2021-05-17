@@ -13,6 +13,7 @@ import DatepickerWrapper from "../../../../components/DatepickerWrapper/Datepick
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
+import UploadAnswers from "../UploadAnswers/UploadAnswers";
 
 const homeworkMock = {
     title: "Example homework",
@@ -241,6 +242,11 @@ const HomeworkDetailsAndResponses = (props) => {
                 subject={homeworkData.subject}
                 group={homeworkData.group}
                 toGrade={homeworkData.toEvaluate}/>}
+
+            {(props.role === "STUDENT" && homeworkData.answers.length > 0) &&
+                <UploadAnswers id={props.id}/>
+            }
+
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>
