@@ -93,6 +93,7 @@ const HomeworksList = () => {
             <Modal isOpen={showCreateDialog} setIsOpen={setShowCreateDialog}>
                 <AssignEditHomeworkForm
                     type="ADD"
+                    setIsOpen={setShowCreateDialog}
                 />
             </Modal>
 

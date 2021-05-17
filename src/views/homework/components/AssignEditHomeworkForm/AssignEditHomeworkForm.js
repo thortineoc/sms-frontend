@@ -10,6 +10,8 @@ import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 import {useKeycloak} from "@react-keycloak/web";
 import axios from "axios";
 import UploadFile from "../../../../components/UploadFIle/UploadFile";
+import callBackendPut from "../../../../utilities/CallBackendPut";
+import * as Yup from "yup";
 
 const initial = {
     group: "",
@@ -18,6 +20,14 @@ const initial = {
     description: "",
     deadline: "",
 }
+
+const validationSchema = Yup.object({
+    title: Yup.string().required('Required'),
+    description: Yup.string().required('Required'),
+    group: Yup.string().required('Required'),
+    subject: Yup.string().required('Required'),
+
+})
 
 const AssignEditHomeworkForm = (props) => {
     const[error, setError] = useState("");
@@ -43,18 +53,33 @@ const AssignEditHomeworkForm = (props) => {
             }
             let formData = new FormData();
             formData.append("file", selectedFile);
-            axios.post("http://localhost:24026/homework-service/homeworks/upload/" + id, formData, {
+            axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/HOMEWORK", formData, {
                 headers: headers})
                 .then(response => {
-                    if(response.status>204){}
-                    setError("Cannot upload file.")
+                    if(response.status>204) {
+                        setError("Cannot upload file.")
+                    } else {
+                        props.setIsOpen(false)
+                    }
                 })
                 .catch(error => setError("Cannot upload file."))
+        } else {
+            props.setIsOpen(false)
         }
     }
 
     const onSubmit = (values, setSubmitting, setValues) =>{
         console.log(values);
+        callBackendPut(axiosInstance, "homework-service/homework", values)
+            .then(response => {
+                attachFile(response.data.id)
+            })
+            .catch(error=>{
+                console.log(error)
+                setError("Cannot create this assignment")
+                setSubmitting(false)
+                setValues(values)
+            })
     }
 
     const fetchGroups = () => {
@@ -75,7 +100,7 @@ const AssignEditHomeworkForm = (props) => {
         <div>
         <Formik
             initialValues={initial}
-            //validationSchema={validationSchema}
+            validationSchema={validationSchema}
             validateOnChange={false}
             onSubmit={(values, {setSubmitting, setValues}) => onSubmit(values, setSubmitting, setValues)}
         >
