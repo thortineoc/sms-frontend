@@ -243,7 +243,7 @@ const HomeworkDetailsAndResponses = (props) => {
                 group={homeworkData.group}
                 toGrade={homeworkData.toEvaluate}/>}
 
-            {(props.role === "STUDENT" && homeworkData.answers.length > 0) &&
+            {props.role === "STUDENT" &&
                 <UploadAnswers id={props.id}/>
             }
 
