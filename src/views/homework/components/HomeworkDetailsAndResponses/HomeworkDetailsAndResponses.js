@@ -14,7 +14,7 @@ import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 
-const homeworkData = {
+const homeworkMock = {
     title: "Example homework",
     group: "3A",
     subject: "Polish",
@@ -67,19 +67,33 @@ const homeworkData = {
     ],
 }
 
+const homeworkEmpty = {
+    title: "",
+    group: "",
+    subject: "",
+    deadline: "",
+    description: "",
+    toEvaluate: true,
+    answers: [],
+    files: [],
+}
+
 const HomeworkDetailsAndResponses = (props) => {
     const [showEdit, setShowEdit] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
     const[error, setError] = useState("");
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [groups, setGroups] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
+    const [homeworkData, setHomeworkData] = useState(homeworkMock);
 
     useEffect(() => {
         if (!!initialized) {
             getKeycloakSubjects(keycloak, setAllSubjects);
+            fetchGroups();
+            fetchHomeworkData();
         }
     }, [keycloak, initialized])
 
@@ -92,9 +106,15 @@ const HomeworkDetailsAndResponses = (props) => {
             .catch(error => console.log(error))
     }
 
-    useEffect(() => {
-        fetchGroups();
-    }, []);
+    const fetchHomeworkData = () => {
+        callBackendGet(axiosInstance, "homework-service/homework/" + props.id, null)
+            .then(response => {
+                console.log(response.data);
+                setHomeworkData(response.data);
+            })
+            .catch(error => console.log(error))
+    }
+
 
     const handleClick = () => {
         setShowEdit(true)
@@ -112,7 +132,7 @@ const HomeworkDetailsAndResponses = (props) => {
             <div className="HomeworkDetailsAndResponses">
                 {role==="TEACHER" &&
                 <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button"/>}
-                <h3>Homework details {props.id}</h3>
+                <h3>Homework details</h3>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Title</div>
@@ -222,7 +242,7 @@ const HomeworkDetailsAndResponses = (props) => {
     return (
         <div>
             {showEdit ? editPage() : detailsPage()}
-            {role==="TEACHER" &&
+            {(role==="TEACHER" && homeworkData.answers.length>0) &&
             <AnswersTable
                 answers={homeworkData.answers}
                 subject={homeworkData.subject}
