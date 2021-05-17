@@ -4,16 +4,61 @@ import Modal from "../../../../components/Modal/Modal";
 import AssignEditHomeworkForm from "../AssignEditHomeworkForm/AssignEditHomeworkForm";
 import "./HomeworkDetailsAndResponses.css"
 import DeleteDialog from "../DeleteDialog/DeleteDialog";
-import AssignmentsTable from "../AssigmentsTable/AssignmentsTable";
+import AnswersTable from "../AnswersTable/AnswersTable";
 import getKeycloakRoles from "../../../../utilities/GetRoles";
 import {useKeycloak} from "@react-keycloak/web";
 
 const homeworkData = {
     title: "Example homework",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    group: "3A",
     subject: "Polish",
-    group: "1D",
-    deadline: "10/10/2021"
+    deadline: "10/10/2021",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    toEvaluate: true,
+    answers: [{
+        review: "REVIEW lorem ipsum dolor sit amet",
+        files: [{
+            filename: "filename_xd",
+            uri: "/what/is/it"
+        },
+            {
+                filename: "filename_xd2",
+                uri: "/what/is/it2"
+            }],
+        grade: {
+            grade: "4"
+        },
+        user: {
+            id: "rafal1",
+            firstName: "Rafal",
+            lastName: "Carlos"
+        },
+        lastUpdatedTime: "21-21-2021",
+        createdTime: "11-21-2021"
+    },
+        {
+            review: "REVIEW lorem ipsum dolor sit amet",
+            files: [{
+                id: "1234",
+                filename: "filename_xd",
+                uri: "/what/is/it"
+            },
+                {
+                    filename: "filename_xd2",
+                    uri: "/what/is/it2"
+                }],
+            // grade: {
+            //     grade: "4"
+            // },
+            user: {
+                id: "rafal2",
+                firstName: "Rafal",
+                lastName: "Brzozowski"
+            },
+            lastUpdatedTime: "21-21-2021",
+            createdTime: "11-21-2021"
+        }
+    ],
 }
 
 const HomeworkDetailsAndResponses = (props) => {
@@ -31,66 +76,72 @@ const HomeworkDetailsAndResponses = (props) => {
 
     return (
         <div>
-        <div className="HomeworkDetailsAndResponses">
+            <div className="HomeworkDetailsAndResponses">
 
-            {role==="TEACHER" &&
-            <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>}
+                {role === "TEACHER" &&
+                <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)}
+                               className="HomeworkDetails__button" style={{margin: "5px"}}/>}
 
-            {role==="TEACHER" &&
-            <ButtonWrapper label={"Edit"} onClick={() => setShowEditDialog(true)} className="HomeworkDetails__button" style={{margin: "5px"}}/>}
+                {role === "TEACHER" &&
+                <ButtonWrapper label={"Edit"} onClick={() => setShowEditDialog(true)}
+                               className="HomeworkDetails__button" style={{margin: "5px"}}/>}
 
-            <h3>Homework details {props.id}</h3>
+                <h3>Homework details {props.id}</h3>
 
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Title</div>
-                <div className="DetailsHomework__data">
-                    {homeworkData.title}
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Title</div>
+                    <div className="DetailsHomework__data">
+                        {homeworkData.title}
+                    </div>
                 </div>
-            </div>
 
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Description</div>
-                <div className="DetailsHomework__data">
-                    {homeworkData.description}
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Description</div>
+                    <div className="DetailsHomework__data">
+                        {homeworkData.description}
+                    </div>
                 </div>
-            </div>
 
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Group</div>
-                <div className="DetailsHomework__data_small">
-                    {homeworkData.group}
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Group</div>
+                    <div className="DetailsHomework__data_small">
+                        {homeworkData.group}
+                    </div>
                 </div>
-            </div>
 
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Subject</div>
-                <div className="DetailsHomework__data_small">
-                    {homeworkData.subject}
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Subject</div>
+                    <div className="DetailsHomework__data_small">
+                        {homeworkData.subject}
+                    </div>
                 </div>
-            </div>
 
-            <div className="DetailsHomework__field">
-                <div className="DetailsHomework__label">Deadline</div>
-                <div className="DetailsHomework__data_small">
-                    {homeworkData.deadline}
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">Deadline</div>
+                    <div className="DetailsHomework__data_small">
+                        {homeworkData.deadline}
+                    </div>
                 </div>
+
+                <Modal isOpen={showEditDialog} setIsOpen={setShowEditDialog}>
+                    <AssignEditHomeworkForm
+                        type={"MODIFY"}
+                        subjects={["Polish", "Math"]}
+                        homeworkDetails={homeworkData}
+                    />
+                </Modal>
+
+                <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                    <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
+                </Modal>
+
             </div>
-
-            <Modal isOpen={showEditDialog} setIsOpen={setShowEditDialog}>
-                <AssignEditHomeworkForm
-                    type={"MODIFY"}
-                    subjects={["Polish", "Math"]}
-                    homeworkDetails={homeworkData}
-                />
-            </Modal>
-
-            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
-                <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
-            </Modal>
-
-        </div>
-            {role==="TEACHER" &&
-            <AssignmentsTable/>}
+            {role === "TEACHER" &&
+            <AnswersTable
+                answers={homeworkData.answers}
+                subject={homeworkData.subject}
+                group={homeworkData.group}
+                toGrade={homeworkData.toEvaluate}/>}
         </div>
     )
 }
