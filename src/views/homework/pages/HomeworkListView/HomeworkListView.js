@@ -1,10 +1,10 @@
 import {useKeycloak} from "@react-keycloak/web";
 import React, {useEffect, useState} from "react";
 import getKeycloakRoles from "../../../../utilities/GetRoles";
-import HomeworkListStudent from "../HomeworkListStudent/HomeworkListStudent";
-import HomeworkListTeacher from "../HomeworkListTeacher/HomeworkListTeacher";
+import HomeworkListStudent from "../../components/HomeworkListStudent/HomeworkListStudent";
+import HomeworkListTeacher from "../../components/HomeworkListTeacher/HomeworkListTeacher";
 
-const HomeworkView = (props) => {
+const HomeworkListView = () => {
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState('');
     useEffect(() => {
@@ -25,4 +25,4 @@ const HomeworkView = (props) => {
     );
 }
 
-export default HomeworkView;
+export default HomeworkListView;
