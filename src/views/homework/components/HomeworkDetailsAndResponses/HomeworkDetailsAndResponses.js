@@ -93,7 +93,7 @@ const HomeworkDetailsAndResponses = (props) => {
         if (!!initialized) {
             getKeycloakSubjects(keycloak, setAllSubjects);
             fetchGroups();
-            fetchHomeworkData();
+            //fetchHomeworkData();
         }
     }, [keycloak, initialized])
 
@@ -241,7 +241,8 @@ const HomeworkDetailsAndResponses = (props) => {
 
     return (
         <div>
-            {showEdit ? editPage() : detailsPage()}
+            {/*{showEdit ? editPage() : detailsPage()}*/}
+            {showEdit ? detailsPage() : detailsPage()}
             {(role==="TEACHER" && homeworkData.answers.length>0) &&
             <AnswersTable
                 answers={homeworkData.answers}
