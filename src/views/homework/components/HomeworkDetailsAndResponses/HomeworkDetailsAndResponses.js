@@ -1,14 +1,20 @@
 import React, {useEffect, useState} from "react";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import Modal from "../../../../components/Modal/Modal";
-import AssignEditHomeworkForm from "../AssignEditHomeworkForm/AssignEditHomeworkForm";
+import AnswersTable from "../AnswersTable/AnswersTable";
 import "./HomeworkDetailsAndResponses.css"
 import DeleteDialog from "../DeleteDialog/DeleteDialog";
-import AnswersTable from "../AnswersTable/AnswersTable";
 import getKeycloakRoles from "../../../../utilities/GetRoles";
 import {useKeycloak} from "@react-keycloak/web";
+import {Form, Formik} from "formik";
+import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
+import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
+import DatepickerWrapper from "../../../../components/DatepickerWrapper/DatepickerWrapper";
+import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
+import getKeycloakSubjects from "../../../../utilities/GetSubjects";
 
-const homeworkData = {
+const homeworkMock = {
     title: "Example homework",
     group: "3A",
     subject: "Polish",
@@ -61,12 +67,58 @@ const homeworkData = {
     ],
 }
 
+const homeworkEmpty = {
+    title: "",
+    group: "",
+    subject: "",
+    deadline: "",
+    description: "",
+    toEvaluate: true,
+    answers: [],
+    files: [],
+}
+
 const HomeworkDetailsAndResponses = (props) => {
-    const [showEditDialog, setShowEditDialog] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
+    const[error, setError] = useState("");
+    const [groups, setGroups] = useState([]);
+    const [allSubjects, setAllSubjects] = useState([]);
+    const [homeworkData, setHomeworkData] = useState(homeworkMock);
 
+    useEffect(() => {
+        if (!!initialized) {
+            getKeycloakSubjects(keycloak, setAllSubjects);
+            fetchGroups();
+            //fetchHomeworkData();
+        }
+    }, [keycloak, initialized])
+
+    const fetchGroups = () => {
+        callBackendGet(axiosInstance, "usermanagement-service/groups", null)
+            .then(response => {
+                console.log(response.data);
+                setGroups(response.data);
+            })
+            .catch(error => console.log(error))
+    }
+
+    const fetchHomeworkData = () => {
+        callBackendGet(axiosInstance, "homework-service/homework/" + props.id, null)
+            .then(response => {
+                console.log(response.data);
+                setHomeworkData(response.data);
+            })
+            .catch(error => console.log(error))
+    }
+
+
+    const handleClick = () => {
+        setShowEdit(true)
+    }
 
     useEffect(() => {
         if (!!initialized) {
@@ -74,75 +126,134 @@ const HomeworkDetailsAndResponses = (props) => {
         }
     }, [keycloak, initialized])
 
-    return (
-        <div>
+
+    const detailsPage = () =>{
+        return (
             <div className="HomeworkDetailsAndResponses">
-
-                {role === "TEACHER" &&
-                <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)}
-                               className="HomeworkDetails__button" style={{margin: "5px"}}/>}
-
-                {role === "TEACHER" &&
-                <ButtonWrapper label={"Edit"} onClick={() => setShowEditDialog(true)}
-                               className="HomeworkDetails__button" style={{margin: "5px"}}/>}
-
-                <h3>Homework details {props.id}</h3>
+                {role==="TEACHER" &&
+                <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button"/>}
+                <h3>Homework details</h3>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Title</div>
-                    <div className="DetailsHomework__data">
+                    <div className="DetailsHomework__data" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.title}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Description</div>
-                    <div className="DetailsHomework__data">
+                    <div className="DetailsHomework__data" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.description}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Group</div>
-                    <div className="DetailsHomework__data_small">
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.group}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Subject</div>
-                    <div className="DetailsHomework__data_small">
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.subject}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Deadline</div>
-                    <div className="DetailsHomework__data_small">
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.deadline}
                     </div>
                 </div>
-
-                <Modal isOpen={showEditDialog} setIsOpen={setShowEditDialog}>
-                    <AssignEditHomeworkForm
-                        type={"MODIFY"}
-                        subjects={["Polish", "Math"]}
-                        homeworkDetails={homeworkData}
-                    />
-                </Modal>
-
-                <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
-                    <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
-                </Modal>
-
             </div>
-            {role === "TEACHER" &&
+        )
+    }
+
+    const editPage = () => {
+        return (
+            <div className="HomeworkDetailsAndResponses">
+            <Formik
+                initialValues={homeworkData}
+                //validationSchema={validationSchema}
+                validateOnChange={false}
+                onSubmit={() => setShowEdit(false)}
+            >
+                {
+                    formik => {
+                        return (
+                            <Form>
+                                <ButtonWrapper type="submit" label="Save" disabled={formik.isSubmitting} className="HomeworkDetails__button"/>
+                                <h3>Modify assignment</h3>
+                                {(error.length>0 ? <p>{error}</p> : <div/>)}
+                                <div>
+                                    {formik.errors && formik.errors.submit &&
+                                    <div className="error">{formik.errors.submit}</div>}
+
+                                    <TextFieldWrapper
+                                        label="Title"
+                                        name="title"
+                                        type="text"
+                                        style={{marginBottom: "2%", width: "70%"}}
+                                    />
+
+                                    <TextFieldWrapper
+                                        label="Description"
+                                        name="description"
+                                        type="text"
+                                        multiline
+                                        rowsMax={6}
+                                        style={{marginBottom: "2%", width: "70%"}}
+                                    />
+
+                                    <SelectFieldWrapper
+                                        label="Group"
+                                        name="group"
+                                        options={groups}
+                                        style={{marginBottom: "2%", width: "30%"}}
+                                    />
+
+                                    <SelectFieldWrapper
+                                        label="Subject"
+                                        name="subject"
+                                        options={allSubjects.toString().split(',')}
+                                        style={{marginBottom: "2%", width: "30%"}}
+                                    />
+
+
+                                    <DatepickerWrapper
+                                        name={"deadline"}
+                                        label={"Deadline"}
+                                        style={{marginBottom: "2%", width: "30%"}}
+                                    />
+
+                                </div>
+                            </Form>
+                        )
+                    }
+                }
+            </Formik>
+            </div>
+        )
+    }
+
+    return (
+        <div>
+            {/*{showEdit ? editPage() : detailsPage()}*/}
+            {showEdit ? detailsPage() : detailsPage()}
+            {(role==="TEACHER" && homeworkData.answers.length>0) &&
             <AnswersTable
                 answers={homeworkData.answers}
                 subject={homeworkData.subject}
                 group={homeworkData.group}
                 toGrade={homeworkData.toEvaluate}/>}
+            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
+            </Modal>
         </div>
+
     )
 }
 

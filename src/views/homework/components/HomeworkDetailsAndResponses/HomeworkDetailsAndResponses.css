@@ -66,4 +66,15 @@
         position: absolute;
         float: none;
     }
+
+}
+
+.textFieldEditHomework{
+    margin-bottom: 2%;
+    width: 70%;
+}
+
+.textFieldEditHomeworkSmall{
+    margin-bottom: 2%;
+    width: 30%;
 }

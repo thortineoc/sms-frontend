@@ -38,7 +38,7 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
     return (
         <ThemeProvider theme={theme}>
         <div className="SelectFieldWrapper">
-            <TextField {...configSelect} color="primary">
+            <TextField {...configSelect} color="primary" style={(rest.style===undefined ? ({marginBottom: "5%"}) : ({...rest.style}))}>
                 {options && options.map((item, index) => {
                     if(item === '') {
                         return (
