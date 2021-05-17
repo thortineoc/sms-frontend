@@ -64,6 +64,7 @@ jobs:
     - run: |
         npm start &
         disown
+    - uses: microsoft/playwright-github-action@v1
     - run: npm install playwright
     - name: run CodeceptJS tests
       run: |
