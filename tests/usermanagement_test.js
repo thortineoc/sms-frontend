@@ -97,6 +97,7 @@ Scenario('can create and delete student', ({I}) => {
     I.click({id: 'delete'});
     I.see('Are you sure that you want to delete this account?');
     I.click({id: 'yes'});
+    I.wait(5);
     I.dontSee('FrontTestLN');
 });
 
@@ -123,6 +124,7 @@ Scenario('can filter students', ({I}) => {
     //I.fillField('email', '@sms');
     I.fillField('group', '1B');
     I.click({id: 'apply'});
+    I.wait(5);
     I.dontSee('2A');
 
     //reset filters
