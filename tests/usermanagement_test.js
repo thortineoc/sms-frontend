@@ -2,7 +2,7 @@ Feature('usermanagement');
 
 Scenario('can login to admin account and logout', ({I}) => {
     //homepage
-    // I.amOnPage('http://school-management-system.online:24020');
+    //I.amOnPage('http://school-management-system.online:24020');
     I.amOnPage('http://localhost:3000/');
     I.click({id: 'open_drawer'});
     I.see('Sign in to your account');
@@ -29,7 +29,7 @@ Scenario('can login to admin account and logout', ({I}) => {
 
 Scenario('can create and delete group', ({I}) => {
     //login
-    // I.amOnPage('http://school-management-system.online:24020');
+    //I.amOnPage('http://school-management-system.online:24020');
     I.amOnPage('http://localhost:3000/');
     I.click({id: 'open_drawer'});
 
@@ -86,8 +86,8 @@ Scenario('can create and delete student', ({I}) => {
     I.click('Submit');
 
     //search for FrontTest
-    I.fillField('Search', 'FrontTest');
-    I.pressKey('Enter');
+    //I.fillField('Search', 'FrontTest');
+    //I.pressKey('Enter');
     I.see('FrontTestLN');
 
     //delete FrontTest
@@ -97,12 +97,13 @@ Scenario('can create and delete student', ({I}) => {
     I.click({id: 'delete'});
     I.see('Are you sure that you want to delete this account?');
     I.click({id: 'yes'});
+    I.wait(5);
     I.dontSee('FrontTestLN');
 });
 
 Scenario('can filter students', ({I}) => {
     //login
-    // I.amOnPage('http://school-management-system.online:24020');
+    //I.amOnPage('http://school-management-system.online:24020');
     I.amOnPage('http://localhost:3000/');
     I.click({id: 'open_drawer'});
 
@@ -123,6 +124,7 @@ Scenario('can filter students', ({I}) => {
     //I.fillField('email', '@sms');
     I.fillField('group', '1B');
     I.click({id: 'apply'});
+    I.wait(5);
     I.dontSee('2A');
 
     //reset filters
@@ -133,7 +135,7 @@ Scenario('can filter students', ({I}) => {
 
 Scenario('can change displayed columns', ({I}) => {
     //login
-    // I.amOnPage('http://school-management-system.online:24020');
+    //I.amOnPage('http://school-management-system.online:24020');
     I.amOnPage('http://localhost:3000/');
     I.click({id: 'open_drawer'});
 
