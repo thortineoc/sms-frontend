@@ -26,7 +26,6 @@ const validationSchema = Yup.object({
     description: Yup.string().required('Required'),
     group: Yup.string().required('Required'),
     subject: Yup.string().required('Required'),
-
 })
 
 const AssignEditHomeworkForm = (props) => {

@@ -20,7 +20,14 @@ import UploadFile from "../../../../components/UploadFIle/UploadFile";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import axios from "axios";
 import UploadAnswer from "../UploadAnswer/UploadAnswer";
+import * as Yup from "yup";
 
+const validationSchema = Yup.object({
+    title: Yup.string().required('Required'),
+    description: Yup.string().required('Required'),
+    group: Yup.string().required('Required'),
+    subject: Yup.string().required('Required'),
+})
 
 const homeworkEmpty = {
     title: "",
@@ -107,11 +114,7 @@ const HomeworkDetailsAndResponses = (props) => {
             axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/HOMEWORK", formData, {
                 headers: headers})
                 .then(response => {
-                    if(response.status>204) {
-                        setError("Cannot upload file.")
-                    } else {
-                        props.setIsOpen(false)
-                    }
+                    console.log("ok")
                 })
                 .catch(error => setError("Cannot upload file."))
         })
@@ -204,7 +207,7 @@ const HomeworkDetailsAndResponses = (props) => {
             <div className="HomeworkDetailsAndResponses">
             <Formik
                 initialValues={homeworkData}
-                //validationSchema={validationSchema}
+                validationSchema={validationSchema}
                 validateOnChange={false}
                 onSubmit={(values, setSubmitting, setValues) => updateHomework(values, setSubmitting, setValues)}
             >
@@ -287,15 +290,15 @@ const HomeworkDetailsAndResponses = (props) => {
     return (
         <div>
             {showEdit ? editPage() : detailsPage()}
-            {(role==="STUDENT" && homeworkData.answer!==undefined)&&
+            {role==="STUDENT" &&
                 <UploadAnswer homeworkData={homeworkData} fetchHomeworkData={fetchHomeworkData}/>
             }
-            {role==="TEACHER"  &&
-            <AnswersTable
-                answers={homeworkData.answers}
-                subject={homeworkData.subject}
-                group={homeworkData.group}
-                toGrade={homeworkData.toEvaluate}/>}
+            {/*{role==="TEACHER"  &&*/}
+            {/*<AnswersTable*/}
+            {/*    answers={homeworkData.answers}*/}
+            {/*    subject={homeworkData.subject}*/}
+            {/*    group={homeworkData.group}*/}
+            {/*    toGrade={homeworkData.toEvaluate}/>}*/}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>

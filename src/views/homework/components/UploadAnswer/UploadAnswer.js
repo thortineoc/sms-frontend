@@ -34,6 +34,7 @@ const UploadAnswers = (props) => {
             })
                 .then(response => {
                     console.log("ok")
+                    props.fetchHomeworkData()
                 })
                 .catch(error => setError("Cannot upload file."))
         })
@@ -63,14 +64,7 @@ const UploadAnswers = (props) => {
             boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1)",
             padding: "30px"
         }}>
-            {props.homeworkData.answer === null ? (
-                <>
-                    <h3>Upload tour answer</h3>
-                    {(error.length > 0 ? <p>{error}</p> : <div/>)}
-                    <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile}/>
-                    <ButtonWrapper label={"submit"} style={{marginTop: "10px"}} onClick={createAnswer}/>
-                </>
-            ) : (
+            {props.homeworkData.answer ? (
                 <>
                     <h3>Here is your answer:</h3>
                     <Grid container direction="column" alignItems="left" style={{marginTop: "2%"}}>
@@ -91,9 +85,16 @@ const UploadAnswers = (props) => {
                             )})}
                     </Grid>
                 </>
+            ) : (
+                <>
+                <h3>Upload tour answer</h3>
+            {(error.length > 0 ? <p>{error}</p> : <div/>)}
+                <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile}/>
+                <ButtonWrapper label={"submit"} style={{marginTop: "10px"}} onClick={createAnswer}/>
+                </>
             )}
 
-            {props.homeworkData.answer.review === null ? (<p>This assignment is not reviewed yet</p>) : ("Your review: ")}
+            {props.homeworkData.answer ? (props.homeworkData.answer.review ? <p>This assignment is reviewed</p> :<p>This assignment is not reviewed yet</p>) : (<p>This assignment is not reviewed yet</p>) }
 
         </div>
     )
