@@ -13,6 +13,10 @@ import DatepickerWrapper from "../../../../components/DatepickerWrapper/Datepick
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
+import {Grid, IconButton, Link} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import UploadFile from "../../../../components/UploadFIle/UploadFile";
 
 const homeworkMock = {
     title: "Example homework",
@@ -87,13 +91,14 @@ const HomeworkDetailsAndResponses = (props) => {
     const[error, setError] = useState("");
     const [groups, setGroups] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
-    const [homeworkData, setHomeworkData] = useState(homeworkMock);
+    const [homeworkData, setHomeworkData] = useState(homeworkEmpty);
+    const [selectedFile, setSelectedFile] = useState([]);
 
     useEffect(() => {
         if (!!initialized) {
             getKeycloakSubjects(keycloak, setAllSubjects);
             fetchGroups();
-            //fetchHomeworkData();
+            fetchHomeworkData();
         }
     }, [keycloak, initialized])
 
@@ -118,6 +123,15 @@ const HomeworkDetailsAndResponses = (props) => {
 
     const handleClick = () => {
         setShowEdit(true)
+    }
+
+    const deleteExistingFile = (index) => {
+        let homeworkToUpdate = {...homeworkData}
+        let itemsToUpdate = [...homeworkToUpdate.files]
+        console.log("should delete file with id: " + itemsToUpdate[index].id)
+        itemsToUpdate.splice(index, 1);
+        homeworkToUpdate.files=itemsToUpdate
+        setHomeworkData(homeworkToUpdate)
     }
 
     useEffect(() => {
@@ -165,9 +179,29 @@ const HomeworkDetailsAndResponses = (props) => {
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Deadline</div>
                     <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
-                        {homeworkData.deadline}
+                        {homeworkData.deadline.split("T")[0]}
                     </div>
                 </div>
+
+                <Grid container direction="column" alignItems="left" style={{marginTop: "2%"}}>
+                    {homeworkData.files.map(file=>{
+                        return(
+                        <Grid item>
+                            <Grid container direction="row" alignItems="center">
+                                <Grid item>
+                                    <AttachFileIcon/>
+                                </Grid>
+                                <Grid item>
+                                    <Link href={file.uri} color="inherit">
+                                        {file.filename}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        )})}
+                </Grid>
+
+
             </div>
         )
     }
@@ -229,6 +263,24 @@ const HomeworkDetailsAndResponses = (props) => {
                                         style={{marginBottom: "2%", width: "30%"}}
                                     />
 
+                                    <Grid container direction="column" alignItems="left" style={{marginTop: "2%"}}>
+                                        {homeworkData.files.map((file, index)=>{
+                                            return(
+                                                <Grid item>
+                                                    <Grid container direction="row" alignItems="center">
+                                                        <Grid item>
+                                                            <IconButton size={"small"} onClick={()=>deleteExistingFile(index)}>
+                                                                <DeleteIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                        <Grid item>
+                                                                {file.filename}
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            )})}
+                                    </Grid>
+                                    <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile}/>
                                 </div>
                             </Form>
                         )
@@ -241,14 +293,14 @@ const HomeworkDetailsAndResponses = (props) => {
 
     return (
         <div>
-            {/*{showEdit ? editPage() : detailsPage()}*/}
-            {showEdit ? detailsPage() : detailsPage()}
-            {(role==="TEACHER" && homeworkData.answers.length>0) &&
-            <AnswersTable
-                answers={homeworkData.answers}
-                subject={homeworkData.subject}
-                group={homeworkData.group}
-                toGrade={homeworkData.toEvaluate}/>}
+            {showEdit ? editPage() : detailsPage()}
+
+            {/*{(role==="TEACHER" && homeworkData.answers.length>0) &&*/}
+            {/*<AnswersTable*/}
+            {/*    answers={homeworkData.answers}*/}
+            {/*    subject={homeworkData.subject}*/}
+            {/*    group={homeworkData.group}*/}
+            {/*    toGrade={homeworkData.toEvaluate}/>}*/}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>
