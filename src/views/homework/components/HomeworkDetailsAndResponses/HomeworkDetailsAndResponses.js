@@ -17,59 +17,9 @@ import {Grid, IconButton, Link} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import UploadFile from "../../../../components/UploadFIle/UploadFile";
+import callBackendPut from "../../../../utilities/CallBackendPut";
+import axios from "axios";
 
-const homeworkMock = {
-    title: "Example homework",
-    group: "3A",
-    subject: "Polish",
-    deadline: "10/10/2021",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    toEvaluate: true,
-    answers: [{
-        review: "REVIEW lorem ipsum dolor sit amet",
-        files: [{
-            filename: "filename_xd",
-            uri: "/what/is/it"
-        },
-            {
-                filename: "filename_xd2",
-                uri: "/what/is/it2"
-            }],
-        grade: {
-            grade: "4"
-        },
-        user: {
-            id: "rafal1",
-            firstName: "Rafal",
-            lastName: "Carlos"
-        },
-        lastUpdatedTime: "21-21-2021",
-        createdTime: "11-21-2021"
-    },
-        {
-            review: "REVIEW lorem ipsum dolor sit amet",
-            files: [{
-                id: "1234",
-                filename: "filename_xd",
-                uri: "/what/is/it"
-            },
-                {
-                    filename: "filename_xd2",
-                    uri: "/what/is/it2"
-                }],
-            // grade: {
-            //     grade: "4"
-            // },
-            user: {
-                id: "rafal2",
-                firstName: "Rafal",
-                lastName: "Brzozowski"
-            },
-            lastUpdatedTime: "21-21-2021",
-            createdTime: "11-21-2021"
-        }
-    ],
-}
 
 const homeworkEmpty = {
     title: "",
@@ -93,6 +43,7 @@ const HomeworkDetailsAndResponses = (props) => {
     const [allSubjects, setAllSubjects] = useState([]);
     const [homeworkData, setHomeworkData] = useState(homeworkEmpty);
     const [selectedFile, setSelectedFile] = useState([]);
+    const kcToken = keycloak?.token ?? '';
 
     useEffect(() => {
         if (!!initialized) {
@@ -143,6 +94,44 @@ const HomeworkDetailsAndResponses = (props) => {
         }
     }, [keycloak, initialized])
 
+    const attachFile = (id) => {
+        selectedFile.forEach(function(file){
+            console.log(file)
+            const headers = {
+                'Content-Type': 'multipart/form-data',
+                Authorization: initialized ? `Bearer ${kcToken}` : undefined,
+            }
+            let formData = new FormData();
+            formData.append("file", file);
+            axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/HOMEWORK", formData, {
+                headers: headers})
+                .then(response => {
+                    if(response.status>204) {
+                        setError("Cannot upload file.")
+                    } else {
+                        props.setIsOpen(false)
+                    }
+                })
+                .catch(error => setError("Cannot upload file."))
+        })
+        setSelectedFile([])
+    }
+
+    const updateHomework = (values, setSubmitting, setValues) => {
+        callBackendPut(axiosInstance, "homework-service/homework", values)
+            .then(response => {
+                attachFile(response.data.id)
+                setShowEdit(false)
+                fetchHomeworkData()
+            })
+            .catch(error=>{
+                console.log(error)
+                setError("Cannot create this assignment")
+                setSubmitting(false)
+                setValues(values)
+            })
+
+    }
 
     const detailsPage = () =>{
         return (
@@ -216,7 +205,7 @@ const HomeworkDetailsAndResponses = (props) => {
                 initialValues={homeworkData}
                 //validationSchema={validationSchema}
                 validateOnChange={false}
-                onSubmit={() => setShowEdit(false)}
+                onSubmit={(values, setSubmitting, setValues) => updateHomework(values, setSubmitting, setValues)}
             >
                 {
                     formik => {
