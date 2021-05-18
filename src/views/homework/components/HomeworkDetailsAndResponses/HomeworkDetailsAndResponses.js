@@ -295,7 +295,7 @@ const HomeworkDetailsAndResponses = (props) => {
         <div>
             {showEdit ? editPage() : detailsPage()}
             {role==="STUDENT" &&
-                <UploadAnswer homeworkData={homeworkData} fetchHomeworkData={fetchHomeworkData}/>
+                <UploadAnswer homeworkData={homeworkData} fetchHomeworkData={fetchHomeworkData} setHomeworkData={setHomeworkData}/>
             }
             {/*{role==="TEACHER"  &&*/}
             {/*<AnswersTable*/}
