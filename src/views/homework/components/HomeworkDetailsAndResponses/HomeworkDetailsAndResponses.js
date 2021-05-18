@@ -79,7 +79,7 @@ const homeworkEmpty = {
     description: "",
     toEvaluate: true,
     answers: [],
-    files: [],
+    files: []
 }
 
 const HomeworkDetailsAndResponses = (props) => {
@@ -114,8 +114,10 @@ const HomeworkDetailsAndResponses = (props) => {
     const fetchHomeworkData = () => {
         callBackendGet(axiosInstance, "homework-service/homework/" + props.id, null)
             .then(response => {
-                console.log(response.data);
-                setHomeworkData(response.data);
+                if(response.status===200){
+                    console.log(response.data);
+                    setHomeworkData(response.data);
+                }
             })
             .catch(error => console.log(error))
     }
@@ -180,7 +182,7 @@ const HomeworkDetailsAndResponses = (props) => {
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Deadline</div>
                     <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
-                        {homeworkData.deadline.split("T")[0]}
+                        {homeworkData.deadline  ? (homeworkData.deadline.split("T")[0]) : ""}
                     </div>
                 </div>
 
