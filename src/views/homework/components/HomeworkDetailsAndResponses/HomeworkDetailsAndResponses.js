@@ -129,6 +129,7 @@ const HomeworkDetailsAndResponses = (props) => {
         let homeworkToUpdate = {...homeworkData}
         let itemsToUpdate = [...homeworkToUpdate.files]
         console.log("should delete file with id: " + itemsToUpdate[index].id)
+
         itemsToUpdate.splice(index, 1);
         homeworkToUpdate.files=itemsToUpdate
         setHomeworkData(homeworkToUpdate)
