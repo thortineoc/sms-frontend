@@ -13,59 +13,22 @@ import DatepickerWrapper from "../../../../components/DatepickerWrapper/Datepick
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import getKeycloakSubjects from "../../../../utilities/GetSubjects";
+import {Grid, IconButton, Link} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import UploadFile from "../../../../components/UploadFIle/UploadFile";
+import callBackendPut from "../../../../utilities/CallBackendPut";
+import axios from "axios";
+import UploadAnswer from "../UploadAnswer/UploadAnswer";
+import * as Yup from "yup";
+import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
-const homeworkMock = {
-    title: "Example homework",
-    group: "3A",
-    subject: "Polish",
-    deadline: "10/10/2021",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    toEvaluate: true,
-    answers: [{
-        review: "REVIEW lorem ipsum dolor sit amet",
-        files: [{
-            filename: "filename_xd",
-            uri: "/what/is/it"
-        },
-            {
-                filename: "filename_xd2",
-                uri: "/what/is/it2"
-            }],
-        grade: {
-            grade: "4"
-        },
-        user: {
-            id: "rafal1",
-            firstName: "Rafal",
-            lastName: "Carlos"
-        },
-        lastUpdatedTime: "21-21-2021",
-        createdTime: "11-21-2021"
-    },
-        {
-            review: "REVIEW lorem ipsum dolor sit amet",
-            files: [{
-                id: "1234",
-                filename: "filename_xd",
-                uri: "/what/is/it"
-            },
-                {
-                    filename: "filename_xd2",
-                    uri: "/what/is/it2"
-                }],
-            // grade: {
-            //     grade: "4"
-            // },
-            user: {
-                id: "rafal2",
-                firstName: "Rafal",
-                lastName: "Brzozowski"
-            },
-            lastUpdatedTime: "21-21-2021",
-            createdTime: "11-21-2021"
-        }
-    ],
-}
+const validationSchema = Yup.object({
+    title: Yup.string().required('Required'),
+    description: Yup.string().required('Required'),
+    group: Yup.string().required('Required'),
+    subject: Yup.string().required('Required'),
+})
 
 const homeworkEmpty = {
     title: "",
@@ -75,24 +38,27 @@ const homeworkEmpty = {
     description: "",
     toEvaluate: true,
     answers: [],
-    files: [],
+    files: []
 }
 
 const HomeworkDetailsAndResponses = (props) => {
     const [showEdit, setShowEdit] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
-    const[error, setError] = useState("");
     const {keycloak, initialized} = useKeycloak();
+    const [role, setRole] = useState("");
+    const[error, setError] = useState("");
     const [groups, setGroups] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
-    const [homeworkData, setHomeworkData] = useState(homeworkMock);
+    const [homeworkData, setHomeworkData] = useState(homeworkEmpty);
+    const [selectedFile, setSelectedFile] = useState([]);
+    const kcToken = keycloak?.token ?? '';
 
     useEffect(() => {
         if (!!initialized) {
             getKeycloakSubjects(keycloak, setAllSubjects);
             fetchGroups();
-            //fetchHomeworkData();
+            fetchHomeworkData();
         }
     }, [keycloak, initialized])
 
@@ -108,8 +74,10 @@ const HomeworkDetailsAndResponses = (props) => {
     const fetchHomeworkData = () => {
         callBackendGet(axiosInstance, "homework-service/homework/" + props.id, null)
             .then(response => {
-                console.log(response.data);
-                setHomeworkData(response.data);
+                if(response.status===200){
+                    console.log(response.data);
+                    setHomeworkData(response.data);
+                }
             })
             .catch(error => console.log(error))
     }
@@ -119,47 +87,121 @@ const HomeworkDetailsAndResponses = (props) => {
         setShowEdit(true)
     }
 
-    const detailsPage = () => {
+    const deleteExistingFile = (index) => {
+        let homeworkToUpdate = {...homeworkData}
+        let itemsToUpdate = [...homeworkToUpdate.files]
+        console.log("should delete file with id: " + itemsToUpdate[index].id)
+        callBackendDelete(axiosInstance, "/homework-service/files/" + itemsToUpdate[index].id)
+            .then(()=>{
+                itemsToUpdate.splice(index, 1);
+                homeworkToUpdate.files=itemsToUpdate
+                setHomeworkData(homeworkToUpdate)
+            })
+            .catch(error=>console.log(error))
+    }
+
+    useEffect(() => {
+        if (!!initialized) {
+            getKeycloakRoles(keycloak, setRole)
+        }
+    }, [keycloak, initialized])
+
+    const attachFile = (id) => {
+        selectedFile.forEach(function(file){
+            console.log(file)
+            const headers = {
+                'Content-Type': 'multipart/form-data',
+                Authorization: initialized ? `Bearer ${kcToken}` : undefined,
+            }
+            let formData = new FormData();
+            formData.append("file", file);
+            axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/HOMEWORK", formData, {
+                headers: headers})
+                .then(response => {
+                    console.log("ok")
+                })
+                .catch(error => setError("Cannot upload file."))
+        })
+        setSelectedFile([])
+    }
+
+    const updateHomework = (values, setSubmitting, setValues) => {
+        callBackendPut(axiosInstance, "homework-service/homework", values)
+            .then(response => {
+                attachFile(response.data.id)
+                setShowEdit(false)
+                fetchHomeworkData()
+            })
+            .catch(error=>{
+                console.log(error)
+                setError("Cannot create this assignment")
+                setSubmitting(false)
+                setValues(values)
+            })
+
+    }
+
+    const detailsPage = () =>{
         return (
             <div className="HomeworkDetailsAndResponses">
-                {props.role==="TEACHER" &&
+                {role==="TEACHER" &&
                 <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button"/>}
                 <h3>Homework details</h3>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Title</div>
-                    <div className="DetailsHomework__data" onClick={props.role==="TEACHER" ? handleClick : undefined } style={props.role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.title}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Description</div>
-                    <div className="DetailsHomework__data" onClick={props.role==="TEACHER" ? handleClick : undefined } style={props.role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.description}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Group</div>
-                    <div className="DetailsHomework__data_small" onClick={props.role==="TEACHER" ? handleClick : undefined } style={props.role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.group}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Subject</div>
-                    <div className="DetailsHomework__data_small" onClick={props.role==="TEACHER" ? handleClick : undefined } style={props.role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
                         {homeworkData.subject}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Deadline</div>
-                    <div className="DetailsHomework__data_small" onClick={props.role==="TEACHER" ? handleClick : undefined } style={props.role==="TEACHER" ? {cursor: "pointer"} : undefined}>
-                        {homeworkData.deadline}
+                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                        {homeworkData.deadline  ? (homeworkData.deadline.split("T")[0]) : ""}
                     </div>
                 </div>
+
+                <Grid container direction="column" alignItems="left" style={{marginTop: "2%"}}>
+                    {homeworkData.files.map(file=>{
+                        return(
+                        <Grid item>
+                            <Grid container direction="row" alignItems="center">
+                                <Grid item>
+                                    <AttachFileIcon/>
+                                </Grid>
+                                <Grid item>
+                                    <Link href={file.uri} color="inherit">
+                                        {file.filename}
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        )})}
+                </Grid>
+
+
             </div>
         )
     }
@@ -169,9 +211,9 @@ const HomeworkDetailsAndResponses = (props) => {
             <div className="HomeworkDetailsAndResponses">
             <Formik
                 initialValues={homeworkData}
-                //validationSchema={validationSchema}
+                validationSchema={validationSchema}
                 validateOnChange={false}
-                onSubmit={() => setShowEdit(false)}
+                onSubmit={(values, setSubmitting, setValues) => updateHomework(values, setSubmitting, setValues)}
             >
                 {
                     formik => {
@@ -221,6 +263,24 @@ const HomeworkDetailsAndResponses = (props) => {
                                         style={{marginBottom: "2%", width: "30%"}}
                                     />
 
+                                    <Grid container direction="column" alignItems="left" style={{marginTop: "2%"}}>
+                                        {homeworkData.files.map((file, index)=>{
+                                            return(
+                                                <Grid item>
+                                                    <Grid container direction="row" alignItems="center">
+                                                        <Grid item>
+                                                            <IconButton size={"small"} onClick={()=>deleteExistingFile(index)}>
+                                                                <DeleteIcon/>
+                                                            </IconButton>
+                                                        </Grid>
+                                                        <Grid item>
+                                                                {file.filename}
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            )})}
+                                    </Grid>
+                                    <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile}/>
                                 </div>
                             </Form>
                         )
@@ -233,14 +293,16 @@ const HomeworkDetailsAndResponses = (props) => {
 
     return (
         <div>
-            {/*{showEdit ? editPage() : detailsPage()}*/}
-            {showEdit ? detailsPage() : detailsPage()}
-            {(props.role==="TEACHER" && homeworkData.answers.length>0) &&
-            <AnswersTable
-                answers={homeworkData.answers}
-                subject={homeworkData.subject}
-                group={homeworkData.group}
-                toGrade={homeworkData.toEvaluate}/>}
+            {showEdit ? editPage() : detailsPage()}
+            {role==="STUDENT" &&
+                <UploadAnswer homeworkData={homeworkData} fetchHomeworkData={fetchHomeworkData}/>
+            }
+            {/*{role==="TEACHER"  &&*/}
+            {/*<AnswersTable*/}
+            {/*    answers={homeworkData.answers}*/}
+            {/*    subject={homeworkData.subject}*/}
+            {/*    group={homeworkData.group}*/}
+            {/*    toGrade={homeworkData.toEvaluate}/>}*/}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>

@@ -26,7 +26,6 @@ const validationSchema = Yup.object({
     description: Yup.string().required('Required'),
     group: Yup.string().required('Required'),
     subject: Yup.string().required('Required'),
-
 })
 
 const AssignEditHomeworkForm = (props) => {
@@ -34,7 +33,7 @@ const AssignEditHomeworkForm = (props) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [groups, setGroups] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState([]);
     const {keycloak, initialized} = useKeycloak();
     const kcToken = keycloak?.token ?? '';
 
@@ -46,13 +45,14 @@ const AssignEditHomeworkForm = (props) => {
 
 
     const attachFile = (id) => {
-        if(selectedFile){
+        selectedFile.forEach(function(file){
+            console.log(file)
             const headers = {
                 'Content-Type': 'multipart/form-data',
                 Authorization: initialized ? `Bearer ${kcToken}` : undefined,
             }
             let formData = new FormData();
-            formData.append("file", selectedFile);
+            formData.append("file", file);
             axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/HOMEWORK", formData, {
                 headers: headers})
                 .then(response => {
@@ -63,9 +63,7 @@ const AssignEditHomeworkForm = (props) => {
                     }
                 })
                 .catch(error => setError("Cannot upload file."))
-        } else {
-            props.setIsOpen(false)
-        }
+        })
     }
 
     const onSubmit = (values, setSubmitting, setValues) =>{
