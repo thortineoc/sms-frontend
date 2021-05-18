@@ -21,6 +21,7 @@ import callBackendPut from "../../../../utilities/CallBackendPut";
 import axios from "axios";
 import UploadAnswer from "../UploadAnswer/UploadAnswer";
 import * as Yup from "yup";
+import callBackendDelete from "../../../../utilities/CallBackendDelete";
 
 const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -90,10 +91,13 @@ const HomeworkDetailsAndResponses = (props) => {
         let homeworkToUpdate = {...homeworkData}
         let itemsToUpdate = [...homeworkToUpdate.files]
         console.log("should delete file with id: " + itemsToUpdate[index].id)
-
-        itemsToUpdate.splice(index, 1);
-        homeworkToUpdate.files=itemsToUpdate
-        setHomeworkData(homeworkToUpdate)
+        callBackendDelete(axiosInstance, "/homework-service/files/" + itemsToUpdate[index].id)
+            .then(()=>{
+                itemsToUpdate.splice(index, 1);
+                homeworkToUpdate.files=itemsToUpdate
+                setHomeworkData(homeworkToUpdate)
+            })
+            .catch(error=>console.log(error))
     }
 
     useEffect(() => {
