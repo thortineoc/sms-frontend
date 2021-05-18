@@ -52,15 +52,15 @@ function Row({row, subject, toGrade}) {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.user.firstName}
+                    {row.student.firstName}
                 </TableCell>
-                <TableCell>{row.user.lastName}</TableCell>
+                <TableCell>{row.student.lastName}</TableCell>
                 <TableCell>{row.createdTime ? row.createdTime : "-"}</TableCell>
                 <TableCell>{row.lastUpdatedTime  ? row.lastUpdatedTime : "-" }</TableCell>
                 {toGrade &&
                 (row.grade ? <TableCell component={Link} onClick={() => editGrade()}>{row.grade.grade}</TableCell>
                         : <TableCell>
-                            <AddCircle studentId={row.user.id} type="REGULAR" subject={subject}/>
+                            <AddCircle studentId={row.student.id} type="REGULAR" subject={subject}/>
                         </TableCell>)}
 
             </TableRow>
@@ -78,13 +78,16 @@ function Row({row, subject, toGrade}) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.files?.map((userFiles) => (
+                                    {row.answer?.files?.map((userFiles) => (
                                         <TableRow key={userFiles.uri}>
                                             <TableCell component="th" scope="row">
                                                 {userFiles.filename}
                                             </TableCell>
-                                            <TableCell component={Link}
-                                                       onClick={() => downloadHomework(userFiles.uri)}>download</TableCell>
+                                            <TableCell>
+                                            <Link href={userFiles.uri} color="inherit">
+                                                download
+                                             </Link>
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -97,49 +100,50 @@ function Row({row, subject, toGrade}) {
     );
 }
 
-function mapUsersToAnswers(allUsers, answers) {
-    let usersWithAnswers = answers.map(answers => answers.user);
-    let usersWithoutAnswer = usersWithAnswers.concat(allUsers)
-        .filter(item => !usersWithAnswers.includes(item));
-    // map to empty answer
-    let allAns = answers.concat(usersWithoutAnswer.map(user => {
-            return {
-                "user":
-                    {
-                        firstName: user.firstName,
-                        lastName: user.lastName
-                    }
-            }
-        }));
-    return allAns
-}
+// function mapUsersToAnswers(allUsers, answers) {
+//     let usersWithAnswers = answers.map(answers => answers.user);
+//     let usersWithoutAnswer = usersWithAnswers.concat(allUsers)
+//         .filter(item => !usersWithAnswers.includes(item));
+//     // map to empty answer
+//     let allAns = answers.concat(usersWithoutAnswer.map(user => {
+//             return {
+//                 "user":
+//                     {
+//                         firstName: user.firstName,
+//                         lastName: user.lastName
+//                     }
+//             }
+//         }));
+//     return allAns
+// }
 
 const AnswersTable = ({answers, subject, group, toGrade}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [allUsers, setAllUsers] = useState([]);
 
-    useEffect(() => {
-        callBackendPost(axiosInstance, "usermanagement-service/users/filter", {group: group})
-            .then(response => {
-                if (response.status === 200) {
-                    setAllUsers(response.data)
-                } else if (response.status === 204) {
-                    setAllUsers([])
-                }
+    // useEffect(() => {
+    //     callBackendPost(axiosInstance, "usermanagement-service/users/filter", {group: group})
+    //         .then(response => {
+    //             if (response.status === 200) {
+    //                 setAllUsers(response.data)
+    //             } else if (response.status === 204) {
+    //                 setAllUsers([])
+    //             }
+    //
+    //         })
+    //         .catch(error => console.log(error))
+    // }, [])
 
-            })
-            .catch(error => console.log(error))
-    }, [])
+    // if(allUsers == null || answers == null)
+    // {
+    //     return ("Loading...");
+    // }
 
-    if(allUsers == null || answers == null)
-    {
-        return ("Loading...");
-    }
-
-    let rows = mapUsersToAnswers(allUsers, answers);
+    //let rows = mapUsersToAnswers(allUsers, answers);
+    let rows=answers;
 
     return (
-        <TableContainer component={Paper} style={{borderRadius: "10px", marginTop: 5}}>
+        <TableContainer component={Paper} style={{borderRadius: "10px", marginTop: 5, boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1)"}}>
             <h3 style={{margin: "15px"}}>Answers</h3>
             <Table aria-label="collapsible table">
                 <TableHead>

@@ -297,12 +297,12 @@ const HomeworkDetailsAndResponses = (props) => {
             {role==="STUDENT" &&
                 <UploadAnswer homeworkData={homeworkData} fetchHomeworkData={fetchHomeworkData} setHomeworkData={setHomeworkData}/>
             }
-            {/*{role==="TEACHER"  &&*/}
-            {/*<AnswersTable*/}
-            {/*    answers={homeworkData.answers}*/}
-            {/*    subject={homeworkData.subject}*/}
-            {/*    group={homeworkData.group}*/}
-            {/*    toGrade={homeworkData.toEvaluate}/>}*/}
+            {role==="TEACHER"  &&
+            <AnswersTable
+                answers={homeworkData.answers}
+                subject={homeworkData.subject}
+                group={homeworkData.group}
+                toGrade={homeworkData.toEvaluate}/>}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>
