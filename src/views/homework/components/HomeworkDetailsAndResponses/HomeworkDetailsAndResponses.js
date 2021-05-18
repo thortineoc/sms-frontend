@@ -19,6 +19,7 @@ import AttachFileIcon from '@material-ui/icons/AttachFile';
 import UploadFile from "../../../../components/UploadFIle/UploadFile";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import axios from "axios";
+import UploadAnswer from "../UploadAnswer/UploadAnswer";
 
 
 const homeworkEmpty = {
@@ -286,13 +287,15 @@ const HomeworkDetailsAndResponses = (props) => {
     return (
         <div>
             {showEdit ? editPage() : detailsPage()}
-
-            {/*{(role==="TEACHER" && homeworkData.answers.length>0) &&*/}
-            {/*<AnswersTable*/}
-            {/*    answers={homeworkData.answers}*/}
-            {/*    subject={homeworkData.subject}*/}
-            {/*    group={homeworkData.group}*/}
-            {/*    toGrade={homeworkData.toEvaluate}/>}*/}
+            {(role==="STUDENT" && homeworkData.answer!==undefined)&&
+                <UploadAnswer homeworkData={homeworkData} fetchHomeworkData={fetchHomeworkData}/>
+            }
+            {role==="TEACHER"  &&
+            <AnswersTable
+                answers={homeworkData.answers}
+                subject={homeworkData.subject}
+                group={homeworkData.group}
+                toGrade={homeworkData.toEvaluate}/>}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>
