@@ -17,7 +17,7 @@ const UploadFile = (props) => {
     }
 
     return(
-        <Grid container direction="column" alignItems="left" style={{marginTop: "2%"}}>
+        <Grid container direction="column" alignItems="left" style={{marginTop: "2%", marginBottom: "2%"}}>
             <Grid item>
                 <input
                     accept="*"

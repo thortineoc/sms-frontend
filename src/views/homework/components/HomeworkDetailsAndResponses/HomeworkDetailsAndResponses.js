@@ -50,7 +50,7 @@ const HomeworkDetailsAndResponses = (props) => {
     const[error, setError] = useState("");
     const [groups, setGroups] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
-    const [homeworkData, setHomeworkData] = useState(homeworkEmpty);
+    const [homeworkData, setHomeworkData] = useState(null);
     const [selectedFile, setSelectedFile] = useState([]);
     const kcToken = keycloak?.token ?? '';
 
@@ -292,22 +292,26 @@ const HomeworkDetailsAndResponses = (props) => {
     }
 
     return (
+        <>
+        {homeworkData ? (
         <div>
             {showEdit ? editPage() : detailsPage()}
             {role==="STUDENT" &&
-                <UploadAnswer homeworkData={homeworkData} fetchHomeworkData={fetchHomeworkData}/>
+                <UploadAnswer homeworkData={homeworkData} fetchHomeworkData={fetchHomeworkData} setHomeworkData={setHomeworkData}/>
             }
-            {/*{role==="TEACHER"  &&*/}
-            {/*<AnswersTable*/}
-            {/*    answers={homeworkData.answers}*/}
-            {/*    subject={homeworkData.subject}*/}
-            {/*    group={homeworkData.group}*/}
-            {/*    toGrade={homeworkData.toEvaluate}/>}*/}
+            {role==="TEACHER"  &&
+            <AnswersTable
+                answers={homeworkData.answers}
+                subject={homeworkData.subject}
+                group={homeworkData.group}
+                toGrade={homeworkData.toEvaluate}/>}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>
-        </div>
-
+        </div>) : (
+            <p>loading...</p>
+            )}
+            </>
     )
 }
 
