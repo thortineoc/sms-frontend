@@ -27,7 +27,7 @@ Scenario('teacher can see grades', ({I}) => {
 //see grades and grades details
     I.waitForElement({id: 'grade_2033'}, 30);
     I.moveCursorTo({id: 'grade_2033'});
-    I.see('2021-05-17');
+    I.see('cdeceptjs test - do not remove');
 });
 
 Scenario('teacher can add grades', ({I}) => {
@@ -97,7 +97,7 @@ Scenario('teacher can update grades', ({I}) => {
 
     I.click({id: 'grade_2033'});
     I.clearField('description');
-    I.fillField('description', 'cdeceptjs test - don\'t remove');
+    I.fillField('description', 'cdeceptjs test - do not remove');
     I.click('Save');
 });
 
@@ -119,5 +119,5 @@ Scenario('student can see grades', ({I}) => {
 
     I.seeElement({id: 'grade_2033'});
     I.moveCursorTo({id: 'grade_2033'});
-    I.see('cdeceptjs test - don\'t remove');
+    I.see('cdeceptjs test - do not remove');
 });
