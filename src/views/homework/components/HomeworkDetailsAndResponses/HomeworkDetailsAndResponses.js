@@ -304,7 +304,8 @@ const HomeworkDetailsAndResponses = (props) => {
                 answers={homeworkData.answers}
                 subject={homeworkData.subject}
                 group={homeworkData.group}
-                toGrade={homeworkData.toEvaluate}/>}
+                toGrade={homeworkData.toEvaluate}
+                fetchHomeworkData={fetchHomeworkData}/>}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>

@@ -7,6 +7,7 @@ import useAxios from "../../../../utilities/useAxios";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import callBackendPost from "../../../../utilities/CallBackendPost";
 
 const init = (id, type, subject) => {
     return(
@@ -19,6 +20,19 @@ const init = (id, type, subject) => {
             subject: subject,
         }
     )
+}
+
+const assignGradeToAnswer = (grade, answer, axiosInstance) => {
+
+    let answerToUpdate = Object.assign({}, answer)
+    answerToUpdate.grade = grade
+    callBackendPut(axiosInstance, "homework-service/answer/", answerToUpdate)
+        .then(response => {
+           console.log("ok")
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 const convertGradeToString = (gradeObject) => {
@@ -67,6 +81,9 @@ const GradesCreateEditForm = (props) => {
         callBackendPut(axiosInstance, "grades-service/grades", JSON.stringify(convertGradeToDouble(values)))
             .then(response => {
                 if(response.status<205){
+                    if(props.answer){
+                        assignGradeToAnswer(response.data, props.answer, axiosInstance)
+                    }
                     props.setIsOpen(false)
                     props.setRefresh(true);
                 }

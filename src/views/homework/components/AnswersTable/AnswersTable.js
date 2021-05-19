@@ -18,6 +18,8 @@ import {Link} from "@material-ui/core";
 import AddCircle from "../../../grades/components/AddCircle/AddCircle";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
+import Grade from "../../../grades/components/Grade/Grade";
+import AddReviewCircle from "../AddCircle/AddReviewCircle";
 
 function downloadHomework(uri) {
     console.log(uri);
@@ -39,9 +41,59 @@ const useRowStyles = makeStyles({
     },
 });
 
-function Row({row, subject, toGrade}) {
+
+const getGrade = (row, subject, setRefresh) =>{
+
+    if(!row.answer){
+        return(
+            <TableCell>
+                -
+            </TableCell>
+        )
+    } else {
+        if(!row.answer.grade){
+            return(
+                <TableCell>
+                    <AddCircle studentId={row.student.id} type="REGULAR" subject={subject} answer={row.answer} setRefresh={setRefresh}/>
+                </TableCell>
+            )
+        } else {
+            console.log(row.answer.grade)
+            return(
+                <TableCell>
+                    <Grade role={"TEACHER"} value={row.answer.grade} setRefresh={setRefresh} type="regular"/>
+                </TableCell>
+            )
+        }
+    }
+}
+const getReview = (row, setRefresh) =>{
+
+    if(!row.answer){
+        return(
+            <TableCell>
+                -
+            </TableCell>
+        )
+    } else {
+            return(
+                <TableCell>
+                    <AddReviewCircle row={row}/>
+                </TableCell>
+            )
+        }
+    }
+
+
+function Row({row, subject, toGrade, fetchHomeworkData}) {
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
+    const [refresh, setRefresh] = useState(false)
+
+    useEffect(() => {
+        fetchHomeworkData();
+        setRefresh(false)
+    }, [refresh]);
 
     return (
         <React.Fragment>
@@ -55,17 +107,13 @@ function Row({row, subject, toGrade}) {
                     {row.student.firstName}
                 </TableCell>
                 <TableCell>{row.student.lastName}</TableCell>
-                <TableCell>{row.createdTime ? row.createdTime : "-"}</TableCell>
-                <TableCell>{row.lastUpdatedTime  ? row.lastUpdatedTime : "-" }</TableCell>
-                {toGrade &&
-                (row.grade ? <TableCell component={Link} onClick={() => editGrade()}>{row.grade.grade}</TableCell>
-                        : <TableCell>
-                            <AddCircle studentId={row.student.id} type="REGULAR" subject={subject}/>
-                        </TableCell>)}
-
+                <TableCell>{row.answer ? row.answer.createdTime.split("T")[0] : "-"}</TableCell>
+                <TableCell>{row.answer ? row.answer.lastUpdatedTime.split("T")[0] : "-" }</TableCell>
+                {getReview(row, setRefresh)}
+                {getGrade(row, subject, setRefresh)}
             </TableRow>
             <TableRow>
-                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
+                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={7}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <p style={{margin: "15"}}>{row.review}</p>
@@ -117,7 +165,7 @@ function Row({row, subject, toGrade}) {
 //     return allAns
 // }
 
-const AnswersTable = ({answers, subject, group, toGrade}) => {
+const AnswersTable = ({answers, subject, group, toGrade, fetchHomeworkData}) => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [allUsers, setAllUsers] = useState([]);
 
@@ -153,12 +201,13 @@ const AnswersTable = ({answers, subject, group, toGrade}) => {
                         <TableCell>Last name</TableCell>
                         <TableCell>Create date</TableCell>
                         <TableCell>Modification date</TableCell>
+                        <TableCell>Review</TableCell>
                         {toGrade && <TableCell>Grade</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map((row) => (
-                        <Row key={row.name} row={row} subject={subject} toGrade={toGrade}/>
+                        <Row key={row.name} row={row} subject={subject} toGrade={toGrade} fetchHomeworkData={fetchHomeworkData}/>
                     ))}
                 </TableBody>
             </Table>
