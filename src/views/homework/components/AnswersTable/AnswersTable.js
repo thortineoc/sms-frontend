@@ -78,7 +78,7 @@ const getReview = (row, setRefresh) =>{
     } else {
             return(
                 <TableCell>
-                    <AddReviewCircle row={row}/>
+                    <AddReviewCircle row={row} setRefresh={setRefresh}/>
                 </TableCell>
             )
         }

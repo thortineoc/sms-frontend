@@ -19,7 +19,7 @@ const AddReviewCircle = (props) => {
             </div>
             {show && (
                 <Modal isOpen={show} setIsOpen={setShow}>
-                    <AddEditReview row={props.row}/>
+                    <AddEditReview row={props.row} setShow={setShow} setRefresh={props.setRefresh}/>
                 </Modal>
             )}
         </>

@@ -3,68 +3,101 @@ import "./AddEditReview.css"
 import {Form, Formik} from "formik";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
-import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
-import DatepickerWrapper from "../../../../components/DatepickerWrapper/DatepickerWrapper";
-import {Grid, IconButton} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import UploadFile from "../../../../components/UploadFIle/UploadFile";
+import * as Yup from "yup";
+import callBackendPut from "../../../../utilities/CallBackendPut";
+import useAxios from "../../../../utilities/useAxios";
+
+const validationSchema = Yup.object({
+    review: Yup.string().required('Required'),
+})
+
 
 const AddEditReview = (props) => {
     console.log(props.row)
-    const [showEdit, setShowEdit] = useState(props.row.answer.review===null)
+    const [showEdit, setShowEdit] = useState(props.row.answer.review === null)
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
 
-    const getEditForm = () =>{
+
+    const updateReview = (values, setSubmitting, setValues) => {
+        callBackendPut(axiosInstance, "homework-service/answer/", values)
+            .then(response => {
+                console.log("ok")
+                props.setShow(false)
+                props.setRefresh(true)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    const deleteReview = () => {
+        let answerToUpdate = Object.assign({}, props.row.answer)
+        answerToUpdate.review=null;
+        callBackendPut(axiosInstance, "homework-service/answer/", answerToUpdate)
+            .then(response => {
+                console.log("ok")
+                props.setShow(false)
+                props.setRefresh(true)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    const getEditForm = () => {
         return (
             <>
-            <h3>Edit review for {props.row.student.firstName} {props.row.student.lastName}</h3>
-        <Formik
-            initialValues={props.row.answer}
-            //validationSchema={validationSchema}
-            validateOnChange={false}
-            //onSubmit={(values, setSubmitting, setValues) => updateHomework(values, setSubmitting, setValues)}
-        >
-            {
-                formik => {
-                    return (
-                        <Form>
-                            <div>
-                                {formik.errors && formik.errors.submit &&
-                                <div className="error">{formik.errors.submit}</div>}
+                <h3>Edit review for {props.row.student.firstName} {props.row.student.lastName}</h3>
+                <Formik
+                    initialValues={props.row.answer}
+                    validationSchema={validationSchema}
+                    validateOnChange={false}
+                    onSubmit={(values, setSubmitting, setValues) => updateReview(values, setSubmitting, setValues)}
+                >
+                    {
+                        formik => {
+                            return (
+                                <Form>
+                                    <div>
+                                        {formik.errors && formik.errors.submit &&
+                                        <div className="error">{formik.errors.submit}</div>}
 
-                                <TextFieldWrapper
-                                    label="Review"
-                                    name="review"
-                                    type="text"
-                                    style={{marginBottom: "2%", width: "100%"}}
-                                />
+                                        <TextFieldWrapper
+                                            label="Review"
+                                            name="review"
+                                            type="text"
+                                            style={{marginBottom: "2%", width: "100%"}}
+                                        />
 
-                            </div>
-                            <ButtonWrapper type="submit" label="Save" disabled={formik.isSubmitting} style={{float: "right", marginTop: "2%"}}/>
-                        </Form>
-                    )
-                }
-            }
-        </Formik>
-                </>
+                                    </div>
+                                    <ButtonWrapper type="submit" label="Save" disabled={formik.isSubmitting}
+                                                   style={{float: "right", marginTop: "2%"}}/>
+                                </Form>
+                            )
+                        }
+                    }
+                </Formik>
+            </>
         )
     }
 
-    const getShowForm = () =>{
+    const getShowForm = () => {
         return (
             <>
-            <h3>Review for {props.row.student.firstName} {props.row.student.lastName}</h3>
-            <div className="Review__field">
-                <div className="Review__data" onClick={() => setShowEdit(true)} style={{cursor: "pointer"}}>
-                    {props.row.answer.review}
+                <h3>Review for {props.row.student.firstName} {props.row.student.lastName}</h3>
+                <div className="Review__field">
+                    <div className="Review__data" onClick={() => setShowEdit(true)} style={{cursor: "pointer"}}>
+                        {props.row.answer.review}
+                    </div>
                 </div>
-            </div>
-                </>
+                <ButtonWrapper label="Delete" onClick={deleteReview} style={{float: "right", marginTop: "2%"}}/>
+            </>
         )
     }
 
     return (
         <>
-        {showEdit ? getEditForm() : getShowForm()}
+            {showEdit ? getEditForm() : getShowForm()}
         </>
     )
 }
