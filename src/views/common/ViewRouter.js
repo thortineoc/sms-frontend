@@ -1,7 +1,7 @@
 import { Switch, Route, useParams } from "react-router-dom";
 import React from "react";
 
-import HomeworkView from "../homework/pages/HomeworkView/HomeworkView";
+import HomeworkListView from "../homework/pages/HomeworkListView/HomeworkListView";
 import PresenceView from "../presence/PresenceView";
 import TimetableView from "../timetables/TimetableView";
 import GradesView from "../grades/pages/GradesView/GradesView";
@@ -10,14 +10,12 @@ import StudentManagement from "../usermanagement/pages/StudentsManagement/Studen
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
 import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
 import Dashboard from "../dashboard/Dashboard";
-import HomeworkDetailsAndResponses
-    from "../homework/components/HomeworkDetailsAndResponses/HomeworkDetailsAndResponses";
-
+import HomeworkDisplayView from "../homework/pages/HomeworkDisplayView/HomeworkDisplayView";
 
 function HomeworkDetails() {
     let { id } = useParams();
     return (
-        <HomeworkDetailsAndResponses id={id}/>
+        <HomeworkDisplayView id={id} />
     )
 }
 
@@ -29,7 +27,7 @@ const ViewRouter = () => {
                 <Dashboard />
             </Route>
             <Route path="/api/homework-service">
-                <HomeworkView />
+                <HomeworkListView />
             </Route>
             <Route path="/api/usermanagement-service/my-account">
                 USER ACCOUNT
@@ -38,7 +36,7 @@ const ViewRouter = () => {
                 <HomeworkDetails />
             </Route>
             <Route exact path="/api/homework-service">
-                <HomeworkView />
+                <HomeworkListView />
             </Route>
             <Route path="/api/grades-service">
                 <GradesView />

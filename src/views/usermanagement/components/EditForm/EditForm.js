@@ -64,6 +64,15 @@ const EditForm = ({user, groups, role, refresh, setShowEdit, setDetailsModalShow
                 .catch(error => console.log(error));
         }
     }, [])
+
+    useEffect(() => {
+        if(role==="TEACHER"){
+            const index=user.customAttributes.subjects.indexOf("");
+            if (index > -1) {
+                user.customAttributes.subjects.splice(index, 1);
+            }
+        }
+    },[])
     const fetchItems = () => {
         callBackendGet(axiosInstance, "usermanagement-service/" + (role === "STUDENT" ? "groups" : "subjects"), null)
             .then(response => {

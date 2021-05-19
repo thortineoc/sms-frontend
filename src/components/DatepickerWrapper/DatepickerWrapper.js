@@ -1,5 +1,5 @@
 import 'date-fns';
-import React from 'react';
+import React, {useEffect} from 'react';
 import DateFnsUtils from '@date-io/date-fns'
 import {
     MuiPickersUtilsProvider,
@@ -26,13 +26,18 @@ export default function DatepickerWrapper({name, label}) {
         setFieldValue(name, date)
     };
 
+    useEffect(() => {
+        setFieldValue(name, new Date());
+    }, []);
+
+
     return (
         <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
                     disableToolbar
                     variant="inline"
-                    format="dd/MM/yyyy"
+                    format="yyyy/MM/dd"
                     margin="normal"
                     id="date-picker-inline"
                     label={label}

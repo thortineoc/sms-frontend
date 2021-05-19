@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import './HomeworkListTeacher.css';
 import Modal from "../../../../components/Modal/Modal";
-import AssignEditHomeworkForm from "../../components/AssignEditHomeworkForm/AssignEditHomeworkForm";
+import AssignEditHomeworkForm from "../AssignEditHomeworkForm/AssignEditHomeworkForm";
 import { v4 as uuidv4 } from 'uuid';
 import StyledTreeItem from "../../../../components/StyledTreeItem/StyledTreeItem";
 import isAfterDeadline from "../../functions/isAfterDeadline";
@@ -93,6 +93,7 @@ const HomeworksList = () => {
             <Modal isOpen={showCreateDialog} setIsOpen={setShowCreateDialog}>
                 <AssignEditHomeworkForm
                     type="ADD"
+                    setIsOpen={setShowCreateDialog}
                 />
             </Modal>
 
