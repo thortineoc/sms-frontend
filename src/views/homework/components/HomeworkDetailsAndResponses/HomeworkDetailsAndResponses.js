@@ -53,6 +53,7 @@ const HomeworkDetailsAndResponses = (props) => {
     const [homeworkData, setHomeworkData] = useState(null);
     const [selectedFile, setSelectedFile] = useState([]);
     const kcToken = keycloak?.token ?? '';
+    const [allowEdit, setAllowEdit] = useState(true)
 
     useEffect(() => {
         if (!!initialized) {
@@ -82,6 +83,17 @@ const HomeworkDetailsAndResponses = (props) => {
             .catch(error => console.log(error))
     }
 
+    useEffect(()=>{
+        let isAnswer=false;
+        if(role==="TEACHER"){
+            homeworkData.answers.forEach((answer, i)=>{
+                if(answer.answer){
+                    isAnswer=true
+                }
+            })
+            setAllowEdit(!isAnswer)
+        }
+    },[homeworkData])
 
     const handleClick = () => {
         setShowEdit(true)
@@ -144,41 +156,41 @@ const HomeworkDetailsAndResponses = (props) => {
     const detailsPage = () =>{
         return (
             <div className="HomeworkDetailsAndResponses">
-                {role==="TEACHER" &&
+                {(role==="TEACHER" && allowEdit) &&
                 <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)} className="HomeworkDetails__button"/>}
                 <h3>Homework details</h3>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Title</div>
-                    <div className="DetailsHomework__data" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
                         {homeworkData.title}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Description</div>
-                    <div className="DetailsHomework__data" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit)? {cursor: "pointer"} : undefined}>
                         {homeworkData.description}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Group</div>
-                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
                         {homeworkData.group}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Subject</div>
-                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
                         {homeworkData.subject}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Deadline</div>
-                    <div className="DetailsHomework__data_small" onClick={role==="TEACHER" ? handleClick : undefined } style={role==="TEACHER" ? {cursor: "pointer"} : undefined}>
+                    <div className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
                         {homeworkData.deadline  ? (homeworkData.deadline.split("T")[0]) : ""}
                     </div>
                 </div>
@@ -304,7 +316,8 @@ const HomeworkDetailsAndResponses = (props) => {
                 answers={homeworkData.answers}
                 subject={homeworkData.subject}
                 group={homeworkData.group}
-                toGrade={homeworkData.toEvaluate}/>}
+                toGrade={homeworkData.toEvaluate}
+                fetchHomeworkData={fetchHomeworkData}/>}
             <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
                 <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
             </Modal>

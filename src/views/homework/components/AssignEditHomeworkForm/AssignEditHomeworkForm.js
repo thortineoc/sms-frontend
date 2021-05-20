@@ -60,6 +60,7 @@ const AssignEditHomeworkForm = (props) => {
                         setError("Cannot upload file.")
                     } else {
                         props.setIsOpen(false)
+                        props.fetchData()
                     }
                 })
                 .catch(error => setError("Cannot upload file."))
@@ -70,7 +71,12 @@ const AssignEditHomeworkForm = (props) => {
         console.log(values);
         callBackendPut(axiosInstance, "homework-service/homework", values)
             .then(response => {
-                attachFile(response.data.id)
+                if(selectedFile.length>0){
+                    attachFile(response.data.id)
+                } else {
+                    props.setIsOpen(false)
+                    props.fetchData()
+                }
             })
             .catch(error=>{
                 console.log(error)
