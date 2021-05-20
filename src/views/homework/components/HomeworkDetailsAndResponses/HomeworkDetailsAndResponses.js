@@ -213,7 +213,9 @@ const HomeworkDetailsAndResponses = (props) => {
                         )})}
                 </Grid>
 
-
+                <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                    <DeleteDialog setDisplayDialog={setShowDeleteDialog} type={"assignment"} id={homeworkData.id}/>
+                </Modal>
             </div>
         )
     }
@@ -318,9 +320,7 @@ const HomeworkDetailsAndResponses = (props) => {
                 group={homeworkData.group}
                 toGrade={homeworkData.toEvaluate}
                 fetchHomeworkData={fetchHomeworkData}/>}
-            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
-                <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
-            </Modal>
+
         </div>) : (
             <p>loading...</p>
             )}

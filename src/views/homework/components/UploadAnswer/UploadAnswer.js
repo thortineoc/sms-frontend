@@ -111,6 +111,9 @@ const UploadAnswers = (props) => {
                     <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)}
                                    style={{marginTop: "2%", marginLeft: "2%"}}/>
                     <p>This assignment is not reviewed yet</p>
+                    <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                        <DeleteDialog setDisplayDialog={setShowDeleteDialog} fetchData={props.fetchHomeworkData} type={"answer"} id={props.homeworkData.answer.id}/>
+                    </Modal>
                 </>
             )
         }
@@ -195,9 +198,6 @@ const UploadAnswers = (props) => {
             boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1)",
             padding: "30px"
         }}>
-            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
-                <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
-            </Modal>
             {showEdit ? getEditForm() : getCreateOrDetails()}
         </div>
     )
