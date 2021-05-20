@@ -94,12 +94,12 @@ const UploadAnswers = (props) => {
                         {answer.grade ?
                             <Grid item>
                                 <Grade role={"STUDENT"} value={props.homeworkData.answer.grade} type="regular"/>
-                            </Grid>: <></>}
+                            </Grid> : <></>}
                         {answer.review ?
                             <Grid item xs={8}>
-                            <div className="Review__data__student">
-                                {answer.review}
-                            </div>
+                                <div className="Review__data__student">
+                                    {answer.review}
+                                </div>
                             </Grid>
                             : <></>}
                     </Grid>
@@ -107,7 +107,11 @@ const UploadAnswers = (props) => {
             )
         } else {
             return (
-                <p>This assignment is not reviewed yet</p>
+                <>
+                    <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)}
+                                   style={{marginTop: "2%", marginLeft: "2%"}}/>
+                    <p>This assignment is not reviewed yet</p>
+                </>
             )
         }
     }
@@ -138,8 +142,6 @@ const UploadAnswers = (props) => {
                             })}
                         </Grid>
                         <ButtonWrapper onClick={() => setShowEdit(true)} label={"Edit"} style={{marginTop: "2%"}}/>
-                        <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)}
-                                       style={{marginTop: "2%", marginLeft: "2%"}}/>
                         {getReview(props.homeworkData.answer)}
 
                     </>
