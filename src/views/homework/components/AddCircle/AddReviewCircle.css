@@ -1,0 +1,14 @@
+.addCircle {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+    transition: color .4s, transform 0.4s ease-in-out;
+    color: gray;
+}
+
+.addCircle:hover {
+    color: greenyellow;
+    -webkit-transform: scale(1.2);
+}
+

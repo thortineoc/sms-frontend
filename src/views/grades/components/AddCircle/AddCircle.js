@@ -5,7 +5,7 @@ import Modal from "../../../../components/Modal/Modal";
 import GradesCreateEditForm from "../GradesCreateEditForm/GradesCreateEditForm";
 import GradesTable from "../GradesTable/GradesTable";
 
-const AddCircle = ({studentId, type, subject, setRefresh}) => {
+const AddCircle = ({studentId, type, subject, setRefresh, answer}) => {
     const [show, setShow] = useState(false);
 
     const handleClick = () => {
@@ -14,7 +14,7 @@ const AddCircle = ({studentId, type, subject, setRefresh}) => {
 
     return (
         <>
-            <div className="addCircle">
+            <div id={'add_'+type+'_'+studentId} className="addCircle">
                 <PlusCircleIcon onClick={handleClick} />
             </div>
             {show && (
@@ -25,6 +25,7 @@ const AddCircle = ({studentId, type, subject, setRefresh}) => {
                         newGradeStudentId={studentId}
                         subject={subject}
                         setRefresh={setRefresh}
+                        answer={answer}
                     />
                 </Modal>
             )}

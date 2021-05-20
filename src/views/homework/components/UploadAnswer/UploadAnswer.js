@@ -4,14 +4,16 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import useAxios from "../../../../utilities/useAxios";
 import {useKeycloak} from "@react-keycloak/web";
 import axios from "axios";
-import callBackendPut from "../../../../utilities/CallBackendPut";
 import callBackendPost from "../../../../utilities/CallBackendPost";
-import {Form} from "formik";
 import {Grid, Link} from "@material-ui/core";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import DeleteDialog from "../DeleteDialog/DeleteDialog";
+import Modal from "../../../../components/Modal/Modal";
+import Grade from "../../../grades/components/Grade/Grade";
+import "./UploadAnswer.css"
 
 
 const UploadAnswers = (props) => {
@@ -21,10 +23,11 @@ const UploadAnswers = (props) => {
     const {keycloak, initialized} = useKeycloak();
     const kcToken = keycloak?.token ?? '';
     const [showEdit, setShowEdit] = useState(false)
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     const updateHomework = () => {
         setError("")
-        if(selectedFile.length===0 && props.homeworkData.answer.files.length===0){
+        if (selectedFile.length === 0 && props.homeworkData.answer.files.length === 0) {
             setError("You need to upload a file")
         } else {
             attachFile(props.homeworkData.answer.id)
@@ -36,12 +39,12 @@ const UploadAnswers = (props) => {
         let homeworkToUpdate = {...props.homeworkData}
         let itemsToUpdate = [...homeworkToUpdate.answer.files]
         callBackendDelete(axiosInstance, "/homework-service/files/" + itemsToUpdate[index].id)
-            .then(()=>{
+            .then(() => {
                 itemsToUpdate.splice(index, 1);
-                homeworkToUpdate.answer.files=itemsToUpdate
+                homeworkToUpdate.answer.files = itemsToUpdate
                 props.setHomeworkData(homeworkToUpdate)
             })
-            .catch(error=>console.log(error))
+            .catch(error => console.log(error))
     }
 
 
@@ -82,6 +85,38 @@ const UploadAnswers = (props) => {
         }
     }
 
+    const getReview = (answer) => {
+        if (answer.grade || answer.review) {
+            return (
+                <>
+                    <h3>Review</h3>
+                    <Grid container direction="row" alignItems="center" style={{marginTop: "2%", width: "100%"}}>
+                        {answer.grade ?
+                            <Grid item>
+                                <Grade role={"STUDENT"} value={props.homeworkData.answer.grade} type="regular"/>
+                            </Grid> : <></>}
+                        {answer.review ?
+                            <Grid item xs={8}>
+                                <div className="Review__data__student">
+                                    {answer.review}
+                                </div>
+                            </Grid>
+                            : <></>}
+                    </Grid>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)}
+                                   style={{marginTop: "2%", marginLeft: "2%"}}/>
+                    <p>This assignment is not reviewed yet</p>
+                </>
+            )
+        }
+    }
+
+
     const getCreateOrDetails = () => {
         return (
             <>
@@ -107,6 +142,8 @@ const UploadAnswers = (props) => {
                             })}
                         </Grid>
                         <ButtonWrapper onClick={() => setShowEdit(true)} label={"Edit"} style={{marginTop: "2%"}}/>
+                        {getReview(props.homeworkData.answer)}
+
                     </>
                 ) : (
                     <>
@@ -116,10 +153,6 @@ const UploadAnswers = (props) => {
                         <ButtonWrapper label={"submit"} style={{marginTop: "3%"}} onClick={createAnswer}/>
                     </>
                 )}
-
-                {props.homeworkData.answer ? (props.homeworkData.answer.review ? <p>This assignment is reviewed</p> :
-                    <p>This assignment is not reviewed yet</p>) : (<p>This assignment is not reviewed yet</p>)}
-
             </>
         )
     }
@@ -147,7 +180,8 @@ const UploadAnswers = (props) => {
                         )
                     })}
                 </Grid>
-                <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile} style={{marginBottom: "2%"}}/>
+                <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile}
+                            style={{marginBottom: "2%"}}/>
                 <ButtonWrapper label={"Save"} onClick={() => updateHomework()} style={{marginTop: "3%"}}/>
             </>
         )
@@ -161,6 +195,9 @@ const UploadAnswers = (props) => {
             boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1)",
             padding: "30px"
         }}>
+            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
+            </Modal>
             {showEdit ? getEditForm() : getCreateOrDetails()}
         </div>
     )
