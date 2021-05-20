@@ -83,6 +83,17 @@ const HomeworkDetailsAndResponses = (props) => {
             .catch(error => console.log(error))
     }
 
+    useEffect(()=>{
+        let isAnswer=false;
+        if(role==="TEACHER"){
+            homeworkData.answers.forEach((answer, i)=>{
+                if(answer.answer){
+                    isAnswer=true
+                }
+            })
+            setAllowEdit(!isAnswer)
+        }
+    },[homeworkData])
 
     const handleClick = () => {
         setShowEdit(true)
