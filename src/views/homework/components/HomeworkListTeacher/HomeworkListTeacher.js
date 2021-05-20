@@ -79,6 +79,7 @@ const HomeworkListTeacher = () => {
                 <AssignEditHomeworkForm
                     type="ADD"
                     setIsOpen={setShowCreateDialog}
+                    fetchData={fetchData}
                 />
             </Modal>
 

@@ -30,19 +30,6 @@ const AddEditReview = (props) => {
             })
     }
 
-    const deleteReview = () => {
-        let answerToUpdate = Object.assign({}, props.row.answer)
-        answerToUpdate.review=null;
-        callBackendPut(axiosInstance, "homework-service/answer/", answerToUpdate)
-            .then(response => {
-                console.log("ok")
-                props.setShow(false)
-                props.setRefresh(true)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
 
     const getEditForm = () => {
         return (
@@ -90,7 +77,6 @@ const AddEditReview = (props) => {
                         {props.row.answer.review}
                     </div>
                 </div>
-                <ButtonWrapper label="Delete" onClick={deleteReview} style={{float: "right", marginTop: "2%"}}/>
             </>
         )
     }
