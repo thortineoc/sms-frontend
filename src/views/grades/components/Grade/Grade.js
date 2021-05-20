@@ -41,7 +41,7 @@ const Grade = ({role, value, type, setRefresh}) => {
                               subject={value.subject}
             >
                 <div className="Grade-wrapper" onClick={() => handleClick(value)}>
-                    <div className={classes}>
+                    <div id={"grade_"+value.id} className={classes}>
                         {result}
                     </div>
                 </div>

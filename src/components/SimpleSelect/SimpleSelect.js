@@ -38,9 +38,9 @@ const SimpleSelect = ({label, options, value, setValue, defaultValue}) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <FormControl className={classes.formControl}>
+            <FormControl id={'formSelect'+label} className={classes.formControl}>
                 <InputLabel>{label}</InputLabel>
-                <Select
+                <Select id={'select'+label}
                     value={value}
                     onChange={handleChange}
                 >
@@ -53,7 +53,7 @@ const SimpleSelect = ({label, options, value, setValue, defaultValue}) => {
                             )
                         }
                         return (
-                            <MenuItem key={index} value={item}>
+                            <MenuItem id={'v'+item} key={index} value={item}>
                                 {item}
                             </MenuItem>
                         )

@@ -14,7 +14,7 @@ const AddCircle = ({studentId, type, subject, setRefresh}) => {
 
     return (
         <>
-            <div className="addCircle">
+            <div id={'add_'+type+'_'+studentId} className="addCircle">
                 <PlusCircleIcon onClick={handleClick} />
             </div>
             {show && (
