@@ -3,14 +3,14 @@ import React from "react";
 
 import HomeworkListView from "../homework/pages/HomeworkListView/HomeworkListView";
 import PresenceView from "../presence/PresenceView";
-import TimetableView from "../timetables/TimetableView";
+import TimetableView from "../timetables/pages/TimetableView/TimetableView";
 import GradesView from "../grades/pages/GradesView/GradesView";
 
 import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
 import TeacherManagement from "../usermanagement/pages/TeachersManagement/TeachersManagement";
-import TimetablesManagement from "../usermanagement/pages/TimetablesManagement/TimetablesManagement";
 import Dashboard from "../dashboard/Dashboard";
 import HomeworkDisplayView from "../homework/pages/HomeworkDisplayView/HomeworkDisplayView";
+import TimetablesManagement from "../timetables/pages/TimetablesManagement/TimetablesManagement";
 
 function HomeworkDetails() {
     let { id } = useParams();
