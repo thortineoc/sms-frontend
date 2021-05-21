@@ -16,6 +16,11 @@
     text-align: center;
 }
 
+.DialogBoxModal {
+    justify-content: center;
+    text-align: center;
+}
+
 .DialogBox__options {
     margin-top: 5%;
     display: flex;
