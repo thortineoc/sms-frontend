@@ -3,7 +3,6 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import Modal from "../../../../components/Modal/Modal";
 import AnswersTable from "../AnswersTable/AnswersTable";
 import "./HomeworkDetailsAndResponses.css"
-import DeleteDialog from "../DeleteDialog/DeleteDialog";
 import getKeycloakRoles from "../../../../utilities/GetRoles";
 import {useKeycloak} from "@react-keycloak/web";
 import {Form, Formik} from "formik";
@@ -22,6 +21,8 @@ import axios from "axios";
 import UploadAnswer from "../UploadAnswer/UploadAnswer";
 import * as Yup from "yup";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import DialogBox from "../../../../components/DialogBox/DialogBox";
+import { useHistory } from "react-router-dom";
 
 const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -53,7 +54,8 @@ const HomeworkDetailsAndResponses = (props) => {
     const [homeworkData, setHomeworkData] = useState(null);
     const [selectedFile, setSelectedFile] = useState([]);
     const kcToken = keycloak?.token ?? '';
-    const [allowEdit, setAllowEdit] = useState(true)
+    const [allowEdit, setAllowEdit] = useState(true);
+    let history = useHistory();
 
     useEffect(() => {
         if (!!initialized) {
@@ -137,6 +139,16 @@ const HomeworkDetailsAndResponses = (props) => {
         setSelectedFile([])
     }
 
+    const deleteAssignment = () => {
+        callBackendDelete(axiosInstance, "homework-service/homework/"+ homeworkData.id)
+            .then(()=> {
+                    setShowDeleteDialog(false);
+                    history.push('/api/homework-service')
+                }
+            )
+            .catch(error => console.log(error))
+    }
+
     const updateHomework = (values, setSubmitting, setValues) => {
         callBackendPut(axiosInstance, "homework-service/homework", values)
             .then(response => {
@@ -214,7 +226,12 @@ const HomeworkDetailsAndResponses = (props) => {
                 </Grid>
 
                 <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
-                    <DeleteDialog setDisplayDialog={setShowDeleteDialog} type={"assignment"} id={homeworkData.id}/>
+                    <DialogBox
+                        deleteFunction={deleteAssignment}
+                        setDisplayDialog={setShowDeleteDialog}
+                        prompt={"assignment"}
+                        isModal={true}
+                    />
                 </Modal>
             </div>
         )
