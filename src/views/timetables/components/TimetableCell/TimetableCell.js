@@ -1,8 +1,9 @@
 import React from 'react';
+import './TimetableCell.css';
 
 const TimetableCell = ({id}) => {
     return (
-        <td>
+        <td className="TimetableCell">
             {id}
         </td>
     );

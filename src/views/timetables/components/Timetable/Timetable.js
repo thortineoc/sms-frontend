@@ -26,7 +26,7 @@ const Timetable = () => {
                 <thead>
                 <tr>
                     {COLUMNS.map((item) => (
-                        <th>{item}</th>
+                        <th className="Timetable__header">{item}</th>
                     ))}
                 </tr>
                 </thead>

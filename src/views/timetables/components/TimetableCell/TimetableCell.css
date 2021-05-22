@@ -1,12 +1,7 @@
-.TableRow__cell {
+.TimetableCell {
     border-collapse: collapse !important;
     border-radius: 10px;
-    padding: 1%;
     border: 1px solid lightgray;
     border-bottom: none;
-}
-
-.TableRow__grades-container {
-    display: flex;
-    flex-wrap: wrap;
+    padding: 3%;
 }
