@@ -4,8 +4,9 @@ import callBackendGet from "../../../../utilities/CallBackendGet";
 import SimpleSelect from "../../../../components/SimpleSelect/SimpleSelect";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import Modal from "../../../../components/Modal/Modal";
-import ManageTimeWindow from "../../components/ManageTimeWindow";
+import ManageTimeWindow from "../../components/ManageTimeWindow/ManageTimeWindow";
 import './TimetablesManagement.css';
+import Timetable from "../../components/Timetable/Timetable";
 
 const TimetablesManagement = () => {
     const axiosInstance = useAxios('http://52.142.201.18:24020/');
@@ -43,6 +44,9 @@ const TimetablesManagement = () => {
 
                 <ButtonWrapper label="Manage time" onClick={() => setShow(true)} className="TimetablesManagement__button"/>
             </div>
+
+            <Timetable />
+
             {show && (
                 <Modal isOpen={show} setIsOpen={setShow}>
                     <ManageTimeWindow
