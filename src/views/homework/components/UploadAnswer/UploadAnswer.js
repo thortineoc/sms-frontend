@@ -147,7 +147,7 @@ const UploadAnswers = (props) => {
                     </>
                 ) : (
                     <>
-                        <h3>Upload tour answer</h3>
+                        <h3>Upload your answer</h3>
                         {(error.length > 0 ? <p>{error}</p> : <div/>)}
                         <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile}/>
                         <ButtonWrapper label={"submit"} style={{marginTop: "3%"}} onClick={createAnswer}/>
