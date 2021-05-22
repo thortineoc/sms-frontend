@@ -1,7 +1,16 @@
 .TimetableCell {
     border-collapse: collapse !important;
-    border-radius: 10px;
+    border-radius: 0;
     border: 1px solid lightgray;
     border-bottom: none;
     height: 120px;
+    padding: 0;
+}
+
+.TimetableCell__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
 }

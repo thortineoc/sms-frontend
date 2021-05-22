@@ -15,15 +15,16 @@ const getColNumber = (id) => {
 }
 
 const TimetableCell = ({id}) => {
-    console.log(getColNumber(id))
 
     return (
         <td className="TimetableCell">
-            { getColNumber(id) === 0 ? (
-                <TimeCell />
-            ) : (
-                <LessonCell />
-            )}
+            <div className="TimetableCell__content">
+                { getColNumber(id) === 0 ? (
+                    <TimeCell />
+                ) : (
+                    <LessonCell />
+                )}
+            </div>
         </td>
     );
 }

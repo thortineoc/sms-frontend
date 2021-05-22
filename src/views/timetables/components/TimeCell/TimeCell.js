@@ -1,8 +1,9 @@
 import React from 'react';
+import './TimeCell.css';
 
 const TimeCell = () => {
     return (
-        <div>
+        <div className="TimeCell">
             8:00
         </div>
     );
