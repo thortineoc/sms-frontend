@@ -1,0 +1,6 @@
+.LessonCell {
+    background: pink;
+    height: 100%;
+    border-radius: 5px;
+    padding: 5%;
+}

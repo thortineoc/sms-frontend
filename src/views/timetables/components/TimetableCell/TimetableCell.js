@@ -1,5 +1,7 @@
 import React from 'react';
 import './TimetableCell.css';
+import TimeCell from "../TimeCell/TimeCell";
+import LessonCell from "../LessonCell/LessonCell";
 
 const getRowNumber = (id) => {
     let pos = id.indexOf('L');
@@ -18,12 +20,12 @@ const TimetableCell = ({id}) => {
     return (
         <td className="TimetableCell">
             { getColNumber(id) === 0 ? (
-                8.00
+                <TimeCell />
             ) : (
-              "lsls"
+                <LessonCell />
             )}
         </td>
     );
-};
+}
 
 export default TimetableCell;
