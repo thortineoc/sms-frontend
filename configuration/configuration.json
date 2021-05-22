@@ -1,0 +1,8 @@
+{
+  "local": {
+    "haproxy_url": "localhost:24020"
+  },
+  "remote": {
+    "haproxy_url": "http://52.142.201.18:24020"
+  }
+}
