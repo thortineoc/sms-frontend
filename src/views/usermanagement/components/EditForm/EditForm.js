@@ -14,6 +14,7 @@ import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import {responsiveFontSizes} from "@material-ui/core";
 import ParentForm from "./EditParentForm";
+import smsConfig from "../../../../utilities/configuration";
 
 const validationSchema = Yup.object({
     id: Yup.string().required('Required'),
@@ -31,7 +32,7 @@ const validationSchema = Yup.object({
 })
 
 const EditForm = ({user, groups, role, refresh, setShowEdit, setDetailsModalShown}) => {
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [items, setItems] = useState([]);
     const [parent, setParent] = useState({});
 

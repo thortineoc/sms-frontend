@@ -11,6 +11,7 @@ import callBackendPost from "../../../../utilities/CallBackendPost";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import MultipleSelect from "../../../../components/MultipleSelect/MultipleSelect";
+import smsConfig from "../../../../utilities/configuration";
 
 const initialValues = (role) => {
     return {
@@ -43,7 +44,7 @@ const validationSchema = Yup.object({
 })
 
 const CreateForm = ({role, setCreateUserModalShown, requireRefresh}) => {
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [items, setItems] = useState([]);
 
     useEffect(() => {

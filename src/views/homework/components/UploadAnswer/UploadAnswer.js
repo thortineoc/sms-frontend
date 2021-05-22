@@ -14,12 +14,13 @@ import Modal from "../../../../components/Modal/Modal";
 import Grade from "../../../grades/components/Grade/Grade";
 import "./UploadAnswer.css"
 import DialogBox from "../../../../components/DialogBox/DialogBox";
+import smsConfig from "../../../../utilities/configuration";
 
 
 const UploadAnswers = (props) => {
     const [selectedFile, setSelectedFile] = useState([]);
     const [error, setError] = useState("");
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const {keycloak, initialized} = useKeycloak();
     const kcToken = keycloak?.token ?? '';
     const [showEdit, setShowEdit] = useState(false)
@@ -66,7 +67,7 @@ const UploadAnswers = (props) => {
             }
             let formData = new FormData();
             formData.append("file", file);
-            axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/ANSWER", formData, {
+            axios.post(smsConfig.haproxyUrl + "homework-service/files/upload/" + id + "/ANSWER", formData, {
                 headers: headers
             })
                 .then(response => {

@@ -10,6 +10,7 @@ import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import {ref} from "yup";
+import smsConfig from "../../../../utilities/configuration";
 
 const COLUMN_TITLES = [
     'Students',
@@ -19,7 +20,7 @@ const COLUMN_TITLES = [
 ]
 
 const GradesViewTeachers = () => {
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [data, setData] = useState([]);
     const [subject, setSubject] = useState('');
     const [group, setGroup] = useState('');

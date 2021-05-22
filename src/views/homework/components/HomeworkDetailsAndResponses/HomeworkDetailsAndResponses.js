@@ -23,6 +23,7 @@ import * as Yup from "yup";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 import DialogBox from "../../../../components/DialogBox/DialogBox";
 import { useHistory } from "react-router-dom";
+import smsConfig from "../../../../utilities/configuration";
 
 const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -45,7 +46,7 @@ const homeworkEmpty = {
 const HomeworkDetailsAndResponses = (props) => {
     const [showEdit, setShowEdit] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
     const[error, setError] = useState("");
@@ -129,7 +130,7 @@ const HomeworkDetailsAndResponses = (props) => {
             }
             let formData = new FormData();
             formData.append("file", file);
-            axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/HOMEWORK", formData, {
+            axios.post(smsConfig.haproxyUrl + "homework-service/files/upload/" + id + "/HOMEWORK", formData, {
                 headers: headers})
                 .then(response => {
                     console.log("ok")

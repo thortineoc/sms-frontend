@@ -3,6 +3,7 @@ import '../GradesView/GradesView.css';
 import GradesTable from "../../components/GradesTable/GradesTable";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
+import smsConfig from "../../../../utilities/configuration";
 
 const COLUMN_TITLES = [
     'Subjects',
@@ -12,7 +13,7 @@ const COLUMN_TITLES = [
 ]
 
 const GradesViewStudents = () => {
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [data, setData] = useState({});
 
     const fetchData = () => {

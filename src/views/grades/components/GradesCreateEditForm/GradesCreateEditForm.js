@@ -8,6 +8,7 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 import callBackendPost from "../../../../utilities/CallBackendPost";
+import smsConfig from "../../../../utilities/configuration";
 
 const init = (id, type, subject) => {
     return(
@@ -73,7 +74,7 @@ const validationSchema = Yup.object({
 })
 
 const GradesCreateEditForm = (props) => {
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [error, setError] = useState("");
 
     const onSubmit = (values, setSubmitting, setValues) =>{
