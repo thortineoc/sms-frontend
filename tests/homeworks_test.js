@@ -21,12 +21,21 @@ Scenario('teacher can add homeworks', ({ I }) => {
     I.see('Required');
 
     //add test homework
-    I.fillField('title', 'codecept test title');
+    I.fillField('title', 'codecept-test-title');
     I.fillField('description', 'codecept test description');
-    I.fillField('group', '1A');
-    I.fillField('subject', 'Biology');
+    I.click({id: 'mui-component-select-group'});
+    I.see('1A');
+    I.click({id: 'v1A'});
+    I.click({id: 'mui-component-select-subject'});
+    I.see('Biology');
+    I.click({id: 'vBiology'});
+    I.click('Add');
 
-
-
+    //check homework details
+    I.see('User profile');
+    I.click({id: 'tree_Biology'});
+    I.click({id: 'tree_1A'});
+    I.click({id: 'tree_codecept-test-title'});
+    I.see('Homework details');
 
 });
