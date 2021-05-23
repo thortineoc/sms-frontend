@@ -10,10 +10,10 @@ import AttachFileIcon from "@material-ui/icons/AttachFile";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
-import DeleteDialog from "../DeleteDialog/DeleteDialog";
 import Modal from "../../../../components/Modal/Modal";
 import Grade from "../../../grades/components/Grade/Grade";
 import "./UploadAnswer.css"
+import DialogBox from "../../../../components/DialogBox/DialogBox";
 
 
 const UploadAnswers = (props) => {
@@ -47,6 +47,15 @@ const UploadAnswers = (props) => {
             .catch(error => console.log(error))
     }
 
+    const deleteAnswer = () => {
+        callBackendDelete(axiosInstance, "homework-service/answer/"+props.homeworkData.answer.id)
+            .then(()=> {
+                    setShowDeleteDialog(false);
+                    props.fetchHomeworkData();
+                }
+            )
+            .catch(error => console.log(error))
+    }
 
     const attachFile = (id) => {
         selectedFile.forEach(function (file) {
@@ -111,6 +120,14 @@ const UploadAnswers = (props) => {
                     <ButtonWrapper label={"Delete"} onClick={() => setShowDeleteDialog(true)}
                                    style={{marginTop: "2%", marginLeft: "2%"}}/>
                     <p>This assignment is not reviewed yet</p>
+                    <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                        <DialogBox
+                            deleteFunction={deleteAnswer}
+                            setDisplayDialog={setShowDeleteDialog}
+                            prompt={"answer"}
+                            isModal={true}
+                        />
+                    </Modal>
                 </>
             )
         }
@@ -195,9 +212,6 @@ const UploadAnswers = (props) => {
             boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1)",
             padding: "30px"
         }}>
-            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
-                <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
-            </Modal>
             {showEdit ? getEditForm() : getCreateOrDetails()}
         </div>
     )
