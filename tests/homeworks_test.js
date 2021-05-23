@@ -35,18 +35,20 @@ Scenario('teacher can add and edit homeworks', ({ I }) => {
     //check homework details
     I.see('User profile');
     I.click({id: 'tree_Biology'});
+    I.see('1A');
     I.click({id: 'tree_1A'});
+    I.see('codecept-test-title');
     I.click({id: 'tree_codecept-test-title'});
     I.see('Homework details');
 
-    //change homework title
-    I.click({id: 'homework_title'});
-    I.clearField({id: 'homework_title'});
-    I.fillField({id: 'homework_title'}, 'New homework title');
-    I.click('Save');
+    //change homework description
+    I.click({id: 'homework_description'});
+    I.see('Modify assignment')
+    I.clearField('description' );
+    I.fillField('description', 'New-homework-description');
+    I.click({id: 'Save'} );
 });
 
-/*
 
 Scenario('student can add answers', ({ I }) => {
     //login
@@ -69,6 +71,8 @@ Scenario('student can add answers', ({ I }) => {
     I.click({id: 'tree_codecept-test-title'});
 
     I.see('Homework details');
+    I.see('codecept-test-title');
+    I.see('New-homework-description');
     I.see('Upload your answer');
 
     //try to send empty answer
@@ -76,7 +80,7 @@ Scenario('student can add answers', ({ I }) => {
     I.see('You need to upload a file');
 
 });
-*/
+
 
 Scenario('teacher can add homeworks', ({ I }) => {
     //login
@@ -93,12 +97,16 @@ Scenario('teacher can add homeworks', ({ I }) => {
     I.click('Homework');
 
     I.click({id: 'tree_Biology'});
+    I.see('1A');
     I.click({id: 'tree_1A'});
+    I.see('codecept-test-title');
     I.click({id: 'tree_codecept-test-title'});
     I.see('Homework details');
 
     I.click('Delete');
+    I.see('Are you sure that you want to delete this assignment?');
     I.click('Yes');
+    I.see('ADD NEW');
 });
 
 
