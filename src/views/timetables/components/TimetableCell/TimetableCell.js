@@ -20,8 +20,14 @@ const TimetableCell = ({id}) => {
     console.log(value);
     console.log(getColNumber(id) + " i " + getRowNumber(id));
 
+    const handleClick = e => {
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+        alert(id);
+    }
+
     return (
-        <td className="TimetableCell" onClick={() => alert(id)}>
+        <td className="TimetableCell" onClick={handleClick}>
             <div className="TimetableCell__content">
                 { getColNumber(id) === 0 ? (
                     <TimeCell />
