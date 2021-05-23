@@ -1,6 +1,7 @@
 Feature('homeworks');
 
-Scenario('teacher can add homeworks', ({ I }) => {
+
+Scenario('teacher can add and edit homeworks', ({ I }) => {
     //login
     //I.amOnPage('http://school-management-system.online:24020');
     I.amOnPage('http://localhost:3000/');
@@ -38,4 +39,68 @@ Scenario('teacher can add homeworks', ({ I }) => {
     I.click({id: 'tree_codecept-test-title'});
     I.see('Homework details');
 
+    //change homework title
+    I.click({id: 'homework_title'});
+    I.clearField({id: 'homework_title'});
+    I.fillField({id: 'homework_title'}, 'New homework title');
+    I.click('Save');
 });
+
+/*
+
+Scenario('student can add answers', ({ I }) => {
+    //login
+    //I.amOnPage('http://school-management-system.online:24020');
+    I.amOnPage('http://localhost:3000/');
+    I.click({id: 'open_drawer'});
+
+    I.fillField('username', 's_12368957894');
+    I.fillField('password', 'JemmFitz');
+    I.click('Sign In');
+
+    I.see('DASHBOARD FOR STUDENT');
+    I.click({id: 'open_drawer'});
+    I.click('Homework');
+
+    //add answer
+    I.waitForElement({id: 'tree_Biology'}, 30);
+    I.click({id: 'tree_Biology'});
+    I.see('codecept-test-title');
+    I.click({id: 'tree_codecept-test-title'});
+
+    I.see('Homework details');
+    I.see('Upload your answer');
+
+    //try to send empty answer
+    I.click({id: 'Submit'});
+    I.see('You need to upload a file');
+
+});
+*/
+
+Scenario('teacher can add homeworks', ({ I }) => {
+    //login
+    //I.amOnPage('http://school-management-system.online:24020');
+    I.amOnPage('http://localhost:3000/');
+    I.click({id: 'open_drawer'});
+
+    I.fillField('username', 't_12345678909');
+    I.fillField('password', 'testtest');
+    I.click('Sign In');
+
+    I.see('DASHBOARD FOR TEACHER');
+    I.click({id: 'open_drawer'});
+    I.click('Homework');
+
+    I.click({id: 'tree_Biology'});
+    I.click({id: 'tree_1A'});
+    I.click({id: 'tree_codecept-test-title'});
+    I.see('Homework details');
+
+    I.click('Delete');
+    I.click('Yes');
+});
+
+
+
+
