@@ -3,8 +3,9 @@ import './LessonCell.css'
 
 const LessonCell = ({value}) => {
     return (
-        <div className="LessonCell">
-            {value && value.subject}
+        <div className="LessonCell" onClick={() => alert("LESSON " + value.subject)}>
+            <div>{value && value.subject}</div>
+            <div>Room: {value ? value.room : '-'}</div>
         </div>
     );
 };

@@ -16,15 +16,19 @@ const getColNumber = (id) => {
 }
 
 const TimetableCell = ({id}) => {
-    const value = useContext(ClassesContext);
+    const [value, setValue] = useContext(ClassesContext);
+    console.log(value);
+    console.log(getColNumber(id) + " i " + getRowNumber(id));
 
     return (
-        <td className="TimetableCell">
+        <td className="TimetableCell" onClick={() => alert(id)}>
             <div className="TimetableCell__content">
                 { getColNumber(id) === 0 ? (
                     <TimeCell />
                 ) : (
-                    <LessonCell value={value[0][0]} />
+                    value   && value[getColNumber(id) - 1]
+                            && value[getColNumber(id) - 1][getRowNumber(id)]
+                            && <LessonCell value={value[getColNumber(id) - 1][getRowNumber(id)]} />
                 )}
             </div>
         </td>
