@@ -8,6 +8,10 @@
     margin-top: 2%;
 }
 
+.Timetable th {
+    font-weight: normal;
+}
+
 .Timetable td:first-child {
     border-left: none;
 }

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './TimetableCell.css';
 import TimeCell from "../TimeCell/TimeCell";
 import LessonCell from "../LessonCell/LessonCell";
+import {ClassesContext} from '../TimetableContextApi/TimetableContext';
 
 const getRowNumber = (id) => {
     let pos = id.indexOf('L');
@@ -15,6 +16,7 @@ const getColNumber = (id) => {
 }
 
 const TimetableCell = ({id}) => {
+    const value = useContext(ClassesContext);
 
     return (
         <td className="TimetableCell">
@@ -22,7 +24,7 @@ const TimetableCell = ({id}) => {
                 { getColNumber(id) === 0 ? (
                     <TimeCell />
                 ) : (
-                    <LessonCell />
+                    <LessonCell value={value[0][0]} />
                 )}
             </div>
         </td>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import GradesTableRow from "../../../grades/components/GradesTableRow/GradesTableRow";
 import './Timetable.css';
 import TimetableRow from "../TimetableRow/TimetableRow";
+import {ClassesProvider} from "../TimetableContextApi/TimetableContext";
 
 const COLUMNS = [
     '',
@@ -22,22 +23,24 @@ const Timetable = () => {
 
     return (
         <div>
-            <table className="Timetable">
-                <thead>
-                <tr>
-                    {COLUMNS.map((item) => (
-                        <th className="Timetable__header">{item}</th>
-                    ))}
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    lessonIndexesArr.map((ix) => (
-                        <TimetableRow lessonId={ix}/>
-                    ))
-                }
-                </tbody>
-            </table>
+            <ClassesProvider>
+                <table className="Timetable">
+                    <thead>
+                    <tr>
+                        {COLUMNS.map((item) => (
+                            <th className="Timetable__header">{item}</th>
+                        ))}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        lessonIndexesArr.map((ix) => (
+                            <TimetableRow lessonId={ix}/>
+                        ))
+                    }
+                    </tbody>
+                </table>
+            </ClassesProvider>
         </div>
     );
 };

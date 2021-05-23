@@ -5,7 +5,7 @@
     width: 80%;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1);
     -webkit-transition: -webkit-transform 0.4s ease-in-out;
-    transition: background-color .4s, transform 0.4s ease-in-out;
+    transition: background-color .7s, transform 0.4s ease-in-out;
     background: pink;
 }
 

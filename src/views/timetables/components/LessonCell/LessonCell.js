@@ -1,10 +1,10 @@
 import React from 'react';
 import './LessonCell.css'
 
-const LessonCell = () => {
+const LessonCell = ({value}) => {
     return (
         <div className="LessonCell">
-            Matma
+            {value && value.subject}
         </div>
     );
 };
