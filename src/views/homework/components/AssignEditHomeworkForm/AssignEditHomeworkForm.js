@@ -12,6 +12,7 @@ import axios from "axios";
 import UploadFile from "../../../../components/UploadFIle/UploadFile";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import * as Yup from "yup";
+import smsConfig from "../../../../utilities/configuration";
 
 const initial = {
     group: "",
@@ -30,7 +31,7 @@ const validationSchema = Yup.object({
 
 const AssignEditHomeworkForm = (props) => {
     const[error, setError] = useState("");
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [groups, setGroups] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
     const [selectedFile, setSelectedFile] = useState([]);
@@ -53,7 +54,7 @@ const AssignEditHomeworkForm = (props) => {
             }
             let formData = new FormData();
             formData.append("file", file);
-            axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/HOMEWORK", formData, {
+            axios.post(smsConfig.haproxyUrl + "homework-service/files/upload/" + id + "/HOMEWORK", formData, {
                 headers: headers})
                 .then(response => {
                     if(response.status>204) {

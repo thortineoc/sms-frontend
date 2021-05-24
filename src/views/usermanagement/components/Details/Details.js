@@ -10,11 +10,12 @@ import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import axios from "axios";
+import smsConfig from "../../../../utilities/configuration";
 
 const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData, refresh}) => {
 
     const [displayDialog, setDisplayDialog] = useState(false);
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [parent, setParent] = useState({});
 
     const handleClick = () => {

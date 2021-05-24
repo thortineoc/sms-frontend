@@ -6,6 +6,7 @@ import React, {useEffect, useState} from "react";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
+import smsConfig from "../../../../utilities/configuration";
 
 const defaultInitValues = {
     userName: "",
@@ -35,7 +36,7 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive, rol
     console.log(initValues)
     console.log(defaultInitValues)
 
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [items, setItems] = useState([]);
 
     useEffect(() => {

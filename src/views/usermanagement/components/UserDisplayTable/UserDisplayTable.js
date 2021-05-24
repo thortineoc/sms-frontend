@@ -18,6 +18,7 @@ import Details from "../Details/Details";
 import EditForm from "../EditForm/EditForm";
 import stableSort from "../../../../utilities/tablesCommons/stableSort";
 import getComparator from "../../../../utilities/tablesCommons/getComparator";
+import smsConfig from "../../../../utilities/configuration";
 
 const removeEmptyStrings = (obj) => {
     return Object.keys(obj)
@@ -109,7 +110,7 @@ export default function UserDisplayTable(props) {
     const [rows, setArray] = useState([]);
     const [errorMessage, setErrorMessage] = useState("Loading...")
     const {keycloak, initialized} = useKeycloak();
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [filterParams, setFilterParams] = useState({role: props.role});
     const [requireRefresh, setRequireRefresh] = useState(false);
     const [showDetails, setShowDetails] = useState(false);

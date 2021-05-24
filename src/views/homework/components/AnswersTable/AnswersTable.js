@@ -20,6 +20,7 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import Grade from "../../../grades/components/Grade/Grade";
 import AddReviewCircle from "../AddCircle/AddReviewCircle";
+import smsConfig from "../../../../utilities/configuration";
 
 function downloadHomework(uri) {
     console.log(uri);
@@ -166,7 +167,7 @@ function Row({row, subject, toGrade, fetchHomeworkData}) {
 // }
 
 const AnswersTable = ({answers, subject, group, toGrade, fetchHomeworkData}) => {
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [allUsers, setAllUsers] = useState([]);
 
     // useEffect(() => {
