@@ -3,7 +3,7 @@ Feature('grades');
 Scenario('teacher can see grades', ({I}) => {
 //login
     //I.amOnPage('http://school-management-system.online');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 't_12345678909');
@@ -33,7 +33,7 @@ Scenario('teacher can see grades', ({I}) => {
 Scenario('teacher can add grades', ({I}) => {
 //login
     //I.amOnPage('http://school-management-system.online');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 't_12345678909');
@@ -66,7 +66,7 @@ Scenario('teacher can add grades', ({I}) => {
 Scenario('teacher can update grades', ({I}) => {
 //login
     //I.amOnPage('http://school-management-system.online');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 't_12345678909');
@@ -105,7 +105,7 @@ Scenario('teacher can update grades', ({I}) => {
 Scenario('student can see grades', ({I}) => {
 //login
     //I.amOnPage('http://school-management-system.online');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 's_12368957894');

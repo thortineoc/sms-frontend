@@ -3,7 +3,7 @@ Feature('usermanagement');
 Scenario('can login to admin account and logout', ({I}) => {
     //homepage
     //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
     I.see('Sign in to your account');
     I.fillField('username', 'smsadmin');
@@ -30,7 +30,7 @@ Scenario('can login to admin account and logout', ({I}) => {
 Scenario('can create and delete group', ({I}) => {
     //login
     //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 'smsadmin');
@@ -58,7 +58,7 @@ Scenario('can create and delete group', ({I}) => {
 Scenario('can create and delete student', ({I}) => {
     //login
     //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 'smsadmin');
@@ -104,7 +104,7 @@ Scenario('can create and delete student', ({I}) => {
 Scenario('can filter students', ({I}) => {
     //login
     //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     //login
@@ -136,7 +136,7 @@ Scenario('can filter students', ({I}) => {
 Scenario('can change displayed columns', ({I}) => {
     //login
     //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:24020/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     //login
