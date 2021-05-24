@@ -1,6 +1,6 @@
 {
     "realm": "sms",
-    "auth-server-url": "http://localhost:24020/auth/",
+    "auth-server-url": "http://52.142.201.18:24020/auth/",
     "ssl-required": "external",
     "resource": "frontend",
     "public-client": true,
