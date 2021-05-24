@@ -15,6 +15,8 @@ const COLUMNS = [
 
 const max_lessons = 10;
 
+// hours from config
+
 const Timetable = () => {
     const lessonIndexesArr = [];
     for(let i=0; i<max_lessons; i++) {

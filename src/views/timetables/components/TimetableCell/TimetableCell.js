@@ -17,8 +17,6 @@ const getColNumber = (id) => {
 
 const TimetableCell = ({id}) => {
     const [value, setValue] = useContext(ClassesContext);
-    console.log(value);
-    console.log(getColNumber(id) + " i " + getRowNumber(id));
 
     const handleClick = e => {
         e.cancelBubble = true;
@@ -29,12 +27,12 @@ const TimetableCell = ({id}) => {
     return (
         <td className="TimetableCell" onClick={handleClick}>
             <div className="TimetableCell__content">
-                { getColNumber(id) === 0 ? (
+                { getColNumber(id) === -1 ? (
                     <TimeCell />
                 ) : (
-                    value   && value[getColNumber(id) - 1]
-                            && value[getColNumber(id) - 1][getRowNumber(id)]
-                            && <LessonCell value={value[getColNumber(id) - 1][getRowNumber(id)]} />
+                    value   && value[getColNumber(id)]
+                            && value[getColNumber(id)][getRowNumber(id)]
+                            && <LessonCell value={value[getColNumber(id)][getRowNumber(id)]} />
                 )}
             </div>
         </td>

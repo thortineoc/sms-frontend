@@ -16,8 +16,9 @@ const LessonCell = ({value}) => {
     return (
         <div className="LessonCell__wrapper" onClick={clearClick}>
             <div className="LessonCell" onClick={handleClick}>
-                <div>{value && value.subject}</div>
-                <div>Room: {value ? value.room : '-'}</div>
+                {value && value.subject && <div><strong>{value.subject}</strong></div>}
+                {value && value.teacher && <div><span style={{color: '#444'}}>Teacher: </span>{value.teacher}</div>}
+                {value && value.room && <div><span style={{color: '#444'}}>Room: </span>{value.room}</div>}
             </div>
         </div>
     );

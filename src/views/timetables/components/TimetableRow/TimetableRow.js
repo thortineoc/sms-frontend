@@ -3,7 +3,7 @@ import TimetableCell from "../TimetableCell/TimetableCell";
 
 const TimetableRow = ({lessonId}) => {
     const lessonDayIndexesArr = [];
-    for(let i=0; i<6; i++) {
+    for(let i=-1; i<5; i++) {
         lessonDayIndexesArr.push(lessonId + i + 'D');
     }
 

@@ -4,6 +4,12 @@
 }
 
 .TimetablesManagement__button {
-    margin-right: 5%;
+    margin: 5%;
     max-height: 50px;
+}
+
+.TimetablesManagement__button-group {
+    display: flex;
+    min-width: 300px;
+    justify-content: space-between;
 }

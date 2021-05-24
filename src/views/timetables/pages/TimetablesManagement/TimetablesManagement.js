@@ -41,8 +41,10 @@ const TimetablesManagement = () => {
                     value={group}
                     setValue={setGroup}
                 />
-
-                <ButtonWrapper label="Manage time" onClick={() => setShow(true)} className="TimetablesManagement__button"/>
+                <div className="TimetablesManagement__button-group">
+                    <ButtonWrapper label="Get generated" className="TimetablesManagement__button"/>
+                    <ButtonWrapper label="Lessons time" onClick={() => setShow(true)} className="TimetablesManagement__button"/>
+                </div>
             </div>
 
             <Timetable />

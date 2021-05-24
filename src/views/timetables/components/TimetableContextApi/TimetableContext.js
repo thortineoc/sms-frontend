@@ -4,27 +4,27 @@ const mockedData = [
     [
         null,
         {
-            'subject': 'geography',
-            'lesson': 2,
-            'room': 5
+            'subject': 'Geography',
+            'teacher': 'John Doe',
+            'room': 5,
         },
         null,
         {
             'subject': 'english',
-            'lesson': 4,
+            'teacher': "aa",
             'room': 10
         }
     ],
     [
         {
             'subject': 'biology',
-            'lesson': 3,
+            'teacher': 'bb',
             'room': 122
         },
 
         {
             'subject': 'chemistry',
-            'lesson': 5,
+            'teacher': 'dlugieimie dlugienazwisko',
             'room': 512
         }
     ],
