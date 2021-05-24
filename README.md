@@ -68,3 +68,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Local
+
+- Start backend locally :) 
+- Change /src/configuration.json haproxyUrl to "http://localhost:24020/"
+- Change /public/keycloak.json auth-server-url to "http://localhost:24020/auth/"
