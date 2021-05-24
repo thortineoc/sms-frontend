@@ -74,3 +74,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - Start backend locally :) 
 - Change /src/configuration.json haproxyUrl to "http://localhost:24020/"
 - Change /public/keycloak.json auth-server-url to "http://localhost:24020/auth/"
+- `npm ci` or `npm install`
+- `npm start`
