@@ -4,7 +4,7 @@ Feature('homeworks');
 Scenario('teacher can add and edit homeworks', ({ I }) => {
     //login
     //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:3000/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 't_12345678909');
@@ -53,7 +53,7 @@ Scenario('teacher can add and edit homeworks', ({ I }) => {
 Scenario('student can add answers', ({ I }) => {
     //login
     //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:3000/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 's_12368957894');
@@ -85,7 +85,7 @@ Scenario('student can add answers', ({ I }) => {
 Scenario('teacher can add homeworks', ({ I }) => {
     //login
     //I.amOnPage('http://school-management-system.online:24020');
-    I.amOnPage('http://localhost:3000/');
+    I.amOnPage('http://localhost:24010/');
     I.click({id: 'open_drawer'});
 
     I.fillField('username', 't_12345678909');

@@ -76,3 +76,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - Change /public/keycloak.json auth-server-url to "http://localhost:24020/auth/"
 - `npm ci` or `npm install`
 - `npm start`
+- run tests: `npx codeceptjs run`
