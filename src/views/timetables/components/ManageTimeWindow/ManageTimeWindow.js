@@ -8,6 +8,8 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import TimePickerWrapper from "../../../../components/TimePickerWrapper/TimePickerWrapper";
 import {Grid} from "@material-ui/core";
+import * as Yup from "yup";
+
 
 
 const ManageTimeWindow = ({setIsOpen}) => {
@@ -43,22 +45,29 @@ const ManageTimeWindow = ({setIsOpen}) => {
         data.config = []
         for(let i = 0; i<values.lessonCount; i++){
             let temp = {}
-            temp.startTime = "08:00"
-            temp.endTime = "09:00"
+            temp.startTime = values[("startTime"+(i+1))].toTimeString().substr(0,5)
+            temp.endTime = values[("endTime"+(i+1))].toTimeString().substr(0,5)
             data.config.push(temp)
         }
-        console.log(data)
+        //console.log(data)
+        callBackendPost(axiosInstance, "/timetable-service/config", data)
+            .then(response => {
+                //console.log(response)
+                fetchData()
+            })
+            .catch(error => console.log(error))
     }
 
     const getInitialValues = (lessonCount) =>{
         const init = {}
         init.lessonCount = lessonCount;
         for(let i=0; i<lessonCount; i++){
-            init["startDate"+i]=""
-            init["endDate"+i]=""
+            init["startTime"+(i+1)]=""
+            init["endTime"+(i+1)]=""
         }
         return init
     }
+
 
     return (
         <div>
@@ -115,11 +124,11 @@ const ManageTimeWindow = ({setIsOpen}) => {
                                         {[...Array(response.data.lessonCount)].map((x, i) =>
                                             <Grid container justify="space-around">
                                                 <TimePickerWrapper
-                                                    name={"startDate"+(i+1)}
+                                                    name={"startTime"+(i+1)}
                                                     label={"Lesson " + (i+1) + " start time"}
                                                 />
                                                 <TimePickerWrapper
-                                                    name={"endDate"+(i+1)}
+                                                    name={"endTime"+(i+1)}
                                                     label={"Lesson " + (i+1) + " end time"}
                                                 />
                                             </Grid>
