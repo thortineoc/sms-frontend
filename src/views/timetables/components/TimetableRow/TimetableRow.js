@@ -1,7 +1,7 @@
 import React from 'react';
 import TimetableCell from "../TimetableCell/TimetableCell";
 
-const TimetableRow = ({lessonId}) => {
+const TimetableRow = ({lessonId, config}) => {
     const lessonDayIndexesArr = [];
     for(let i=-1; i<5; i++) {
         lessonDayIndexesArr.push(lessonId + i + 'D');
@@ -11,7 +11,7 @@ const TimetableRow = ({lessonId}) => {
         <tr>
             {
                 lessonDayIndexesArr.map((ix) => (
-                    <TimetableCell id={ix} />
+                    <TimetableCell id={ix} config={config} />
                 ))
             }
         </tr>

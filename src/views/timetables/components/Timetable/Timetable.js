@@ -25,12 +25,10 @@ const Timetable = () => {
     }, [])
 
     const lessonIndexesArr = [];
-    useEffect(() => {
-        for(let i=0; i<hours.lessonCount; i++) {
-            lessonIndexesArr.push(i + 'L');
-        }
-    }, [hours])
-
+    console.log(hours.lessonCount)
+    for(let i=0; i<hours.lessonCount; i++) {
+        lessonIndexesArr.push(i + 'L');
+    }
 
     return (
         <div>
@@ -46,7 +44,7 @@ const Timetable = () => {
                     <tbody>
                     {
                         lessonIndexesArr.map((ix) => (
-                            <TimetableRow lessonId={ix}/>
+                            <TimetableRow lessonId={ix} config={hours.config} />
                         ))
                     }
                     </tbody>

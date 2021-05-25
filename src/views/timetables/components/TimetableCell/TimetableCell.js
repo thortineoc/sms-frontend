@@ -15,7 +15,7 @@ const getColNumber = (id) => {
     return Number.parseInt(id.slice(start, end));
 }
 
-const TimetableCell = ({id}) => {
+const TimetableCell = ({id, config}) => {
     const [value, setValue] = useContext(ClassesContext);
 
     const handleClick = e => {
@@ -28,7 +28,7 @@ const TimetableCell = ({id}) => {
         <td className="TimetableCell" onClick={handleClick}>
             <div className="TimetableCell__content">
                 { getColNumber(id) === -1 ? (
-                    <TimeCell />
+                    <TimeCell time={config[getRowNumber(id)]}/>
                 ) : (
                     value   && value[getColNumber(id)]
                             && value[getColNumber(id)][getRowNumber(id)]
