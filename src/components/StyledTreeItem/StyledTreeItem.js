@@ -31,7 +31,7 @@ export default function StyledTreeItem(props) {
         <TreeItem
             label={
                 <div className={classes.labelRoot}>
-                    <Typography variant="" className={classes.labelText} >
+                    <Typography id={"tree_"+labelText} variant="" className={classes.labelText} >
                         {labelText}
                     </Typography>
                     <Typography className={classes.labelInfo}>

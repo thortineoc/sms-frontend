@@ -6,6 +6,7 @@ import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldW
 import * as Yup from "yup";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import useAxios from "../../../../utilities/useAxios";
+import smsConfig from "../../../../utilities/configuration";
 
 const validationSchema = Yup.object({
     review: Yup.string().required('Required'),
@@ -15,7 +16,7 @@ const validationSchema = Yup.object({
 const AddEditReview = (props) => {
     console.log(props.row)
     const [showEdit, setShowEdit] = useState(props.row.answer.review === null)
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
 
 
     const updateReview = (values, setSubmitting, setValues) => {

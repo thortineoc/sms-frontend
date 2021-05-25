@@ -14,7 +14,7 @@ const theme = createMuiTheme({
 const ButtonWrapper = ({label, ...rest}) => {
     return (
         <ThemeProvider theme={theme}>
-        <Button className="Button" {...rest} color="primary" variant="contained">
+        <Button id={label} className="Button" {...rest} color="primary" variant="contained">
             {label}
         </Button>
         </ThemeProvider>

@@ -3,7 +3,6 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import Modal from "../../../../components/Modal/Modal";
 import AnswersTable from "../AnswersTable/AnswersTable";
 import "./HomeworkDetailsAndResponses.css"
-import DeleteDialog from "../DeleteDialog/DeleteDialog";
 import getKeycloakRoles from "../../../../utilities/GetRoles";
 import {useKeycloak} from "@react-keycloak/web";
 import {Form, Formik} from "formik";
@@ -22,6 +21,9 @@ import axios from "axios";
 import UploadAnswer from "../UploadAnswer/UploadAnswer";
 import * as Yup from "yup";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import DialogBox from "../../../../components/DialogBox/DialogBox";
+import { useHistory } from "react-router-dom";
+import smsConfig from "../../../../utilities/configuration";
 
 const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -44,16 +46,17 @@ const homeworkEmpty = {
 const HomeworkDetailsAndResponses = (props) => {
     const [showEdit, setShowEdit] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
-    const[error, setError] = useState("");
+    const [error, setError] = useState("");
     const [groups, setGroups] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
     const [homeworkData, setHomeworkData] = useState(null);
     const [selectedFile, setSelectedFile] = useState([]);
     const kcToken = keycloak?.token ?? '';
-    const [allowEdit, setAllowEdit] = useState(true)
+    const [allowEdit, setAllowEdit] = useState(true);
+    let history = useHistory();
 
     useEffect(() => {
         if (!!initialized) {
@@ -127,7 +130,7 @@ const HomeworkDetailsAndResponses = (props) => {
             }
             let formData = new FormData();
             formData.append("file", file);
-            axios.post("http://52.142.201.18:24020/homework-service/files/upload/" + id + "/HOMEWORK", formData, {
+            axios.post(smsConfig.haproxyUrl + "homework-service/files/upload/" + id + "/HOMEWORK", formData, {
                 headers: headers})
                 .then(response => {
                     console.log("ok")
@@ -135,6 +138,16 @@ const HomeworkDetailsAndResponses = (props) => {
                 .catch(error => setError("Cannot upload file."))
         })
         setSelectedFile([])
+    }
+
+    const deleteAssignment = () => {
+        callBackendDelete(axiosInstance, "homework-service/homework/"+ homeworkData.id)
+            .then(()=> {
+                    setShowDeleteDialog(false);
+                    history.push('/api/homework-service')
+                }
+            )
+            .catch(error => console.log(error))
     }
 
     const updateHomework = (values, setSubmitting, setValues) => {
@@ -162,35 +175,35 @@ const HomeworkDetailsAndResponses = (props) => {
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Title</div>
-                    <div className="DetailsHomework__data" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
+                    <div id="homework_title" className="DetailsHomework__data" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
                         {homeworkData.title}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Description</div>
-                    <div className="DetailsHomework__data" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit)? {cursor: "pointer"} : undefined}>
+                    <div id="homework_description" className="DetailsHomework__data" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit)? {cursor: "pointer"} : undefined}>
                         {homeworkData.description}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Group</div>
-                    <div className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
+                    <div id="homework_group" className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
                         {homeworkData.group}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Subject</div>
-                    <div className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
+                    <div id="homework_subject" className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
                         {homeworkData.subject}
                     </div>
                 </div>
 
                 <div className="DetailsHomework__field">
                     <div className="DetailsHomework__label">Deadline</div>
-                    <div className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
+                    <div id="homework_deadline" className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
                         {homeworkData.deadline  ? (homeworkData.deadline.split("T")[0]) : ""}
                     </div>
                 </div>
@@ -213,7 +226,14 @@ const HomeworkDetailsAndResponses = (props) => {
                         )})}
                 </Grid>
 
-
+                <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                    <DialogBox
+                        deleteFunction={deleteAssignment}
+                        setDisplayDialog={setShowDeleteDialog}
+                        prompt={"assignment"}
+                        isModal={true}
+                    />
+                </Modal>
             </div>
         )
     }
@@ -318,9 +338,7 @@ const HomeworkDetailsAndResponses = (props) => {
                 group={homeworkData.group}
                 toGrade={homeworkData.toEvaluate}
                 fetchHomeworkData={fetchHomeworkData}/>}
-            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
-                <DeleteDialog setDisplayDialog={setShowDeleteDialog}/>
-            </Modal>
+
         </div>) : (
             <p>loading...</p>
             )}

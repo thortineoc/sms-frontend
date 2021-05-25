@@ -42,13 +42,13 @@ const SelectFieldWrapper = ({name, options, ...rest}) => {
                 {options && options.map((item, index) => {
                     if(item === '') {
                         return (
-                            <MenuItem key={index} value={item}>
+                            <MenuItem id={"v"+item} key={index} value={item}>
                                 <em>None</em>
                             </MenuItem>
                         )
                     }
                     return (
-                          <MenuItem key={index} value={item}>
+                          <MenuItem id={"v"+item} key={index} value={item}>
                              {item}
                           </MenuItem>
                     )

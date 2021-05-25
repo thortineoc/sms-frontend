@@ -17,6 +17,7 @@ import TableRow from '@material-ui/core/TableRow';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import smsConfig from "../../../../utilities/configuration";
 
 const useStyles = makeStyles({
     table: {
@@ -48,7 +49,7 @@ const GroupsSubjectsTable = (props) => {
     const [array, setArray] = useState([]);
     const [errorMessage, setErrorMessage] = useState("Loading...")
     const {keycloak, initialized} = useKeycloak();
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
 
     useEffect( () => {
         fetchData();

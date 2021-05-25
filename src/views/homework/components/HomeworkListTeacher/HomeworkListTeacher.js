@@ -13,6 +13,7 @@ import StyledTreeItem from "../../../../components/StyledTreeItem/StyledTreeItem
 import isAfterDeadline from "../../functions/isAfterDeadline";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
+import smsConfig from "../../../../utilities/configuration";
 
 const useStyles = makeStyles({
     root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
 const HomeworkListTeacher = () => {
     const classes = useStyles();
     const [showCreateDialog, setShowCreateDialog] = useState(false);
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [data, setData] = useState({});
 
     const fetchData = () => {

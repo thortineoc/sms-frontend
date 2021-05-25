@@ -3,19 +3,19 @@ import './Details.css';
 import {TrashIcon} from "@heroicons/react/outline";
 import {Dialog} from "@material-ui/core";
 import Modal from "../Modal/Modal";
-import DialogBox from "../DialogBox/DialogBox";
+import DialogBox from "../../../../components/DialogBox/DialogBox";
 import {useKeycloak} from "@react-keycloak/web";
 import useAxios from "../../../../utilities/useAxios";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import callBackendDelete from "../../../../utilities/CallBackendDelete";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import axios from "axios";
+import smsConfig from "../../../../utilities/configuration";
 
 const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData, refresh}) => {
 
     const [displayDialog, setDisplayDialog] = useState(false);
-    const [deleteUser, setDeleteUser] = useState('');
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [parent, setParent] = useState({});
 
     const handleClick = () => {
@@ -48,6 +48,17 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData, refr
 
     if (Object.keys(parent).length === 0 && role==="STUDENT") {
         return ("Please wait. We're doing our best :)");
+    }
+
+    const deleteUser = () => {
+        callBackendDelete(axiosInstance, "/usermanagement-service/users/" + user.id)
+            .then(response => {
+                setDetailsModalShown(false)
+                console.log(response)
+                fetchData();
+                refresh();
+            })
+            .catch(error => console.log(error));
     }
 
     return (
@@ -170,12 +181,10 @@ const Details = ({user, setShowEdit, setDetailsModalShown, role, fetchData, refr
             </div>
 
             {displayDialog && <DialogBox
-                user={user}
+                deleteFunction={deleteUser}
                 setDisplayDialog={setDisplayDialog}
-                setDeleteUser={setDeleteUser}
-                setDetailsModalShown={setDetailsModalShown}
-                fetchData={fetchData}
-                refresh={refresh}
+                prompt={"account"}
+                isModal={false}
             />}
 
         </div>
