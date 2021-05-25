@@ -1,0 +1,15 @@
+.TimetablesManagement__top-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.TimetablesManagement__button {
+    margin: 5%;
+    max-height: 50px;
+}
+
+.TimetablesManagement__button-group {
+    display: flex;
+    min-width: 300px;
+    justify-content: space-between;
+}

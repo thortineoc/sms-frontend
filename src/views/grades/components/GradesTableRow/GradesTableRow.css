@@ -10,21 +10,3 @@
     display: flex;
     flex-wrap: wrap;
 }
-
-/*
-.TableRow__inner-table {
-    border: none;
-}
-
-.TableRow__inner-row {
-    border: none;
-}
-
-.TableRow__inner-cell {
-    border: none;
-    word-wrap: break-word;
-}
-
-
-
-*/
