@@ -7,9 +7,10 @@ import Modal from "../../../../components/Modal/Modal";
 import ManageTimeWindow from "../../components/ManageTimeWindow/ManageTimeWindow";
 import './TimetablesManagement.css';
 import Timetable from "../../components/Timetable/Timetable";
+import smsConfig from "../../../../utilities/configuration";
 
 const TimetablesManagement = () => {
-    const axiosInstance = useAxios('http://52.142.201.18:24020/');
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [allGroups, setAllGroups] = useState([]);
     const [group, setGroup] = useState('');
     const [show, setShow] = useState(false);
