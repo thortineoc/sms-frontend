@@ -10,7 +10,7 @@ import Timetable from "../../components/Timetable/Timetable";
 import smsConfig from "../../../../utilities/configuration";
 
 const TimetablesManagement = () => {
-    const axiosInstance = useAxios(smsConfig.haproxyUrl);
+    const axiosInstance = useAxios('http://52.142.201.18:24020/');
     const [allGroups, setAllGroups] = useState([]);
     const [group, setGroup] = useState('');
     const [show, setShow] = useState(false);

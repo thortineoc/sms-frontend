@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import GradesTableRow from "../../../grades/components/GradesTableRow/GradesTableRow";
 import './Timetable.css';
 import TimetableRow from "../TimetableRow/TimetableRow";
@@ -13,15 +13,24 @@ const COLUMNS = [
     'Friday'
 ]
 
-const max_lessons = 10;
-
-// hours from config
+const conf = {
+    config: [{'beginTime': '8:00', 'endTime': '8:45'}, {'beginTime': '9:00', 'endTime': '9:45'}],
+    lessonCount: 10
+}
 
 const Timetable = () => {
+    const [hours, setHours] = useState({});
+    useEffect(() => {
+        setHours(conf);
+    }, [])
+
     const lessonIndexesArr = [];
-    for(let i=0; i<max_lessons; i++) {
-        lessonIndexesArr.push(i + 'L');
-    }
+    useEffect(() => {
+        for(let i=0; i<hours.lessonCount; i++) {
+            lessonIndexesArr.push(i + 'L');
+        }
+    }, [hours])
+
 
     return (
         <div>
