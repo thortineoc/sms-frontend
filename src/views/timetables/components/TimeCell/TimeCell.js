@@ -9,7 +9,7 @@ const TimeCell = ({time = ''}) => {
 
     return (
         <div className="TimeCell" onClick={clearClick}>
-            {time && time.beginDate}
+
         </div>
     );
 };
