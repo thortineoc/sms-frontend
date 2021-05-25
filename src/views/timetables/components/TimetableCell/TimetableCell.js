@@ -24,9 +24,6 @@ const TimetableCell = ({id, config}) => {
         alert(id);
     }
 
-    console.log(config);
-    //console.log(config(getRowNumber(id)));
-
     return (
         <td className="TimetableCell" onClick={handleClick}>
             <div className="TimetableCell__content">
