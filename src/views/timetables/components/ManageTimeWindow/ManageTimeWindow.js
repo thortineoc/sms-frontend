@@ -30,10 +30,19 @@ const ManageTimeWindow = ({setIsOpen}) => {
     }, []);
 
     const onSubmit = (values) => {
-        callBackendPost(axiosInstance, "/timetable-service/config", values)
+        let data = {}
+        data.lessonCount = values.lessonCount
+        data.config = []
+        for(let i=0; i<data.lessonCount; i++){
+            let temp = {}
+            temp.startTime = "00:00"
+            temp.endTime = "00:00"
+            data.config.push(temp)
+        }
+        callBackendPost(axiosInstance, "/timetable-service/config", data)
             .then(response => {
                 console.log(response)
-                fetchData()
+                setIsOpen(false)
             })
             .catch(error => console.log(error))
     }
@@ -49,25 +58,28 @@ const ManageTimeWindow = ({setIsOpen}) => {
             temp.endTime = values[("endTime"+(i+1))].toTimeString().substr(0,5)
             data.config.push(temp)
         }
-        //console.log(data)
         callBackendPost(axiosInstance, "/timetable-service/config", data)
             .then(response => {
-                //console.log(response)
                 fetchData()
+                setIsOpen(false)
             })
             .catch(error => console.log(error))
     }
 
-    const getInitialValues = (lessonCount) =>{
+    const validationSchema = Yup.object({
+        lessonCount: Yup.number().required('Required')
+    })
+
+    const getInitialValues = (data) =>{
         const init = {}
-        init.lessonCount = lessonCount;
-        for(let i=0; i<lessonCount; i++){
-            init["startTime"+(i+1)]=""
-            init["endTime"+(i+1)]=""
-        }
+        init.lessonCount = data.lessonCount;
+
+        data.config.map((lesson, i)=>{
+            init["startTime"+(i+1)]=new Date("December 17, 1995 " + lesson.startTime)
+            init["endTime"+(i+1)]=new Date("December 17, 1995 " + lesson.endTime)
+        })
         return init
     }
-
 
     return (
         <div>
@@ -75,7 +87,7 @@ const ManageTimeWindow = ({setIsOpen}) => {
             <Formik
                 enableReinitialize
                 initialValues={((response && response.status === 200) ? response.data : {lessonCount: 0})}
-                //validationSchema={validationSchema}
+                validationSchema={validationSchema}
                 validateOnChange={false}
                 onSubmit={onSubmit}
             >
@@ -108,7 +120,7 @@ const ManageTimeWindow = ({setIsOpen}) => {
             {response && response.data.lessonCount > 0 ? (
                 <Formik
                     enableReinitialize
-                    initialValues={getInitialValues(response.data.lessonCount)}
+                    initialValues={getInitialValues(response.data)}
                     //validationSchema={validationSchema}
                     validateOnChange={false}
                     onSubmit={onSubmit1}
@@ -126,10 +138,12 @@ const ManageTimeWindow = ({setIsOpen}) => {
                                                 <TimePickerWrapper
                                                     name={"startTime"+(i+1)}
                                                     label={"Lesson " + (i+1) + " start time"}
+                                                    init={getInitialValues(response.data)["startTime"+(i+1)]}
                                                 />
                                                 <TimePickerWrapper
                                                     name={"endTime"+(i+1)}
                                                     label={"Lesson " + (i+1) + " end time"}
+                                                    init={getInitialValues(response.data)["endTime"+(i+1)]}
                                                 />
                                             </Grid>
                                         )}

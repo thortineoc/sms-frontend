@@ -18,17 +18,19 @@ const theme = createMuiTheme({
     }
 });
 
-export default function TimePickerWrapper({name, label}) {
-    const [selectedDate, setSelectedDate] = React.useState(new Date());
+export default function TimePickerWrapper({name, label, init}) {
+
     const { setFieldValue } = useFormikContext();
+    const [selectedDate, setSelectedDate] = React.useState(init);
     const handleDateChange = (date) => {
         setSelectedDate(date);
         setFieldValue(name, date)
     };
 
     useEffect(() => {
-        setFieldValue(name, new Date());
+        setFieldValue(name, selectedDate);
     }, []);
+
 
 
     return (
