@@ -11,7 +11,6 @@ import {Grid} from "@material-ui/core";
 import * as Yup from "yup";
 
 
-
 const ManageTimeWindow = ({setIsOpen}) => {
     const [response, setResponse] = useState(null);
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
