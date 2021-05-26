@@ -67,7 +67,7 @@ const ManageTimeWindow = ({setIsOpen}) => {
     }
 
     const validationSchema = Yup.object({
-        lessonCount: Yup.number().required('Required')
+        lessonCount: Yup.number().integer().min(1).max(12).required('Required')
     })
 
     const getInitialValues = (data) =>{
