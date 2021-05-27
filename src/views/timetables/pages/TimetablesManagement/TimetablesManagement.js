@@ -48,7 +48,7 @@ const TimetablesManagement = () => {
                 </div>
             </div>
 
-            <Timetable />
+            <Timetable type="admin" />
 
             {show && (
                 <Modal isOpen={show} setIsOpen={setShow}>

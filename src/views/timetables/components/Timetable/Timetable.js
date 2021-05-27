@@ -16,15 +16,7 @@ const COLUMNS = [
     'Friday'
 ]
 
-const conf = {
-    config: [{'beginTime': '8:00', 'endTime': '8:45'}, {'beginTime': '9:00', 'endTime': '9:45'},
-        {'beginTime': '10:00', 'endTime': '10:45'},{'beginTime': '11:00', 'endTime': '11:45'}
-
-    ],
-    lessonCount: 5
-}
-
-const Timetable = () => {
+const Timetable = ({type}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [hours, setHours] = useState({});
     const fetchData = () => {
@@ -59,7 +51,7 @@ const Timetable = () => {
                     <tbody>
                     {
                         lessonIndexesArr.map((ix) => (
-                            <TimetableRow lessonId={ix} config={hours.config} />
+                            <TimetableRow lessonId={ix} config={hours.config} type={type} />
                         ))
                     }
                     </tbody>

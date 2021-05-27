@@ -15,7 +15,7 @@ const getColNumber = (id) => {
     return Number.parseInt(id.slice(start, end));
 }
 
-const TimetableCell = ({id, config}) => {
+const TimetableCell = ({id, config, type}) => {
     const [value, setValue] = useContext(ClassesContext);
 
     const handleClick = e => {
@@ -32,7 +32,7 @@ const TimetableCell = ({id, config}) => {
                 ) : (
                     value   && value[getColNumber(id)]
                             && value[getColNumber(id)][getRowNumber(id)]
-                            && <LessonCell value={value[getColNumber(id)][getRowNumber(id)]} />
+                            && <LessonCell value={value[getColNumber(id)][getRowNumber(id)]} type={type} />
                 )}
             </div>
         </td>
