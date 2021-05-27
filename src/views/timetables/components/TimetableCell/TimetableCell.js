@@ -25,8 +25,8 @@ const TimetableCell = ({id, config, type}) => {
     }
 
     return (
-        <td className="TimetableCell" onClick={handleClick}>
-            <div className="TimetableCell__content">
+        <td className="TimetableCell" onClick={type === 'admin' && handleClick}>
+            <div className={`TimetableCell__content ${type === 'admin' ? 'TimetableCell__content-admin' : ''}`}>
                 { getColNumber(id) === -1 ? (
                     <TimeCell time={config[getRowNumber(id)]}/>
                 ) : (

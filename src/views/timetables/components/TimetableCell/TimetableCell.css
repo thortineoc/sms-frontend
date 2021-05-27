@@ -3,12 +3,14 @@
     border-radius: 0;
     border: 1px solid lightgray;
     border-bottom: none;
-
     padding: 0;
 }
 
 .TimetableCell__content {
-    cursor: pointer;
     height: 100%;
     min-height: 140px;
+}
+
+.TimetableCell__content-admin {
+    cursor: pointer;
 }

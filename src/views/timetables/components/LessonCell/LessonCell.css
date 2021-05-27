@@ -4,10 +4,7 @@
     height: 80%;
     width: 80%;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-    -webkit-transition: -webkit-transform 0.4s ease-in-out;
-    transition: background-color .7s, transform 0.4s ease-in-out;
     background-color: lightblue;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -17,10 +14,18 @@
     min-height: 100px;
 }
 
-.LessonCell:hover {
+.LessonCell__admin {
+    cursor: pointer;
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+    transition: background-color .7s, transform 0.4s ease-in-out;
+}
+
+.LessonCell__admin:hover {
     background-color: rgb(33,150,243);
     -webkit-transform: scale(1.05);
 }
+
+
 
 .LessonCell__wrapper {
     width: 100%;
