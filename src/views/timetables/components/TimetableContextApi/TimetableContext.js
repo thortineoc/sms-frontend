@@ -12,19 +12,20 @@ const mockedData = [
         {
             'subject': 'English',
             'teacher': "aa",
+            'room': null,
         }
     ],
     [
         {
             'subject': 'Biology',
             'teacher': 'bb',
-            'room': 122
+            'room': 122,
         },
 
         {
             'subject': 'Chemistry',
             'teacher': 'dlugieimie dlugienazwisko',
-            'room': 512
+            'room': 512,
         }
     ],
 
