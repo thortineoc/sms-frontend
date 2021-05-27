@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import "./EditDeleteLesson.css"
 import {Form, Formik} from "formik";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import {Grid, IconButton} from "@material-ui/core";
 import * as Yup from "yup";
+import Modal from "../../../../components/Modal/Modal";
+import DialogBox from "../../../../components/DialogBox/DialogBox";
 
 
 const validationSchema = Yup.object({
@@ -12,9 +14,15 @@ const validationSchema = Yup.object({
 })
 
 const EditDeleteLesson = ({setIsOpen, lesson}) => {
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     const onSubmit = (values) => {
         console.log(values)
+        setIsOpen(false)
+    }
+
+    const deleteLesson = () => {
+        console.log("delete lesson")
         setIsOpen(false)
     }
 
@@ -83,7 +91,15 @@ const EditDeleteLesson = ({setIsOpen, lesson}) => {
                 )}
                 <div/>
             </div>
-            <ButtonWrapper label={"Delete"} style={{marginTop: "3%", float: "right"}}/>
+            <ButtonWrapper label={"Delete"} style={{marginTop: "3%", float: "right"}} onClick={()=>setShowDeleteDialog(true)}/>
+            <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                <DialogBox
+                    deleteFunction={deleteLesson}
+                    setDisplayDialog={setShowDeleteDialog}
+                    prompt={"lesson"}
+                    isModal={true}
+                />
+            </Modal>
         </>
     )
 }
