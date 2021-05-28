@@ -125,7 +125,7 @@ const LandingPage = () => {
 
             <div style={{marginTop: "10%", fontSize: "10px"}}>
 
-                <p style={{textAlign: "center", color: "rgba(0,0,0,0.3)"}}>Projekt zaliczeniowy przedmiotów: Systemy
+                <p style={{textAlign: "center", color: "rgba(0,0,0,0.3)"}}>Projekt zaliczeniowy z przedmiotów: Systemy
                     Informatyczne i Podstawy Programowania Aplikacji Korporacyjncyh</p>
                 <p style={{textAlign: "center", color: "rgba(0,0,0,0.3)"}}>Grupa 2D, 2021</p>
 
