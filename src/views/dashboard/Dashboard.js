@@ -25,10 +25,10 @@ const Dashboard = (props) => {
     const [role, setRole] = useState("");
 
 
+
     useEffect(() => {
         if (!!initialized) {
-            getKeycloakRoles(keycloak, setRole)
-        }
+            getKeycloakRoles(keycloak, setRole)}
     }, [keycloak, initialized])
     return (
         (initialized && keycloak.authenticated ? (
