@@ -1,7 +1,7 @@
 import React from 'react';
 import './TimeCell.css';
 
-const TimeCell = () => {
+const TimeCell = ({time = null}) => {
     const clearClick = e => {
         e.cancelBubble = true;
         if (e.stopPropagation) e.stopPropagation();
@@ -9,7 +9,7 @@ const TimeCell = () => {
 
     return (
         <div className="TimeCell" onClick={clearClick}>
-            8:00
+            {time && time.startTime.substr(0,5) + ' - ' + time.endTime.substr(0,5)}
         </div>
     );
 };
