@@ -13,7 +13,6 @@ const UserProfile = () => {
             keycloak.loadUserProfile()
                 .then((profile) => {
                     setProfile(profile)
-                    console.log(profile)
                 })
                 .catch((error) => console.log(error));
         }
@@ -21,7 +20,7 @@ const UserProfile = () => {
 
     return (
         <div>
-            <Paper style={(window.innerWidth > 1000) ? {width: "40%", marginLeft: "30%", padding: "20px"} : {
+            <Paper style={(window.innerWidth > 1000) ? {width: "35%", marginLeft: "30%", padding: "20px"} : {
                 width: "100%",
                 padding: "10px"
             }}>
@@ -43,21 +42,21 @@ const UserProfile = () => {
                             </Typography>
                         </Paper>
                     </Grid>
-                    {profile && profile.firstName &&
+                    {profile && profile.firstName && profile.firstName.length>1 &&
                     <Grid item>
                         <div className="Profile__label">First Name</div>
                         <div className="Profile__data">
                             {profile.firstName}
                         </div>
                     </Grid>}
-                    {profile && profile.attributes.middleName &&
+                    {profile && profile.attributes.middleName && profile.attributes.middleName.length>1 &&
                     <Grid item>
                         <div className="Profile__label">Middle Name</div>
                         <div className="Profile__data">
                             {profile.attributes.middleName}
                         </div>
                     </Grid>}
-                    {profile && profile.lastName &&
+                    {profile && profile.lastName && profile.lastName.length>1 &&
                     <Grid item>
                         <div className="Profile__label">Last Name</div>
                         <div className="Profile__data">
