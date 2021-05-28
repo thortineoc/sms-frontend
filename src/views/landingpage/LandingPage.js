@@ -1,5 +1,5 @@
 import Typography from "@material-ui/core/Typography";
-import {Grid} from "@material-ui/core";
+import {Grid, Grow, Slide} from "@material-ui/core";
 import school from "./resources/school.png"
 import book from "./resources/book.png"
 import calendar from "./resources/calendar.png"
@@ -11,8 +11,10 @@ import ButtonWrapper from "../../components/Button/ButtonWrapper";
 const LandingPage = () => {
     return (
         <div>
+
             <Grid container direction={"row"} justify="center" alignItems="center" alignContent="flex-end"
                   style={{flexGrow: "1", marginTop: "5%"}} spacing={window.innerWidth < 600 ? 5 : 0}>
+                <Slide direction="right" in={true}  timeout={2000}>
                 <Grid item md={6} sm={12}>
                     <Grid container direction={"column"}>
                         <Grid item>
@@ -42,16 +44,21 @@ const LandingPage = () => {
                             <Grid/>
                         </Grid>
                     </Grid>
-
                 </Grid>
+                </Slide>
+                <Slide direction="left" in={true}  timeout={2000}>
                 <Grid item md={6} sm={12} style={{textAlign: "center"}}>
                     <img src={school} style={{width: "80%", height: "auto"}}/>
                 </Grid>
+                </Slide>
 
             </Grid>
 
+
+
             <Grid container direction={"row"} justify="center" alignItems="center"
                   style={{marginTop: "10%", textAlign: "center"}} spacing={window.innerWidth < 600 ? 10 : 0}>
+                <Grow direction="left" in={true}  timeout={3000}>
                 <Grid item md={4} sm={12}>
                     <Grid container direction={"column"}>
                         <Grid item>
@@ -70,6 +77,8 @@ const LandingPage = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                </Grow>
+                <Grow direction="left" in={true}  timeout={4000}>
                 <Grid item md={4} sm={12}>
                     <Grid container direction={"column"}>
                         <Grid item>
@@ -88,6 +97,8 @@ const LandingPage = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                </Grow>
+                <Grow direction="left" in={true}  timeout={5000}>
                 <Grid item md={4} sm={12}>
                     <Grid container direction={"column"}>
                         <Grid item>
@@ -107,7 +118,9 @@ const LandingPage = () => {
                         </Grid>
                     </Grid>
                 </Grid>
+                </Grow>
             </Grid>
+
 
 
             <div style={{marginTop: "10%", fontSize: "10px"}}>
