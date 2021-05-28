@@ -1,9 +1,9 @@
 import Typography from "@material-ui/core/Typography";
 import {Grid} from "@material-ui/core";
 import school from "./resources/school.png"
-import book from "./resources/boo.png"
+import book from "./resources/book.png"
 import calendar from "./resources/calendar.png"
-import grade from "./resources/school.png"
+import grade from "./resources/grade.png"
 
 import "./LandingPage.css"
 import ButtonWrapper from "../../components/Button/ButtonWrapper";
@@ -44,13 +44,13 @@ const LandingPage = () =>{
 
             <Grid container direction={"row"} justify="center" alignItems="center" style={{marginTop: "10%"}}>
                 <Grid item lg={4} sm={12}>
-                    "ok"
+                    <img src={grade} style={{width: "30%", height: "auto"}}/>
                 </Grid>
                 <Grid item lg={4} sm={12}>
-                    "ok"
+                    <img src={calendar} style={{width: "20%", height: "auto"}}/>
                 </Grid>
                 <Grid item lg={4} sm={12}>
-                    "ok"
+                    <img src={book} style={{width: "20%", height: "auto"}}/>
                 </Grid>
             </Grid>
 
