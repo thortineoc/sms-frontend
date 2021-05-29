@@ -9,7 +9,7 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import * as Yup from "yup";
 
 
-const initialValues = (groups, subjects) => {
+const initialValues = () => {
     return {
         id: '',
         groups: '',
@@ -72,7 +72,7 @@ const AddLesson = () => {
         <>
             <h3>Create lesson</h3>
             <Formik
-                initialValues={initialValues(groups, subjects)}
+                initialValues={initialValues()}
                 validationSchema={validationSchema}
                 validateOnChange={false}
                 onSubmit={onSubmit}
