@@ -7,11 +7,25 @@ import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/Select
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 
+
+const initialValues = () => {
+    return {
+        id: '',
+        groups: '',
+        subject: '',
+        teacher_id: '',
+        weekday: '',
+        room: '',
+        lesson: '',
+        conflict: ''
+    }
+}
+
 const AddLesson = () => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [groups, setGroups] = useState([]);
     const [subjects, setSubjects] = useState([]);
-    const [teachers, setTeachers] = useState([]);
+    const [teacher, setTeacher] = useState([]);
     const [lessons, setLessons] = useState([]);
 
     const fetchData = () => {
@@ -21,6 +35,18 @@ const AddLesson = () => {
                 setGroups(response.data);
             })
             .catch(error => console.log(error))
+        callBackendGet(axiosInstance, "usermanagement-service/subjects", null)
+            .then(response => {
+                console.log(response.data);
+                setSubjects(response.data);
+            })
+            .catch(error => console.log(error))
+        callBackendGet(axiosInstance, "usermanagement-service/users/filter", {role: "TEACHER"})
+            .then(response => {
+                console.log(response.data);
+                setTeacher(response.data);
+            })
+            .catch(error => console.log(error))
     }
 
     useEffect(() => {
@@ -28,7 +54,7 @@ const AddLesson = () => {
     }, []);
 
 
-    const onSubmit = (values, resetForm) => {
+    const onSubmit = (values, {resetForm}) => {
         resetForm();
     }
 
@@ -37,7 +63,9 @@ const AddLesson = () => {
         <>
             <h3>Create lesson</h3>
             <Formik
-                initialValues={''}
+                initialValues={initialValues()}
+                validationSchema={false}
+                validateOnChange={false}
                 onSubmit={onSubmit}
             >
                 {
@@ -62,26 +90,26 @@ const AddLesson = () => {
                                 <SelectFieldWrapper
                                     label="Teacher"
                                     name="teacher"
-                                    options={teachers}
+                                    options={teacher}
                                 />
 
                                 <SelectFieldWrapper
                                     label="Weekday"
                                     name="weekday"
-                                    options={[0,1,2,3,4,5]}
+                                    options={[1,2,3,4,5]}
                                 />
 
                                 <SelectFieldWrapper
                                     label="Lesson"
                                     name="lesson"
-                                    options={lessons}
+                                    options={[1,2,3,4,5,6,7,8,9]}
                                 />
 
-                                <TextFieldWrapper
+                                {/*<TextFieldWrapper
                                     label="Room"
-                                    name="room"
+                                    name="firstName"
                                     type="text"
-                                />
+                                />*/}
 
                                 <ButtonWrapper type="submit" label="Submit" disabled={formik.isSubmitting}/>
                             </Form>

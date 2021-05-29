@@ -7,7 +7,8 @@ import Modal from "../../../../components/Modal/Modal";
 import ManageTimeWindow from "../../components/ManageTimeWindow/ManageTimeWindow";
 import './TimetablesManagement.css';
 import Timetable from "../../components/Timetable/Timetable";
-import smsConfig from "../../../../utilities/configuration";import AddLesson from "../../components/AddLesson/AddLesson";
+import smsConfig from "../../../../utilities/configuration";
+import AddLesson from "../../components/AddLesson/AddLesson";
 
 const TimetablesManagement = () => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
