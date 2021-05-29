@@ -1,6 +1,7 @@
 import {useKeycloak} from "@react-keycloak/web";
 import {useEffect, useState} from "react";
 import getKeycloakRoles from "../../utilities/GetRoles";
+import LandingPage from "../landingpage/LandingPage";
 
 const getDashboard = (role) =>{
     switch (role){
@@ -17,25 +18,23 @@ const getDashboard = (role) =>{
     }
 }
 
-const getWelcomePage = () => {
-    return ("Welcome")
-}
+
 
 const Dashboard = (props) => {
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
 
 
+
     useEffect(() => {
         if (!!initialized) {
-            getKeycloakRoles(keycloak, setRole)
-        }
+            getKeycloakRoles(keycloak, setRole)}
     }, [keycloak, initialized])
     return (
         (initialized && keycloak.authenticated ? (
             getDashboard(role)
             ) : (
-              getWelcomePage()
+              <LandingPage/>
         )))
 }
 

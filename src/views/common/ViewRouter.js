@@ -11,6 +11,7 @@ import TeacherManagement from "../usermanagement/pages/TeachersManagement/Teache
 import Dashboard from "../dashboard/Dashboard";
 import HomeworkDisplayView from "../homework/pages/HomeworkDisplayView/HomeworkDisplayView";
 import TimetablesManagement from "../timetables/pages/TimetablesManagement/TimetablesManagement";
+import UserProfile from "../profile/profile";
 
 function HomeworkDetails() {
     let { id } = useParams();
@@ -30,7 +31,7 @@ const ViewRouter = () => {
                 <HomeworkListView />
             </Route>
             <Route path="/api/usermanagement-service/my-account">
-                USER ACCOUNT
+                <UserProfile/>
             </Route>
             <Route path="/api/homework/:id">
                 <HomeworkDetails />
