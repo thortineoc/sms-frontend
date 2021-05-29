@@ -6,9 +6,10 @@ import {Form, Formik} from "formik";
 import SelectFieldWrapper from "../../../../components/SelectFieldWrapper/SelectFieldWrapper";
 import TextFieldWrapper from "../../../../components/TextFieldWrapper/TextFieldWrapper";
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
+import * as Yup from "yup";
 
 
-const initialValues = () => {
+const initialValues = (groups, subjects) => {
     return {
         id: '',
         groups: '',
@@ -20,6 +21,14 @@ const initialValues = () => {
         conflict: ''
     }
 }
+
+const validationSchema = Yup.object({
+    groups: Yup.string().required('Required'),
+    subject: Yup.string().required('Required'),
+    teacher_id: Yup.string().required('Required'),
+    weekday: Yup.string().required('Required'),
+    lesson: Yup.string().required('Required'),
+})
 
 const AddLesson = () => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
@@ -63,8 +72,8 @@ const AddLesson = () => {
         <>
             <h3>Create lesson</h3>
             <Formik
-                initialValues={initialValues()}
-                validationSchema={false}
+                initialValues={initialValues(groups, subjects)}
+                validationSchema={validationSchema}
                 validateOnChange={false}
                 onSubmit={onSubmit}
             >
@@ -83,13 +92,13 @@ const AddLesson = () => {
 
                                 <SelectFieldWrapper
                                     label="Group"
-                                    name="group"
+                                    name="groups"
                                     options={groups}
                                 />
 
                                 <SelectFieldWrapper
                                     label="Teacher"
-                                    name="teacher"
+                                    name="teacher_id"
                                     options={teacher}
                                 />
 
@@ -105,11 +114,11 @@ const AddLesson = () => {
                                     options={[1,2,3,4,5,6,7,8,9]}
                                 />
 
-                                {/*<TextFieldWrapper
+                                <TextFieldWrapper
                                     label="Room"
-                                    name="firstName"
+                                    name="room"
                                     type="text"
-                                />*/}
+                                />
 
                                 <ButtonWrapper type="submit" label="Submit" disabled={formik.isSubmitting}/>
                             </Form>
