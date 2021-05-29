@@ -7,13 +7,14 @@ import Modal from "../../../../components/Modal/Modal";
 import ManageTimeWindow from "../../components/ManageTimeWindow/ManageTimeWindow";
 import './TimetablesManagement.css';
 import Timetable from "../../components/Timetable/Timetable";
-import smsConfig from "../../../../utilities/configuration";
+import smsConfig from "../../../../utilities/configuration";import AddLesson from "../../components/AddLesson/AddLesson";
 
 const TimetablesManagement = () => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [allGroups, setAllGroups] = useState([]);
     const [group, setGroup] = useState('');
     const [show, setShow] = useState(false);
+    const [showAddLesson, setShowAddLesson] = useState(false);
 
     useEffect(() => {
         fetchGroups();
@@ -43,6 +44,7 @@ const TimetablesManagement = () => {
                     setValue={setGroup}
                 />
                 <div className="TimetablesManagement__button-group">
+                    <ButtonWrapper label="Create lesson" onClick={() => setShowAddLesson(true)} className="TimetablesManagement__button"/>
                     <ButtonWrapper label="Get generated" className="TimetablesManagement__button"/>
                     <ButtonWrapper label="Lessons time" onClick={() => setShow(true)} className="TimetablesManagement__button"/>
                 </div>
@@ -54,6 +56,13 @@ const TimetablesManagement = () => {
                 <Modal isOpen={show} setIsOpen={setShow}>
                     <ManageTimeWindow
                         setIsOpen={setShow}
+                    />
+                </Modal>
+            )}
+            {showAddLesson && (
+                <Modal isOpen={showAddLesson} setIsOpen={setShowAddLesson}>
+                    <AddLesson
+                        setIsOpen={setShowAddLesson}
                     />
                 </Modal>
             )}
