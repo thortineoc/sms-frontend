@@ -15,7 +15,6 @@ const TimetablesManagement = () => {
     const [allGroups, setAllGroups] = useState([]);
     const [group, setGroup] = useState('');
     const [show, setShow] = useState(false);
-    const [showAddLesson, setShowAddLesson] = useState(false);
 
     useEffect(() => {
         fetchGroups();
@@ -45,7 +44,6 @@ const TimetablesManagement = () => {
                     setValue={setGroup}
                 />
                 <div className="TimetablesManagement__button-group">
-                    <ButtonWrapper label="Create lesson" onClick={() => setShowAddLesson(true)} className="TimetablesManagement__button"/>
                     <ButtonWrapper label="Get generated" className="TimetablesManagement__button"/>
                     <ButtonWrapper label="Lessons time" onClick={() => setShow(true)} className="TimetablesManagement__button"/>
                 </div>
@@ -57,13 +55,6 @@ const TimetablesManagement = () => {
                 <Modal isOpen={show} setIsOpen={setShow}>
                     <ManageTimeWindow
                         setIsOpen={setShow}
-                    />
-                </Modal>
-            )}
-            {showAddLesson && (
-                <Modal isOpen={showAddLesson} setIsOpen={setShowAddLesson}>
-                    <AddLesson
-                        setIsOpen={setShowAddLesson}
                     />
                 </Modal>
             )}

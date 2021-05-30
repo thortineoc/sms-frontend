@@ -9,15 +9,15 @@ import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import * as Yup from "yup";
 
 
-const initialValues = () => {
+const initialValues = (day, lesson) => {
     return {
         id: '',
         groups: '',
         subject: '',
         teacher_id: '',
-        weekday: '',
+        weekday: day,
         room: '',
-        lesson: '',
+        lesson: lesson,
         conflict: ''
     }
 }
@@ -30,12 +30,11 @@ const validationSchema = Yup.object({
     lesson: Yup.string().required('Required'),
 })
 
-const AddLesson = () => {
+const AddLesson = (day, lesson) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [groups, setGroups] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [teacher, setTeacher] = useState([]);
-    const [lessons, setLessons] = useState([]);
 
     const fetchData = () => {
         callBackendGet(axiosInstance, "usermanagement-service/groups", null)
@@ -72,7 +71,7 @@ const AddLesson = () => {
         <>
             <h3>Create lesson</h3>
             <Formik
-                initialValues={initialValues()}
+                initialValues={initialValues(day, lesson)}
                 validationSchema={validationSchema}
                 validateOnChange={false}
                 onSubmit={onSubmit}
@@ -100,18 +99,6 @@ const AddLesson = () => {
                                     label="Teacher"
                                     name="teacher_id"
                                     options={teacher}
-                                />
-
-                                <SelectFieldWrapper
-                                    label="Weekday"
-                                    name="weekday"
-                                    options={[1,2,3,4,5]}
-                                />
-
-                                <SelectFieldWrapper
-                                    label="Lesson"
-                                    name="lesson"
-                                    options={[1,2,3,4,5,6,7,8,9]}
                                 />
 
                                 <TextFieldWrapper
