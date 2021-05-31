@@ -30,11 +30,11 @@ const validationSchema = Yup.object({
     lesson: Yup.string().required('Required'),
 })
 
-const AddLesson = (day, lesson) => {
+const AddLesson = ({value}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [groups, setGroups] = useState([]);
     const [subjects, setSubjects] = useState([]);
-    const [teacher, setTeacher] = useState([]);
+    const [teachers, setTeachers] = useState([]);
 
     const fetchData = () => {
         callBackendGet(axiosInstance, "usermanagement-service/groups", null)
@@ -49,10 +49,10 @@ const AddLesson = (day, lesson) => {
                 setSubjects(response.data);
             })
             .catch(error => console.log(error))
-        callBackendGet(axiosInstance, "usermanagement-service/users/filter", {role: "TEACHER"})
+        callBackendGet(axiosInstance, "usermanagement-service/teachers", null)
             .then(response => {
                 console.log(response.data);
-                setTeacher(response.data);
+                setTeachers(response.data);
             })
             .catch(error => console.log(error))
     }
@@ -71,7 +71,7 @@ const AddLesson = (day, lesson) => {
         <>
             <h3>Create lesson</h3>
             <Formik
-                initialValues={initialValues(day, lesson)}
+                initialValues={initialValues(value.weekday, value.lesson)}
                 validationSchema={validationSchema}
                 validateOnChange={false}
                 onSubmit={onSubmit}
@@ -98,7 +98,7 @@ const AddLesson = (day, lesson) => {
                                 <SelectFieldWrapper
                                     label="Teacher"
                                     name="teacher_id"
-                                    options={teacher}
+                                    options={teachers}
                                 />
 
                                 <TextFieldWrapper
