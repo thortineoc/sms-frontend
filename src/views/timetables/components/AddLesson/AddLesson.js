@@ -26,8 +26,6 @@ const validationSchema = Yup.object({
     groups: Yup.string().required('Required'),
     subject: Yup.string().required('Required'),
     teacher_id: Yup.string().required('Required'),
-    weekday: Yup.string().required('Required'),
-    lesson: Yup.string().required('Required'),
 })
 
 const AddLesson = ({value}) => {
