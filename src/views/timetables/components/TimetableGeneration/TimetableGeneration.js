@@ -4,22 +4,61 @@ import smsConfig from "../../../../utilities/configuration";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import './TimetableGeneration.css';
 
-const COLUMNS = ['Teacher ID', 'Full Name', 'Subjects', 'Amount'];
-
 const TimetableGeneration = ({setIsOpen}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [teachers, setTeachers] = useState([]);
     const [config, setConfig] = useState({});
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState({});
+
+    const item = {
+        '3e21ebc7-8247-4757-94f5-ddfdcee74f75': {
+            'Chemistry': 5
+        }
+    }
+
+
+    function Object_assign(target, ...sources) {
+        sources.forEach(source => {
+            Object.keys(source).forEach(key => {
+                const s_val = source[key]
+                const t_val = target[key]
+                target[key] = t_val && s_val && typeof t_val === 'object' && typeof s_val === 'object'
+                    ? Object_assign(t_val, s_val)
+                    : s_val
+            })
+        })
+        return target
+    }
 
     useEffect(() => {
-        console.log(config);
-    }, [config])
+        if(value !== {} && value !== undefined) {
+            const id = Object.keys(value)[0];
+            console.log(id);
+            let sub;
+            if(value[id] !== undefined) {
+                 sub = Object.keys(value[id])[0];
+                 if(config[id] === undefined) {
+                     Object_assign(config, value);
+                 } else {
+                     config[id][sub] = value[id][sub];
+                 }
+            }
+            //if(config[id] === undefined || config[id][sub] === undefined) {
+              //  console.log(value)
+               // Object.assign(...config, value);
+            //} else {
 
+            //}
+        }
+    }, [value])
 
     useEffect(() => {
         fetchData();
     }, [])
+
+    useEffect(() => {
+        console.log(":)))))))))))))) " + config);
+    }, [config])
 
     const fetchData = () => {
         callBackendPost(axiosInstance, "usermanagement-service/users/filter", {"role": "TEACHER"})
@@ -30,19 +69,10 @@ const TimetableGeneration = ({setIsOpen}) => {
     }
     {/*{/*onChange={ () => handleChange(e, teacher, subject)}/>**/}
     const handleChange = (e, teacherId, subjectId) => {
-
-        setConfig({...config}, {[`${teacherId}`]: {
+        setValue({[`${teacherId}`]: {
                 [`${subjectId}`]: e.target.value
             }
         })
-    }
-
-    const handleChange2 = (e, teacherId, subjectId) => {
-        setConfig({teacherId: {
-                subjectId: e.target.value
-            }
-        })
-        //setValue(e.target.value);
     }
 
     return (
@@ -51,9 +81,9 @@ const TimetableGeneration = ({setIsOpen}) => {
             <table className="TimetableGeneration">
                 <thead>
                 <tr>
-                    {COLUMNS.map((item) => (
-                        <th className="TimetableGeneration__header">{item}</th>
-                    ))}
+                    <th className="TimetableGeneration__header">Username</th>
+                    <th className="TimetableGeneration__header">Full name</th>
+                    <th className="TimetableGeneration__header-two">Amount of hours</th>
                 </tr>
                 </thead>
 
@@ -67,8 +97,14 @@ const TimetableGeneration = ({setIsOpen}) => {
                                 subject !== '' && (
                                     <div className="TimetableGeneration__cell-subject">
                                         {subject}
-                                        <input name={teacher + '_' + subject}
-                                               onChange={e => handleChange(e, teacher.id, subject)} />
+                                        <td><input
+                                                type="number" min={0} name={teacher + '_' + subject}
+                                                onChange={e => handleChange(e, teacher.id, subject)}
+                                                style={{width: '100px'}}
+                                                placeholder={
+                                                    item[teacher.id] && item[teacher.id][subject] || 0}
+                                        />
+                                        </td>
                                     </div>
                                 )))}
                         </td>

@@ -8,6 +8,10 @@
     color: gray;
 }
 
+.TimetableGeneration__header-two {
+    color: gray;
+}
+
 .TimetableGeneration__cell {
     border-radius: 0;
     padding: 1%;
@@ -16,6 +20,9 @@
 
 .TimetableGeneration__cell-subject {
     border-bottom: 2px dotted lightskyblue;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
 }
 
 .TimetableGeneration__cell-subject:last-child {

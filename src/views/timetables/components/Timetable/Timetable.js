@@ -31,7 +31,6 @@ const Timetable = ({type}) => {
     }, [])
 
     const lessonIndexesArr = [];
-    console.log(hours.lessonCount)
     for(let i=0; i<hours.lessonCount; i++) {
         lessonIndexesArr.push(i + 'L');
     }
