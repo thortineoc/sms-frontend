@@ -53,17 +53,17 @@ const TimetablesManagement = () => {
                     <SupervisedUserCircleIcon
                         fontSize="large"
                         onClick={() => setShowGenerator(true)}
-                        style={{cursor: "pointer", margin: '2%'}}
+                        style={{cursor: "pointer", margin: '2%', color: 'gray'}}
                     />
                     <WatchLaterIcon
                         fontSize="large"
                         onClick={() => setShowManageTime(true)}
-                        style={{cursor: "pointer", margin: '2%'}}
+                        style={{cursor: "pointer", margin: '2%', color: 'gray'}}
                     />
                     <ErrorIcon
                         fontSize="large"
                         onClick={() => setShowErrors(true)}
-                        style={{cursor: "pointer", margin: '2%'}}
+                        style={{cursor: "pointer", margin: '2%', color: 'gray'}}
                     />
                     <ButtonWrapper label="Generate"  className="TimetablesManagement__button"/>
                 </div>
@@ -82,6 +82,7 @@ const TimetablesManagement = () => {
                 <Modal isOpen={showGenerator} setIsOpen={setShowGenerator}>
                     <TimetableGeneration
                         setIsOpen={setShowGenerator}
+                        group={group}
                     />
                 </Modal>
             )}
