@@ -18,7 +18,7 @@ const TimetableView = () => {
         {role === 'TEACHER' &&
             <Timetable type="TEACHER" />
         }
-        {role === 'STUDENT' || role === 'PARENT' &&
+        {(role === 'STUDENT' || role === 'PARENT') &&
             <Timetable type="STUDENT" />
         }
         </>

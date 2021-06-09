@@ -13,24 +13,6 @@ const TimetableGeneration = ({group}) => {
     const [value, setValue] = useState({});
     const [timetable, setTimetable] = useState([]);
 
-    const item = {
-        '3e21ebc7-8247-4757-94f5-ddfdcee74f75': {
-            'Chemistry': 5
-        }
-    }
-
-    /*
-    const handleSubmit = () => {
-        callBackendPost(axiosInstance, "/config", JSON.stringify(config))
-            .then(response => {
-                alert(JSON.stringify(config, null, 2));
-            })
-            .catch(error => {
-                console.log(error);
-                alert(JSON.stringify(config, null, 2));
-            })
-    }*/
-
     function Object_assign(target, ...sources) {
         sources.forEach(source => {
             Object.keys(source).forEach(key => {
@@ -57,12 +39,6 @@ const TimetableGeneration = ({group}) => {
                      config[id][sub] = value[id][sub];
                  }
             }
-            //if(config[id] === undefined || config[id][sub] === undefined) {
-              //  console.log(value)
-               // Object.assign(...config, value);
-            //} else {
-
-            //}
         }
     }, [value])
 
@@ -70,11 +46,6 @@ const TimetableGeneration = ({group}) => {
         fetchData();
         //fetchConfig();
     }, [])
-
-
-    useEffect(() => {
-        console.log(":)))))))))))))) " + config);
-    }, [config])
 
     const fetchConfig = () => {
         callBackendGet(axiosInstance, "/config", null)
@@ -100,17 +71,11 @@ const TimetableGeneration = ({group}) => {
             .catch(error => console.log(error))
     }
 
-    useEffect(() => {
-        console.log(timetable);
-    }, [timetable])
-
-    {/*{/*onChange={ () => handleChange(e, teacher, subject)}/>**/}
     const handleChange = (e, teacherId, subjectId) => {
         setValue({[`${teacherId}`]: {
                 [`${subjectId}`]: e.target.value
             }
         })
-        //Object_assign(config, obj);
     }
 
     const handleSubmit = () => {
@@ -153,7 +118,11 @@ const TimetableGeneration = ({group}) => {
                 ))}
                 </tbody>
             </table>
-            <ButtonWrapper label="generate" className="TimetablesManagement__button" onClick={handleSubmit} style={{marginTop: '10px', float: 'right', minHeight: '40px'}}/>
+            <ButtonWrapper label="generate"
+                           className="TimetablesManagement__button"
+                           onClick={handleSubmit}
+                           style={{marginTop: '10px', float: 'right', minHeight: '40px'}}
+            />
         </div>
     )
 }

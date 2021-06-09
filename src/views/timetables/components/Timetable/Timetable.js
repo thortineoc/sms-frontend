@@ -20,19 +20,15 @@ const Timetable = ({type, group}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [hours, setHours] = useState({});
     const [timetable, setTimetable] = useState([]);
+    const [teachers, setTeachers] = useState([]);
+    const [classes, setClasses] = useState([]);
 
     const fetchTimetable = () => {
         let url = `/timetable-service/timetables/${group}`;
-        switch ({type}) {
-            case 'ADMIN':
-                url += '1A';
-                break;
-            case  'STUDENT':
-                url += 'students';
-                break;
-            case  'TEACHER':
-                url += 'teacher';
-                break;
+        if(type === 'STUDENT') {
+            url = '/timetable-service/timetables/student';
+        } else if(type === 'TEACHER') {
+            url = '/timetable-service/timetables/teacher';
         }
 
         callBackendGet(axiosInstance, url, null)
@@ -74,6 +70,25 @@ const Timetable = ({type, group}) => {
 
     }, [group])
 
+
+    useEffect(() => {
+        setClasses(timetable['lessons']);
+        setTeachers(timetable['teachers']);
+    },[timetable])
+
+    if(classes !== [] && teachers !== {} && classes !== undefined && teachers !== undefined) {
+        classes.forEach((day, dayId) => {
+            day.forEach((lesson, lessonId) => {
+                Object.keys(teachers).forEach(id => {
+                    if(lesson && lesson.teacherId === id) {
+                        const name = teachers[id].firstName + " " + teachers[id].lastName;
+                        classes[dayId][lessonId] = {...lesson, teacher: name}
+                    }
+                })
+            })
+        })
+    }
+
     const lessonIndexesArr = [];
     for(let i=0; i<hours.lessonCount; i++) {
         lessonIndexesArr.push(i + 'L');
@@ -92,7 +107,7 @@ const Timetable = ({type, group}) => {
                 <tbody>
                 {
                     lessonIndexesArr.map((ix) => (
-                        <TimetableRow lessonId={ix} config={hours.config} type={type} timetable={timetable} />
+                        <TimetableRow lessonId={ix} config={hours.config} type={type} timetable={classes} />
                     ))
                 }
                 </tbody>
