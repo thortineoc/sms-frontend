@@ -3,6 +3,7 @@ import useAxios from "../../../../utilities/useAxios";
 import smsConfig from "../../../../utilities/configuration";
 import callBackendPost from "../../../../utilities/CallBackendPost";
 import './TimetableGeneration.css';
+import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 
 const TimetableGeneration = ({setIsOpen}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
@@ -14,6 +15,12 @@ const TimetableGeneration = ({setIsOpen}) => {
         '3e21ebc7-8247-4757-94f5-ddfdcee74f75': {
             'Chemistry': 5
         }
+    }
+
+    const handleSubmit = () => {
+        setTimeout(() => {
+            alert(JSON.stringify(config, null, 2));
+        }, 500);
     }
 
 
@@ -73,6 +80,7 @@ const TimetableGeneration = ({setIsOpen}) => {
                 [`${subjectId}`]: e.target.value
             }
         })
+        //Object_assign(config, obj);
     }
 
     return (
@@ -112,6 +120,7 @@ const TimetableGeneration = ({setIsOpen}) => {
                 ))}
                 </tbody>
             </table>
+            <ButtonWrapper label="Save" className="TimetablesManagement__button" onClick={handleSubmit}/>
         </div>
     )
 }

@@ -9,6 +9,10 @@ import './TimetablesManagement.css';
 import Timetable from "../../components/Timetable/Timetable";
 import smsConfig from "../../../../utilities/configuration";
 import TimetableGeneration from "../../components/TimetableGeneration/TimetableGeneration";
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import WatchLaterIcon from '@material-ui/icons/WatchLater';
+import ErrorIcon from '@material-ui/icons/Error';
+import ErrorsWindow from "../../components/ErrorsWindow/ErrorsWindow";
 
 const TimetablesManagement = () => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
@@ -16,6 +20,7 @@ const TimetablesManagement = () => {
     const [group, setGroup] = useState('');
     const [showManageTime, setShowManageTime] = useState(false);
     const [showGenerator, setShowGenerator] = useState(false);
+    const [showErrors, setShowErrors] = useState(false);
 
     useEffect(() => {
         fetchGroups();
@@ -45,8 +50,22 @@ const TimetablesManagement = () => {
                     setValue={setGroup}
                 />
                 <div className="TimetablesManagement__button-group">
-                    <ButtonWrapper label="Get generated" onClick={() => setShowGenerator(true)} className="TimetablesManagement__button"/>
-                    <ButtonWrapper label="Lessons time" onClick={() => setShowManageTime(true)} className="TimetablesManagement__button"/>
+                    <SupervisedUserCircleIcon
+                        fontSize="large"
+                        onClick={() => setShowGenerator(true)}
+                        style={{cursor: "pointer", margin: '2%'}}
+                    />
+                    <WatchLaterIcon
+                        fontSize="large"
+                        onClick={() => setShowManageTime(true)}
+                        style={{cursor: "pointer", margin: '2%'}}
+                    />
+                    <ErrorIcon
+                        fontSize="large"
+                        onClick={() => setShowErrors(true)}
+                        style={{cursor: "pointer", margin: '2%'}}
+                    />
+                    <ButtonWrapper label="Generate"  className="TimetablesManagement__button"/>
                 </div>
             </div>
 
@@ -63,6 +82,13 @@ const TimetablesManagement = () => {
                 <Modal isOpen={showGenerator} setIsOpen={setShowGenerator}>
                     <TimetableGeneration
                         setIsOpen={setShowGenerator}
+                    />
+                </Modal>
+            )}
+            {showErrors && (
+                <Modal isOpen={showErrors} setIsOpen={setShowErrors}>
+                    <ErrorsWindow
+                        setIsOpen={setShowErrors}
                     />
                 </Modal>
             )}
