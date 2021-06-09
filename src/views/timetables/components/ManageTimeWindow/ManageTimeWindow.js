@@ -147,8 +147,6 @@ const ManageTimeWindow = ({setIsOpen}) => {
                                             </Grid>
                                         )}
 
-
-
                                         <ButtonWrapper
                                             type="submit"
                                             label="Save"

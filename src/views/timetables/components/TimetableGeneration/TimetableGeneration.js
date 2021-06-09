@@ -120,7 +120,7 @@ const TimetableGeneration = ({setIsOpen}) => {
                 ))}
                 </tbody>
             </table>
-            <ButtonWrapper label="Save" className="TimetablesManagement__button" onClick={handleSubmit}/>
+            <ButtonWrapper label="Save" className="TimetablesManagement__button" onClick={handleSubmit} style={{marginTop: '10px'}}/>
         </div>
     )
 }
