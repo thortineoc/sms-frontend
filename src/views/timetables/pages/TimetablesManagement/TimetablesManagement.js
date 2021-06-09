@@ -2,16 +2,15 @@ import React, {useEffect, useState} from 'react';
 import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import SimpleSelect from "../../../../components/SimpleSelect/SimpleSelect";
-import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import Modal from "../../../../components/Modal/Modal";
 import ManageTimeWindow from "../../components/ManageTimeWindow/ManageTimeWindow";
 import './TimetablesManagement.css';
 import Timetable from "../../components/Timetable/Timetable";
 import smsConfig from "../../../../utilities/configuration";
 import TimetableGeneration from "../../components/TimetableGeneration/TimetableGeneration";
-import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import ErrorIcon from '@material-ui/icons/Error';
+import ImportExportRoundedIcon from '@material-ui/icons/ImportExportRounded';
 import ErrorsWindow from "../../components/ErrorsWindow/ErrorsWindow";
 
 const TimetablesManagement = () => {
@@ -50,7 +49,7 @@ const TimetablesManagement = () => {
                     setValue={setGroup}
                 />
                 <div className="TimetablesManagement__button-group">
-                    <SupervisedUserCircleIcon
+                    <ImportExportRoundedIcon
                         fontSize="large"
                         onClick={() => setShowGenerator(true)}
                         style={{cursor: "pointer", margin: '2%', color: 'gray'}}
@@ -65,11 +64,10 @@ const TimetablesManagement = () => {
                         onClick={() => setShowErrors(true)}
                         style={{cursor: "pointer", margin: '2%', color: 'gray'}}
                     />
-                    <ButtonWrapper label="Generate"  className="TimetablesManagement__button"/>
                 </div>
             </div>
 
-            <Timetable type="admin" />
+            <Timetable type="ADMIN" group={group} />
 
             {showManageTime && (
                 <Modal isOpen={showManageTime} setIsOpen={setShowManageTime}>

@@ -153,7 +153,7 @@ const TimetableGeneration = ({group}) => {
                 ))}
                 </tbody>
             </table>
-            <ButtonWrapper label="Save" className="TimetablesManagement__button" onClick={handleSubmit} style={{marginTop: '10px'}}/>
+            <ButtonWrapper label="generate" className="TimetablesManagement__button" onClick={handleSubmit} style={{marginTop: '10px', float: 'right', minHeight: '40px'}}/>
         </div>
     )
 }

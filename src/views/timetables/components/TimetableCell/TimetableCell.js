@@ -1,8 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './TimetableCell.css';
 import TimeCell from "../TimeCell/TimeCell";
 import LessonCell from "../LessonCell/LessonCell";
 import {ClassesContext} from '../TimetableContextApi/TimetableContext';
+import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
+import smsConfig from "../../../../utilities/configuration";
 
 const getRowNumber = (id) => {
     let pos = id.indexOf('L');
@@ -15,8 +18,7 @@ const getColNumber = (id) => {
     return Number.parseInt(id.slice(start, end));
 }
 
-const TimetableCell = ({id, config, type}) => {
-    const [value, setValue] = useContext(ClassesContext);
+const TimetableCell = ({id, config, type, timetable}) => {
 
     const handleClick = e => {
         e.cancelBubble = true;
@@ -25,14 +27,14 @@ const TimetableCell = ({id, config, type}) => {
     }
 
     return (
-        <td className="TimetableCell" onClick={type === 'admin' && handleClick}>
-            <div className={`TimetableCell__content ${type === 'admin' ? 'TimetableCell__content-admin' : ''}`}>
+        <td className="TimetableCell" onClick={type === 'ADMIN' && handleClick}>
+            <div className={`TimetableCell__content ${type === 'ADMIN' ? 'TimetableCell__content-admin' : ''}`}>
                 { getColNumber(id) === -1 ? (
                     <TimeCell time={config[getRowNumber(id)]}/>
                 ) : (
-                    value   && value[getColNumber(id)]
-                            && value[getColNumber(id)][getRowNumber(id)]
-                            && <LessonCell value={value[getColNumber(id)][getRowNumber(id)]} type={type} />
+                    timetable && timetable[getColNumber(id)]
+                              && timetable[getColNumber(id)][getRowNumber(id)]
+                              && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} />
                 )}
             </div>
         </td>
