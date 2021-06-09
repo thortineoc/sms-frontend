@@ -15,14 +15,14 @@ const LessonCell = ({value, type}) => {
     }
 
     return (
-        <div className="LessonCell__wrapper" onClick={type === 'admin' && clearClick}>
-            <div className={`LessonCell ${type === 'admin' ? 'LessonCell__admin' : ''}`}
-                 onClick={type === 'admin' && handleClick}>
+        <div className="LessonCell__wrapper" onClick={type === 'ADMIN' && clearClick}>
+            <div className={`LessonCell ${type === 'ADMIN' ? 'LessonCell__admin' : ''}`}
+                 onClick={type === 'ADMIN' && handleClick}>
                 {value && value.subject && <div><strong>{value.subject}</strong></div>}
-                {value && value.teacher && <div><span style={{color: '#444'}}>Teacher: </span>{value.teacher}</div>}
+                {type !== 'TEACHER' && value && value.teacher && <div><span style={{color: '#444'}}>Teacher: </span>{value.teacher}</div>}
                 {value && value.room && <div><span style={{color: '#444'}}>Room: </span>{value.room}</div>}
             </div>
-            {type === 'admin' &&
+            {type === 'ADMIN' &&
             <Modal isOpen={showEdit} setIsOpen={setShowEdit}>
                 <EditDeleteLesson
                     setIsOpen={setShowEdit}

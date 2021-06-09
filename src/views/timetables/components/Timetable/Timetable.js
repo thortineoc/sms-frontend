@@ -16,47 +16,102 @@ const COLUMNS = [
     'Friday'
 ]
 
-const Timetable = ({type}) => {
+const Timetable = ({type, group}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [hours, setHours] = useState({});
-    const fetchData = () => {
+    const [timetable, setTimetable] = useState([]);
+    const [teachers, setTeachers] = useState([]);
+    const [classes, setClasses] = useState([]);
+
+    const fetchTimetable = () => {
+        let url = `/timetable-service/timetables/${group}`;
+        if(type === 'STUDENT') {
+            url = '/timetable-service/timetables/student';
+        } else if(type === 'TEACHER') {
+            url = '/timetable-service/timetables/teacher';
+        }
+
+        callBackendGet(axiosInstance, url, null)
+            .then(response => {
+                setTimetable(response.data);
+            })
+            .catch(error => console.log(error))
+    }
+
+    const fetchHours = () => {
         callBackendGet(axiosInstance, "/timetable-service/config", null)
             .then(response => {
                 setHours(response.data);
             })
             .catch(error => console.log(error))
     }
+
     useEffect(() => {
-        fetchData();
+        fetchHours();
+        if(type === 'ADMIN') {
+            if(group !== undefined) {
+                fetchTimetable();
+            }
+        } else {
+            fetchTimetable();
+        }
+
     }, [])
 
+    useEffect(() => {
+        fetchHours();
+        if(type === 'ADMIN') {
+            if(group !== undefined) {
+                fetchTimetable();
+            }
+        } else {
+            fetchTimetable();
+        }
+
+    }, [group])
+
+
+    useEffect(() => {
+        setClasses(timetable['lessons']);
+        setTeachers(timetable['teachers']);
+    },[timetable])
+
+    if(classes !== [] && teachers !== {} && classes !== undefined && teachers !== undefined) {
+        classes.forEach((day, dayId) => {
+            day.forEach((lesson, lessonId) => {
+                Object.keys(teachers).forEach(id => {
+                    if(lesson && lesson.teacherId === id) {
+                        const name = teachers[id].firstName + " " + teachers[id].lastName;
+                        classes[dayId][lessonId] = {...lesson, teacher: name}
+                    }
+                })
+            })
+        })
+    }
+
     const lessonIndexesArr = [];
-    console.log(hours.lessonCount)
     for(let i=0; i<hours.lessonCount; i++) {
         lessonIndexesArr.push(i + 'L');
     }
 
-    console.log(hours);
     return (
         <div>
-            <ClassesProvider>
-                <table className="Timetable">
-                    <thead>
-                    <tr>
-                        {COLUMNS.map((item) => (
-                            <th className="Timetable__header">{item}</th>
-                        ))}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        lessonIndexesArr.map((ix) => (
-                            <TimetableRow lessonId={ix} config={hours.config} type={type} />
-                        ))
-                    }
-                    </tbody>
-                </table>
-            </ClassesProvider>
+            <table className="Timetable">
+                <thead>
+                <tr>
+                    {COLUMNS.map((item) => (
+                        <th className="Timetable__header">{item}</th>
+                    ))}
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    lessonIndexesArr.map((ix) => (
+                        <TimetableRow lessonId={ix} config={hours.config} type={type} timetable={classes} />
+                    ))
+                }
+                </tbody>
+            </table>
         </div>
     );
 };
