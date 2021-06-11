@@ -6,6 +6,9 @@ import {ClassesContext} from '../TimetableContextApi/TimetableContext';
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import smsConfig from "../../../../utilities/configuration";
+import TimetableRow from "../TimetableRow/TimetableRow";
+import Modal from "../../../../components/Modal/Modal";
+
 
 const getRowNumber = (id) => {
     let pos = id.indexOf('L');
@@ -18,12 +21,12 @@ const getColNumber = (id) => {
     return Number.parseInt(id.slice(start, end));
 }
 
-const TimetableCell = ({id, config, type, timetable}) => {
+const TimetableCell = ({id, config, type, timetable, refresh, setRefresh, group}) => {
+
+    const [showAdd, setShowAdd] = useState(false);
 
     const handleClick = e => {
-        e.cancelBubble = true;
-        if (e.stopPropagation) e.stopPropagation();
-        alert(id);
+        setShowAdd(true);
     }
 
     return (
@@ -34,9 +37,12 @@ const TimetableCell = ({id, config, type, timetable}) => {
                 ) : (
                     timetable && timetable[getColNumber(id)]
                               && timetable[getColNumber(id)][getRowNumber(id)]
-                              && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} />
+                              && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} refresh={refresh} setRefresh={setRefresh}/>
                 )}
             </div>
+            {showAdd && <Modal isOpen={showAdd} setIsOpen={setShowAdd}>
+                {"Lesson: " + id.charAt(0) + " Day: " + id.charAt(2) + " Group: " + group + " teacher/subject/room"}
+            </Modal>}
         </td>
     );
 }
