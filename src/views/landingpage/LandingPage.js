@@ -19,16 +19,16 @@ const LandingPage = () => {
                     <Grid container direction={"column"}>
                         <Grid item>
                             <Typography variant="h3"
-                                        style={{width: "80%", marginLeft: "5%", fontFamily: 'Roboto', color: ""}}>
+                                        style={{width: "80%", marginLeft: "5%", fontFamily: 'sans-serif', color: ""}}>
                                 School Management System
                             </Typography>
                         </Grid>
                         <Grid item style={{marginTop: "2%"}}>
                             <p style={window.innerWidth < 600 ? {
                                 marginLeft: "5%",
-                                fontFamily: 'Roboto',
+                                fontFamily: 'sans-serif',
                                 textAlign: "justify"
-                            } : {width: "60%", marginLeft: "5%", fontFamily: 'Roboto', textAlign: "justify"}}>
+                            } : {width: "60%", marginLeft: "5%", fontFamily: 'sans-serif', textAlign: "justify"}}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -65,12 +65,12 @@ const LandingPage = () => {
                             <img src={grade} style={{width: "30%", height: "auto"}}/>
                         </Grid>
                         <Grid item style={{marginTop: "5%"}}>
-                            <Typography variant="p" style={{fontFamily: 'Roboto', fontSize: "1.5em"}}>
+                            <Typography variant="p" style={{fontFamily: 'sans-serif', fontSize: "1.5em"}}>
                                 Grades
                             </Typography>
                         </Grid>
                         <Grid item style={{marginTop: "2%", width: "60%", marginLeft: "20%", textAlign: "justify"}}>
-                            <Typography variant="p" style={{fontFamily: 'Roboto'}}>
+                            <Typography variant="p" style={{fontFamily: 'sans-serif'}}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                             </Typography>
@@ -85,12 +85,12 @@ const LandingPage = () => {
                             <img src={calendar} style={{width: "30%", height: "auto"}}/>
                         </Grid>
                         <Grid item style={{marginTop: "5%"}}>
-                            <Typography variant="p" style={{fontFamily: 'Roboto', fontSize: "1.5em"}}>
+                            <Typography variant="p" style={{fontFamily: 'sans-serif', fontSize: "1.5em"}}>
                                 Timetable
                             </Typography>
                         </Grid>
                         <Grid item style={{marginTop: "2%", width: "60%", marginLeft: "20%", textAlign: "justify"}}>
-                            <Typography variant="p" style={{fontFamily: 'Roboto'}}>
+                            <Typography variant="p" style={{fontFamily: 'sans-serif'}}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                             </Typography>
@@ -105,12 +105,12 @@ const LandingPage = () => {
                             <img src={book} style={{width: "30%", height: "auto"}}/>
                         </Grid>
                         <Grid item style={{marginTop: "5%"}}>
-                            <Typography variant="p" style={{fontFamily: 'Roboto', fontSize: "1.5em"}}>
+                            <Typography variant="p" style={{fontFamily: 'sans-serif', fontSize: "1.5em"}}>
                                 Homeworks
                             </Typography>
                         </Grid>
                         <Grid item style={{marginTop: "2%", width: "60%", marginLeft: "20%", textAlign: "justify"}}>
-                            <Typography variant="p" style={{fontFamily: 'Roboto'}}>
+                            <Typography variant="p" style={{fontFamily: 'sans-serif'}}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                 incididunt ut
                                 labore et dolore magna aliqua. Ut enim ad minim veniam,
