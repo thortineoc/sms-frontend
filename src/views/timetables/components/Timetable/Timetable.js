@@ -114,7 +114,7 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
                 <tbody>
                 {
                     lessonIndexesArr.map((ix) => (
-                        <TimetableRow lessonId={ix} config={hours.config} type={type} timetable={classes} refresh={refresh} setRefresh={setRefresh}/>
+                        <TimetableRow lessonId={ix} config={hours.config} type={type} timetable={classes} refresh={refresh} setRefresh={setRefresh} group={group}/>
                     ))
                 }
                 </tbody>

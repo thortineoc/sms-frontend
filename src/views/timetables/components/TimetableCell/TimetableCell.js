@@ -21,7 +21,7 @@ const getColNumber = (id) => {
     return Number.parseInt(id.slice(start, end));
 }
 
-const TimetableCell = ({id, config, type, timetable, refresh, setRefresh}) => {
+const TimetableCell = ({id, config, type, timetable, refresh, setRefresh, group}) => {
 
     const [showAdd, setShowAdd] = useState(false);
 
@@ -40,9 +40,9 @@ const TimetableCell = ({id, config, type, timetable, refresh, setRefresh}) => {
                               && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} refresh={refresh} setRefresh={setRefresh}/>
                 )}
             </div>
-            <Modal isOpen={showAdd} setIsOpen={setShowAdd}>
-                {"Lesson: " + id.charAt(0) + "day " + id.charAt(2)}
-            </Modal>
+            {showAdd && <Modal isOpen={showAdd} setIsOpen={setShowAdd}>
+                {"Lesson: " + id.charAt(0) + " Day: " + id.charAt(2) + " Group: " + group + " teacher/subject/room"}
+            </Modal>}
         </td>
     );
 }
