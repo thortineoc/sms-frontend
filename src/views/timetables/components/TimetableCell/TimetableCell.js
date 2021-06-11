@@ -7,6 +7,8 @@ import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import smsConfig from "../../../../utilities/configuration";
 import TimetableRow from "../TimetableRow/TimetableRow";
+import Modal from "../../../../components/Modal/Modal";
+
 
 const getRowNumber = (id) => {
     let pos = id.indexOf('L');
@@ -21,10 +23,10 @@ const getColNumber = (id) => {
 
 const TimetableCell = ({id, config, type, timetable, refresh, setRefresh}) => {
 
+    const [showAdd, setShowAdd] = useState(false);
+
     const handleClick = e => {
-        e.cancelBubble = true;
-        if (e.stopPropagation) e.stopPropagation();
-        alert(id);
+        setShowAdd(true);
     }
 
     return (
@@ -38,6 +40,9 @@ const TimetableCell = ({id, config, type, timetable, refresh, setRefresh}) => {
                               && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} refresh={refresh} setRefresh={setRefresh}/>
                 )}
             </div>
+            <Modal isOpen={showAdd} setIsOpen={setShowAdd}>
+                {"Lesson: " + id.charAt(0) + "day " + id.charAt(2)}
+            </Modal>
         </td>
     );
 }
