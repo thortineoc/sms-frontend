@@ -7,32 +7,60 @@ import {Grid, IconButton} from "@material-ui/core";
 import * as Yup from "yup";
 import Modal from "../../../../components/Modal/Modal";
 import DialogBox from "../../../../components/DialogBox/DialogBox";
+import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import useAxios from "../../../../utilities/useAxios";
+import smsConfig from "../../../../utilities/configuration";
+import callBackendPost from "../../../../utilities/CallBackendPost";
 
 
 const validationSchema = Yup.object({
     room: Yup.string().required('Required')
 })
 
-const EditDeleteLesson = ({setIsOpen, lesson}) => {
+const EditDeleteLesson = ({setIsOpen, lesson, refresh, setRefresh}) => {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const axiosInstance = useAxios(smsConfig.haproxyUrl);
 
     const onSubmit = (values) => {
-        console.log(values)
-        setIsOpen(false)
+        let val = values;
+        delete val.teacher;
+        delete val.conflicts;
+
+        let data = {
+            lessons: [val]
+        }
+
+        callBackendPost(axiosInstance, "/timetable-service/timetables", data)
+            .then(()=>{
+                setRefresh(true);
+                setIsOpen(false);
+            })
+            .catch(error => console.log(error))
     }
 
     const deleteLesson = () => {
-        console.log("delete lesson")
-        setIsOpen(false)
+        callBackendDelete(axiosInstance, "/timetable-service/timetables/id/"+lesson.id)
+            .then(()=>{
+                setRefresh(true);
+                setIsOpen(false);
+            })
+            .catch(error => console.log(error))
+
     }
 
     return (
         <>
-            {(true) &&
+            {(lesson.conflicts.length>0) &&
             <div>
-                <div className="EditDeleteLessonConflict__label">Conflict</div>
+                <div className="EditDeleteLessonConflict__label">Conflicts</div>
                 <div id="homework_subject" className="EditDeleteLessonConflict__data">
-                    This lesson has a conflict with:...
+                    {lesson.conflicts.map((value, index, array)=>{
+                        return (
+                            <div>
+                                {index+1 + ". lesson: " + (parseInt(value.lesson, 10)+1) + ", group: " + value.group + ", subject: " + value.subject}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>}
             <div>

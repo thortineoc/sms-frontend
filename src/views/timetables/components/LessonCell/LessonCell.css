@@ -14,6 +14,23 @@
     min-height: 100px;
 }
 
+.LessonCellError {
+    border-radius: 5px;
+    padding: 5%;
+    height: 80%;
+    width: 80%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    background-color: lightcoral;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    word-wrap: break-word;
+    word-break: break-word;
+    margin: 20px 0;
+    min-height: 100px;
+}
+
+
 .LessonCell__admin {
     cursor: pointer;
     -webkit-transition: -webkit-transform 0.4s ease-in-out;
@@ -25,6 +42,16 @@
     -webkit-transform: scale(1.05);
 }
 
+.LessonCell__adminError {
+    cursor: pointer;
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+    transition: background-color .7s, transform 0.4s ease-in-out;
+}
+
+.LessonCell__adminError:hover {
+    background-color: rgb(243, 33, 33);
+    -webkit-transform: scale(1.05);
+}
 
 
 .LessonCell__wrapper {

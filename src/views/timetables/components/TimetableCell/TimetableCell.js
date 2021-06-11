@@ -6,6 +6,7 @@ import {ClassesContext} from '../TimetableContextApi/TimetableContext';
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import useAxios from "../../../../utilities/useAxios";
 import smsConfig from "../../../../utilities/configuration";
+import TimetableRow from "../TimetableRow/TimetableRow";
 
 const getRowNumber = (id) => {
     let pos = id.indexOf('L');
@@ -18,7 +19,7 @@ const getColNumber = (id) => {
     return Number.parseInt(id.slice(start, end));
 }
 
-const TimetableCell = ({id, config, type, timetable}) => {
+const TimetableCell = ({id, config, type, timetable, refresh, setRefresh}) => {
 
     const handleClick = e => {
         e.cancelBubble = true;
@@ -34,7 +35,7 @@ const TimetableCell = ({id, config, type, timetable}) => {
                 ) : (
                     timetable && timetable[getColNumber(id)]
                               && timetable[getColNumber(id)][getRowNumber(id)]
-                              && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} />
+                              && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} refresh={refresh} setRefresh={setRefresh}/>
                 )}
             </div>
         </td>

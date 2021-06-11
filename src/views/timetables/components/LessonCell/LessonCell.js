@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import './LessonCell.css'
 import Modal from "../../../../components/Modal/Modal";
 import EditDeleteLesson from "../EditDeleteLesson/EditDeleteLesson";
+import TimetableRow from "../TimetableRow/TimetableRow";
 
-const LessonCell = ({value, type}) => {
+const LessonCell = ({value, type, refresh, setRefresh}) => {
     const [showEdit, setShowEdit] = useState(false);
     const handleClick = () => {
         setShowEdit(true)
@@ -16,7 +17,7 @@ const LessonCell = ({value, type}) => {
 
     return (
         <div className="LessonCell__wrapper" onClick={type === 'ADMIN' && clearClick}>
-            <div className={`LessonCell ${type === 'ADMIN' ? 'LessonCell__admin' : ''}`}
+            <div className={(type === "ADMIN" ? (value && value.conflicts.length>0 ? "LessonCellError LessonCell__adminError" : "LessonCell LessonCell__admin"): "LessonCell ")}
                  onClick={type === 'ADMIN' && handleClick}>
                 {value && value.subject && <div><strong>{value.subject}</strong></div>}
                 {type !== 'TEACHER' && value && value.teacher && <div><span style={{color: '#444'}}>Teacher: </span>{value.teacher}</div>}
@@ -27,6 +28,7 @@ const LessonCell = ({value, type}) => {
                 <EditDeleteLesson
                     setIsOpen={setShowEdit}
                     lesson={value}
+                    refresh={refresh} setRefresh={setRefresh}
                 />
             </Modal>
             }

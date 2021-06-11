@@ -24,7 +24,9 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
     const [classes, setClasses] = useState([]);
 
     useEffect(() => {
-        setRefresh(false);
+        if(setRefresh){
+            setRefresh(false);
+        }
         fetchTimetable();
     }, [setRefresh, refresh])
 
@@ -112,7 +114,7 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
                 <tbody>
                 {
                     lessonIndexesArr.map((ix) => (
-                        <TimetableRow lessonId={ix} config={hours.config} type={type} timetable={classes} />
+                        <TimetableRow lessonId={ix} config={hours.config} type={type} timetable={classes} refresh={refresh} setRefresh={setRefresh}/>
                     ))
                 }
                 </tbody>
