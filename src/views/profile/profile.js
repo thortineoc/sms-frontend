@@ -36,7 +36,7 @@ const UserProfile = () => {
                                 textAlign: "center",
                                 paddingTop: "45px",
                                 color: "white",
-                                fontFamily: "Roboto"
+                                fontFamily: "sans-serif"
                             }}>
                                 {profile && profile.firstName && profile.firstName.length > 0 ? (profile.firstName.charAt(0).toUpperCase()) : ("")}{profile && profile.lastName && profile.lastName.length > 0 ? (profile.lastName.charAt(0).toUpperCase()) : ("")}
                             </Typography>

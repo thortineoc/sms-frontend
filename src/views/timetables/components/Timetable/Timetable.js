@@ -16,12 +16,17 @@ const COLUMNS = [
     'Friday'
 ]
 
-const Timetable = ({type, group}) => {
+const Timetable = ({type, group, setRefresh, refresh}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [hours, setHours] = useState({});
     const [timetable, setTimetable] = useState([]);
     const [teachers, setTeachers] = useState([]);
     const [classes, setClasses] = useState([]);
+
+    useEffect(() => {
+        setRefresh(false);
+        fetchTimetable();
+    }, [setRefresh, refresh])
 
     const fetchTimetable = () => {
         let url = `/timetable-service/timetables/${group}`;
