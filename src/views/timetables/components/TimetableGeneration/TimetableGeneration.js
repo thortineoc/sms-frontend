@@ -6,7 +6,7 @@ import './TimetableGeneration.css';
 import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 
-const TimetableGeneration = ({group}) => {
+const TimetableGeneration = ({group, setIsOpen, setRefresh, refresh}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [teachers, setTeachers] = useState([]);
     const [config, setConfig] = useState({});
@@ -66,7 +66,9 @@ const TimetableGeneration = ({group}) => {
     const generateTimetable = () => {
         callBackendPost(axiosInstance, `/timetable-service/timetables/generate/${group}`, JSON.stringify(config))
             .then(response => {
-                setTimetable(response.data);
+                //setTimetable(response.data);
+                setRefresh(true);
+                setIsOpen(false);
             })
             .catch(error => console.log(error))
     }
@@ -80,7 +82,6 @@ const TimetableGeneration = ({group}) => {
 
     const handleSubmit = () => {
         generateTimetable();
-        alert(JSON.stringify(timetable, null, 2));
     }
 
     return (

@@ -20,6 +20,8 @@ const TimetablesManagement = () => {
     const [showManageTime, setShowManageTime] = useState(false);
     const [showGenerator, setShowGenerator] = useState(false);
     const [showErrors, setShowErrors] = useState(false);
+    const [refresh, setRefresh] = useState(false);
+
 
     useEffect(() => {
         fetchGroups();
@@ -67,7 +69,7 @@ const TimetablesManagement = () => {
                 </div>
             </div>
 
-            <Timetable type="ADMIN" group={group} />
+            <Timetable type="ADMIN" group={group} refresh={refresh} setRefresh={setRefresh}/>
 
             {showManageTime && (
                 <Modal isOpen={showManageTime} setIsOpen={setShowManageTime}>
@@ -81,6 +83,8 @@ const TimetablesManagement = () => {
                     <TimetableGeneration
                         setIsOpen={setShowGenerator}
                         group={group}
+                        refresh={refresh}
+                        setRefresh={setRefresh}
                     />
                 </Modal>
             )}
