@@ -24,7 +24,7 @@ Scenario('can login to admin account and logout', ({I}) => {
     //homepage again
     I.click('Log out');
     I.see('School Management System');
-    I.see('Welcome');
+    //I.see('Welcome');
 });
 
 Scenario('can create and delete group', ({I}) => {

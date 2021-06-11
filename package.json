@@ -21,6 +21,7 @@
         "material-ui-search-bar": "^1.0.0",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",
+        "react-awesome-reveal": "^3.7.1",
         "react-dom": "^17.0.2",
         "react-scripts": "4.0.3",
         "resq": "^1.10.0",
@@ -66,7 +67,7 @@
         "@material-ui/icons": "^4.11.2",
         "codeceptjs": "^3.0.6",
         "keycloak-js": "^12.0.4",
-        "playwright": "^1.10.0",
+        "playwright": "^1.11.1",
         "react-router-dom": "^5.2.0"
     }
 }

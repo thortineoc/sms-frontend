@@ -1,12 +1,14 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './TimetableCell.css';
 import TimeCell from "../TimeCell/TimeCell";
 import LessonCell from "../LessonCell/LessonCell";
 import {ClassesContext} from '../TimetableContextApi/TimetableContext';
-import AddLesson from "../AddLesson/AddLesson";
-import ButtonWrapper from "../../../../components/Button/ButtonWrapper";
+import callBackendGet from "../../../../utilities/CallBackendGet";
+import useAxios from "../../../../utilities/useAxios";
+import smsConfig from "../../../../utilities/configuration";
+import TimetableRow from "../TimetableRow/TimetableRow";
 import Modal from "../../../../components/Modal/Modal";
-import ManageTimeWindow from "../ManageTimeWindow/ManageTimeWindow";
+
 
 const getRowNumber = (id) => {
     let pos = id.indexOf('L');
@@ -19,37 +21,28 @@ const getColNumber = (id) => {
     return Number.parseInt(id.slice(start, end));
 }
 
-const TimetableCell = ({id}) => {
-    const [value, setValue] = useContext(ClassesContext);
-    const [showAddLesson, setShowAddLesson] = useState(false);
+const TimetableCell = ({id, config, type, timetable, refresh, setRefresh, group}) => {
+
+    const [showAdd, setShowAdd] = useState(false);
 
     const handleClick = e => {
-        e.cancelBubble = true;
-        if (e.stopPropagation) e.stopPropagation();
-        alert(id);
-        setShowAddLesson( true);
+        setShowAdd(true);
     }
 
     return (
-        <td className="TimetableCell" onClick={handleClick}>
-            <div className="TimetableCell__content">
+        <td className="TimetableCell" onClick={type === 'ADMIN' && handleClick}>
+            <div className={`TimetableCell__content ${type === 'ADMIN' ? 'TimetableCell__content-admin' : ''}`}>
                 { getColNumber(id) === -1 ? (
-                    <TimeCell />
+                    <TimeCell time={config[getRowNumber(id)]}/>
                 ) : (
-                    value   && value[getColNumber(id)]
-                            && value[getColNumber(id)][getRowNumber(id)]
-                            && <LessonCell value={value[getColNumber(id)][getRowNumber(id)]} />
-
-                )}
-
-                {showAddLesson && (
-                    <Modal isOpen={showAddLesson} setIsOpen={setShowAddLesson}>
-                        <AddLesson
-                            value={[getColNumber(id)][getRowNumber(id)]}
-                        />
-                    </Modal>
+                    timetable && timetable[getColNumber(id)]
+                              && timetable[getColNumber(id)][getRowNumber(id)]
+                              && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} refresh={refresh} setRefresh={setRefresh}/>
                 )}
             </div>
+            {showAdd && <Modal isOpen={showAdd} setIsOpen={setShowAdd}>
+                {"Lesson: " + id.charAt(0) + " Day: " + id.charAt(2) + " Group: " + group + " teacher/subject/room"}
+            </Modal>}
         </td>
     );
 }

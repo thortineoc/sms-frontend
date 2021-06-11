@@ -10,6 +10,6 @@
 
 .TimetablesManagement__button-group {
     display: flex;
-    min-width: 300px;
+    min-width: 180px;
     justify-content: space-between;
 }

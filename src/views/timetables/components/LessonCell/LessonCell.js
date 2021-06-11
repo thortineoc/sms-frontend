@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
 import './LessonCell.css'
-import AddLesson from "../AddLesson/AddLesson";
 import Modal from "../../../../components/Modal/Modal";
+import EditDeleteLesson from "../EditDeleteLesson/EditDeleteLesson";
+import TimetableRow from "../TimetableRow/TimetableRow";
 
-const LessonCell = ({value}) => {
-    const [showAddLesson, setShowAddLesson] = useState(false);
-    const handleClick = e => {
-        e.cancelBubble = true;
-        if (e.stopPropagation) e.stopPropagation();
-        alert("LESSON " + value.subject)
+const LessonCell = ({value, type, refresh, setRefresh}) => {
+    const [showEdit, setShowEdit] = useState(false);
+    const handleClick = () => {
+        setShowEdit(true)
     }
 
     const clearClick = e => {
@@ -17,11 +16,22 @@ const LessonCell = ({value}) => {
     }
 
     return (
-        <div className="LessonCell__wrapper" onClick={clearClick}>
-            <div className="LessonCell" onClick={handleClick}>
+        <div className="LessonCell__wrapper" onClick={type === 'ADMIN' && clearClick}>
+            <div className={(type === "ADMIN" ? (value && value.conflicts.length>0 ? "LessonCellError LessonCell__adminError" : "LessonCell LessonCell__admin"): "LessonCell ")}
+                 onClick={type === 'ADMIN' && handleClick}>
                 {value && value.subject && <div><strong>{value.subject}</strong></div>}
-                {value && value.teacher && <div><span style={{color: '#444'}}>Teacher: </span>{value.teacher}</div>}
+                {type !== 'TEACHER' && value && value.teacher && <div><span style={{color: '#444'}}>Teacher: </span>{value.teacher}</div>}
+                {value && value.room && <div><span style={{color: '#444'}}>Room: </span>{value.room}</div>}
             </div>
+            {type === 'ADMIN' &&
+            <Modal isOpen={showEdit} setIsOpen={setShowEdit}>
+                <EditDeleteLesson
+                    setIsOpen={setShowEdit}
+                    lesson={value}
+                    refresh={refresh} setRefresh={setRefresh}
+                />
+            </Modal>
+            }
         </div>
     );
 }

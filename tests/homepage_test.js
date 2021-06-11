@@ -4,7 +4,7 @@ Scenario('is visible', ({I}) => {
     //I.amOnPage('http://school-management-system.online:24020');
     I.amOnPage('http://localhost:24010/');
     I.see('School Management System');
-    I.see('Welcome');
+    //I.see('Welcome');
     I.seeElement(locate({id: 'open_drawer'}));
 });
 
