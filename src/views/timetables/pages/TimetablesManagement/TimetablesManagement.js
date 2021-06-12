@@ -10,8 +10,11 @@ import smsConfig from "../../../../utilities/configuration";
 import TimetableGeneration from "../../components/TimetableGeneration/TimetableGeneration";
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import ErrorIcon from '@material-ui/icons/Error';
+import DeleteIcon from "@material-ui/icons/Delete";
 import ImportExportRoundedIcon from '@material-ui/icons/ImportExportRounded';
 import ErrorsWindow from "../../components/ErrorsWindow/ErrorsWindow";
+import callBackendDelete from "../../../../utilities/CallBackendDelete";
+import DialogBox from "../../../../components/DialogBox/DialogBox";
 
 const TimetablesManagement = () => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
@@ -21,6 +24,7 @@ const TimetablesManagement = () => {
     const [showGenerator, setShowGenerator] = useState(false);
     const [showErrors, setShowErrors] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
 
     useEffect(() => {
@@ -38,6 +42,14 @@ const TimetablesManagement = () => {
     useEffect(() => {
         setGroup(allGroups[0])
     }, [allGroups])
+
+    const DeleteTimetable = () =>{
+        callBackendDelete(axiosInstance, "/timetable-service/timetables/group/" + group)
+            .then(()=>{
+                setRefresh(true);
+            })
+            .catch(error => console.log(error))
+    }
 
     const groupsOptions = allGroups ? allGroups.toString().split(',') : [''];
 
@@ -66,6 +78,13 @@ const TimetablesManagement = () => {
                         onClick={() => setShowErrors(true)}
                         style={{cursor: "pointer", margin: '2%', color: 'gray'}}
                     />
+
+                    <DeleteIcon
+                        fontSize="large"
+                        onClick={() => setShowDeleteDialog(true)}
+                        style={{cursor: "pointer", margin: '2%', color: 'gray'}}
+                    />
+
                 </div>
             </div>
 
@@ -92,6 +111,16 @@ const TimetablesManagement = () => {
                 <Modal isOpen={showErrors} setIsOpen={setShowErrors}>
                     <ErrorsWindow
                         setIsOpen={setShowErrors}
+                    />
+                </Modal>
+            )}
+            {showDeleteDialog && (
+                <Modal isOpen={showDeleteDialog} setIsOpen={setShowDeleteDialog}>
+                    <DialogBox
+                        deleteFunction={DeleteTimetable}
+                        setDisplayDialog={setShowDeleteDialog}
+                        prompt={"timetable"}
+                        isModal={true}
                     />
                 </Modal>
             )}

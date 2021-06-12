@@ -8,6 +8,7 @@ import useAxios from "../../../../utilities/useAxios";
 import smsConfig from "../../../../utilities/configuration";
 import TimetableRow from "../TimetableRow/TimetableRow";
 import Modal from "../../../../components/Modal/Modal";
+import AddLesson from "../AddLesson/AddLesson";
 
 
 const getRowNumber = (id) => {
@@ -41,7 +42,14 @@ const TimetableCell = ({id, config, type, timetable, refresh, setRefresh, group}
                 )}
             </div>
             {showAdd && <Modal isOpen={showAdd} setIsOpen={setShowAdd}>
-                {"Lesson: " + id.charAt(0) + " Day: " + id.charAt(2) + " Group: " + group + " teacher/subject/room"}
+                <AddLesson
+                    weekday={id.charAt(2)}
+                    lesson={ id.charAt(0)}
+                    group={group}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                    setIsOpen={setShowAdd}
+                />
             </Modal>}
         </td>
     );

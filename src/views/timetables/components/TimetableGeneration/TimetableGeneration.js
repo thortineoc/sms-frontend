@@ -12,6 +12,7 @@ const TimetableGeneration = ({group, setIsOpen, setRefresh, refresh}) => {
     const [config, setConfig] = useState({});
     const [value, setValue] = useState({});
     const [timetable, setTimetable] = useState([]);
+    const [error, setError] = useState("");
 
     function Object_assign(target, ...sources) {
         sources.forEach(source => {
@@ -70,7 +71,10 @@ const TimetableGeneration = ({group, setIsOpen, setRefresh, refresh}) => {
                 setRefresh(true);
                 setIsOpen(false);
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error)
+                setError("Unable to generate timetable with these parameters")
+            })
     }
 
     const handleChange = (e, teacherId, subjectId) => {
@@ -87,6 +91,7 @@ const TimetableGeneration = ({group, setIsOpen, setRefresh, refresh}) => {
     return (
         <div>
             <h3>Set amount of lessons the teacher conducts</h3>
+            <p>{(error.length>0 ? error : "")}</p>
             <table className="TimetableGeneration">
                 <thead>
                 <tr>
