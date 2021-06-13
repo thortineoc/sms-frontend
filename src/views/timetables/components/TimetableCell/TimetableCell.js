@@ -8,6 +8,7 @@ import useAxios from "../../../../utilities/useAxios";
 import smsConfig from "../../../../utilities/configuration";
 import TimetableRow from "../TimetableRow/TimetableRow";
 import Modal from "../../../../components/Modal/Modal";
+import AddLesson from "../AddLesson/AddLesson";
 
 
 const getRowNumber = (id) => {
@@ -29,19 +30,35 @@ const TimetableCell = ({id, config, type, timetable, refresh, setRefresh, group}
         setShowAdd(true);
     }
 
+    let value;
+
+    if(timetable) {
+        for (let i = 0; i < timetable.length; i++) {
+            if(timetable[i].lesson === getRowNumber(id) && timetable[i].weekday === getColNumber(id)) {
+                value = timetable[i];
+            }
+        }
+    }
+
     return (
         <td className="TimetableCell" onClick={type === 'ADMIN' && handleClick}>
             <div className={`TimetableCell__content ${type === 'ADMIN' ? 'TimetableCell__content-admin' : ''}`}>
                 { getColNumber(id) === -1 ? (
                     <TimeCell time={config[getRowNumber(id)]}/>
                 ) : (
-                    timetable && timetable[getColNumber(id)]
-                              && timetable[getColNumber(id)][getRowNumber(id)]
-                              && <LessonCell value={timetable[getColNumber(id)][getRowNumber(id)]} type={type} refresh={refresh} setRefresh={setRefresh}/>
+                    value &&
+                    <LessonCell value={value} type={type} refresh={refresh} setRefresh={setRefresh}/>
                 )}
             </div>
             {showAdd && <Modal isOpen={showAdd} setIsOpen={setShowAdd}>
-                {"Lesson: " + id.charAt(0) + " Day: " + id.charAt(2) + " Group: " + group + " teacher/subject/room"}
+                <AddLesson
+                    weekday={id.charAt(2)}
+                    lesson={ id.charAt(0)}
+                    group={group}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                    setIsOpen={setShowAdd}
+                />
             </Modal>}
         </td>
     );
