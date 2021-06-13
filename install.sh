@@ -9,6 +9,4 @@ sudo apt-get install -y nodejs
 sudo apt-get update
 sudo apt-get -y install npm
 sudo npm install -g serve
-npm install
-npm run build
 
