@@ -20,7 +20,7 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [hours, setHours] = useState({});
     const [timetable, setTimetable] = useState([]);
-    const [teachers, setTeachers] = useState([]);
+    const [teachers, setTeachers] = useState({});
     const [classes, setClasses] = useState([]);
 
     useEffect(() => {
@@ -31,11 +31,13 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
     }, [setRefresh, refresh])
 
     const fetchTimetable = () => {
-        let url = `/timetable-service/timetables/${group}`;
+        if(group) {
+            var url = `/timetable-service/timetables/${group}`;
+        }
         if(type === 'STUDENT') {
-            url = '/timetable-service/timetables/student';
+            var url = '/timetable-service/timetables/student';
         } else if(type === 'TEACHER') {
-            url = '/timetable-service/timetables/teacher';
+            var url = '/timetable-service/timetables/teacher';
         }
 
         callBackendGet(axiosInstance, url, null)
@@ -74,7 +76,6 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
         } else {
             fetchTimetable();
         }
-
     }, [group])
 
 
@@ -84,14 +85,12 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
     },[timetable])
 
     if(classes !== [] && teachers !== {} && classes !== undefined && teachers !== undefined) {
-        classes.forEach((day, dayId) => {
-            day.forEach((lesson, lessonId) => {
-                Object.keys(teachers).forEach(id => {
-                    if(lesson && lesson.teacherId === id) {
-                        const name = teachers[id].firstName + " " + teachers[id].lastName;
-                        classes[dayId][lessonId] = {...lesson, teacher: name}
-                    }
-                })
+        classes.forEach((lesson, lessonId) => {
+            Object.keys(teachers).forEach(id => {
+                if(lesson && lesson.teacherId === id) {
+                    const name = teachers[id].firstName + " " + teachers[id].lastName;
+                    classes[lessonId] = {...lesson, teacher: name}
+                }
             })
         })
     }
