@@ -12,7 +12,7 @@ Scenario('can login to admin account and logout', ({I}) => {
 
     //admin dashboard
     I.see('School Management System');
-    I.see('Student management');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.see('User profile');
     I.see('Student management');
@@ -37,7 +37,8 @@ Scenario('can create group', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
 
     //create group
     I.click({id: "manage_groups"});
@@ -65,7 +66,8 @@ Scenario('can create student', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
 
     //Search users for FrontTest (doesn't exist yet)
     I.fillField('Search', 'FrontTest');
@@ -107,7 +109,8 @@ Scenario('can filter students', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
 
     //filter students by email
     I.click({id: 'filter_users'});
@@ -140,7 +143,8 @@ Scenario('can change displayed columns', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
 
     //check displayed columns
     I.see('First Name');
@@ -190,7 +194,8 @@ Scenario('can delete student', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
 
     //delete user
     I.click({id: 'filter_users'});
@@ -215,7 +220,8 @@ Scenario('can delete group', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
 
     //delete group
     I.click({id: "manage_groups"});
@@ -236,7 +242,8 @@ Scenario('can create teacher', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.click('Teacher management');
     I.see('Teacher management');

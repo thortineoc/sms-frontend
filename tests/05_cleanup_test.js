@@ -12,7 +12,8 @@ Scenario('remove test user', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
 
     //delete user
     I.click({id: 'filter_users'});
@@ -37,7 +38,8 @@ Scenario('delete test group', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Student management');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.click('Student management');
     I.see('Student management');
@@ -63,7 +65,8 @@ Scenario('remove test teacher', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('Timetables');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.click('Teacher management');
     I.see('Teacher management');
