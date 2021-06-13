@@ -1,7 +1,11 @@
 import {useKeycloak} from "@react-keycloak/web";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import getKeycloakRoles from "../../utilities/GetRoles";
 import LandingPage from "../landingpage/LandingPage";
+import UserProfile from "../profile/profile";
+import StudentManagement from "../usermanagement/pages/StudentsManagement/StudentsManagement";
+import TimetableView from "../timetables/pages/TimetableView/TimetableView";
+import {Route} from "react-router-dom";
 
 const getDashboard = (role) =>{
     switch (role){
@@ -24,6 +28,15 @@ const Dashboard = (props) => {
     const {keycloak, initialized} = useKeycloak();
     const [role, setRole] = useState("");
 
+    const getView = (role) =>{
+        if(role==="ADMIN"){
+            return (<StudentManagement />)
+        } else {
+            return ( <TimetableView />)
+        }
+    }
+
+
 
 
     useEffect(() => {
@@ -32,7 +45,7 @@ const Dashboard = (props) => {
     }, [keycloak, initialized])
     return (
         (initialized && keycloak.authenticated ? (
-            getDashboard(role)
+            getView(role)
             ) : (
               <LandingPage/>
         )))

@@ -151,14 +151,14 @@ export default function LeftMenu(props) {
                                     <ListItemText primary="User profile"/>
                                 </ListItem>
                             </Link>
-                            <Link onClick={() => setCurrentView("Dashboard")}
-                                  className="Link_noDecoration" to="/"
-                                  role={role}>
-                                <ListItem button key="dashboard_key">
-                                    <ListItemIcon><DashboardIcon/></ListItemIcon>
-                                    <ListItemText primary="Dashboard"/>
-                                </ListItem>
-                            </Link>
+                            {/*<Link onClick={() => setCurrentView("Dashboard")}*/}
+                            {/*      className="Link_noDecoration" to="/"*/}
+                            {/*      role={role}>*/}
+                            {/*    <ListItem button key="dashboard_key">*/}
+                            {/*        <ListItemIcon><DashboardIcon/></ListItemIcon>*/}
+                            {/*        <ListItemText primary="Dashboard"/>*/}
+                            {/*    </ListItem>*/}
+                            {/*</Link>*/}
                         </List>
                         <Divider/>
                         <List>
@@ -202,14 +202,14 @@ export default function LeftMenu(props) {
                                     <ListItemText primary="User profile"/>
                                 </ListItem>
                             </Link>
-                            <Link onClick={() => setCurrentView("Dashboard")}
-                                  className="Link_noDecoration" to="/"
-                                  role={role}>
-                                <ListItem button key="dashboard_key">
-                                    <ListItemIcon><DashboardIcon/></ListItemIcon>
-                                    <ListItemText primary="Dashboard"/>
-                                </ListItem>
-                            </Link>
+                            {/*<Link onClick={() => setCurrentView("Dashboard")}*/}
+                            {/*      className="Link_noDecoration" to="/"*/}
+                            {/*      role={role}>*/}
+                            {/*    <ListItem button key="dashboard_key">*/}
+                            {/*        <ListItemIcon><DashboardIcon/></ListItemIcon>*/}
+                            {/*        <ListItemText primary="Dashboard"/>*/}
+                            {/*    </ListItem>*/}
+                            {/*</Link>*/}
                         </List>
                         <Divider/>
                         <List>
@@ -234,13 +234,13 @@ export default function LeftMenu(props) {
                                     <ListItemText primary="Grades"/>
                                 </ListItem>
                             </Link>
-                            <Link onClick={() => setCurrentView("Presence")}
-                                  className="Link_noDecoration" to="/api/presence-service">
-                                <ListItem button key="presences_key">
-                                    <ListItemIcon><FormatListNumbered/></ListItemIcon>
-                                    <ListItemText primary="Presences"/>
-                                </ListItem>
-                            </Link>
+                            {/*<Link onClick={() => setCurrentView("Presence")}*/}
+                            {/*      className="Link_noDecoration" to="/api/presence-service">*/}
+                            {/*    <ListItem button key="presences_key">*/}
+                            {/*        <ListItemIcon><FormatListNumbered/></ListItemIcon>*/}
+                            {/*        <ListItemText primary="Presences"/>*/}
+                            {/*    </ListItem>*/}
+                            {/*</Link>*/}
                         </List>
                         <Divider/>
                     </>
