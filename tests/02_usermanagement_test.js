@@ -264,7 +264,7 @@ Scenario('can create teacher', ({I}) => {
     I.click({id: "add_user"});
     I.see('Create new teacher');
     I.fillField('firstName', 'testTeacher');
-    I.fillField('lastName', 'testTeacher');
+    I.fillField('lastName', 'testTeacherLN');
     I.fillField('pesel', '88888888888');
     I.fillField('email', 'testteacher@sms.com');
     I.click('Submit');
