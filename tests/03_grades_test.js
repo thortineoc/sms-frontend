@@ -11,7 +11,8 @@ Scenario('teacher can see grades', ({I}) => {
     I.click('Sign In');
 
 //go to grades view
-    I.see('DASHBOARD FOR TEACHER');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.see('Grades');
     I.click('Grades');
@@ -41,7 +42,8 @@ Scenario('teacher can add grades', ({I}) => {
     I.click('Sign In');
 
 //go to grades view
-    I.see('DASHBOARD FOR TEACHER');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.see('Grades');
     I.click('Grades');
@@ -74,7 +76,8 @@ Scenario('teacher can update grades', ({I}) => {
     I.click('Sign In');
 
 //go to grades view
-    I.see('DASHBOARD FOR TEACHER');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.see('Grades');
     I.click('Grades');
@@ -112,7 +115,8 @@ Scenario('student can see grades', ({I}) => {
     I.fillField('password', 'JemmFitz');
     I.click('Sign In');
 
-    I.see('DASHBOARD FOR STUDENT');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.see('Grades');
     I.click('Grades');

@@ -11,7 +11,8 @@ Scenario('teacher can add and edit homeworks', ({ I }) => {
     I.fillField('password', 'testtest');
     I.click('Sign In');
 
-    I.see('DASHBOARD FOR TEACHER');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.click('Homework');
 
@@ -60,7 +61,8 @@ Scenario('student can add answers', ({ I }) => {
     I.fillField('password', 'JemmFitz');
     I.click('Sign In');
 
-    I.see('DASHBOARD FOR STUDENT');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.click('Homework');
 
@@ -92,7 +94,8 @@ Scenario('teacher can add homeworks', ({ I }) => {
     I.fillField('password', 'testtest');
     I.click('Sign In');
 
-    I.see('DASHBOARD FOR TEACHER');
+    I.see('School Management System');
+    I.wait(5);
     I.click({id: 'open_drawer'});
     I.click('Homework');
 
