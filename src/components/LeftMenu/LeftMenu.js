@@ -144,7 +144,7 @@ export default function LeftMenu(props) {
                     <>
                         <List>
                             <Link onClick={() => setCurrentView("User profile")}
-                                  className="Link_noDecoration" to="/"
+                                  className="Link_noDecoration" to="/api/usermanagement-service/my-account"
                                   role={role}>
                                 <ListItem button key="profile_key">
                                     <ListItemIcon><AccountBox/></ListItemIcon>
@@ -195,7 +195,7 @@ export default function LeftMenu(props) {
                     <>
                         <List>
                             <Link onClick={() => setCurrentView("User profile")}
-                                  className="Link_noDecoration" to="/"
+                                  className="Link_noDecoration" to="/api/usermanagement-service/my-account"
                                   role={role}>
                                 <ListItem button key="profile_key">
                                     <ListItemIcon><AccountBox/></ListItemIcon>
