@@ -12,9 +12,6 @@ Scenario('remove test user', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('DASHBOARD FOR ADMIN');
-    I.click({id: 'open_drawer'});
-    I.click('Student management');
     I.see('Student management');
 
     //delete user
@@ -40,7 +37,7 @@ Scenario('delete test group', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('DASHBOARD FOR ADMIN');
+    I.see('Student management');
     I.click({id: 'open_drawer'});
     I.click('Student management');
     I.see('Student management');
@@ -66,7 +63,7 @@ Scenario('remove test teacher', ({I}) => {
     I.click('Sign In');
 
     //go to student management
-    I.see('DASHBOARD FOR ADMIN');
+    I.see('Timetables');
     I.click({id: 'open_drawer'});
     I.click('Teacher management');
     I.see('Teacher management');
