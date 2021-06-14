@@ -301,6 +301,7 @@ const HomeworkDetailsAndResponses = (props) => {
                                         name={"deadline"}
                                         label={"Deadline"}
                                         style={{marginBottom: "2%", width: "30%"}}
+                                        initial={homeworkData.deadline}
                                     />
 
                                     <SwitchWrapper

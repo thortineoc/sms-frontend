@@ -151,6 +151,7 @@ const AssignEditHomeworkForm = (props) => {
                                 <DatepickerWrapper
                                 name={"deadline"}
                                 label={"Deadline"}
+                                initial={new Date()}
                                 />
 
                                 <SwitchWrapper
