@@ -111,7 +111,7 @@ function Row({row, subject, toGrade, fetchHomeworkData}) {
                 <TableCell>{row.answer ? row.answer.createdTime.split("T")[0] : "-"}</TableCell>
                 <TableCell>{row.answer ? row.answer.lastUpdatedTime.split("T")[0] : "-" }</TableCell>
                 {getReview(row, setRefresh)}
-                {getGrade(row, subject, setRefresh)}
+                {toGrade && getGrade(row, subject, setRefresh)}
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={7}>
