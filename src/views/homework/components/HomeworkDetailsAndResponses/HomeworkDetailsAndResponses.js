@@ -24,6 +24,7 @@ import callBackendDelete from "../../../../utilities/CallBackendDelete";
 import DialogBox from "../../../../components/DialogBox/DialogBox";
 import { useHistory } from "react-router-dom";
 import smsConfig from "../../../../utilities/configuration";
+import SwitchWrapper from "../../../../components/Switch/SwitchWrapper";
 
 const validationSchema = Yup.object({
     title: Yup.string().required('Required'),
@@ -208,6 +209,13 @@ const HomeworkDetailsAndResponses = (props) => {
                     </div>
                 </div>
 
+                <div className="DetailsHomework__field">
+                    <div className="DetailsHomework__label">To Evaluate</div>
+                    <div id="homework_toEvaluate" className="DetailsHomework__data_small" onClick={(role==="TEACHER" && allowEdit) ? handleClick : undefined } style={(role==="TEACHER" && allowEdit) ? {cursor: "pointer"} : undefined}>
+                        {homeworkData.toEvaluate  ? "True" : "False"}
+                    </div>
+                </div>
+
                 <Grid container direction="column" alignItems="left" style={{marginTop: "2%"}}>
                     {homeworkData.files.map(file=>{
                         return(
@@ -293,6 +301,13 @@ const HomeworkDetailsAndResponses = (props) => {
                                         name={"deadline"}
                                         label={"Deadline"}
                                         style={{marginBottom: "2%", width: "30%"}}
+                                        initial={homeworkData.deadline}
+                                    />
+
+                                    <SwitchWrapper
+                                        label={"To Evaluate"}
+                                        name={"toEvaluate"}
+                                        initial={homeworkData.toEvaluate}
                                     />
 
                                     <Grid container direction="column" alignItems="left" style={{marginTop: "2%"}}>

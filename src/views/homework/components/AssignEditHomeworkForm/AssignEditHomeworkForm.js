@@ -13,6 +13,7 @@ import UploadFile from "../../../../components/UploadFIle/UploadFile";
 import callBackendPut from "../../../../utilities/CallBackendPut";
 import * as Yup from "yup";
 import smsConfig from "../../../../utilities/configuration";
+import SwitchWrapper from "../../../../components/Switch/SwitchWrapper";
 
 const initial = {
     group: "",
@@ -20,6 +21,7 @@ const initial = {
     title: "",
     description: "",
     deadline: "",
+    toEvaluate: true
 }
 
 const validationSchema = Yup.object({
@@ -149,6 +151,13 @@ const AssignEditHomeworkForm = (props) => {
                                 <DatepickerWrapper
                                 name={"deadline"}
                                 label={"Deadline"}
+                                initial={new Date()}
+                                />
+
+                                <SwitchWrapper
+                                    label={"To Evaluate"}
+                                    name={"toEvaluate"}
+                                    initial={true}
                                 />
                                 <UploadFile selectedFile={selectedFile} setSelectedFile={setSelectedFile}/>
                                 <div className="CreateForm__button-wrapper">
