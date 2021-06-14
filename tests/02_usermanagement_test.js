@@ -91,6 +91,8 @@ Scenario('can create student', ({I}) => {
     I.fillField('email', 'front1test@sms.com');
     I.click('Submit');
     //search for FrontTest
+    I.wait(5);
+    I.clearField('Search');
     I.fillField('Search', 'FrontTest');
     I.pressKey('Enter');
     I.see('FrontTestLN');
