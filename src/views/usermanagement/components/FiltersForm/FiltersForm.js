@@ -8,16 +8,19 @@ import useAxios from "../../../../utilities/useAxios";
 import callBackendGet from "../../../../utilities/CallBackendGet";
 import smsConfig from "../../../../utilities/configuration";
 
-const defaultInitValues = {
-    userName: "",
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    phoneNumber: "",
-    pesel: "",
-    id: "",
-    email: "",
-    group: "",
+const defaultInitValues = (role) => {
+    return {
+        userName: "",
+        firstName: "",
+        lastName: "",
+        middleName: "",
+        phoneNumber: "",
+        pesel: "",
+        id: "",
+        email: "",
+        group: "",
+        role: role
+    }
 };
 
 const columnNames = {
@@ -32,9 +35,9 @@ const columnNames = {
     group: "Group"
 }
 
-const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive, role}) => {
+const FiltersForm = ({initValues = defaultInitValues(role), onSubmit, setIsActive, role}) => {
     console.log(initValues)
-    console.log(defaultInitValues)
+    console.log(defaultInitValues(role))
 
     const axiosInstance = useAxios(smsConfig.haproxyUrl);
     const [items, setItems] = useState([]);
@@ -59,7 +62,7 @@ const FiltersForm = ({initValues = defaultInitValues, onSubmit, setIsActive, rol
                         setIsActive(false);
                     }}
                     onReset={() => {
-                        onSubmit(defaultInitValues);
+                        onSubmit(defaultInitValues(role));
                         setIsActive(false);
                     }}
             >
