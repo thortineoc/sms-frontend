@@ -23,12 +23,12 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
     const [teachers, setTeachers] = useState({});
     const [classes, setClasses] = useState([]);
 
-    useEffect(() => {
-        if(setRefresh){
-            setRefresh(false);
-        }
-        fetchTimetable();
-    }, [setRefresh, refresh])
+    // useEffect(() => {
+    //     if(setRefresh){
+    //         setRefresh(false);
+    //     }
+    //     fetchTimetable();
+    // }, [])
 
     const fetchTimetable = () => {
         if(group) {
@@ -55,6 +55,19 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
             .catch(error => console.log(error))
     }
 
+    // useEffect(() => {
+    //     fetchHours();
+    //     if(type === 'ADMIN') {
+    //         if(group !== undefined) {
+    //             fetchTimetable();
+    //         }
+    //     } else {
+    //         fetchTimetable();
+    //     }
+    //
+    //
+    // }, [])
+
     useEffect(() => {
         fetchHours();
         if(type === 'ADMIN') {
@@ -65,18 +78,10 @@ const Timetable = ({type, group, setRefresh, refresh}) => {
             fetchTimetable();
         }
 
-    }, [])
-
-    useEffect(() => {
-        fetchHours();
-        if(type === 'ADMIN') {
-            if(group !== undefined) {
-                fetchTimetable();
-            }
-        } else {
-            fetchTimetable();
+        if(setRefresh){
+            setRefresh(false);
         }
-    }, [group])
+    }, [group, setRefresh, refresh])
 
 
     useEffect(() => {
